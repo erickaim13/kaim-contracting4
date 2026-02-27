@@ -210,6 +210,15 @@ section{padding:80px 24px}
 .fg input::placeholder,.fg textarea::placeholder{color:var(--muted)}
 .fg select option{background:var(--bg3);color:var(--text)}
 .fg textarea{height:108px;resize:vertical}
+
+.fg-label{font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;display:block}
+.contact-pref{display:flex;gap:10px;flex-wrap:wrap}
+.cp-option{display:flex;align-items:center;gap:0}
+.cp-option input[type=checkbox]{display:none}
+.cp-option label{display:flex;align-items:center;gap:8px;padding:9px 16px;border:1px solid var(--border2);border-radius:3px;cursor:pointer;font-size:13.5px;color:var(--muted);font-family:'Source Sans 3',sans-serif;transition:all .15s;user-select:none}
+.cp-option label:hover{border-color:var(--gold);color:var(--text)}
+.cp-option input[type=checkbox]:checked + label{border-color:var(--gold);background:rgba(201,168,76,.12);color:var(--gold-l)}
+.cp-option label svg{width:15px;height:15px;flex-shrink:0}
 .form-submit{width:100%;background:var(--gold);color:var(--teal);border:none;padding:14px;font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:3px;cursor:pointer;transition:background .2s;margin-top:4px}
 .form-submit:hover{background:var(--gold-l)}
 
@@ -495,6 +504,23 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
           </div>
           <div class="fg"><label>Service Needed</label><select name="service" required><option value="">Select a service...</option><option>Paver Installation</option><option>Landscaping</option><option>Drainage Solutions</option><option>Hardscaping</option><option>Landscape Design</option><option>Pressure Washing</option><option>Plantings</option><option>Outdoor Living Spaces</option><option>Multiple Services</option></select></div>
           <div class="fg"><label>Tell Us About Your Project</label><textarea name="message" placeholder="Describe your project, property size, timeline, or any other details..."></textarea></div>
+          <div class="fg" style="margin-bottom:16px">
+            <span class="fg-label">Preferred Contact Method</span>
+            <div class="contact-pref">
+              <div class="cp-option">
+                <input type="checkbox" id="cp-call" name="contact-method" value="Phone Call">
+                <label for="cp-call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Phone Call</label>
+              </div>
+              <div class="cp-option">
+                <input type="checkbox" id="cp-text" name="contact-method" value="Text Message">
+                <label for="cp-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Text Message</label>
+              </div>
+              <div class="cp-option">
+                <input type="checkbox" id="cp-email" name="contact-method" value="Email">
+                <label for="cp-email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</label>
+              </div>
+            </div>
+          </div>
           <button type="submit" class="form-submit" id="form-submit-btn">Send My Request</button>
         </form>
         <div id="form-success" style="display:none;background:#1a3d1c;border:2px solid var(--gold);border-radius:8px;padding:24px;text-align:center;margin-top:16px;">
