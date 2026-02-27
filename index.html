@@ -124,7 +124,7 @@ section{padding:80px 24px}
 .af-check{color:var(--gold-l);font-weight:700;flex-shrink:0;font-size:15px}
 .about-cta-row{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-top:4px}
 .about-phone{display:flex;flex-direction:column}
-.about-phone strong{font-family:'Oswald',sans-serif;font-size:18px;color:var(--gold-l);font-weight:700}
+.about-phone a{color:var(--gold-l);text-decoration:none}.about-phone strong{font-family:'Oswald',sans-serif;font-size:18px;color:var(--gold-l);font-weight:700}
 .about-phone span{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:2px}
 .about-stats-bar{background:var(--teal);display:grid;grid-template-columns:repeat(4,1fr)}
 .asb-item{padding:22px 16px;text-align:center;border-right:1px solid rgba(255,255,255,.12)}
@@ -160,7 +160,7 @@ section{padding:80px 24px}
 .svc-tile:hover .svc-tile-arrow{opacity:1;transform:translateY(0)}
 
 /* CTA BAND */
-.cta-band{position:relative;overflow:hidden;z-index:3;isolation:isolate}
+.cta-band{position:relative;overflow:hidden;z-index:3;background-color:var(--bg)}
 .cta-band::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:3}
 .cta-photo{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1628624747186-a941c476b7ef?w=1600&q=80') center/cover no-repeat}
 .cta-overlay{position:absolute;inset:0;background:rgba(13,31,53,.88)}
@@ -430,7 +430,7 @@ body{position:relative}.topo-bg{position:absolute;top:0;left:0;width:100%;height
       </ul>
       <div class="about-cta-row">
         <a href="#contact" class="btn-primary">Request a Free Quote</a>
-        <div class="about-phone"><strong>978-960-7832</strong><span>Call for a free estimate</span></div>
+        <div class="about-phone"><a href="tel:9789607832"><strong>978-960-7832</strong></a><span>Call for a free estimate</span></div>
       </div>
     </div>
   </div>
