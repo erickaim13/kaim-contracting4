@@ -170,7 +170,7 @@ section{padding:80px 24px}
 .cta-band .sub{color:rgba(255,255,255,.65);margin-top:7px;font-size:15px}
 
 /* WHY */
-.why{background:var(--bg2);position:relative;overflow:hidden}
+.why{background:linear-gradient(180deg,var(--bg) 0%,#091828 100%);position:relative;overflow:hidden}
 .why::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .why::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent)}
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative;z-index:1}
@@ -311,7 +311,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   .page-grid{grid-template-columns:1fr}
   .sidebar{position:static}
 }
-@media(max-width:640px){
+@media(max-width:640px){.topo-bg{background-size:100% auto;background-position:top center;}
   section{padding:48px 16px}
   .section-inner{padding-left:0;padding-right:0}
   .section-header{margin-bottom:32px}
