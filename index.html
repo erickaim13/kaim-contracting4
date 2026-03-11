@@ -544,6 +544,45 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   
 </div>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
+// CRM lead injection
+async function addLeadToCRM(data){
+  var SB_URL='https://dfquwxmoidhhcwezgnry.supabase.co';
+  var SB_KEY='sb_publishable_63igSt9FrltKroNoWZvALg_mWBj14nK';
+  try{
+    var res=await fetch(SB_URL+'/rest/v1/crm_data?id=eq.1&select=data',{
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+    });
+    var rows=await res.json();
+    var db=rows[0]&&rows[0].data&&rows[0].data.clients?rows[0].data:{clients:[],estimates:[],invoices:[],messages:[],activity:[],settings:{},_nc:1,_ne:1001,_ni:2001,jobs:[]};
+    var now=new Date();
+    var client={
+      id:db._nc++,
+      first:data.get('first-name')||'',
+      last:data.get('last-name')||'',
+      phone:data.get('phone')||'',
+      email:data.get('email')||'',
+      address:'',
+      service:data.get('service')||'',
+      val:0,
+      source:'Website (kaimcontracting.com)',
+      status:'new',
+      prio:'normal',
+      notes:data.get('message')||'',
+      priv:'',
+      added:now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),
+      addedRaw:now.toISOString()
+    };
+    db.clients.unshift(client);
+    db.activity=db.activity||[];
+    db.activity.unshift({text:'New website lead: '+client.first+' '+client.last,ico:'🌐',time:now.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})});
+    await fetch(SB_URL+'/rest/v1/crm_data?id=eq.1',{
+      method:'PATCH',
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify({data:db,updated_at:now.toISOString()})
+    });
+  }catch(e){console.error('CRM error',e);}
+}
+
 // Form AJAX submission
 (function(){
   var form = document.getElementById('quote-form');
@@ -554,11 +593,15 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
     btn.disabled = true;
     btn.textContent = 'Sending...';
     var data = new FormData(form);
-    fetch('https://formspree.io/f/mnjbrgjw', {
-      method: 'POST',
-      headers: {'Accept': 'application/json'},
-      body: data
-    }).then(function(r){ return r.json(); }).then(function(r){
+    Promise.all([
+      fetch('https://formspree.io/f/mnjbrgjw', {
+        method: 'POST',
+        headers: {'Accept': 'application/json'},
+        body: data
+      }).then(function(r){ return r.json(); }),
+      addLeadToCRM(data)
+    ]).then(function(results){
+      var r = results[0];
       if(r.ok){
         form.style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
