@@ -628,6 +628,16 @@ async function addLeadToCRM(data){
   if(c){c.textContent=em;c.href='mailto:'+em;}
   if(f){f.textContent=em;f.href='mailto:'+em;}
 })();
+
+// Auto-format phone numbers as XXX-XXX-XXXX
+document.querySelectorAll('input[type="tel"]').forEach(function(inp){
+  inp.addEventListener('input',function(){
+    var v=this.value.replace(/\D/g,'').slice(0,10);
+    if(v.length>6)this.value=v.slice(0,3)+'-'+v.slice(3,6)+'-'+v.slice(6);
+    else if(v.length>3)this.value=v.slice(0,3)+'-'+v.slice(3);
+    else this.value=v;
+  });
+});
 </script>
 </body>
 </html>
