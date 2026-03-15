@@ -143,12 +143,12 @@ section{padding:80px 24px}
 .svc-tile-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(1,26,28,.92) 0%,rgba(1,26,28,.3) 60%,transparent 100%);transition:background .3s}
 .svc-tile::after{content:'';position:absolute;inset:0;border:2px solid transparent;border-radius:6px;transition:border-color .3s;z-index:3;pointer-events:none}
 .svc-tile:hover::after{border-color:rgba(201,168,76,.5)}
-.svc-tile:hover .svc-tile-overlay{background:linear-gradient(to top,rgba(1,26,28,.96) 0%,rgba(1,26,28,.55) 70%,rgba(1,26,28,.15) 100%)}
+.svc-tile:hover .svc-tile-overlay{background:linear-gradient(to top,rgba(1,26,28,.97) 0%,rgba(1,26,28,.75) 70%,rgba(1,26,28,.4) 100%)}
 .svc-tile-body{position:absolute;bottom:0;left:0;right:0;padding:20px 22px;z-index:2}
 .svc-tile-num{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.2em;color:var(--gold);margin-bottom:6px;display:block}
 .svc-tile-body h3{font-family:'Oswald',sans-serif;font-size:17px;font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.05em;margin-bottom:0;line-height:1.1}
-.svc-tile-desc{font-size:13px;color:rgba(255,255,255,.75);margin-top:8px;line-height:1.55;max-height:0;overflow:hidden;transition:max-height .35s ease,margin .3s}
-.svc-tile:hover .svc-tile-desc{max-height:80px}
+.svc-tile-desc{font-size:13px;color:rgba(255,255,255,.85);margin-top:8px;line-height:1.55;max-height:0;overflow:hidden;transition:max-height .35s ease,margin .3s}
+.svc-tile:hover .svc-tile-desc{max-height:150px}
 .svc-tile-arrow{display:inline-flex;align-items:center;gap:5px;margin-top:10px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-l);opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s}
 .svc-tile:hover .svc-tile-arrow{opacity:1;transform:translateY(0)}
 
@@ -342,7 +342,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   .about-stats-bar{grid-template-columns:1fr 1fr}  .asb-item{padding:18px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80px}  .asb-num{font-size:20px}  .asb-lbl{letter-spacing:.03em;font-size:9px;word-break:break-word;text-align:center}
   .svc-bento{grid-template-columns:1fr}
   .svc-tile:nth-child(n){grid-column:auto;min-height:220px}
-  .svc-tile-desc{max-height:80px}
+  .svc-tile-desc{max-height:150px}
   .svc-tile-arrow{opacity:1;transform:translateY(0)}
   .cta-inner{padding:44px 20px}
   .cta-band h2{font-size:20px}
