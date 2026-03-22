@@ -583,6 +583,24 @@ async function addLeadToCRM(data){
   }catch(e){console.error('CRM error',e);}
 }
 
+function queueIMessages(data){
+  var SB_URL='https://dfquwxmoidhhcwezgnry.supabase.co';
+  var SB_KEY='sb_publishable_63igSt9FrltKroNoWZvALg_mWBj14nK';
+  var first=data.get('first-name')||'';
+  var last=data.get('last-name')||'';
+  var phone=data.get('phone')||'';
+  var service=data.get('service')||'';
+  var h={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
+  var p=phone.replace(/[^0-9]/g,'');
+  var num=p.length===10?'+1'+p:'+'+p;
+  // Notify owner
+  fetch(SB_URL+'/rest/v1/imessage_queue',{method:'POST',headers:h,body:JSON.stringify({phone:'+19789607832',body:'New quote request from '+first+' '+last+' — '+service+'\nPhone: '+phone,direction:'outgoing',status:'pending',client_name:first+' '+last,trigger_type:'lead_notify'})}).catch(function(e){console.error('iMsg notify error',e);});
+  // Auto-reply to client
+  if(p.length>=10){
+    fetch(SB_URL+'/rest/v1/imessage_queue',{method:'POST',headers:h,body:JSON.stringify({phone:num,body:'Hi '+first+', thanks for reaching out to Kaim Contracting! We received your request for '+service+' and will be in touch within 1 business day.\n\nQuestions? Call us anytime at 978-960-7832.',direction:'outgoing',status:'pending',client_name:first+' '+last,trigger_type:'lead_autoreply'})}).catch(function(e){console.error('iMsg reply error',e);});
+  }
+}
+
 // Form AJAX submission
 (function(){
   var form = document.getElementById('quote-form');
@@ -599,7 +617,8 @@ async function addLeadToCRM(data){
         headers: {'Accept': 'application/json'},
         body: data
       }).then(function(r){ return r.json(); }),
-      addLeadToCRM(data)
+      addLeadToCRM(data),
+      queueIMessages(data)
     ]).then(function(results){
       var r = results[0];
       if(r.ok){
