@@ -109,7 +109,7 @@ section{padding:80px 24px}
 .about-sub{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
 .about-h2{font-family:'Oswald',sans-serif;font-size:clamp(26px,3.2vw,38px);font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:14px;line-height:1.1}
 .about-h2 span{color:var(--gold-l)}
-.about-text-col p{color:var(--muted);margin-bottom:10px;font-size:14.5px;line-height:1.6}
+.about-text-col p{color:var(--muted);margin-bottom:10px;font-size:14.5px;line-height:1.6;max-width:480px}
 .about-features{list-style:none;margin:14px 0 20px;display:flex;flex-direction:column;gap:9px}
 .about-features li{display:flex;align-items:flex-start;gap:10px;color:var(--text);font-size:14.5px;line-height:1.5}
 .af-check{color:var(--gold-l);font-weight:700;flex-shrink:0;font-size:15px}
@@ -190,14 +190,15 @@ section{padding:80px 24px}
 /* CONTACT */
 .contact{background:linear-gradient(135deg,#0d1f35 0%,var(--bg2) 40%,var(--bg2) 100%);position:relative;overflow:hidden}
 .contact::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 10% 80%,rgba(201,168,76,.06) 0%,transparent 50%);pointer-events:none}
-.contact::after{content:'';position:absolute;bottom:0;left:0;right:0;height:100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600' preserveAspectRatio='xMidYMax slice'%3E%3Cpath d='M0 600V340l15-5 8 15 7-25 10 10 5-30 12 8 6-20 8 12 5-18 10 6-5-35 15 10-8-40 20 15-10-50 25 20-15-55 18 25-8-30 12 15 5-40 10 20 3-25 8 10-3-30 12 18-7-28 15 12-5-35 10 15 5-20 8 8-3-25 12 15-8-20 10 10V600z' fill='%23071520' opacity='.6'/%3E%3Cpath d='M1200 600V360l-12-8-6 12-8-20-5 8-10-25-8 15-12-30-6 10-8-18-10 8 5-28-15 12 8-35-18 15 12-45-20 18 10-40-15 20 8-25-12 10-5-35-10 18 3-22-8 8 3-28-12 15 7-22-15 10 5-30-10 12-5-18-8 6 3-22-12 12 8-18-10 8V600z' fill='%23071520' opacity='.6'/%3E%3Cpath d='M0 600V420l10-3 5 8 4-15 8 5 3-18 6 10 4-12 5 6 3-10 7 4-3-20 10 6-5-25 12 8-6-30 15 12-8-20 10 10 4-22 8 12-4-15 6 8 3-18 5 10-2-12 8 6-3-15 6 10 4-8 5 4-2-12 7 8-4-10 5 5V600z' fill='%23091a2a' opacity='.5'/%3E%3Cpath d='M1200 600V430l-8-4-4 6-6-12-3 8-8-15-5 10-6-18-4 6-5-10-8 5 3-16-8 8 4-20-10 6 5-22-12 10 6-16-8 8-4-18-6 10 3-12-5 6-3-15-4 8 2-10-6 5 3-12-5 8-3-6-4 3 2-10-6 6 4-8-5 4V600z' fill='%23091a2a' opacity='.5'/%3E%3Cpath d='M350 600V480l6-2 3 5 3-10 5 4 2-12 4 6 3-8 3 4 2-7 5 3-2-14 7 4-3-16 8 5-4-18 10 8-5-12 6 6 3-14 5 8-3-10 4 5 2-12 4 6-2-8 5 4-2-10 4 6 3-5 3 3-2-8 5 5-3-6 4 3V600z' fill='%230a1e30' opacity='.4'/%3E%3Cpath d='M850 600V470l-5-3-3 4-4-8-2 6-6-10-3 8-4-12-3 4-4-7-5 3 2-12-6 5 3-14-7 4 4-16-8 7 5-10-5 5-3-12-4 7 2-8-3 4-2-10-3 5 1-7-4 3 2-8-3 5-2-4-3 2 1-7-4 4 3-6-3 3V600z' fill='%230a1e30' opacity='.4'/%3E%3C/svg%3E");background-size:cover;background-position:bottom;pointer-events:none;z-index:0;opacity:.8}
+.tree-bg{position:absolute;bottom:0;left:0;right:0;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.tree-bg svg{position:absolute;bottom:0;width:100%;height:auto}
 .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:start;position:relative;z-index:1}
-.contact-info h3{font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:12px}
-.contact-info>p{color:var(--muted);margin-bottom:24px;line-height:1.75}
-.ci{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
+.contact-info{text-align:center}
+.contact-info h3{font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:20px}
+.ci{display:flex;align-items:center;gap:14px;margin-bottom:16px;justify-content:center}
 .ci-icon{width:40px;height:40px;background:var(--teal);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .ci-icon svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ci-text{font-size:14px;color:var(--muted);line-height:1.5}
+.ci-text{font-size:14px;color:var(--muted);line-height:1.5;text-align:left}
 .ci-text strong{display:block;font-weight:600;color:var(--text);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
 .ci-text a{color:var(--gold-l);text-decoration:none}
 .contact-form{background:var(--card);border-radius:8px;padding:36px;border:1px solid var(--border)}
@@ -377,6 +378,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   .contact-form{padding:22px 16px}
   .contact-form h3{font-size:16px}
   .contact-info h3{font-size:20px}
+  .tree-bg{opacity:.6}
   .footer-top{grid-template-columns:1fr;gap:28px;padding:32px 16px 24px;text-align:center}
   .footer-social{justify-content:center}
   .page-hero{min-height:240px}
@@ -524,12 +526,12 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 </section>
 
 <section class="contact" id="contact">
+  <div class="tree-bg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 420" preserveAspectRatio="xMidYMax slice"><g fill="rgba(0,15,35,0.12)" stroke="none"><polygon points="55,420 55,395 30,395 45,355 28,355 48,315 35,315 60,265 85,315 72,315 92,355 75,355 90,395 65,395 65,420"/><polygon points="175,420 175,388 140,388 160,335 138,335 162,280 145,280 180,210 215,280 198,280 222,335 200,335 220,388 185,388 185,420"/><polygon points="295,420 295,398 272,398 285,365 270,365 290,330 280,330 300,290 320,330 310,330 330,365 315,365 328,398 305,398 305,420"/><polygon points="435,420 435,400 418,400 428,372 416,372 432,340 425,340 440,308 455,340 448,340 464,372 452,372 462,400 445,400 445,420"/><polygon points="615,420 615,385 578,385 598,330 575,330 600,272 582,272 620,195 658,272 640,272 665,330 642,330 662,385 625,385 625,420"/><polygon points="835,420 835,400 815,400 825,368 812,368 828,336 820,336 840,298 860,336 852,336 868,368 855,368 865,400 845,400 845,420"/><polygon points="1095,420 1095,390 1065,390 1082,340 1062,340 1082,290 1068,290 1100,228 1132,290 1118,290 1138,340 1118,340 1135,390 1105,390 1105,420"/><polygon points="1335,420 1335,382 1298,382 1318,325 1295,325 1320,268 1302,268 1340,192 1378,268 1360,268 1385,325 1362,325 1382,382 1345,382 1345,420"/><polygon points="1500,420 1500,398 1478,398 1490,360 1475,360 1492,322 1482,322 1505,275 1528,322 1518,322 1535,360 1520,360 1532,398 1510,398 1510,420"/><polygon points="1680,420 1680,385 1648,385 1665,332 1645,332 1665,278 1650,278 1685,205 1720,278 1705,278 1725,332 1705,332 1722,385 1690,385 1690,420"/><polygon points="1860,420 1860,390 1835,390 1850,345 1832,345 1852,298 1838,298 1865,238 1892,298 1878,298 1898,345 1880,345 1895,390 1870,390 1870,420"/></g><g fill="rgba(0,15,35,0.08)" stroke="none"><polygon points="120,420 120,392 92,392 108,348 90,348 110,300 98,300 125,240 152,300 140,300 160,348 142,348 158,392 130,392 130,420"/><polygon points="520,420 520,390 490,390 505,342 488,342 508,292 495,292 525,225 555,292 542,292 562,342 545,342 560,390 530,390 530,420"/><polygon points="960,420 960,395 935,395 948,352 932,352 950,308 940,308 965,255 990,308 980,308 998,352 982,352 995,395 970,395 970,420"/><polygon points="1420,420 1420,388 1388,388 1405,338 1385,338 1405,285 1392,285 1425,215 1458,285 1445,285 1465,338 1445,338 1462,388 1430,388 1430,420"/><polygon points="1780,420 1780,395 1758,395 1770,355 1755,355 1772,312 1762,312 1785,260 1808,312 1798,312 1815,355 1800,355 1812,395 1790,395 1790,420"/></g></svg></div>
   <div class="section-inner">
     <div class="section-header"><div class="section-label">Get In Touch</div><h2>Request an Estimate</h2><div class="divider"></div><p style="margin-top:14px"><span style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:6px 16px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-l)">Booking Now for Spring 2026</span></p><p>Fill out the form and we will get back to you promptly to discuss your project.</p></div>
     <div class="contact-grid">
       <div class="contact-info">
         <h3>Contact Information</h3>
-        <p>We serve residential and commercial clients throughout Massachusetts. No job is too big or too small.</p>
         <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg></div><div class="ci-text"><strong>Phone</strong><a href="tel:978-351-2195">978-351-2195</a></div></div>
         <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="ci-text"><strong>Email</strong><a id="ci-email" href="#"></a></div></div>
         <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="ci-text"><strong>Hours</strong>Mon to Fri: 8am to 6pm<br>Sat and Sun: By Appointment</div></div>
