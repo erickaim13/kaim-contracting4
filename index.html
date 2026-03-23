@@ -2,12 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:title" content="Kaim Contracting LLC | Pavers · Landscapes · Pressure Washing · Outdoor Living">
-<meta property="og:description" content="Professional paver installation, landscaping, hardscaping, pressure washing, and outdoor living solutions serving Massachusetts and Southern NH. Free estimates.">
+<meta property="og:description" content="Professional paver installation, landscaping, hardscaping, pressure washing, and outdoor living solutions serving Greater Boston and Southern NH. Free estimates.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kaimcontracting.com/">
 <meta property="og:image" content="https://kaimcontracting.com/images/logo.webp">
@@ -29,13 +26,17 @@
 html{scroll-behavior:smooth;scroll-padding-top:90px}
 body{font-family:'Source Sans 3',sans-serif;color:var(--text);background-color:#0d1e35}
 
+/* TOPBAR */
+.topbar{background:var(--teal);color:rgba(255,255,255,.75);font-size:12.5px;padding:8px 0;position:relative;z-index:200}
+.topbar-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
+.topbar a{color:var(--gold-l);text-decoration:none}
+.topbar a:hover{color:#fff}
+.topbar-left{display:flex;align-items:center;gap:20px}
+.topbar-left span{display:flex;align-items:center;gap:6px}
+
 /* NAV */
 nav{background:var(--bg2);border-bottom:3px solid var(--teal);position:sticky;top:0;z-index:150;box-shadow:0 2px 20px var(--sh)}
 .nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:78px}
-.nav-info{display:flex;align-items:center;gap:14px;margin-left:auto;margin-right:16px}
-.nav-info a,.nav-info span{font-size:11.5px;color:rgba(255,255,255,.6);text-decoration:none;display:flex;align-items:center;gap:5px;font-family:'Source Sans 3',sans-serif;white-space:nowrap}
-.nav-info a:hover{color:var(--gold-l)}
-.nav-info .nav-sep{color:rgba(255,255,255,.2);font-size:10px}
 .nav-logo img{height:60px;width:auto;display:block}
 .nav-links{display:flex;list-style:none;gap:6px;align-items:center}
 .nav-links>li{position:relative}
@@ -170,7 +171,7 @@ section{padding:80px 24px}
 .why-card:hover{border-color:var(--gold)}
 .why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--gold))}
 .why-card:hover{box-shadow:0 10px 32px var(--sh);transform:translateY(-3px)}
-.why-icon{width:52px;height:52px;border-radius:50%;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.why-num{font-family:'Oswald',sans-serif;font-size:38px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:10px;display:block;opacity:.2}
 .why-card h4{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text);margin-bottom:8px}
 .why-card p{font-size:13px;color:var(--muted);line-height:1.6}
 
@@ -318,7 +319,9 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   .section-header{margin-bottom:32px}
   .section-header h2{font-size:24px}
   .section-header p{font-size:14px}
-  .nav-info{display:none}
+  .topbar{font-size:11px}
+  .topbar-inner{flex-direction:column;align-items:center;text-align:center;gap:5px;padding:8px 16px}
+  .topbar-left{flex-wrap:wrap;gap:10px;justify-content:center}
   .nav-inner{height:64px;padding:0 16px}
   .nav-logo img{height:50px}
   .nav-links{display:none}
@@ -378,40 +381,11 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
 
 
 .topo-bg{position:absolute;top:0;left:0;width:100%;height:100%;background:url('images/topo.webp') no-repeat center/cover;filter:sepia(1) saturate(2) hue-rotate(190deg) contrast(1.8) brightness(.6);mix-blend-mode:screen;opacity:.15;pointer-events:none;z-index:1}
-
-/* MOBILE BOTTOM BAR */
-.mob-bottom-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:999;background:#111;border-top:1px solid rgba(255,255,255,.1);box-shadow:0 -2px 12px rgba(0,0,0,.5)}
-.mob-bottom-bar .mbb-inner{display:flex;align-items:stretch}
-.mob-bottom-bar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:10px 4px;color:#fff;text-decoration:none;font-family:'Oswald',sans-serif;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;transition:background .2s}
-.mob-bottom-bar a:active{background:rgba(255,255,255,.1)}
-.mob-bottom-bar a svg{width:20px;height:20px;flex-shrink:0}
-.mob-bottom-bar a.mbb-gold{color:var(--gold)}
-@media(max-width:860px){
-  .mob-bottom-bar{display:block}
-  body{padding-bottom:64px}
-  footer{padding-bottom:64px}
-}
-
-/* SERVICE AREA */
-.service-area{background:var(--bg)}
-.sa-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
-.sa-map iframe{width:100%;border-radius:10px;display:block}
-.sa-towns h3{font-family:'Oswald',sans-serif;font-size:18px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-l);margin-bottom:18px}
-.sa-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px 20px}
-.sa-cols ul{list-style:none;padding:0;margin:0}
-.sa-cols li{font-size:14.5px;color:var(--muted);padding:5px 0;border-bottom:1px solid var(--border);line-height:1.5}
-.sa-cols li:last-child{border-bottom:none}
-@media(max-width:860px){
-  .sa-grid{grid-template-columns:1fr}
-  .sa-cols{grid-template-columns:1fr 1fr}
-}
-@media(max-width:480px){
-  .sa-cols{grid-template-columns:1fr}
-}
 </style>
 </head>
 <body>
-<nav><div class="nav-inner"><a href="/" class="nav-logo"><img src="images/logo.webp" alt="Kaim Contracting LLC" width="200" height="60"></a><ul class="nav-links"><li><a href="#about">About</a></li><li><a href="#services">Services <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="pavers.html"><b>Paver Installation</b><p>Custom walkways, driveways, and patio surfaces.</p></a><a class="dd-item" href="hardscaping.html"><b>Hardscaping</b><p>Retaining walls, steps, and decorative stone.</p></a><a class="dd-item" href="landscaping.html"><b>Landscaping</b><p>Garden design, installation, and cleanups.</p></a><a class="dd-item" href="design.html"><b>Landscape Design</b><p>Custom layouts tailored to your property.</p></a><a class="dd-item" href="drainage.html"><b>Drainage Solutions</b><p>French drains and water management.</p></a><a class="dd-item" href="pressure-washing.html"><b>Pressure Washing</b><p>Deep cleaning for all outdoor surfaces.</p></a><a class="dd-item" href="plantings.html"><b>Plantings</b><p>Trees, shrubs, and seasonal plants.</p></a><a class="dd-item" href="outdoor-living.html"><b>Outdoor Living</b><p>Pergolas, fire pits, and outdoor kitchens.</p></a></div></li><li><a href="#contact">Contact</a></li></ul><div class="nav-info"><a href="tel:978-351-2195"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a><span class="nav-sep">|</span><a id="nav-email" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a><span class="nav-sep">|</span><span>Serving MA &amp; Southern NH</span></div><a href="#contact" class="btn-nav">Free Quote</a><button class="hamburger" onclick="document.querySelector('.mob-menu').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button></div><div class="mob-menu" id="mobMenu"><a href="#about" onclick="document.getElementById('mobMenu').classList.remove('open')">About</a><a href="#services" onclick="document.getElementById('mobMenu').classList.remove('open')">Services</a><a href="#contact" onclick="document.getElementById('mobMenu').classList.remove('open')">Contact</a><a href="tel:978-351-2195">978-351-2195</a><a href="#contact" class="cta" onclick="document.getElementById('mobMenu').classList.remove('open')">Get a Free Quote</a></div></nav>
+<div class="topbar"><div class="topbar-inner"><div class="topbar-left"><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg><a href="tel:978-960-7832">978-960-7832</a></span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a id="tb-email" href="#"></a></span></div><span>Serving Greater Boston &amp; Southern NH &nbsp;|&nbsp; Free Estimates</span></div></div>
+<nav><div class="nav-inner"><a href="/" class="nav-logo"><img src="images/logo.webp" alt="Kaim Contracting LLC" width="200" height="60"></a><ul class="nav-links"><li><a href="#about">About</a></li><li><a href="#services">Services <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="pavers.html"><b>Paver Installation</b><p>Custom walkways, driveways, and patio surfaces.</p></a><a class="dd-item" href="hardscaping.html"><b>Hardscaping</b><p>Retaining walls, steps, and decorative stone.</p></a><a class="dd-item" href="landscaping.html"><b>Landscaping</b><p>Garden design, installation, and cleanups.</p></a><a class="dd-item" href="design.html"><b>Landscape Design</b><p>Custom layouts tailored to your property.</p></a><a class="dd-item" href="drainage.html"><b>Drainage Solutions</b><p>French drains and water management.</p></a><a class="dd-item" href="pressure-washing.html"><b>Pressure Washing</b><p>Deep cleaning for all outdoor surfaces.</p></a><a class="dd-item" href="plantings.html"><b>Plantings</b><p>Trees, shrubs, and seasonal plants.</p></a><a class="dd-item" href="outdoor-living.html"><b>Outdoor Living</b><p>Pergolas, fire pits, and outdoor kitchens.</p></a></div></li><li><a href="#contact">Contact</a></li><li><a href="#contact" class="btn-nav">Free Quote</a></li></ul><button class="hamburger" onclick="document.querySelector('.mob-menu').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button></div><div class="mob-menu" id="mobMenu"><a href="#about" onclick="document.getElementById('mobMenu').classList.remove('open')">About</a><a href="#services" onclick="document.getElementById('mobMenu').classList.remove('open')">Services</a><a href="#contact" onclick="document.getElementById('mobMenu').classList.remove('open')">Contact</a><a href="tel:978-960-7832">978-960-7832</a><a href="#contact" class="cta" onclick="document.getElementById('mobMenu').classList.remove('open')">Get a Free Quote</a></div></nav>
 
 <section class="hero">
   <div class="hero-photo" style="background-image:url('images/hero-firepit.webp');background-position:center bottom"></div>
@@ -435,7 +409,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
     <a href="landscaping.html" class="strip-item"><span class="strip-dot"></span>Landscapes<div class="strip-tip"><h5>Landscaping</h5><p>Full garden design, planting installation, and seasonal cleanups.</p></div></a>
     <a href="pressure-washing.html" class="strip-item"><span class="strip-dot"></span>Pressure Washing<div class="strip-tip"><h5>Pressure Washing</h5><p>Professional cleaning for driveways, patios, walkways, and siding.</p></div></a>
     <a href="outdoor-living.html" class="strip-item"><span class="strip-dot"></span>Outdoor Living<div class="strip-tip"><h5>Outdoor Living Spaces</h5><p>Custom pergolas, fire pits, outdoor kitchens, and seating areas.</p></div></a>
-    <a href="#contact" class="strip-item"><span class="strip-dot"></span>Free Estimates<div class="strip-tip"><h5>Free Estimates</h5><p>No obligation estimates on all services. Call 978-351-2195.</p></div></a>
+    <a href="#contact" class="strip-item"><span class="strip-dot"></span>Free Estimates<div class="strip-tip"><h5>Free Estimates</h5><p>No obligation estimates on all services. Call 978-960-7832.</p></div></a>
   </div>
 </div>
 
@@ -456,7 +430,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
       </ul>
       <div class="about-cta-row">
         <a href="#contact" class="btn-primary">Request a Free Quote</a>
-        <div class="about-phone"><a href="tel:9783512195"><strong>978-351-2195</strong></a><span>Call for a free estimate</span></div>
+        <div class="about-phone"><a href="tel:9789607832"><strong>978-960-7832</strong></a><span>Call for a free estimate</span></div>
       </div>
     </div>
   </div>
@@ -496,53 +470,15 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   <div class="section-inner">
     <div class="section-header"><div class="section-label">Why Choose Us</div><h2>The Kaim Difference</h2><div class="divider"></div></div>
     <div class="why-grid">
-      <div class="why-card"><span class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span><h4>Quality Craftsmanship</h4><p>Premium materials and proven techniques that stand the test of time on every project.</p></div>
-      <div class="why-card"><span class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg></span><h4>Honest and Reliable</h4><p>We show up when we say we will, communicate clearly, and deliver on every promise.</p></div>
-      <div class="why-card"><span class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span><h4>Fair Pricing</h4><p>Transparent quotes with no hidden fees. We work with your budget without cutting corners.</p></div>
-      <div class="why-card"><span class="why-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></span><h4>Fully Insured</h4><p>Fully licensed and insured so your property and peace of mind are always protected.</p></div>
+      <div class="why-card"><span class="why-num">01</span><h4>Quality Craftsmanship</h4><p>Premium materials and proven techniques that stand the test of time on every project.</p></div>
+      <div class="why-card"><span class="why-num">02</span><h4>Honest and Reliable</h4><p>We show up when we say we will, communicate clearly, and deliver on every promise.</p></div>
+      <div class="why-card"><span class="why-num">03</span><h4>Fair Pricing</h4><p>Transparent quotes with no hidden fees. We work with your budget without cutting corners.</p></div>
+      <div class="why-card"><span class="why-num">04</span><h4>Fully Insured</h4><p>Fully licensed and insured so your property and peace of mind are always protected.</p></div>
     </div>
   </div>
 </section>
 
-<section class="service-area" id="service-area">
-  <div class="section-inner">
-    <div class="section-header"><div class="section-label">Where We Work</div><h2>Service Area</h2><div class="divider"></div><p>Proudly serving the Merrimack Valley, Greater Boston, and Southern New Hampshire.</p></div>
-    <div class="sa-grid">
-      <div class="sa-map">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d185500!2d-71.15!3d42.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus" width="100%" height="400" style="border:0;border-radius:10px;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-      <div class="sa-towns">
-        <h3>Towns & Cities We Serve</h3>
-        <div class="sa-cols">
-          <ul>
-            <li>Methuen</li>
-            <li>Lawrence</li>
-            <li>Andover</li>
-            <li>North Andover</li>
-            <li>Haverhill</li>
-            <li>Dracut</li>
-          </ul>
-          <ul>
-            <li>Lowell</li>
-            <li>Chelmsford</li>
-            <li>Tewksbury</li>
-            <li>Billerica</li>
-            <li>Georgetown</li>
-            <li>Boxford</li>
-          </ul>
-          <ul>
-            <li>Salem, NH</li>
-            <li>Pelham, NH</li>
-            <li>Windham, NH</li>
-            <li>Londonderry, NH</li>
-            <li>Nashua, NH</li>
-            <li>& Surrounding Areas</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <section class="contact" id="contact">
   <div class="section-inner">
@@ -551,10 +487,10 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
       <div class="contact-info">
         <h3>Contact Information</h3>
         <p>We serve residential and commercial clients throughout Massachusetts. No job is too big or too small.</p>
-        <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg></div><div class="ci-text"><strong>Phone</strong><a href="tel:978-351-2195">978-351-2195</a></div></div>
+        <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg></div><div class="ci-text"><strong>Phone</strong><a href="tel:978-960-7832">978-960-7832</a></div></div>
         <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="ci-text"><strong>Email</strong><a id="ci-email" href="#"></a></div></div>
         <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="ci-text"><strong>Hours</strong>Mon to Fri: 8am to 6pm<br>Sat and Sun: By Appointment</div></div>
-        <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="ci-text"><strong>Service Area</strong>Massachusetts and Southern New Hampshire</div></div>
+        <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="ci-text"><strong>Service Area</strong>Greater Boston, Merrimack Valley, and Southern New Hampshire</div></div>
       </div>
       <div class="contact-form">
         <h3>Get Your Free Quote</h3>
@@ -600,11 +536,11 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   </div>
 </section>
 
-<footer><div class="footer-inner"><div class="footer-top"><div class="footer-brand"><img src="images/logo.webp" alt="Kaim Contracting LLC" height="50" loading="lazy"><p></p><div class="footer-contact"><a href="tel:978-351-2195">978-351-2195</a><a id="ft-email" href="#"></a></div><div class="footer-social"><a href="https://instagram.com/kaimcontracting" target="_blank" rel="noopener" class="sf-ig" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a><a href="https://facebook.com/kaimcontractingllc" target="_blank" rel="noopener" class="sf-fb" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a><a href="https://tiktok.com/@kaimcontractingllc" target="_blank" rel="noopener" class="sf-tt" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77.39 2.89 2.89 0 012.88-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 105.55 6.27V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a></div></div><div class="footer-col"><h4>Services</h4><ul><li><a href="design.html">Landscape Design</a></li><li><a href="pavers.html">Paver Installation</a></li><li><a href="landscaping.html">Landscaping</a></li><li><a href="hardscaping.html">Hardscaping</a></li><li><a href="pressure-washing.html">Pressure Washing</a></li><li><a href="outdoor-living.html">Outdoor Living</a></li><li><a href="drainage.html">Drainage Solutions</a></li><li><a href="plantings.html">Plantings</a></li></ul></div><div class="footer-col"><h4>Company</h4><ul><li><a href="index.html#about">About Us</a></li><li><a href="index.html#contact">Contact</a></li><li><a href="index.html#contact">Free Estimate</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2025 Kaim Contracting LLC. All Rights Reserved.</span><span>Pavers &nbsp;&#183;&nbsp; Landscapes &nbsp;&#183;&nbsp; Pressure Washing &nbsp;&#183;&nbsp; Outdoor Living</span></div></div></footer>
+<footer><div class="footer-inner"><div class="footer-top"><div class="footer-brand"><img src="images/logo.webp" alt="Kaim Contracting LLC" height="50" loading="lazy"><p>Kaim Contracting LLC delivers professional paver installation, landscaping, pressure washing, and outdoor living throughout Massachusetts.</p><div class="footer-contact"><a href="tel:978-960-7832">978-960-7832</a><a id="ft-email" href="#"></a></div><div class="footer-social"><a href="https://instagram.com/kaimcontracting" target="_blank" rel="noopener" class="sf-ig" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a><a href="https://facebook.com/kaimcontracting" target="_blank" rel="noopener" class="sf-fb" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a><a href="https://tiktok.com/@kaimcontracting" target="_blank" rel="noopener" class="sf-tt" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77.39 2.89 2.89 0 012.88-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 105.55 6.27V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a></div></div><div class="footer-col"><h4>Services</h4><ul><li><a href="design.html">Landscape Design</a></li><li><a href="pavers.html">Paver Installation</a></li><li><a href="landscaping.html">Landscaping</a></li><li><a href="hardscaping.html">Hardscaping</a></li><li><a href="pressure-washing.html">Pressure Washing</a></li><li><a href="outdoor-living.html">Outdoor Living</a></li><li><a href="drainage.html">Drainage Solutions</a></li><li><a href="plantings.html">Plantings</a></li></ul></div><div class="footer-col"><h4>Company</h4><ul><li><a href="index.html#about">About Us</a></li><li><a href="index.html#why">Why Choose Us</a></li><li><a href="index.html#contact">Contact</a></li><li><a href="index.html#contact">Free Estimate</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2025 Kaim Contracting LLC. All Rights Reserved.</span><span>Pavers &nbsp;&#183;&nbsp; Landscapes &nbsp;&#183;&nbsp; Pressure Washing &nbsp;&#183;&nbsp; Outdoor Living</span></div></div></footer>
 <div class="social-float">
   <a href="https://instagram.com/kaimcontracting" target="_blank" rel="noopener" class="sf-ig" aria-label="Instagram"><span class="sf-lbl">Instagram</span><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-  <a href="https://facebook.com/kaimcontractingllc" target="_blank" rel="noopener" class="sf-fb" aria-label="Facebook"><span class="sf-lbl">Facebook</span><svg width="19" height="19" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-  <a href="https://tiktok.com/@kaimcontractingllc" target="_blank" rel="noopener" class="sf-tt" aria-label="TikTok"><span class="sf-lbl">TikTok</span><svg width="19" height="19" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77.39 2.89 2.89 0 012.88-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 105.55 6.27V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a>
+  <a href="https://facebook.com/kaimcontracting" target="_blank" rel="noopener" class="sf-fb" aria-label="Facebook"><span class="sf-lbl">Facebook</span><svg width="19" height="19" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+  <a href="https://tiktok.com/@kaimcontracting" target="_blank" rel="noopener" class="sf-tt" aria-label="TikTok"><span class="sf-lbl">TikTok</span><svg width="19" height="19" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77.39 2.89 2.89 0 012.88-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 105.55 6.27V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a>
   
 </div>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
@@ -647,24 +583,6 @@ async function addLeadToCRM(data){
   }catch(e){console.error('CRM error',e);}
 }
 
-function queueIMessages(data){
-  var SB_URL='https://dfquwxmoidhhcwezgnry.supabase.co';
-  var SB_KEY='sb_publishable_63igSt9FrltKroNoWZvALg_mWBj14nK';
-  var first=data.get('first-name')||'';
-  var last=data.get('last-name')||'';
-  var phone=data.get('phone')||'';
-  var service=data.get('service')||'';
-  var h={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
-  var p=phone.replace(/[^0-9]/g,'');
-  var num=p.length===10?'+1'+p:'+'+p;
-  // Notify owner
-  fetch(SB_URL+'/rest/v1/imessage_queue',{method:'POST',headers:h,body:JSON.stringify({phone:'+19783512195',body:'New quote request from '+first+' '+last+' — '+service+'\nPhone: '+phone,direction:'outgoing',status:'pending',client_name:first+' '+last,trigger_type:'lead_notify'})}).catch(function(e){console.error('iMsg notify error',e);});
-  // Auto-reply to client
-  if(p.length>=10){
-    fetch(SB_URL+'/rest/v1/imessage_queue',{method:'POST',headers:h,body:JSON.stringify({phone:num,body:'Hi '+first+', thanks for reaching out to Kaim Contracting! We received your request for '+service+' and will be in touch within 1 business day.\n\nQuestions? Call us anytime at 978-351-2195.',direction:'outgoing',status:'pending',client_name:first+' '+last,trigger_type:'lead_autoreply'})}).catch(function(e){console.error('iMsg reply error',e);});
-  }
-}
-
 // Form AJAX submission
 (function(){
   var form = document.getElementById('quote-form');
@@ -675,16 +593,13 @@ function queueIMessages(data){
     btn.disabled = true;
     btn.textContent = 'Sending...';
     var data = new FormData(form);
-    Promise.all([
-      addLeadToCRM(data),
-      queueIMessages(data)
-    ]).then(function(){
-      form.style.display = 'none';
-      document.getElementById('form-success').style.display = 'block';
+    addLeadToCRM(data).then(function(){
+        form.style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
     }).catch(function(){
       btn.disabled = false;
       btn.textContent = 'Send My Request';
-      alert('Something went wrong. Please call us at 978-351-2195.');
+      alert('Something went wrong. Please call us at 978-960-7832.');
     });
   });
 })();
@@ -692,10 +607,10 @@ function queueIMessages(data){
 // Email injection (prevents Cloudflare obfuscation)
 (function(){
   var em = 'info' + String.fromCharCode(64) + 'kaimcontracting.com';
-  var t = document.getElementById('nav-email');
+  var t = document.getElementById('tb-email');
   var c = document.getElementById('ci-email');
   var f = document.getElementById('ft-email');
-  if(t){t.insertAdjacentText('beforeend',em);t.href='mailto:'+em;}
+  if(t){t.textContent=em;t.href='mailto:'+em;}
   if(c){c.textContent=em;c.href='mailto:'+em;}
   if(f){f.textContent=em;f.href='mailto:'+em;}
 })();
@@ -710,11 +625,5 @@ document.querySelectorAll('input[type="tel"]').forEach(function(inp){
   });
 });
 </script>
-<div class="mob-bottom-bar"><div class="mbb-inner">
-<a href="tel:978-351-2195"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>
-<a href="#contact" class="mbb-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Free Quote</a>
-<a href="https://instagram.com/kaimcontracting" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>
-<a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>Top</a>
-</div></div>
 </body>
 </html>
