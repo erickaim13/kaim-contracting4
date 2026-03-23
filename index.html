@@ -231,16 +231,17 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 .footer-col a:hover{color:#fff}
 .footer-col .ft-name{font-size:15px;font-weight:600;color:rgba(255,255,255,.85);display:block;margin-bottom:2px}
 .footer-col .ft-owner{font-style:italic;color:var(--gold-l);display:block;margin-bottom:10px;font-size:13px}
-.footer-social{display:flex;gap:12px;margin-top:14px}
-.footer-social a{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;opacity:.85;transition:transform .2s,opacity .2s}
-.footer-social a:hover{transform:scale(1.12);opacity:1}
+.footer-social{display:flex;gap:14px;margin-top:14px}
+.footer-social a{display:flex;align-items:center;justify-content:center;text-decoration:none;opacity:.7;transition:transform .2s,opacity .2s}
+.footer-social a:hover{transform:scale(1.15);opacity:1}
+.footer-social a svg{width:20px;height:20px}
+.sf-ig svg{stroke:none;fill:url(#igGrad)}
+.sf-fb svg{fill:#1877f2}
+.sf-tt svg{fill:rgba(255,255,255,.7)}
 .footer-bottom{background:rgba(0,0,0,.3);padding:14px 24px;text-align:center;font-size:12px;color:rgba(255,255,255,.3)}
-
-/* SOCIAL FLOAT (footer only) */
-.sf-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
-.sf-fb{background:#1877f2}
-.sf-tt{background:#010101;border:1px solid #333}
-.sf-yt{background:#ff0000}
+.footer-cards{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.footer-cards span{font-size:10px;color:rgba(255,255,255,.2);margin-right:2px;text-transform:uppercase;letter-spacing:.06em}
+.cc-icon{display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:3px 8px;font-family:'Source Sans 3',sans-serif;font-size:9px;font-weight:600;letter-spacing:.04em;color:rgba(255,255,255,.35);line-height:1}
 
 /* SERVICE PAGE */
 .home-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:8px 14px;border:1px solid var(--border);border-radius:3px;margin-bottom:16px;background:var(--card);transition:color .2s,border-color .2s;width:fit-content}
@@ -525,8 +526,8 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 <footer><div class="footer-inner"><div class="footer-top">
 <div class="footer-col"><h4>Business</h4><span class="ft-name">Kaim Contracting LLC</span><span class="ft-owner">Eric Kaim</span><p>Serving Greater Boston,<br>Merrimack Valley &amp;<br>Southern New Hampshire</p></div>
 <div class="footer-col"><h4>Hours of Operation</h4><p>Mon - Fri: 7am - 6pm<br>Sat: By Appointment<br>Sun: Closed</p></div>
-<div class="footer-col"><h4>Contact</h4><p><a href="tel:978-351-2195">978-351-2195</a><br><a id="ft-email" href="#"></a></p><div class="footer-social"><a href="https://instagram.com/kaimcontracting" target="_blank" rel="noopener" class="sf-ig" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a><a href="https://facebook.com/kaimcontracting" target="_blank" rel="noopener" class="sf-fb" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a><a href="https://tiktok.com/@kaimcontracting" target="_blank" rel="noopener" class="sf-tt" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77.39 2.89 2.89 0 012.88-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 105.55 6.27V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a></div></div>
-</div><div class="footer-bottom">&copy; 2025 Kaim Contracting LLC. All Rights Reserved.</div></div></footer>
+<div class="footer-col"><h4>Contact</h4><p><a href="tel:978-351-2195">978-351-2195</a><br><a id="ft-email" href="#"></a></p><svg width="0" height="0" style="position:absolute"><defs><linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs></svg><div class="footer-social"><a href="https://instagram.com/kaimcontracting" target="_blank" rel="noopener" class="sf-ig" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="url(#igGrad)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a><a href="https://facebook.com/kaimcontracting" target="_blank" rel="noopener" class="sf-fb" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a><a href="https://tiktok.com/@kaimcontracting" target="_blank" rel="noopener" class="sf-tt" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77.39 2.89 2.89 0 012.88-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 105.55 6.27V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a></div></div>
+</div><div class="footer-bottom">&copy; 2025 Kaim Contracting LLC. All Rights Reserved.<div class="footer-cards"><span>We Accept</span><span class="cc-icon">VISA</span><span class="cc-icon">MASTERCARD</span><span class="cc-icon">AMEX</span><span class="cc-icon">DISCOVER</span><span class="cc-icon">APPLE PAY</span></div></div></div></footer>
 <script>
 // CRM lead injection
 async function addLeadToCRM(data){
