@@ -243,6 +243,19 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 .footer-cards span{font-size:10px;color:rgba(255,255,255,.2);margin-right:2px;text-transform:uppercase;letter-spacing:.06em}
 .cc-icon{display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:3px 8px;font-family:'Source Sans 3',sans-serif;font-size:9px;font-weight:600;letter-spacing:.04em;color:rgba(255,255,255,.35);line-height:1}
 
+/* SERVING AREA */
+.serving{background:var(--bg);position:relative;overflow:hidden}
+.serving-inner{display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:1200px;margin:0 auto}
+.serving-text{padding:60px 44px;display:flex;flex-direction:column;justify-content:center}
+.serving-text h2{font-family:'Oswald',sans-serif;font-size:clamp(24px,3.5vw,38px);font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:8px;line-height:1.1}
+.serving-text h2 span{color:var(--gold-l)}
+.serving-text .serving-sub{font-size:15px;color:var(--muted);margin-bottom:24px;line-height:1.7}
+.serving-towns{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px}
+.serving-towns li{display:flex;align-items:center;gap:8px;font-size:13.5px;color:rgba(255,255,255,.75)}
+.serving-towns li svg{width:14px;height:14px;flex-shrink:0;stroke:var(--gold);fill:none;stroke-width:2}
+.serving-map{position:relative;min-height:420px}
+.serving-map iframe{width:100%;height:100%;border:0;filter:saturate(.3) brightness(.7) contrast(1.2);display:block}
+
 /* SERVICE PAGE */
 .home-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:8px 14px;border:1px solid var(--border);border-radius:3px;margin-bottom:16px;background:var(--card);transition:color .2s,border-color .2s;width:fit-content}
 .home-btn:hover{color:var(--gold-l);border-color:var(--gold)}
@@ -297,6 +310,9 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   .about-inner{grid-template-columns:1fr;height:auto;overflow:visible}  .about-img-col{min-height:260px;max-height:260px}  .about-text-col{padding:32px 24px}
   .contact-grid{grid-template-columns:1fr;gap:28px}
   .test-grid{grid-template-columns:1fr}
+  .serving-inner{grid-template-columns:1fr}
+  .serving-text{padding:32px 24px}
+  .serving-map{min-height:320px}
   .footer-top{grid-template-columns:1fr 1fr 1fr}
   .cta-inner{flex-direction:column;text-align:center;align-items:center}
   .page-grid{grid-template-columns:1fr}
@@ -318,7 +334,6 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   .hero-content{padding:60px 20px 56px}
   .hero h1{font-size:34px;margin-bottom:14px}
   .hero-desc{font-size:14.5px;margin-bottom:28px}
-  .hero-eyebrow{font-size:10px;letter-spacing:.2em;margin-bottom:12px}
   .hero-btns{flex-direction:column;align-items:stretch;gap:10px;max-width:300px;margin:0 auto}
   .btn-primary,.btn-outline{width:100%;text-align:center;padding:14px 20px;white-space:normal}
   .strip-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
@@ -333,6 +348,11 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   .svc-tile-desc,.svc-tile-arrow,.svc-tile-num{display:none}
   .svc-tile-body{padding:12px 14px}
   .svc-tile::after{border-color:rgba(201,168,76,.5)}
+  .serving-inner{grid-template-columns:1fr}
+  .serving-text{padding:32px 16px;text-align:center}
+  .serving-towns{grid-template-columns:1fr 1fr;gap:6px 16px}
+  .serving-towns li{font-size:12.5px;justify-content:center}
+  .serving-map{min-height:280px}
   .cta-inner{padding:44px 20px}
   .cta-band h2{font-size:20px}
   .why-grid{grid-template-columns:1fr 1fr;gap:10px}
@@ -372,16 +392,15 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 </style>
 </head>
 <body>
-<nav><div class="nav-inner"><a href="/" class="nav-logo"><img src="images/logo.webp" alt="Kaim Contracting LLC" width="200" height="60"></a><ul class="nav-links"><li><a href="#about">About</a></li><li><a href="#services">Services <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="pavers.html"><b>Paver Installation</b><p>Custom walkways, driveways, and patio surfaces.</p></a><a class="dd-item" href="hardscaping.html"><b>Hardscaping</b><p>Retaining walls, steps, and decorative stone.</p></a><a class="dd-item" href="landscaping.html"><b>Landscaping</b><p>Garden design, installation, and cleanups.</p></a><a class="dd-item" href="design.html"><b>Landscape Design</b><p>Custom layouts tailored to your property.</p></a><a class="dd-item" href="drainage.html"><b>Drainage Solutions</b><p>French drains and water management.</p></a><a class="dd-item" href="pressure-washing.html"><b>Pressure Washing</b><p>Deep cleaning for all outdoor surfaces.</p></a><a class="dd-item" href="plantings.html"><b>Plantings</b><p>Trees, shrubs, and seasonal plants.</p></a><a class="dd-item" href="outdoor-living.html"><b>Outdoor Living</b><p>Pergolas, fire pits, and outdoor kitchens.</p></a></div></li><li><a href="#contact">Contact</a></li></ul><div class="nav-info"><a href="tel:978-351-2195"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a><span class="nav-sep">|</span><a id="tb-email" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a><span class="nav-sep">|</span><span>Serving Greater Boston &amp; Southern NH &nbsp;|&nbsp; Complimentary Estimates</span></div><a href="#contact" class="btn-nav">Get Started</a><button class="hamburger" onclick="document.querySelector('.mob-menu').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button></div><div class="mob-menu" id="mobMenu"><a href="#about" onclick="document.getElementById('mobMenu').classList.remove('open')">About</a><a href="#services" onclick="document.getElementById('mobMenu').classList.remove('open')">Services</a><a href="#contact" onclick="document.getElementById('mobMenu').classList.remove('open')">Contact</a><a href="tel:978-351-2195">978-351-2195</a><a href="#contact" class="cta" onclick="document.getElementById('mobMenu').classList.remove('open')">Get Started</a></div></nav>
+<nav><div class="nav-inner"><a href="/" class="nav-logo"><img src="images/logo.webp" alt="Kaim Contracting LLC" width="200" height="60"></a><ul class="nav-links"><li><a href="#about">About</a></li><li><a href="#services">Services <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="pavers.html"><b>Paver Installation</b><p>Custom walkways, driveways, and patio surfaces.</p></a><a class="dd-item" href="hardscaping.html"><b>Hardscaping</b><p>Retaining walls, steps, and decorative stone.</p></a><a class="dd-item" href="landscaping.html"><b>Landscaping</b><p>Garden design, installation, and cleanups.</p></a><a class="dd-item" href="design.html"><b>Landscape Design</b><p>Custom layouts tailored to your property.</p></a><a class="dd-item" href="drainage.html"><b>Drainage Solutions</b><p>French drains and water management.</p></a><a class="dd-item" href="pressure-washing.html"><b>Pressure Washing</b><p>Deep cleaning for all outdoor surfaces.</p></a><a class="dd-item" href="plantings.html"><b>Plantings</b><p>Trees, shrubs, and seasonal plants.</p></a><a class="dd-item" href="outdoor-living.html"><b>Outdoor Living</b><p>Pergolas, fire pits, and outdoor kitchens.</p></a></div></li><li><a href="#contact">Contact</a></li><li><a href="https://kaim-crm.vercel.app" target="_blank" style="color:var(--gold-l)">Client Portal</a></li></ul><div class="nav-info"><a href="tel:978-351-2195"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a><span class="nav-sep">|</span><a id="tb-email" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a><span class="nav-sep">|</span><span>Serving Greater Boston &amp; Southern NH &nbsp;|&nbsp; Complimentary Estimates</span></div><a href="#contact" class="btn-nav">Get Started</a><button class="hamburger" onclick="document.querySelector('.mob-menu').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button></div><div class="mob-menu" id="mobMenu"><a href="#about" onclick="document.getElementById('mobMenu').classList.remove('open')">About</a><a href="#services" onclick="document.getElementById('mobMenu').classList.remove('open')">Services</a><a href="#contact" onclick="document.getElementById('mobMenu').classList.remove('open')">Contact</a><a href="tel:978-351-2195">978-351-2195</a><a href="https://kaim-crm.vercel.app" target="_blank" style="color:var(--gold-l)">Client Portal</a><a href="#contact" class="cta" onclick="document.getElementById('mobMenu').classList.remove('open')">Get Started</a></div></nav>
 
 <section class="hero">
   <div class="hero-photo" style="background-image:url('images/hero-firepit.webp');background-position:center bottom"></div>
   <div class="hero-overlay"></div>
-  
+
   <div class="hero-content">
-    <div class="hero-eyebrow">Professional Contracting Services</div>
-    <h1>Transforming Outdoor <span>Spaces</span></h1>
-    <p class="hero-desc">Quality you can see. Results you can trust.</p>
+    <h1>Love Where <span>You Live</span></h1>
+    <p class="hero-desc">We build outdoor spaces worth coming home to.</p>
     <div class="hero-btns">
       <a href="#contact" class="btn-primary">Start Your Project</a>
       <a href="#services" class="btn-outline">View Our Services</a>
@@ -467,9 +486,34 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 
 
 
+<section class="serving" id="serving">
+  <div class="serving-inner">
+    <div class="serving-text">
+      <div class="section-label" style="margin-bottom:10px">Service Area</div>
+      <h2>Proudly Serving <span>Methuen</span> &amp; Surrounding Communities</h2>
+      <p class="serving-sub">From pavers and landscaping to pressure washing and outdoor living, we bring the same quality craftsmanship to every town we serve.</p>
+      <ul class="serving-towns">
+        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Methuen</li>
+        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Lawrence</li>
+        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Andover</li>
+        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>North Andover</li>
+        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Haverhill</li>
+        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Dracut</li>
+        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Lowell</li>
+        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Salem, NH</li>
+        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Pelham, NH</li>
+        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Windham, NH</li>
+      </ul>
+    </div>
+    <div class="serving-map">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d92500!2d-71.19!3d42.73!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
 <section class="contact" id="contact">
   <div class="section-inner">
-    <div class="section-header"><div class="section-label">Get In Touch</div><h2>Request an Estimate</h2><div class="divider"></div><p>Fill out the form and we will get back to you promptly to discuss your project.</p></div>
+    <div class="section-header"><div class="section-label">Get In Touch</div><h2>Request an Estimate</h2><div class="divider"></div><p style="margin-top:14px"><span style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:6px 16px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-l)">Booking Now for Spring 2026</span></p><p>Fill out the form and we will get back to you promptly to discuss your project.</p></div>
     <div class="contact-grid">
       <div class="contact-info">
         <h3>Contact Information</h3>
