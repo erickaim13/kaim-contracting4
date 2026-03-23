@@ -320,10 +320,15 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 @media(max-width:860px){
   .about-inner{grid-template-columns:1fr;height:auto;overflow:visible}  .about-img-col{min-height:260px;max-height:260px}  .about-text-col{padding:32px 24px}
   .contact-grid{grid-template-columns:1fr;gap:28px}
+  .contact-info{max-width:300px;margin:0 auto}
+  .ci{justify-content:flex-start}
+  .ci-text{text-align:left}
   .test-grid{grid-template-columns:1fr}
   .serving-inner{grid-template-columns:1fr}
   .serving-text{padding:32px 24px}
   .serving-map{min-height:320px}
+  .serving-towns{max-width:360px;margin:0 auto}
+  .serving-towns li{justify-content:flex-start}
   .footer-top{grid-template-columns:1fr 1fr 1fr}
   .cta-inner{flex-direction:column;text-align:center;align-items:center}
   .page-grid{grid-template-columns:1fr}
@@ -362,9 +367,11 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   .svc-tile::after{border-color:rgba(201,168,76,.5)}
   .serving-inner{grid-template-columns:1fr}
   .serving-text{padding:32px 16px;text-align:center}
-  .serving-towns{grid-template-columns:1fr 1fr;gap:6px 16px}
-  .serving-towns li{font-size:12.5px;justify-content:center}
+  .serving-towns{grid-template-columns:1fr 1fr;gap:6px 16px;max-width:320px;margin:0 auto}
+  .serving-towns li{font-size:12.5px;justify-content:flex-start}
   .serving-map{min-height:280px}
+  .contact-info{max-width:260px}
+  .ci{justify-content:flex-start}
   .cta-inner{padding:44px 20px}
   .cta-band h2{font-size:20px}
   .why-grid{grid-template-columns:1fr 1fr;gap:10px}
@@ -377,7 +384,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   .form-row{grid-template-columns:1fr}
   .contact-form{padding:22px 16px}
   .contact-form h3{font-size:16px}
-  .contact-info h3{font-size:20px}
+  .contact-info h3{font-size:20px;text-align:center}
   .tree-bg{opacity:.6}
   .footer-top{grid-template-columns:1fr;gap:28px;padding:32px 16px 24px;text-align:center}
   .footer-social{justify-content:center}
