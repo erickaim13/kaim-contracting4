@@ -222,23 +222,19 @@ section{padding:80px 24px}
 .form-submit:hover{background:var(--gold-l)}
 
 /* FOOTER */
-footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
+footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(--gold);padding:0}
 .footer-inner{max-width:1200px;margin:0 auto}
-.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:44px;margin-bottom:32px}
-.footer-brand img{height:50px;margin-bottom:12px;display:block}
-.footer-brand p{font-size:13px;line-height:1.7;max-width:270px}
-.footer-contact{margin-top:12px}
-.footer-contact a{color:var(--gold-l);text-decoration:none;font-size:13px;display:block;margin-bottom:4px}
-.footer-contact a:hover{color:#fff}
-.footer-social{display:flex;gap:9px;margin-top:14px}
-.footer-social a{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;opacity:.8;transition:transform .2s,opacity .2s}
-.footer-social a:hover{transform:scale(1.1);opacity:1}
-.footer-col h4{font-family:'Oswald',sans-serif;font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.85);margin-bottom:12px}
-.footer-col ul{list-style:none}
-.footer-col ul li{margin-bottom:7px}
-.footer-col ul a{color:rgba(255,255,255,.4);text-decoration:none;font-size:13px;transition:color .2s}
-.footer-col ul a:hover{color:var(--gold-l)}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:12px}
+.footer-top{display:grid;grid-template-columns:1fr 1fr 1fr;gap:44px;padding:44px 24px 32px}
+.footer-col h4{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:#fff;margin-bottom:14px;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--gold)}
+.footer-col p,.footer-col span{font-size:13.5px;line-height:1.8;color:rgba(255,255,255,.55)}
+.footer-col a{color:var(--gold-l);text-decoration:none;font-size:13.5px}
+.footer-col a:hover{color:#fff}
+.footer-col .ft-name{font-size:15px;font-weight:600;color:rgba(255,255,255,.85);display:block;margin-bottom:2px}
+.footer-col .ft-owner{font-style:italic;color:var(--gold-l);display:block;margin-bottom:10px;font-size:13px}
+.footer-social{display:flex;gap:12px;margin-top:14px}
+.footer-social a{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;opacity:.85;transition:transform .2s,opacity .2s}
+.footer-social a:hover{transform:scale(1.12);opacity:1}
+.footer-bottom{background:rgba(0,0,0,.3);padding:14px 24px;text-align:center;font-size:12px;color:rgba(255,255,255,.3)}
 
 /* SOCIAL FLOAT (footer only) */
 .sf-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
@@ -300,8 +296,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   .about-inner{grid-template-columns:1fr;height:auto;overflow:visible}  .about-img-col{min-height:260px;max-height:260px}  .about-text-col{padding:32px 24px}
   .contact-grid{grid-template-columns:1fr;gap:28px}
   .test-grid{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr 1fr}
-  .footer-brand{grid-column:1/-1}
+  .footer-top{grid-template-columns:1fr 1fr 1fr}
   .cta-inner{flex-direction:column;text-align:center;align-items:center}
   .page-grid{grid-template-columns:1fr}
   .sidebar{position:static}
@@ -350,8 +345,8 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   .contact-form{padding:22px 16px}
   .contact-form h3{font-size:16px}
   .contact-info h3{font-size:20px}
-  .footer-top{grid-template-columns:1fr;gap:22px}
-  .footer-bottom{flex-direction:column;text-align:center}
+  .footer-top{grid-template-columns:1fr;gap:28px;padding:32px 16px 24px;text-align:center}
+  .footer-social{justify-content:center}
   .page-hero{min-height:240px}
   .page-hero-content{padding:28px 16px 32px}
   .page-hero-content h1{font-size:26px}
@@ -527,7 +522,11 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   </div>
 </section>
 
-<footer><div class="footer-inner"><div class="footer-top"><div class="footer-brand"><img src="images/logo.webp" alt="Kaim Contracting LLC" height="50" loading="lazy"><div class="footer-contact"><a href="tel:978-351-2195">978-351-2195</a><a id="ft-email" href="#"></a></div><div class="footer-social"><a href="https://instagram.com/kaimcontracting" target="_blank" rel="noopener" class="sf-ig" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a><a href="https://facebook.com/kaimcontracting" target="_blank" rel="noopener" class="sf-fb" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a><a href="https://tiktok.com/@kaimcontracting" target="_blank" rel="noopener" class="sf-tt" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77.39 2.89 2.89 0 012.88-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 105.55 6.27V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a></div></div><div class="footer-col"><h4>Services</h4><ul><li><a href="design.html">Landscape Design</a></li><li><a href="pavers.html">Paver Installation</a></li><li><a href="landscaping.html">Landscaping</a></li><li><a href="hardscaping.html">Hardscaping</a></li><li><a href="pressure-washing.html">Pressure Washing</a></li><li><a href="outdoor-living.html">Outdoor Living</a></li><li><a href="drainage.html">Drainage Solutions</a></li><li><a href="plantings.html">Plantings</a></li></ul></div><div class="footer-col"><h4>Company</h4><ul><li><a href="index.html#about">About Us</a></li><li><a href="index.html#why">Why Choose Us</a></li><li><a href="index.html#contact">Contact</a></li><li><a href="index.html#contact">Get an Estimate</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2025 Kaim Contracting LLC. All Rights Reserved.</span><span>Pavers &nbsp;&#183;&nbsp; Landscapes &nbsp;&#183;&nbsp; Pressure Washing &nbsp;&#183;&nbsp; Outdoor Living</span></div></div></footer>
+<footer><div class="footer-inner"><div class="footer-top">
+<div class="footer-col"><h4>Business</h4><span class="ft-name">Kaim Contracting LLC</span><span class="ft-owner">Eric Kaim</span><p>Serving Greater Boston,<br>Merrimack Valley &amp;<br>Southern New Hampshire</p></div>
+<div class="footer-col"><h4>Hours of Operation</h4><p>Mon - Fri: 7am - 6pm<br>Sat: By Appointment<br>Sun: Closed</p></div>
+<div class="footer-col"><h4>Contact</h4><p><a href="tel:978-351-2195">978-351-2195</a><br><a id="ft-email" href="#"></a></p><div class="footer-social"><a href="https://instagram.com/kaimcontracting" target="_blank" rel="noopener" class="sf-ig" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a><a href="https://facebook.com/kaimcontracting" target="_blank" rel="noopener" class="sf-fb" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a><a href="https://tiktok.com/@kaimcontracting" target="_blank" rel="noopener" class="sf-tt" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77.39 2.89 2.89 0 012.88-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 105.55 6.27V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a></div></div>
+</div><div class="footer-bottom">&copy; 2025 Kaim Contracting LLC. All Rights Reserved.</div></div></footer>
 <script>
 // CRM lead injection
 async function addLeadToCRM(data){
