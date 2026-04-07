@@ -717,6 +717,14 @@ function queueIMessages(data){
     processUploads().then(function(attachments){
       btn.textContent = 'Sending...';
       queueIMessages(data);
+      // Send confirmation email to client
+      var emailAddr = data.get('email');
+      var firstName = data.get('first-name') || '';
+      var lastName = data.get('last-name') || '';
+      var service = data.get('service') || '';
+      if(emailAddr){
+        fetch('/api/send-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:firstName+' '+lastName,email:emailAddr,service:service})}).catch(function(e){console.error('Confirmation email error',e);});
+      }
       return addLeadToCRM(data,attachments);
     }).then(function(){
         form.style.display = 'none';
