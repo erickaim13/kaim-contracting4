@@ -54,6 +54,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true });
   } catch (e) {
     console.error('[send-email] Error:', e);
-    return res.status(500).json({ error: 'Failed to send email', detail: e.message, hasPassword: !!process.env.GMAIL_APP_PASSWORD });
+    return res.status(500).json({ error: 'Failed to send email' });
   }
 }
