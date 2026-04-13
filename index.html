@@ -185,6 +185,7 @@ section{padding:80px 24px}
 .contact{background:linear-gradient(135deg,#0d1f35 0%,var(--bg2) 40%,var(--bg2) 100%);position:relative;overflow:hidden}
 .contact::before{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:1500px;opacity:.04;pointer-events:none;z-index:0}
 .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:start;position:relative;z-index:1}
+.contact-info{padding-top:36px;padding-left:40px}
 .contact-info h3{font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:20px}
 .ci{display:flex;align-items:center;gap:14px;margin-bottom:16px}
 .ci-icon{width:40px;height:40px;background:var(--teal);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -312,7 +313,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 @media(max-width:860px){
   .about-inner{grid-template-columns:1fr;height:auto;overflow:visible}  .about-img-col{min-height:260px;max-height:260px}  .about-text-col{padding:32px 24px}
   .contact-grid{grid-template-columns:1fr;gap:28px}
-  .contact-info{max-width:300px;margin:0 auto;text-align:center}
+  .contact-info{max-width:300px;margin:0 auto;text-align:center;padding-top:0;padding-left:0}
   .test-grid{grid-template-columns:1fr}
   .serving-inner{grid-template-columns:1fr}
   .serving-text{padding:32px 24px}
