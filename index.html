@@ -112,10 +112,12 @@ section{padding:80px 24px}
 .about-features{list-style:none;margin:14px 0 20px;display:flex;flex-direction:column;gap:9px}
 .about-features li{display:flex;align-items:flex-start;gap:10px;color:var(--text);font-size:14.5px;line-height:1.5}
 .af-check{color:var(--gold-l);font-weight:700;flex-shrink:0;font-size:15px}
-.about-cta-row{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-top:4px}
-.about-phone{display:flex;flex-direction:column}
-.about-phone a{color:var(--gold-l);text-decoration:none}.about-phone strong{font-family:'Oswald',sans-serif;font-size:18px;color:var(--gold-l);font-weight:700}
-.about-phone span{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:2px}
+.about-cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:4px}
+.about-cta-row .btn-primary{margin:0}
+.about-or{color:rgba(255,255,255,.4);font-size:12px;text-transform:uppercase;letter-spacing:.15em}
+.about-phone-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;text-decoration:none;padding:12px 22px;border:2px solid var(--gold);border-radius:3px;transition:all .2s;letter-spacing:.08em}
+.about-phone-btn:hover{background:var(--gold);color:var(--teal)}
+.about-phone-btn svg{flex-shrink:0}
 
 /* SERVICES - BENTO LAYOUT */
 .services{background:var(--bg2);position:relative;overflow:hidden}
@@ -450,7 +452,8 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       </ul>
       <div class="about-cta-row">
         <a href="#contact" class="btn-primary">Request an Estimate</a>
-        <div class="about-phone"><a href="tel:978-351-2195"><strong>978-351-2195</strong></a><span>Call to get started</span></div>
+        <span class="about-or">or</span>
+        <a href="tel:978-351-2195" class="about-phone-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Call 978-351-2195</a>
       </div>
     </div>
   </div>
