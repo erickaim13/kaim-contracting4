@@ -408,19 +408,29 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
 })();
 </script>
 <!-- Value Stack Popup -->
+<style>
+@media(max-width:640px){
+  #hz-popup{padding:12px!important}
+  .hz-card{max-height:none!important;overflow:hidden!important}
+  .hz-card>div{padding:18px 14px 14px!important}
+  .hz-stack,.hz-sub{display:none!important}
+  .hz-card h2{font-size:20px!important;margin-bottom:10px!important}
+  .hz-cta{padding:12px!important;font-size:13px!important;margin-bottom:6px!important}
+}
+</style>
 <div id="hz-popup" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px">
-<div style="background:linear-gradient(135deg,#0d1e35,#102545);border:2px solid var(--gold);border-radius:16px;max-width:440px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.5)">
+<div class="hz-card" style="background:linear-gradient(135deg,#0d1e35,#102545);border:2px solid var(--gold);border-radius:16px;max-width:440px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.5)">
 <button onclick="closeHzPopup()" style="position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);font-size:28px;cursor:pointer;z-index:2;line-height:1">&times;</button>
 <div style="padding:28px 24px 24px;text-align:center">
 <div style="font-family:Oswald,sans-serif;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Before You Go</div>
 <h2 style="font-family:Oswald,sans-serif;font-size:24px;font-weight:700;text-transform:uppercase;color:#fff;line-height:1.15;margin-bottom:6px">Get a <span style="color:var(--gold-l)">Free Estimate</span></h2>
-<p style="color:var(--muted);font-size:13px;margin-bottom:20px">Book this week and get:</p>
-<div style="text-align:left;display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+<p class="hz-sub" style="color:var(--muted);font-size:13px;margin-bottom:20px">Book this week and get:</p>
+<div class="hz-stack" style="text-align:left;display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
 <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.12);border-radius:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2.5" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg><span style="font-family:Oswald,sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#fff">Free on-site walkthrough</span><span style="margin-left:auto;font-family:Oswald,sans-serif;font-size:13px;font-weight:700;color:var(--gold-l)">$250 value</span></div>
 <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.12);border-radius:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2.5" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg><span style="font-family:Oswald,sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#fff">Written quote within 48 hours</span><span style="margin-left:auto;font-family:Oswald,sans-serif;font-size:13px;font-weight:700;color:var(--gold-l)">Guaranteed</span></div>
 <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.12);border-radius:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2.5" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg><span style="font-family:Oswald,sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#fff">Price-match promise</span><span style="margin-left:auto;font-family:Oswald,sans-serif;font-size:13px;font-weight:700;color:var(--gold-l)">Always</span></div>
 </div>
-<a href="index.html#contact" style="display:block;width:100%;padding:14px;background:var(--gold);color:var(--teal);font-family:Oswald,sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-align:center;border-radius:6px;margin-bottom:10px" onmouseover="this.style.background='var(--gold-l)'" onmouseout="this.style.background='var(--gold)'">Get My Free Estimate</a>
+<a class="hz-cta" href="index.html#contact" style="display:block;width:100%;padding:14px;background:var(--gold);color:var(--teal);font-family:Oswald,sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-align:center;border-radius:6px;margin-bottom:10px" onmouseover="this.style.background='var(--gold-l)'" onmouseout="this.style.background='var(--gold)'">Get My Free Estimate</a>
 <p style="color:var(--muted);font-size:11px;margin:0">No obligation. Licensed &amp; insured. Serving Greater Boston &amp; Southern NH.</p>
 </div></div></div>
 <script>
