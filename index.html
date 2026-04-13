@@ -121,6 +121,7 @@ section{padding:80px 24px}
 /* SERVICES - BENTO LAYOUT */
 .services{background:var(--bg2);position:relative;overflow:hidden}
 .services::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 50%,rgba(201,168,76,.04) 0%,transparent 60%),radial-gradient(circle at 80% 20%,rgba(7,24,40,.3) 0%,transparent 50%);pointer-events:none}
+.services::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:3}
 .svc-bento{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:auto;gap:14px}
 .svc-tile{position:relative;overflow:hidden;border-radius:6px;border:1px solid var(--border);text-decoration:none;color:inherit;display:block;z-index:2}
 .svc-tile:nth-child(1){grid-column:1/8;min-height:340px}
@@ -155,7 +156,7 @@ section{padding:80px 24px}
 .cta-band .sub{color:rgba(255,255,255,.65);margin-top:7px;font-size:15px}
 
 /* WHY */
-.why{background:var(--bg2);position:relative;overflow:hidden}
+.why{background:var(--bg);position:relative;overflow:hidden}
 .why::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .why::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent)}
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative;z-index:1}
@@ -184,6 +185,7 @@ section{padding:80px 24px}
 /* CONTACT */
 .contact{background:var(--bg2);position:relative;overflow:hidden}
 .contact::before{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:1500px;opacity:.04;pointer-events:none;z-index:0}
+.contact::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:3}
 .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:start;position:relative;z-index:1}
 .contact-info{padding-top:36px;padding-left:40px}
 .contact-info h3{font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:20px}
@@ -248,6 +250,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 
 /* SERVING AREA */
 .serving{background:var(--bg);position:relative;overflow:hidden}
+.serving::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2}
 .serving-inner{display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:1200px;margin:0 auto}
 .serving-text{padding:60px 44px;display:flex;flex-direction:column;justify-content:center}
 .serving-text h2{font-family:'Oswald',sans-serif;font-size:clamp(24px,3.5vw,38px);font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:8px;line-height:1.1}
