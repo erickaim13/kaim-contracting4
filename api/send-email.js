@@ -34,7 +34,7 @@ export default async function handler(req, res) {
   const html = brandedHtml(`
     <h2 style="margin:0 0 8px;font-size:22px;color:#1a1a1a">Thanks for Reaching Out!</h2>
     <p style="margin:0 0 20px;font-size:15px;color:#555;line-height:1.6">Hi ${firstName},</p>
-    <p style="margin:0 0 12px;font-size:15px;color:#555;line-height:1.6">We received your quote request${service ? ' for <strong>' + service + '</strong>' : ''} and we're on it. One of our team members will reach out shortly to go over the details.</p>
+    <p style="margin:0 0 12px;font-size:15px;color:#555;line-height:1.6">We received your quote request${service ? ' for <strong>' + service + '</strong>' : ''}. We'll get back to you within one business day to go over the details.</p>
     <p style="margin:0 0 24px;font-size:15px;color:#555;line-height:1.6">In the meantime, feel free to give us a call or reply to this email with any questions.</p>
     <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px"><tr><td style="background:#f8f8f8;border-radius:8px;padding:20px 24px;text-align:center">
       <div style="font-size:13px;color:#999;margin-bottom:6px">Call or text us anytime</div>

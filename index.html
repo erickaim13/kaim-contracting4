@@ -700,7 +700,7 @@ function queueIMessages(data){
   fetch(SB_URL+'/rest/v1/imessage_queue',{method:'POST',headers:h,body:JSON.stringify({phone:'+19783512195',body:'New quote request from '+first+' '+last+' — '+service+'\nPhone: '+phone,direction:'outgoing',status:'pending',client_name:first+' '+last,trigger_type:'lead_notify'})}).catch(function(e){console.error('iMsg notify error',e);});
   // Auto-reply to client
   if(p.length>=10){
-    fetch(SB_URL+'/rest/v1/imessage_queue',{method:'POST',headers:h,body:JSON.stringify({phone:num,body:'Hey '+first+'! This is Kaim Contracting, thanks for your quote request! We\'ll reach out to get some more details soon.',direction:'outgoing',status:'pending',client_name:first+' '+last,trigger_type:'lead_autoreply'})}).catch(function(e){console.error('iMsg reply error',e);});
+    fetch(SB_URL+'/rest/v1/imessage_queue',{method:'POST',headers:h,body:JSON.stringify({phone:num,body:'Hey '+first+'! This is Kaim Contracting, thanks for your quote request! We\'ll get back to you within one business day.',direction:'outgoing',status:'pending',client_name:first+' '+last,trigger_type:'lead_autoreply'})}).catch(function(e){console.error('iMsg reply error',e);});
   }
 }
 
