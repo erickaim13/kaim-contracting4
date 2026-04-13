@@ -818,15 +818,20 @@ document.querySelectorAll('input[type="tel"]').forEach(function(inp){
 </div>
 <a class="hz-cta" href="#contact" onclick="closeHzPopup()" style="display:block;width:100%;padding:16px;background:var(--gold);color:var(--teal);font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-align:center;border-radius:6px;transition:background .2s;margin-bottom:10px" onmouseover="this.style.background='var(--gold-l)'" onmouseout="this.style.background='var(--gold)'">Book Your House Wash</a>
 <p style="color:var(--muted);font-size:11.5px;line-height:1.5;margin:0 0 16px">Offer valid through May 31, 2026. No obligation. Free estimates.</p>
-<div style="border-top:1px solid rgba(255,255,255,.08);padding-top:14px;display:flex;align-items:center;gap:10px;justify-content:center">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-<p style="color:var(--muted);font-size:12px;line-height:1.4;margin:0"><span style="color:var(--gold-l);font-weight:700">Refer a neighbor</span> who books a service and get <span style="color:#fff;font-weight:700">$50 off</span> your next job.</p>
+<div style="border-top:1px solid rgba(255,255,255,.08);padding-top:14px;display:flex;align-items:center;gap:10px;justify-content:center;cursor:pointer" onclick="shareReferral()">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="flex-shrink:0"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+<p style="color:var(--muted);font-size:12px;line-height:1.4;margin:0"><span style="color:var(--gold-l);font-weight:700;text-decoration:underline;text-underline-offset:2px">Refer a friend</span> who books a service and get <span style="color:#fff;font-weight:700">$50 off</span> your next job.</p>
 </div>
 </div>
 </div>
 </div>
 <script>
 function closeHzPopup(){document.getElementById('hz-popup').classList.remove('active');sessionStorage.setItem('hz-dismissed','1');}
+function shareReferral(){
+  var msg='Check out Kaim Contracting! They\'re running a spring house washing special starting at $300. Plus if I refer you and you book, I get $50 off my next service. Take a look: https://kaimcontracting.com';
+  if(navigator.share){navigator.share({title:'Kaim Contracting Spring Special',text:msg}).catch(function(){});}
+  else{window.location.href='mailto:?subject=Kaim Contracting Spring Special&body='+encodeURIComponent(msg);}
+}
 document.getElementById('hz-popup').addEventListener('click',function(e){if(e.target===this)closeHzPopup();});
 (function(){
   if(sessionStorage.getItem('hz-dismissed'))return;
