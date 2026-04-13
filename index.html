@@ -833,8 +833,10 @@ function closeHzPopup(){document.getElementById('hz-popup').style.display='none'
   if(sessionStorage.getItem('hz-dismissed'))return;
   var shown=false;
   function showPopup(){if(shown)return;shown=true;var p=document.getElementById('hz-popup');if(p)p.style.display='flex';}
-  setTimeout(showPopup,12000);
-  window.addEventListener('scroll',function(){if(document.documentElement.scrollTop>document.documentElement.scrollHeight*0.35)showPopup();},{passive:true});
+  var isMobile='ontouchstart' in window||navigator.maxTouchPoints>0;
+  if(!isMobile){document.addEventListener('mouseout',function(e){if(e.clientY<10&&e.relatedTarget===null)showPopup();});}
+  setTimeout(showPopup,45000);
+  window.addEventListener('scroll',function(){if(document.documentElement.scrollTop>document.documentElement.scrollHeight*0.6)showPopup();},{passive:true});
 })();
 </script>
 </body>
