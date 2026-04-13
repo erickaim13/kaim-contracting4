@@ -183,7 +183,7 @@ section{padding:80px 24px}
 
 /* CONTACT */
 .contact{background:linear-gradient(135deg,#0d1f35 0%,var(--bg2) 40%,var(--bg2) 100%);position:relative;overflow:hidden}
-.contact::before{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:400px;opacity:.06;mix-blend-mode:overlay;pointer-events:none;z-index:0}
+.contact::before{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:400px;opacity:.07;pointer-events:none;z-index:0}
 .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:start;position:relative;z-index:1}
 .contact-info h3{font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:20px}
 .ci{display:flex;align-items:center;gap:14px;margin-bottom:16px}
@@ -351,6 +351,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   .strip-tip{display:none}
   .svc-bento{grid-template-columns:repeat(2,1fr)}
   .svc-tile:nth-child(n){grid-column:auto;min-height:220px}
+  .svc-tile:last-child{grid-column:1/-1}
   .svc-tile-desc,.svc-tile-arrow,.svc-tile-num{display:none}
   .svc-tile-body{padding:12px 14px}
   .svc-tile::after{border-color:rgba(201,168,76,.5)}
