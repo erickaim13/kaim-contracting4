@@ -826,7 +826,7 @@ document.querySelectorAll('input[type="tel"]').forEach(function(inp){
 </div>
 </div>
 <script>
-function closeHzPopup(){document.getElementById('hz-popup').classList.remove('active');sessionStorage.setItem('hz-dismissed','1');}
+function closeHzPopup(){document.getElementById('hz-popup').classList.remove('active');document.body.style.overflow='';sessionStorage.setItem('hz-dismissed','1');}
 function shareReferral(){
   var msg='Check out Kaim Contracting! They\'re running a spring house washing special starting at $300. Plus if I refer you and you book, I get $50 off my next service. Take a look: https://kaimcontracting.com';
   if(navigator.share){navigator.share({title:'Kaim Contracting Spring Special',text:msg}).catch(function(){});}
@@ -836,7 +836,7 @@ document.getElementById('hz-popup').addEventListener('click',function(e){if(e.ta
 (function(){
   if(sessionStorage.getItem('hz-dismissed'))return;
   var shown=false;
-  function showPopup(){if(shown)return;shown=true;var p=document.getElementById('hz-popup');if(p)p.classList.add('active');}
+  function showPopup(){if(shown)return;shown=true;var p=document.getElementById('hz-popup');if(p){p.classList.add('active');document.body.style.overflow='hidden';}}
   var isMobile='ontouchstart' in window||navigator.maxTouchPoints>0;
   if(!isMobile){document.addEventListener('mouseout',function(e){if(e.clientY<10&&e.relatedTarget===null)showPopup();});}
   setTimeout(showPopup,45000);
