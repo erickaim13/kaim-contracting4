@@ -777,6 +777,10 @@ document.querySelectorAll('input[type="tel"]').forEach(function(inp){
 </script>
 <!-- Hormozi-Style Value Stack Popup -->
 <style>
+#hz-popup{display:flex;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,0);pointer-events:none;transition:background .4s ease;visibility:hidden}
+#hz-popup.active{background:rgba(0,0,0,.5);pointer-events:auto;visibility:visible}
+#hz-popup .hz-card{opacity:0;transform:translateY(20px) scale(.97);transition:opacity .4s ease,transform .4s ease}
+#hz-popup.active .hz-card{opacity:1;transform:translateY(0) scale(1)}
 @media(max-width:640px){
   #hz-popup{padding:12px!important}
   .hz-card{max-height:none!important;overflow:hidden!important}
@@ -786,7 +790,7 @@ document.querySelectorAll('input[type="tel"]').forEach(function(inp){
   .hz-cta{padding:13px!important;font-size:13px!important;margin-bottom:8px!important}
 }
 </style>
-<div id="hz-popup" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.35);align-items:center;justify-content:center;padding:16px">
+<div id="hz-popup">
 <div class="hz-card" style="background:linear-gradient(135deg,#0d1e35,#102545);border:2px solid var(--gold);border-radius:16px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.45)">
 <button onclick="closeHzPopup()" style="position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);font-size:28px;cursor:pointer;z-index:2;line-height:1">&times;</button>
 <div style="padding:32px 28px 28px;text-align:center">
@@ -822,11 +826,12 @@ document.querySelectorAll('input[type="tel"]').forEach(function(inp){
 </div>
 </div>
 <script>
-function closeHzPopup(){document.getElementById('hz-popup').style.display='none';sessionStorage.setItem('hz-dismissed','1');}
+function closeHzPopup(){document.getElementById('hz-popup').classList.remove('active');sessionStorage.setItem('hz-dismissed','1');}
+document.getElementById('hz-popup').addEventListener('click',function(e){if(e.target===this)closeHzPopup();});
 (function(){
   if(sessionStorage.getItem('hz-dismissed'))return;
   var shown=false;
-  function showPopup(){if(shown)return;shown=true;var p=document.getElementById('hz-popup');if(p)p.style.display='flex';}
+  function showPopup(){if(shown)return;shown=true;var p=document.getElementById('hz-popup');if(p)p.classList.add('active');}
   var isMobile='ontouchstart' in window||navigator.maxTouchPoints>0;
   if(!isMobile){document.addEventListener('mouseout',function(e){if(e.clientY<10&&e.relatedTarget===null)showPopup();});}
   setTimeout(showPopup,45000);
