@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+  <defs>
+    <pattern id="h" patternUnits="userSpaceOnUse" width="60" height="60">
+      <rect width="60" height="60" fill="none"/>
+      <path d="M0 15 L15 0 L30 15 L15 30 Z" fill="none" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+      <path d="M30 15 L45 0 L60 15 L45 30 Z" fill="none" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+      <path d="M0 45 L15 30 L30 45 L15 60 Z" fill="none" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+      <path d="M30 45 L45 30 L60 45 L45 60 Z" fill="none" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="60" height="60" fill="url(#h)"/>
+</svg>
