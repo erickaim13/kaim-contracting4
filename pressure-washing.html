@@ -230,15 +230,6 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:12px}
 
 /* SOCIAL FLOAT */
-.social-float{position:fixed;right:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:500}
-.social-float a{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:transform .2s;box-shadow:0 4px 14px var(--sh);position:relative}
-.social-float a:hover{transform:scale(1.14)}
-.sf-lbl{position:absolute;right:50px;background:var(--bg2);color:var(--text);font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:3px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;border:1px solid var(--border)}
-.social-float a:hover .sf-lbl{opacity:1}
-.sf-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
-.sf-fb{background:#1877f2}
-.sf-tt{background:#010101;border:1px solid #333}
-.sf-yt{background:#ff0000}
 
 /* SERVICE PAGE */
 .home-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:8px 14px;border:1px solid var(--border);border-radius:3px;margin-bottom:16px;background:var(--card);transition:color .2s,border-color .2s;width:fit-content}
@@ -351,7 +342,6 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   .contact-info h3{font-size:20px}
   .footer-top{grid-template-columns:1fr;gap:22px}
   .footer-bottom{flex-direction:column;text-align:center}
-  .social-float{display:none}
   .page-hero{min-height:240px}
   .page-hero-content{padding:28px 16px 32px}
   .page-hero-content h1{font-size:26px}
@@ -409,12 +399,6 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   </div>
 </div>
 <footer class="svc-footer"><div class="svc-footer-inner"><span>&copy; 2025 Kaim Contracting LLC. All Rights Reserved.</span><div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center"><a href="tel:978-351-2195">978-351-2195</a><a href="index.html#services">All Services</a><a href="index.html#contact">Get Started</a></div></div></footer>
-<div class="social-float">
-  <a href="https://instagram.com/kaimcontracting" target="_blank" rel="noopener" class="sf-ig" aria-label="Instagram"><span class="sf-lbl">Instagram</span><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-  <a href="https://facebook.com/kaimcontracting" target="_blank" rel="noopener" class="sf-fb" aria-label="Facebook"><span class="sf-lbl">Facebook</span><svg width="19" height="19" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-  <a href="https://tiktok.com/@kaimcontracting" target="_blank" rel="noopener" class="sf-tt" aria-label="TikTok"><span class="sf-lbl">TikTok</span><svg width="19" height="19" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77.39 2.89 2.89 0 012.88-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 105.55 6.27V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a>
-  <a href="https://youtube.com/@kaimcontracting" target="_blank" rel="noopener" class="sf-yt" aria-label="YouTube"><span class="sf-lbl">YouTube</span><svg width="19" height="19" viewBox="0 0 24 24" fill="white"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg></a>
-</div>
 <script>function toggleAcc(btn){var item=btn.parentElement;var wasOpen=item.classList.contains('open');document.querySelectorAll('.acc-item.open').forEach(function(el){el.classList.remove('open')});if(!wasOpen){item.classList.add('open')}}</script>
 <script>
 (function(){
