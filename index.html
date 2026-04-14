@@ -782,11 +782,13 @@ document.querySelectorAll('input[type="tel"]').forEach(function(inp){
 #hz-popup .hz-card{opacity:0;transform:translateY(20px) scale(.97);transition:opacity .4s ease,transform .4s ease}
 #hz-popup.active .hz-card{opacity:1;transform:translateY(0) scale(1)}
 @media(max-width:640px){
-  #hz-popup{padding:12px!important}
-  .hz-card{max-height:none!important;overflow:hidden!important}
+  #hz-popup{padding:10px!important}
+  .hz-card{max-height:90vh!important;overflow-y:auto!important}
   .hz-card>div{padding:20px 16px 16px!important}
-  .hz-stack,.hz-total,.hz-sub{display:none!important}
-  .hz-card h2{font-size:20px!important;margin-bottom:10px!important}
+  .hz-card h2{font-size:20px!important;margin-bottom:6px!important}
+  .hz-sub{font-size:13px!important;margin-bottom:14px!important}
+  .hz-stack{gap:8px!important;margin-bottom:16px!important}
+  .hz-stack>div{padding:10px 12px!important}
   .hz-cta{padding:13px!important;font-size:13px!important;margin-bottom:8px!important}
 }
 </style>
