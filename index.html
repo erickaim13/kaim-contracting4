@@ -777,57 +777,87 @@ document.querySelectorAll('input[type="tel"]').forEach(function(inp){
 </script>
 <!-- Hormozi-Style Value Stack Popup -->
 <style>
-#hz-popup{display:flex;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,0);pointer-events:none;transition:background .4s ease;visibility:hidden}
+#hz-popup{display:flex;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,0);pointer-events:none;transition:background .4s ease;visibility:hidden}
 #hz-popup.active{background:rgba(0,0,0,.5);pointer-events:auto;visibility:visible}
-#hz-popup .hz-card{opacity:0;transform:translateY(20px) scale(.97);transition:opacity .4s ease,transform .4s ease}
+#hz-popup .hz-card{opacity:0;transform:translateY(16px) scale(.98);transition:opacity .4s ease,transform .4s ease}
 #hz-popup.active .hz-card{opacity:1;transform:translateY(0) scale(1)}
+.hz-card{background:#0e1f37;border:1px solid rgba(201,168,76,.25);border-radius:12px;max-width:420px;width:100%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.04) inset}
+.hz-close{position:absolute;top:10px;right:12px;background:rgba(255,255,255,.06);border:none;color:rgba(255,255,255,.5);width:28px;height:28px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;line-height:1}
+.hz-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.hz-body{padding:28px 24px 24px;text-align:center}
+.hz-badge{display:inline-block;font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.15);border-radius:20px;padding:5px 14px;margin-bottom:14px}
+.hz-title{font-family:'Oswald',sans-serif;font-size:26px;font-weight:700;text-transform:uppercase;color:#fff;line-height:1.15;margin-bottom:4px}
+.hz-price{font-family:'Oswald',sans-serif;font-size:32px;font-weight:700;color:var(--gold-l)}
+.hz-desc{color:rgba(255,255,255,.5);font-size:13px;margin:8px 0 18px;line-height:1.4}
+.hz-perks{display:flex;flex-direction:column;gap:0;margin-bottom:18px;border:1px solid rgba(255,255,255,.06);border-radius:8px;overflow:hidden}
+.hz-perk{display:flex;align-items:center;gap:10px;padding:11px 14px;background:rgba(255,255,255,.02);border-bottom:1px solid rgba(255,255,255,.04)}
+.hz-perk:last-child{border-bottom:none}
+.hz-perk:nth-child(even){background:rgba(255,255,255,.035)}
+.hz-perk svg{flex-shrink:0}
+.hz-perk-text{flex:1;font-family:'Oswald',sans-serif;font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;color:#fff}
+.hz-perk-tag{font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;color:var(--gold-l);letter-spacing:.05em}
+.hz-value{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:18px}
+.hz-value-old{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;color:rgba(255,255,255,.3);text-decoration:line-through}
+.hz-value-arrow{color:rgba(255,255,255,.15);font-size:18px}
+.hz-value-new{font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;color:var(--gold-l)}
+.hz-cta{display:block;width:100%;padding:14px;background:var(--gold);color:var(--teal);font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-align:center;border-radius:6px;transition:all .2s;border:none;cursor:pointer}
+.hz-cta:hover{background:var(--gold-l)}
+.hz-footer{color:rgba(255,255,255,.35);font-size:11px;margin-top:10px;line-height:1.4}
+.hz-ref{border-top:1px solid rgba(255,255,255,.06);margin-top:14px;padding-top:12px;display:flex;align-items:center;gap:8px;justify-content:center;cursor:pointer;transition:opacity .2s}
+.hz-ref:hover{opacity:.8}
+.hz-ref p{color:rgba(255,255,255,.4);font-size:11.5px;line-height:1.3;margin:0}
 @media(max-width:640px){
-  #hz-popup{padding:10px!important}
-  .hz-card{max-height:90vh!important;overflow-y:auto!important}
-  .hz-card>div{padding:20px 16px 16px!important}
-  .hz-card h2{font-size:20px!important;margin-bottom:6px!important}
-  .hz-sub{font-size:13px!important;margin-bottom:14px!important}
-  .hz-stack{gap:8px!important;margin-bottom:16px!important}
-  .hz-stack>div{padding:10px 12px!important}
-  .hz-cta{padding:13px!important;font-size:13px!important;margin-bottom:8px!important}
+  #hz-popup{padding:12px;align-items:flex-end}
+  .hz-card{max-width:100%;border-radius:12px 12px 0 0;max-height:80vh;overflow-y:auto}
+  .hz-body{padding:22px 18px 18px}
+  .hz-badge{font-size:9px;padding:4px 12px;margin-bottom:10px}
+  .hz-title{font-size:20px}
+  .hz-price{font-size:26px}
+  .hz-desc{font-size:12px;margin:6px 0 14px}
+  .hz-perk{padding:9px 12px}
+  .hz-perk-text{font-size:11.5px}
+  .hz-perks{margin-bottom:14px}
+  .hz-value{margin-bottom:14px;gap:10px}
+  .hz-value-old{font-size:18px}
+  .hz-value-new{font-size:22px}
+  .hz-cta{padding:12px;font-size:13px}
 }
 </style>
 <div id="hz-popup">
-<div class="hz-card" style="background:linear-gradient(135deg,#0d1e35,#102545);border:2px solid var(--gold);border-radius:16px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.45)">
-<button onclick="closeHzPopup()" style="position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);font-size:28px;cursor:pointer;z-index:2;line-height:1">&times;</button>
-<div style="padding:32px 28px 28px;text-align:center">
-<div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Spring Special | Ends May 31st</div>
-<h2 style="font-family:'Oswald',sans-serif;font-size:clamp(22px,5vw,28px);font-weight:700;text-transform:uppercase;color:#fff;line-height:1.15;margin-bottom:6px">House Washing<br><span style="color:var(--gold-l)">Starting at $300</span></h2>
-<p class="hz-sub" style="color:var(--muted);font-size:14px;margin-bottom:20px;line-height:1.5">$300 flat for all two-story homes under 2,500 sq ft.<br>Every house wash includes these bonuses:</p>
-<div class="hz-stack" style="text-align:left;display:flex;flex-direction:column;gap:10px;margin-bottom:22px">
-<div style="display:flex;align-items:center;gap:12px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.12);border-radius:10px;padding:14px 16px">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2.5" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
-<div style="flex:1"><div style="font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#fff">Free Shed or Fence Wash</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Included with every house wash</div></div>
-<div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;color:var(--gold-l);white-space:nowrap">FREE</div>
+<div class="hz-card">
+<button class="hz-close" onclick="closeHzPopup()">&times;</button>
+<div class="hz-body">
+<div class="hz-badge">Spring Special | Ends May 31st</div>
+<div class="hz-title">House Washing</div>
+<div class="hz-price">Starting at $300</div>
+<p class="hz-desc">$300 flat for all two-story homes under 2,500 sq ft.<br>Every house wash includes:</p>
+<div class="hz-perks">
+<div class="hz-perk">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+<span class="hz-perk-text">Shed or Fence Wash</span>
+<span class="hz-perk-tag">FREE</span>
 </div>
-<div style="display:flex;align-items:center;gap:12px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.12);border-radius:10px;padding:14px 16px">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2.5" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
-<div style="flex:1"><div style="font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#fff">Free Trash & Recycling Bin Cleaning</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Bins left fresh and sanitized</div></div>
-<div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;color:var(--gold-l);white-space:nowrap">FREE</div>
+<div class="hz-perk">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+<span class="hz-perk-text">Trash & Recycling Bin Cleaning</span>
+<span class="hz-perk-tag">FREE</span>
 </div>
-<div style="display:flex;align-items:center;gap:12px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.12);border-radius:10px;padding:14px 16px">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2.5" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
-<div style="flex:1"><div style="font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#fff">Free Gutter Brightening</div><div style="font-size:12px;color:var(--muted);margin-top:2px">Oxidation and stain removal included</div></div>
-<div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;color:var(--gold-l);white-space:nowrap">FREE</div>
-</div>
-</div>
-<div style="background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(201,168,76,.04));border:1.5px solid rgba(201,168,76,.2);border-radius:10px;padding:16px;margin-bottom:22px">
-<div style="font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Total Value</div>
-<div style="display:flex;align-items:center;justify-content:center;gap:14px">
-<span style="font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;color:var(--muted);text-decoration:line-through;opacity:.5">$550+</span>
-<span style="font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;color:var(--gold-l)">$300</span>
+<div class="hz-perk">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+<span class="hz-perk-text">Gutter Brightening & Stain Removal</span>
+<span class="hz-perk-tag">FREE</span>
 </div>
 </div>
-<a class="hz-cta" href="#contact" onclick="closeHzPopup()" style="display:block;width:100%;padding:16px;background:var(--gold);color:var(--teal);font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-align:center;border-radius:6px;transition:background .2s;margin-bottom:10px" onmouseover="this.style.background='var(--gold-l)'" onmouseout="this.style.background='var(--gold)'">Book Your House Wash</a>
-<p style="color:var(--muted);font-size:11.5px;line-height:1.5;margin:0 0 16px">Offer valid through May 31, 2026. No obligation. Free estimates.</p>
-<div style="border-top:1px solid rgba(255,255,255,.08);padding-top:14px;display:flex;align-items:center;gap:10px;justify-content:center;cursor:pointer" onclick="shareReferral()">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="flex-shrink:0"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-<p style="color:var(--muted);font-size:12px;line-height:1.4;margin:0"><span style="color:var(--gold-l);font-weight:700;text-decoration:underline;text-underline-offset:2px">Refer a friend</span> who books a service and get <span style="color:#fff;font-weight:700">$50 off</span> your next job.</p>
+<div class="hz-value">
+<span class="hz-value-old">$550+</span>
+<span class="hz-value-arrow">&rsaquo;</span>
+<span class="hz-value-new">$300</span>
+</div>
+<a class="hz-cta" href="#contact" onclick="closeHzPopup()">Book Your House Wash</a>
+<p class="hz-footer">Offer valid through May 31, 2026. No obligation. Free estimates.</p>
+<div class="hz-ref" onclick="shareReferral()">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="flex-shrink:0"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+<p><span style="color:var(--gold-l);font-weight:700;text-decoration:underline;text-underline-offset:2px">Refer a friend</span> who books a service and get <span style="color:#fff;font-weight:700">$50 off</span> your next job.</p>
 </div>
 </div>
 </div>
