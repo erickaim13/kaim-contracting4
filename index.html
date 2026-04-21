@@ -694,7 +694,7 @@ async function addLeadToCRM(data,attachments){
   }catch(e){console.error('CRM error',e);}
 }
 
-function queueIMessages(data){
+async function queueIMessages(data){
   var SB_URL='https://dfquwxmoidhhcwezgnry.supabase.co';
   var SB_KEY='sb_publishable_63igSt9FrltKroNoWZvALg_mWBj14nK';
   var first=data.get('first-name')||'';
@@ -704,11 +704,30 @@ function queueIMessages(data){
   var h={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
   var p=phone.replace(/[^0-9]/g,'');
   var num=p.length===10?'+1'+p:'+'+p;
-  // Notify owner
-  fetch(SB_URL+'/rest/v1/imessage_queue',{method:'POST',headers:h,body:JSON.stringify({phone:'+19783512195',body:'New quote request from '+first+' '+last+' — '+service+'\nPhone: '+phone,direction:'outgoing',status:'pending',client_name:first+' '+last,trigger_type:'lead_notify'})}).catch(function(e){console.error('iMsg notify error',e);});
-  // Auto-reply to client
+  // Notify owner immediately (no delay)
+  fetch(SB_URL+'/rest/v1/imessage_queue',{method:'POST',headers:h,body:JSON.stringify({phone:'+19783512195',body:'New quote request from '+first+' '+last+' for '+service+'\nPhone: '+phone,direction:'outgoing',status:'pending',client_name:first+' '+last,trigger_type:'lead_notify'})}).catch(function(e){console.error('iMsg notify error',e);});
+  // Auto-reply to client with randomized 2-5 min delay and time-aware template
   if(p.length>=10){
-    fetch(SB_URL+'/rest/v1/imessage_queue',{method:'POST',headers:h,body:JSON.stringify({phone:num,body:'Hey '+first+'! This is Kaim Contracting, thanks for your quote request! We\'ll get back to you within one business day.',direction:'outgoing',status:'pending',client_name:first+' '+last,trigger_type:'lead_autoreply'})}).catch(function(e){console.error('iMsg reply error',e);});
+    // Fetch templates from Supabase
+    var bizTemplate='Hey {name}, thanks for reaching out to Kaim Contracting! Got your request for {service}. Quick question to help prep your quote: are you looking to get this done in the next 30 days, or just gathering info?';
+    var afterTemplate='Hey {name}, thanks for reaching out to Kaim Contracting! Its after hours so Eric will personally follow up first thing in the morning. In the meantime, mind sharing if youre hoping to get this done in the next 30 days or just exploring? Helps us prep.';
+    try{
+      var tplRes=await fetch(SB_URL+'/rest/v1/message_templates?key=in.(lead_biz_hours,lead_after_hours)&select=key,body',{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
+      var tpls=await tplRes.json();
+      tpls.forEach(function(t){
+        if(t.key==='lead_biz_hours')bizTemplate=t.body;
+        if(t.key==='lead_after_hours')afterTemplate=t.body;
+      });
+    }catch(e){console.error('Template fetch error, using defaults',e);}
+    // Check time of day in Eastern Time
+    var etHour=parseInt(new Date().toLocaleString('en-US',{timeZone:'America/New_York',hour:'numeric',hour12:false}));
+    var isBizHours=(etHour>=7&&etHour<20);
+    var template=isBizHours?bizTemplate:afterTemplate;
+    var body=template.replace(/\{name\}/g,first).replace(/\{service\}/g,service||'your project');
+    // Random delay: 2-5 minutes
+    var delayMs=Math.floor(Math.random()*(300000-120000+1))+120000;
+    var sendAfter=new Date(Date.now()+delayMs).toISOString();
+    fetch(SB_URL+'/rest/v1/imessage_queue',{method:'POST',headers:h,body:JSON.stringify({phone:num,body:body,direction:'outgoing',status:'pending',client_name:first+' '+last,trigger_type:'lead_autoreply',send_after:sendAfter})}).catch(function(e){console.error('iMsg reply error',e);});
   }
 }
 
