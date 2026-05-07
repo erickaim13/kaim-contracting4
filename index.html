@@ -534,7 +534,11 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       </div>
       <div class="contact-form">
         <h3>Tell Us About Your Project</h3>
-        <form name="quote-request" id="quote-form" method="POST" action="/api/contact">
+        <form name="quote-request" id="quote-form" method="POST" action="/api/lead">
+          <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+            <label>Website (leave blank)<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+            <label>Address Line 2 (leave blank)<input type="text" name="address2" tabindex="-1" autocomplete="off"></label>
+          </div>
           <div class="form-row">
             <div class="fg"><label>First Name</label><input type="text" name="first-name" placeholder="John" required></div>
             <div class="fg"><label>Last Name</label><input type="text" name="last-name" placeholder="Smith" required></div>
@@ -655,80 +659,30 @@ function processUploads(){
   return Promise.all(_selectedFiles.map(function(f){return compressImage(f,1200,0.6);}));
 }
 
-async function addLeadToCRM(data,attachments){
-  var SB_URL='https://dfquwxmoidhhcwezgnry.supabase.co';
-  var SB_KEY='sb_publishable_63igSt9FrltKroNoWZvALg_mWBj14nK';
-  try{
-    var res=await fetch(SB_URL+'/rest/v1/crm_data?id=eq.1&select=data',{
-      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
-    });
-    var rows=await res.json();
-    var db=rows[0]&&rows[0].data&&rows[0].data.clients?rows[0].data:{clients:[],estimates:[],invoices:[],messages:[],activity:[],settings:{},_nc:1,_ne:1001,_ni:2001,jobs:[]};
-    var now=new Date();
-    var client={
-      id:db._nc++,
-      first:data.get('first-name')||'',
-      last:data.get('last-name')||'',
-      phone:data.get('phone')||'',
-      email:data.get('email')||'',
-      address:'',
-      service:data.get('service')||'',
-      val:0,
-      source:'Website (kaimcontracting.com)',
-      status:'new',
-      prio:'normal',
-      notes:data.get('message')||'',
-      priv:'',
-      added:now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),
-      addedRaw:now.toISOString()
-    };
-    if(attachments&&attachments.length){client.attachments=attachments;}
-    db.clients.unshift(client);
-    db.activity=db.activity||[];
-    db.activity.unshift({text:'New website lead: '+client.first+' '+client.last+(attachments&&attachments.length?' ('+attachments.length+' photo'+(attachments.length>1?'s':'')+')':''),ico:'🌐',time:now.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})});
-    await fetch(SB_URL+'/rest/v1/crm_data?id=eq.1',{
-      method:'PATCH',
-      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
-      body:JSON.stringify({data:db,updated_at:now.toISOString()})
-    });
-  }catch(e){console.error('CRM error',e);}
-}
-
-async function queueIMessages(data){
-  var SB_URL='https://dfquwxmoidhhcwezgnry.supabase.co';
-  var SB_KEY='sb_publishable_63igSt9FrltKroNoWZvALg_mWBj14nK';
-  var first=data.get('first-name')||'';
-  var last=data.get('last-name')||'';
-  var phone=data.get('phone')||'';
-  var service=data.get('service')||'';
-  var h={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
-  var p=phone.replace(/[^0-9]/g,'');
-  var num=p.length===10?'+1'+p:'+'+p;
-  // Notify owner immediately (no delay)
-  fetch(SB_URL+'/rest/v1/imessage_queue',{method:'POST',headers:h,body:JSON.stringify({phone:'+19783512195',body:'New quote request from '+first+' '+last+' for '+service+'\nPhone: '+phone,direction:'outgoing',status:'pending',client_name:first+' '+last,trigger_type:'lead_notify'})}).catch(function(e){console.error('iMsg notify error',e);});
-  // Auto-reply to client with randomized 2-5 min delay and time-aware template
-  if(p.length>=10){
-    // Fetch templates from Supabase
-    var bizTemplate='Hey {name}, thanks for reaching out to Kaim Contracting! Got your request for {service}. Quick question to help prep your quote: are you looking to get this done in the next 30 days, or just gathering info?';
-    var afterTemplate='Hey {name}, thanks for reaching out to Kaim Contracting! Its after hours so Eric will personally follow up first thing in the morning. In the meantime, mind sharing if youre hoping to get this done in the next 30 days or just exploring? Helps us prep.';
-    try{
-      var tplRes=await fetch(SB_URL+'/rest/v1/message_templates?key=in.(lead_biz_hours,lead_after_hours)&select=key,body',{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
-      var tpls=await tplRes.json();
-      tpls.forEach(function(t){
-        if(t.key==='lead_biz_hours')bizTemplate=t.body;
-        if(t.key==='lead_after_hours')afterTemplate=t.body;
-      });
-    }catch(e){console.error('Template fetch error, using defaults',e);}
-    // Check time of day in Eastern Time
-    var etHour=parseInt(new Date().toLocaleString('en-US',{timeZone:'America/New_York',hour:'numeric',hour12:false}));
-    var isBizHours=(etHour>=7&&etHour<20);
-    var template=isBizHours?bizTemplate:afterTemplate;
-    var body=template.replace(/\{name\}/g,first).replace(/\{service\}/g,service||'your project');
-    // Random delay: 2-5 minutes
-    var delayMs=Math.floor(Math.random()*(300000-120000+1))+120000;
-    var sendAfter=new Date(Date.now()+delayMs).toISOString();
-    fetch(SB_URL+'/rest/v1/imessage_queue',{method:'POST',headers:h,body:JSON.stringify({phone:num,body:body,direction:'outgoing',status:'pending',client_name:first+' '+last,trigger_type:'lead_autoreply',send_after:sendAfter})}).catch(function(e){console.error('iMsg reply error',e);});
+async function submitLead(data,attachments){
+  var payload={
+    first:data.get('first-name')||'',
+    last:data.get('last-name')||'',
+    phone:data.get('phone')||'',
+    email:data.get('email')||'',
+    service:data.get('service')||'',
+    message:data.get('message')||'',
+    contactPref:data.getAll('contact-method').join(', '),
+    website:data.get('website')||'',
+    address2:data.get('address2')||'',
+    attachments:attachments||[]
+  };
+  var res=await fetch('/api/lead',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  });
+  if(!res.ok){
+    var err='Submission failed';
+    try{var j=await res.json();err=j.error||err;}catch(e){}
+    throw new Error(err);
   }
+  return res.json();
 }
 
 // Form AJAX submission
@@ -743,23 +697,14 @@ async function queueIMessages(data){
     var data = new FormData(form);
     processUploads().then(function(attachments){
       btn.textContent = 'Sending...';
-      queueIMessages(data);
-      // Send confirmation email to client
-      var emailAddr = data.get('email');
-      var firstName = data.get('first-name') || '';
-      var lastName = data.get('last-name') || '';
-      var service = data.get('service') || '';
-      if(emailAddr){
-        fetch('/api/send-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:firstName+' '+lastName,email:emailAddr,service:service})}).catch(function(e){console.error('Confirmation email error',e);});
-      }
-      return addLeadToCRM(data,attachments);
+      return submitLead(data,attachments);
     }).then(function(){
         form.style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
-    }).catch(function(){
+    }).catch(function(err){
       btn.disabled = false;
       btn.textContent = 'Send My Request';
-      alert('Something went wrong. Please call us at 978-351-2195.');
+      alert((err&&err.message?err.message+'. ':'')+'Please call us at 978-351-2195.');
     });
   });
 })();
