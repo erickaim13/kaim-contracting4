@@ -23,18 +23,35 @@ function brandedHtml(body) {
 </td></tr></table></body></html>`;
 }
 
+const ALLOWED_ORIGINS = new Set([
+  'https://kaimcontracting.com',
+  'https://www.kaimcontracting.com'
+]);
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { name, email, service } = req.body || {};
-  if (!email) return res.status(400).json({ error: 'Missing email' });
+  const origin = req.headers.origin || '';
+  const referer = req.headers.referer || '';
+  const okOrigin = ALLOWED_ORIGINS.has(origin) ||
+    [...ALLOWED_ORIGINS].some(o => referer.startsWith(o + '/'));
+  if (!okOrigin) return res.status(403).json({ error: 'Forbidden' });
 
-  const firstName = (name || '').split(' ')[0] || 'there';
+  const { name, email, service } = req.body || {};
+  if (!email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Invalid email' });
+  }
+  // Strip any HTML/control chars from interpolated fields
+  const sanitize = s => String(s || '').replace(/[<>&"']/g, '').slice(0, 80);
+  const safeName = sanitize(name);
+  const safeService = sanitize(service);
+
+  const firstName = safeName.split(' ')[0] || 'there';
 
   const html = brandedHtml(`
     <h2 style="margin:0 0 8px;font-size:22px;color:#1a1a1a">Thanks for Reaching Out!</h2>
     <p style="margin:0 0 20px;font-size:15px;color:#555;line-height:1.6">Hi ${firstName},</p>
-    <p style="margin:0 0 12px;font-size:15px;color:#555;line-height:1.6">We received your quote request${service ? ' for <strong>' + service + '</strong>' : ''}. We'll get back to you within one business day to go over the details.</p>
+    <p style="margin:0 0 12px;font-size:15px;color:#555;line-height:1.6">We received your quote request${safeService ? ' for <strong>' + safeService + '</strong>' : ''}. We'll get back to you within one business day to go over the details.</p>
     <p style="margin:0 0 24px;font-size:15px;color:#555;line-height:1.6">In the meantime, feel free to give us a call or reply to this email with any questions.</p>
     <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px"><tr><td style="background:#f8f8f8;border-radius:8px;padding:20px 24px;text-align:center">
       <div style="font-size:13px;color:#999;margin-bottom:6px">Call or text us anytime</div>
