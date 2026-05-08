@@ -30,21 +30,14 @@ const FALLBACK_AFTER_HRS = "Hey {name}, thanks for reaching out to Kaim Contract
 const sanitize = (s, max = 200) =>
   String(s || '').replace(/[\u0000-\u001F\u007F]/g, '').trim().slice(0, max);
 
-const LOGO_CID = 'kaim-logo@kaimcontracting';
-const LOGO_ATTACHMENT = {
-  filename: 'kaim-logo.png',
-  path: 'https://kaim-crm.vercel.app/kaim-contracting-logo-gold.png',
-  cid: LOGO_CID,
-  contentDisposition: 'inline'
-};
-
 function brandedHtml(body) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;padding:0;background:#f4f4f4;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;padding:32px 16px">
 <tr><td align="center">
 <table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)">
-<tr><td style="background:#1a1a1a;padding:28px 32px;text-align:center">
-<img src="cid:${LOGO_CID}" alt="Kaim Contracting" width="180" style="display:block;margin:0 auto;pointer-events:none" draggable="false">
+<tr><td style="background:#1a1a1a;padding:32px;text-align:center">
+<div style="font-family:Georgia,'Times New Roman',serif;font-size:26px;font-weight:700;color:#c9a84c;letter-spacing:.18em">KAIM CONTRACTING</div>
+<div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:600;color:#9a8a5a;letter-spacing:.4em;margin-top:8px">LANDSCAPING &middot; HARDSCAPING</div>
 </td></tr>
 <tr><td style="padding:32px 32px 28px">${body}</td></tr>
 <tr><td style="padding:0 32px 28px;border-top:1px solid #eee;padding-top:20px;text-align:center">
@@ -188,7 +181,6 @@ export default async function handler(req, res) {
       to: email,
       subject: 'We Got Your Quote Request!',
       replyTo: 'info@kaimcontracting.com',
-      attachments: [LOGO_ATTACHMENT],
       html: brandedHtml(`
         <h2 style="margin:0 0 8px;font-size:22px;color:#1a1a1a">Thanks for Reaching Out!</h2>
         <p style="margin:0 0 20px;font-size:15px;color:#555;line-height:1.6">Hi ${first.replace(/[<>&"']/g, '')},</p>
