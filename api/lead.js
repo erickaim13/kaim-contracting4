@@ -17,7 +17,14 @@ const ALLOWED_ORIGINS = new Set([
   'https://www.kaimcontracting.com'
 ]);
 
-const OWNER_PHONE = '+19783512195';
+const DEFAULT_OWNER_PHONE = '+19783512195';
+
+function normalizePhone(p) {
+  if (!p) return null;
+  const digits = String(p).replace(/\D/g, '');
+  if (!digits) return null;
+  return digits.length === 10 ? '+1' + digits : '+' + digits;
+}
 const SERVICE_OPTS = new Set([
   'Paver Installation', 'Landscaping', 'Drainage Solutions',
   'Hardscaping', 'Landscape Design', 'Pressure Washing',
@@ -145,8 +152,9 @@ export default async function handler(req, res) {
     const phoneDigits = phone.replace(/\D/g, '');
     const clientNumE164 = phoneDigits.length === 10 ? '+1' + phoneDigits : '+' + phoneDigits;
 
+    const ownerNotifyPhone = normalizePhone(db.settings?.notifyPhone) || normalizePhone(db.settings?.phone) || DEFAULT_OWNER_PHONE;
     sbAdmin.from('imessage_queue').insert({
-      phone: OWNER_PHONE,
+      phone: ownerNotifyPhone,
       body: 'New quote request from ' + client.first + ' ' + client.last + ' for ' + (service || 'a service') + '\nPhone: ' + phone,
       direction: 'outgoing',
       status: 'pending',
