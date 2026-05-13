@@ -83,8 +83,9 @@ export default async function handler(req, res) {
 
   const body = req.body || {};
 
-  // Honeypot — bots usually fill all fields. If 'website' or 'address2' is set, reject silently.
-  if (body.website || body.address2) {
+  // Honeypot — bots usually fill all visible fields. Random obscure name so
+  // browser autofill leaves it alone. If filled, reject silently.
+  if (body.kc_hpot_xyz) {
     return res.status(200).json({ ok: true }); // pretend success so bots don't probe
   }
 

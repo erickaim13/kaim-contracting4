@@ -534,10 +534,9 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       </div>
       <div class="contact-form">
         <h3>Tell Us About Your Project</h3>
-        <form name="quote-request" id="quote-form" method="POST" action="/api/lead">
-          <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
-            <label>Website (leave blank)<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-            <label>Address Line 2 (leave blank)<input type="text" name="address2" tabindex="-1" autocomplete="off"></label>
+        <form name="quote-request" id="quote-form" method="POST" action="/api/lead" autocomplete="on">
+          <div style="display:none" aria-hidden="true">
+            <label>Leave this empty<input type="text" name="kc_hpot_xyz" tabindex="-1" autocomplete="off" value=""></label>
           </div>
           <div class="form-row">
             <div class="fg"><label>First Name</label><input type="text" name="first-name" placeholder="John" required></div>
@@ -668,8 +667,7 @@ async function submitLead(data,attachments){
     service:data.get('service')||'',
     message:data.get('message')||'',
     contactPref:data.getAll('contact-method').join(', '),
-    website:data.get('website')||'',
-    address2:data.get('address2')||'',
+    kc_hpot_xyz:data.get('kc_hpot_xyz')||'',
     attachments:attachments||[]
   };
   var res=await fetch('/api/lead',{
