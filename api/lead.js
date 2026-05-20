@@ -184,24 +184,33 @@ export default async function handler(req, res) {
       }).then(() => {}, err => console.error('autoreply error', err?.message));
     }
 
-    // 4. Confirmation email to client (best-effort, non-blocking)
-    transporter.sendMail({
-      from: 'Kaim Contracting <info@kaimcontracting.com>',
-      to: email,
-      subject: 'We Got Your Quote Request!',
-      replyTo: 'info@kaimcontracting.com',
-      html: brandedHtml(`
-        <h2 style="margin:0 0 8px;font-size:22px;color:#1a1a1a">Thanks for Reaching Out!</h2>
-        <p style="margin:0 0 20px;font-size:15px;color:#555;line-height:1.6">Hi ${first.replace(/[<>&"']/g, '')},</p>
-        <p style="margin:0 0 12px;font-size:15px;color:#555;line-height:1.6">We received your quote request${service ? ' for <strong>' + service.replace(/[<>&"']/g, '') + '</strong>' : ''}. We'll get back to you within one business day to go over the details.</p>
-        <p style="margin:0 0 24px;font-size:15px;color:#555;line-height:1.6">In the meantime, feel free to give us a call or reply to this email with any questions.</p>
-        <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px"><tr><td style="background:#f8f8f8;border-radius:8px;padding:20px 24px;text-align:center">
-          <div style="font-size:13px;color:#999;margin-bottom:6px">Call or text us anytime</div>
-          <div style="font-size:20px;font-weight:700;color:#1a1a1a">(978) 351-2195</div>
-        </td></tr></table>
-        <p style="margin:0;font-size:13px;color:#999;line-height:1.5">We look forward to working with you!</p>
-      `)
-    }).catch(err => console.error('confirmation email error', err?.message));
+    // 4. Confirmation email to client — AWAITED so the Vercel function doesn't
+    // freeze before the SMTP handshake completes. SMTP takes ~1-2s; if we
+    // fire-and-forget the way we do with iMessage inserts, Vercel terminates
+    // the function and the email never actually sends.
+    try {
+      await transporter.sendMail({
+        from: 'Kaim Contracting <info@kaimcontracting.com>',
+        to: email,
+        subject: 'We Got Your Quote Request!',
+        replyTo: 'info@kaimcontracting.com',
+        html: brandedHtml(`
+          <h2 style="margin:0 0 8px;font-size:22px;color:#1a1a1a">Thanks for Reaching Out!</h2>
+          <p style="margin:0 0 20px;font-size:15px;color:#555;line-height:1.6">Hi ${first.replace(/[<>&"']/g, '')},</p>
+          <p style="margin:0 0 12px;font-size:15px;color:#555;line-height:1.6">We received your quote request${service ? ' for <strong>' + service.replace(/[<>&"']/g, '') + '</strong>' : ''}. We'll get back to you within one business day to go over the details.</p>
+          <p style="margin:0 0 24px;font-size:15px;color:#555;line-height:1.6">In the meantime, feel free to give us a call or reply to this email with any questions.</p>
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px"><tr><td style="background:#f8f8f8;border-radius:8px;padding:20px 24px;text-align:center">
+            <div style="font-size:13px;color:#999;margin-bottom:6px">Call or text us anytime</div>
+            <div style="font-size:20px;font-weight:700;color:#1a1a1a">(978) 351-2195</div>
+          </td></tr></table>
+          <p style="margin:0;font-size:13px;color:#999;line-height:1.5">We look forward to working with you!</p>
+        `)
+      });
+    } catch (e) {
+      console.error('confirmation email error', e?.message || e);
+      // Don't fail the whole request if the email part stumbles — the lead
+      // is already in the CRM and iMessages were queued.
+    }
 
     return res.status(200).json({ ok: true });
   } catch (e) {
