@@ -444,6 +444,8 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 
 /* HOMEPAGE FAQ + accordion (reused from service-page pattern) */
 .home-faq{padding:80px 24px;background:var(--bg2);position:relative;overflow:hidden;z-index:2}
+.home-faq::after{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:1500px;opacity:.04;pointer-events:none;z-index:0}
+.home-faq .section-inner{position:relative;z-index:1}
 .home-faq::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:5}
 .home-faq .section-inner{max-width:820px;margin:0 auto}
 .home-faq .acc-list{margin-top:36px}
