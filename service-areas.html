@@ -527,15 +527,15 @@ document.addEventListener('DOMContentLoaded',function(){
     var icon=L.divIcon({className:'kaim-marker',html:'<div class="kaim-pin'+(t.home?' kaim-pin-home':'')+'"></div>',iconSize:t.home?[18,18]:[11,11],iconAnchor:t.home?[9,9]:[5.5,5.5]});
     L.marker([t.lat,t.lon],{icon:icon}).bindTooltip(t.name+(t.home?' (Home Base)':''),{direction:'top',offset:[0,-2]}).addTo(map);
   });
-  // Service-area polygon (convex hull of outer towns)
-  var coverage=[
-    [42.9956,-71.4548],[42.9959,-71.3478],[42.8806,-71.1798],
-    [42.8584,-70.9300],[42.8418,-70.8589],[42.7878,-70.8753],
-    [42.7251,-70.9939],[42.5995,-71.3673],[42.6334,-71.3162],
-    [42.7644,-71.4392]
-  ];
-  L.polygon(coverage,{color:'#c9a84c',fillColor:'#c9a84c',fillOpacity:0.14,weight:2,opacity:0.75,dashArray:'4,6'}).addTo(map);
-  map.fitBounds(L.polygon(coverage).getBounds(),{padding:[24,24]});
+  // Organic highlighted service area: overlapping circles around each town
+  var coverageLayer=L.featureGroup();
+  towns.forEach(function(t){
+    L.circle([t.lat,t.lon],{radius:9500,color:'transparent',fillColor:'#c9a84c',fillOpacity:0.10,interactive:false}).addTo(coverageLayer);
+  });
+  coverageLayer.addTo(map);
+  // Send coverage circles below the markers
+  coverageLayer.getLayers().forEach(function(l){if(l.bringToBack)l.bringToBack();});
+  map.fitBounds(coverageLayer.getBounds(),{padding:[24,24]});
 });
 </script>
 </body>
