@@ -539,7 +539,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
   var revealMap=[];
   revealMap.forEach(function(m){var el=document.querySelector(m.sel);if(el)el.classList.add(m.cls);});
   document.querySelectorAll('.inc-item').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*70)+'ms';});
-  document.querySelectorAll('.acc-item').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*90)+'ms';});
+  
   var all=document.querySelectorAll('.reveal, .reveal-scale, .stagger-item');
   if(!('IntersectionObserver' in window)){all.forEach(function(el){el.classList.add('is-in');});return;}
   var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -10% 0px',threshold:0.08});
