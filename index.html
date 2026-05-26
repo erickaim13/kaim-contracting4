@@ -638,14 +638,14 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
     <div class="three-card-grid">
       <a href="pavers.html" class="three-card-item">
         <div class="three-card-emoji"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="11" height="7" rx="1"/><rect x="16" y="4" width="13" height="7" rx="1"/><rect x="3" y="13" width="14" height="7" rx="1"/><rect x="19" y="13" width="10" height="7" rx="1"/><rect x="3" y="22" width="9" height="6" rx="1"/><rect x="14" y="22" width="15" height="6" rx="1"/></svg></div>
-        <h3>Paver <span>Installation</span></h3>
+        <h3><span>Paver Installation</span></h3>
         <div class="what">Driveways &middot; Walkways &middot; Patios</div>
         <p class="outcome">Boost curb appeal and add real value to your home with a surface that will not crack, sink, or fade. Built to last decades through every freeze and thaw.</p>
         <span class="three-link">See Details &#8594;</span>
       </a>
       <a href="pressure-washing.html" class="three-card-item">
         <div class="three-card-emoji"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14 L19 14 L19 20 L5 20 Z"/><path d="M6 20 L6 26 L10 26 L10 20"/><path d="M10 22 Q13 22.5 13 25.5"/><path d="M19 15.5 L23 17 L19 18.5 Z"/><path d="M24 12.5 L29 10"/><path d="M24 17 L29 17"/><path d="M24 21.5 L29 24"/></svg></div>
-        <h3>Pressure <span>Washing</span></h3>
+        <h3><span>Pressure Washing</span></h3>
         <div class="what">Driveways &middot; Siding &middot; Decks &middot; Patios</div>
         <p class="outcome">Strip away years of mold, mildew, and grime in a single visit. Your home looks brand new and the surfaces underneath get protected from long-term damage.</p>
         <span class="three-link">See Details &#8594;</span>
@@ -1006,7 +1006,7 @@ async function submitLead(data,attachments){
 (function(){var n=document.querySelector('nav');if(!n)return;function check(){if(window.scrollY>20)n.classList.add('scrolled');else n.classList.remove('scrolled');}check();window.addEventListener('scroll',check,{passive:true});})();
 (function(){
   if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  var revealMap=[{sel:'.three-card',cls:'reveal'},{sel:'.about',cls:'reveal'},{sel:'.services',cls:'reveal'},{sel:'.cta-band',cls:'reveal-scale'},{sel:'.why',cls:'reveal'},{sel:'.testimonials',cls:'reveal'},{sel:'.serving',cls:'reveal'},{sel:'.contact',cls:'reveal'}];
+  var revealMap=[{sel:'.about',cls:'reveal'},{sel:'.services',cls:'reveal'},{sel:'.cta-band',cls:'reveal-scale'},{sel:'.why',cls:'reveal'},{sel:'.testimonials',cls:'reveal'},{sel:'.serving',cls:'reveal'},{sel:'.contact',cls:'reveal'}];
   revealMap.forEach(function(m){var el=document.querySelector(m.sel);if(el)el.classList.add(m.cls);});
   document.querySelectorAll('.three-card-item').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*140)+'ms';});
   document.querySelectorAll('.strip-item').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*80)+'ms';});
