@@ -400,6 +400,10 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .stagger-item{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.2,.65,.2,1),transform .8s cubic-bezier(.2,.65,.2,1)}
 .stagger-item.is-in{opacity:1;transform:translateY(0)}
 @media(prefers-reduced-motion:reduce){.reveal,.reveal-scale,.stagger-item{opacity:1;transform:none;transition:none}}
+/* Gold accent bar on every page-hero bottom edge */
+.page-hero{position:relative}
+.page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:3}
+
 </style>
 </head>
 <body>
@@ -419,6 +423,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
     <div class="page-content">
       <h2>From the <span>Field</span></h2>
       <p>Project highlights, seasonal tips, and notes from our crew. New posts coming as we wrap each project.</p>
+      <img src="images/tile-landscaping.jpg" alt="Landscape project by Kaim Contracting LLC" loading="lazy" width="800" height="300">
       <div class="inc-section">
         <h3>Coming Soon</h3>
         <p>We are building out our blog with project case studies, before-and-after photos, and practical advice for homeowners thinking about outdoor projects. In the meantime, follow us on <a href="https://instagram.com/kaimcontracting" target="_blank" rel="noopener" style="color:var(--gold-l)">Instagram</a> or <a href="https://facebook.com/kaimcontracting" target="_blank" rel="noopener" style="color:var(--gold-l)">Facebook</a> for current work and updates.</p>
