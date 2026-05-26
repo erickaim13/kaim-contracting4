@@ -73,8 +73,8 @@
 <link rel="shortcut icon" href="images/icon-192.png">
 <link rel="apple-touch-icon" href="images/icon-192.png">
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#0d1e35">
-<meta name="msapplication-TileColor" content="#0d1e35">
+<meta name="theme-color" content="#2f4f3a">
+<meta name="msapplication-TileColor" content="#2f4f3a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@400;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@400;600&display=swap"></noscript>
@@ -424,7 +424,79 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   .stat-card:last-child{grid-column:1/-1}
   .why-grid{grid-template-columns:1fr}
 }
-.acc-list{display:flex;flex-direction:column;gap:6px}.acc-item{background:var(--card);border:1px solid var(--border);border-radius:5px;overflow:hidden}.acc-head{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:none;border:none;color:var(--text);cursor:pointer;font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;text-align:left;transition:background .2s;gap:12px}.acc-head:hover{background:rgba(255,255,255,.06)}.acc-item.open .acc-head{color:var(--gold-l)}.acc-arrow{transition:transform .25s;flex-shrink:0;color:var(--gold)}.acc-item.open .acc-arrow{transform:rotate(180deg)}.acc-body{max-height:0;overflow:hidden;transition:max-height .3s ease}.acc-item.open .acc-body{max-height:200px}.acc-body p{padding:14px 16px;color:var(--muted);font-size:14px;line-height:1.72;margin:0}</style>
+.acc-list{display:flex;flex-direction:column;gap:6px}.acc-item{background:var(--card);border:1px solid var(--border);border-radius:5px;overflow:hidden}.acc-head{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:none;border:none;color:var(--text);cursor:pointer;font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;text-align:left;transition:background .2s;gap:12px}.acc-head:hover{background:rgba(255,255,255,.06)}.acc-item.open .acc-head{color:var(--gold-l)}.acc-arrow{transition:transform .25s;flex-shrink:0;color:var(--gold)}.acc-item.open .acc-arrow{transform:rotate(180deg)}.acc-body{max-height:0;overflow:hidden;transition:max-height .3s ease}.acc-item.open .acc-body{max-height:200px}.acc-body p{padding:14px 16px;color:var(--muted);font-size:14px;line-height:1.72;margin:0}
+/* SPRING REDESIGN - service pages. Remove to revert. */
+:root{--sage:#2f4f3a;--sage-d:#1f3a2e;--sage-l:#4a6b54;--sage-pale:#e8efe8;--sage-wash:rgba(47,79,58,.06);--ivory:#f5f1e8;--paper:#fffefa;--wood:#b8814a;--wood-d:#9a6936;--wood-l:#d4a06b;--charcoal:#1a2438;--charcoal-m:#5d6373;--line:#e6e0d2;--line-d:#d6cebf}
+html{scroll-behavior:smooth}
+body{background:var(--ivory)!important;color:var(--charcoal)!important}
+nav{background:var(--paper)!important;border-bottom:1px solid var(--line)!important;box-shadow:none!important;transition:box-shadow .25s ease}
+nav.scrolled{box-shadow:0 6px 24px rgba(26,36,56,.08)!important}
+.nav-links>li>a{color:var(--charcoal)!important;font-weight:600;letter-spacing:.08em!important}
+.nav-links>li>a:hover{color:var(--sage)!important;background:var(--sage-wash)!important}
+.arr{color:var(--sage-l)!important}
+.nav-info a,.nav-info span{color:var(--charcoal-m)!important;font-weight:500}
+.nav-info a:hover{color:var(--sage)!important}
+.nav-info .nav-sep{color:rgba(26,36,56,.18)!important}
+.btn-nav{background:var(--sage)!important;color:#fff!important;border-radius:8px!important;letter-spacing:.08em!important;box-shadow:0 4px 12px rgba(47,79,58,.18)}
+.btn-nav:hover{background:var(--sage-d)!important;color:#fff!important}
+.dropdown{background:var(--paper)!important;border:1px solid var(--line)!important;border-radius:10px!important;box-shadow:0 18px 44px rgba(26,36,56,.12)!important}
+.dd-item{color:var(--charcoal)!important;border-radius:6px!important}
+.dd-item:hover{background:var(--sage-wash)!important}
+.dd-item b{color:var(--charcoal)!important;letter-spacing:.04em}
+.dd-item:hover b{color:var(--sage)!important}
+.dd-item p{color:var(--charcoal-m)!important}
+.hamburger span{background:var(--charcoal)!important}
+.mob-menu{background:var(--paper)!important;border-top:1px solid var(--line)!important}
+.mob-menu a{color:var(--charcoal)!important;border-bottom:1px solid var(--line)!important;font-weight:500;letter-spacing:.05em}
+.mob-menu a:hover,.mob-menu a.cta{color:var(--sage)!important}
+.page-hero-overlay{background:linear-gradient(to top,rgba(31,58,46,.92) 0%,rgba(26,36,56,.55) 55%,rgba(26,36,56,.25) 100%)!important}
+.page-hero-content h1{text-transform:none!important;letter-spacing:-.005em!important;font-weight:700;color:#fff!important;line-height:1.05}
+.page-hero-content h1 span{color:var(--wood-l)!important;font-style:italic;font-weight:600}
+.page-hero-content .sub{color:rgba(255,255,255,.85)!important}
+.breadcrumb{color:var(--wood-l)!important;letter-spacing:.18em}
+.breadcrumb a{color:rgba(255,255,255,.65)!important}
+.breadcrumb a:hover{color:var(--wood-l)!important}
+.page-body{background:transparent}
+.home-btn{color:var(--charcoal-m)!important;border:1px solid var(--line)!important;background:var(--paper)!important;border-radius:8px!important}
+.home-btn:hover{color:var(--sage)!important;border-color:var(--sage)!important}
+.page-content h2{color:var(--charcoal)!important;text-transform:none!important;letter-spacing:-.005em;font-weight:700;line-height:1.15;font-size:30px}
+.page-content h2 span{color:var(--sage)!important;font-style:italic;font-weight:600}
+.page-content p{color:var(--charcoal-m)!important;font-size:15.5px;line-height:1.78}
+.page-content img{border-radius:12px;box-shadow:0 14px 36px rgba(26,36,56,.1)!important}
+.inc-section h3{color:var(--charcoal)!important;text-transform:none!important;letter-spacing:-.005em;font-weight:700;font-size:20px;border-bottom:2px solid var(--line)!important;padding-bottom:10px}
+.inc-item{background:var(--paper)!important;border:1px solid var(--line)!important;border-radius:10px!important;box-shadow:0 2px 8px rgba(26,36,56,.04)}
+.inc-icon{background:var(--sage)!important;color:#fff!important;border-radius:6px}
+.inc-text{color:var(--charcoal-m)!important}
+.inc-text strong{color:var(--charcoal)!important}
+.sbar-cta{background:var(--sage)!important;border:1px solid rgba(255,255,255,.06)!important;border-radius:14px!important;box-shadow:0 14px 36px rgba(47,79,58,.22)}
+.sbar-cta h3{color:#fff!important;text-transform:none!important;letter-spacing:-.005em;font-weight:700}
+.sbar-cta p{color:rgba(255,255,255,.78)!important}
+.sbar-phone{color:var(--wood-l)!important}
+.sbar-phone:hover{color:#fff!important}
+.sbar-cta .btn-gold{background:var(--wood)!important;color:#fff!important;border-radius:8px!important;letter-spacing:.06em!important;box-shadow:0 6px 18px rgba(184,129,74,.3)}
+.sbar-cta .btn-gold:hover{background:var(--wood-d)!important}
+.other-svcs{background:var(--paper)!important;border:1px solid var(--line)!important;border-radius:12px!important;box-shadow:0 4px 16px rgba(26,36,56,.05)}
+.other-svcs h4{color:var(--charcoal)!important;text-transform:none!important;letter-spacing:-.005em;font-weight:700}
+.other-svcs a{color:var(--charcoal-m)!important;border-bottom:1px solid var(--line)!important}
+.other-svcs a:hover{color:var(--sage)!important}
+.acc-item{background:var(--paper)!important;border:1px solid var(--line)!important;border-radius:10px!important;box-shadow:0 2px 8px rgba(26,36,56,.04)}
+.acc-head{color:var(--charcoal)!important;background:none!important;text-transform:none!important;letter-spacing:-.005em;font-weight:600;font-size:15px}
+.acc-head:hover{background:var(--sage-wash)!important}
+.acc-item.open .acc-head{color:var(--sage)!important}
+.acc-arrow{color:var(--sage)!important}
+.acc-body p{color:var(--charcoal-m)!important;font-size:14.5px}
+footer{background:var(--sage-d)!important;border-top:none!important}
+footer .footer-col h4{color:#fff!important;text-decoration-color:var(--wood-l)!important}
+footer .footer-col p,footer .footer-col span{color:rgba(255,255,255,.6)!important}
+footer .footer-col a{color:var(--wood-l)!important}
+footer .footer-col a:hover{color:#fff!important}
+footer .ft-name{color:rgba(255,255,255,.92)!important}
+footer .ft-owner{color:var(--wood-l)!important}
+footer .footer-bottom{background:rgba(0,0,0,.18)!important;color:rgba(255,255,255,.4)!important}
+.svc-footer{background:var(--sage-d)!important;color:rgba(255,255,255,.55)!important}
+.svc-footer-inner a{color:var(--wood-l)!important}
+.svc-footer-inner a:hover{color:#fff!important}
+</style>
 </head>
 <body>
 <nav><div class="nav-inner"><a href="index.html" class="nav-logo"><img src="images/logo.webp" alt="Kaim Contracting LLC" width="200" height="60"></a><ul class="nav-links"><li><a href="index.html#about">About</a></li><li><a href="index.html#services">Services <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="drainage.html"><b>Drainage Solutions</b><p>French drains and water management.</p></a><a class="dd-item" href="hardscaping.html"><b>Hardscaping</b><p>Retaining walls, steps, and decorative stone.</p></a><a class="dd-item" href="design.html"><b>Landscape Design</b><p>Custom layouts tailored to your property.</p></a><a class="dd-item" href="landscaping.html"><b>Landscaping</b><p>Garden design, installation, and cleanups.</p></a><a class="dd-item" href="pavers.html"><b>Paver Installation</b><p>Walkways, driveways, and patio surfaces.</p></a><a class="dd-item" href="plantings.html"><b>Plantings</b><p>Trees, shrubs, and seasonal plants.</p></a><a class="dd-item" href="pressure-washing.html"><b>Pressure Washing</b><p>Deep cleaning for all outdoor surfaces.</p></a></div></li><li><a href="index.html#contact">Contact</a></li></ul><div class="nav-info"><a href="tel:978-351-2195"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a><span class="nav-sep">|</span><a id="tb-email" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a><span class="nav-sep">|</span><span>Serving Greater Boston &amp; Southern NH &nbsp;|&nbsp; Complimentary Estimates</span></div><a href="index.html#contact" class="btn-nav">Get Started</a><button class="hamburger" onclick="document.querySelector('.mob-menu').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button></div><div class="mob-menu" id="mobMenu"><a href="index.html#about" onclick="document.getElementById('mobMenu').classList.remove('open')">About</a><a href="index.html#services" onclick="document.getElementById('mobMenu').classList.remove('open')">Services</a><a href="tel:978-351-2195">978-351-2195</a><a href="index.html#contact" class="cta" onclick="document.getElementById('mobMenu').classList.remove('open')">Get Started</a></div></nav>
