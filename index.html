@@ -1002,7 +1002,6 @@ async function submitLead(data,attachments){
   if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   var revealMap=[{sel:'.about',cls:'reveal'},{sel:'.services',cls:'reveal'},{sel:'.cta-band',cls:'reveal-scale'},{sel:'.why',cls:'reveal'},{sel:'.testimonials',cls:'reveal'},{sel:'.serving',cls:'reveal'},{sel:'.contact',cls:'reveal'}];
   revealMap.forEach(function(m){var el=document.querySelector(m.sel);if(el)el.classList.add(m.cls);});
-  document.querySelectorAll('.three-card-item').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*140)+'ms';});
   document.querySelectorAll('.svc-tile').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*100)+'ms';});
   document.querySelectorAll('.why-card').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*120)+'ms';});
   document.querySelectorAll('.test-card').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*120)+'ms';});
