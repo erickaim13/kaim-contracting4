@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8HBEMX0PPR"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8HBEMX0PPR');</script>
+<title>Service Areas in MA & Southern NH | Kaim Contracting</title>
+<meta name="description" content="Kaim Contracting serves Methuen, Andover, Lawrence, Lowell, Salem NH, Derry, Londonderry and 12 other towns across MA and southern NH. Free estimates, licensed and insured.">
+<link rel="canonical" href="https://kaimcontracting.com/service-areas.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Kaim Contracting LLC">
+<meta property="og:title" content="Service Areas in MA & Southern NH | Kaim Contracting">
+<meta property="og:description" content="Kaim Contracting serves Methuen, Andover, Lawrence, Lowell, Salem NH, Derry, Londonderry and 12 other towns across MA and southern NH. Free estimates, licensed and insured.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kaimcontracting.com/service-areas.html">
+<meta property="og:image" content="https://kaimcontracting.com/images/hero-firepit.webp">
+<meta property="og:site_name" content="Kaim Contracting LLC">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Service Areas in MA & Southern NH | Kaim Contracting">
+<meta name="twitter:description" content="Kaim Contracting serves Methuen, Andover, Lawrence, Lowell, Salem NH, Derry, Londonderry and 12 other towns across MA and southern NH. Free estimates, licensed and insured.">
+<meta name="twitter:image" content="https://kaimcontracting.com/images/hero-firepit.webp">
+<meta name="geo.region" content="US-MA">
+<meta name="geo.placename" content="Methuen, Massachusetts">
+<meta name="geo.position" content="42.7262;-71.1909">
+<meta name="ICBM" content="42.7262, -71.1909">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"Kaim Contracting LLC","areaServed":[{"@type":"City","name":"Methuen, MA"},{"@type":"City","name":"Andover, MA"},{"@type":"City","name":"Lawrence, MA"},{"@type":"City","name":"Lowell, MA"},{"@type":"City","name":"Salem, NH"},{"@type":"City","name":"Derry, NH"}],"telephone":"+1-978-351-2195","address":{"@type":"PostalAddress","addressLocality":"Methuen","addressRegion":"MA","postalCode":"01844","addressCountry":"US"}}
+</script>
+<link rel="icon" type="image/png" sizes="192x192" href="images/icon-192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="images/icon-192.png">
+<link rel="shortcut icon" href="images/icon-192.png">
+<link rel="apple-touch-icon" href="images/icon-192.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0d1e35">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<style>
+.kaim-map{width:100%;height:480px;border-radius:8px;overflow:hidden;border:1px solid var(--border);position:relative;z-index:1;background:#eee}
+.kaim-marker{background:transparent!important;border:none!important}
+.kaim-pin{width:11px;height:11px;border-radius:50%;background:#c9a84c;border:2px solid #fff;box-shadow:0 0 0 2px rgba(201,168,76,.35),0 2px 8px rgba(0,0,0,.5)}
+.kaim-pin-home{width:18px;height:18px;background:#e2c47a;border-color:#fff;box-shadow:0 0 0 4px rgba(226,196,122,.45),0 0 22px rgba(226,196,122,.7),0 2px 10px rgba(0,0,0,.6)}
+.leaflet-tooltip{background:rgba(13,30,53,.95)!important;color:#fff!important;border:1px solid rgba(201,168,76,.4)!important;border-radius:3px!important;padding:4px 10px!important;font-family:'Oswald',sans-serif!important;font-size:11px!important;text-transform:uppercase!important;letter-spacing:.08em!important;box-shadow:0 4px 14px rgba(0,0,0,.4)!important;font-weight:600}
+.leaflet-tooltip-top:before{border-top-color:rgba(13,30,53,.95)!important}
+.leaflet-control-attribution{font-size:9.5px!important;background:rgba(13,30,53,.7)!important;color:rgba(255,255,255,.55)!important}
+.leaflet-control-attribution a{color:#c9a84c!important}
+.leaflet-control-zoom a{background:rgba(13,30,53,.95)!important;color:#c9a84c!important;border:1px solid rgba(201,168,76,.4)!important}
+.leaflet-control-zoom a:hover{background:rgba(201,168,76,.2)!important}
+</style>
+<meta name="msapplication-TileColor" content="#0d1e35">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@400;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@400;600&display=swap"></noscript>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#071828;--gold:#c9a84c;--gold-l:#e2c47a;
+  --bg:#0d1e35;--bg2:#102240;--bg3:#162c4e;
+  --card:#102545;--text:#f4f8f7;--muted:#5a90bb;
+  --border:#1a3555;--border2:#254868;--sh:rgba(0,0,0,.22);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',sans-serif;color:var(--text);background-color:#0d1e35;font-size:16px;line-height:1.65;overflow-x:hidden;width:100%;position:relative}
+
+
+/* NAV */
+nav{background:var(--bg2);position:sticky;top:0;z-index:150;box-shadow:0 2px 20px var(--sh);border-bottom:2px solid var(--gold)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:96px}
+.nav-logo img{height:78px;width:auto;display:block}
+.nav-links{display:flex;list-style:none;gap:2px;align-items:center}
+.nav-links>li{position:relative}
+.nav-links>li>a{font-family:'Oswald',sans-serif;font-weight:500;font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:8px 12px;border-radius:3px;transition:color .2s,background .2s;display:flex;align-items:center;gap:4px}
+.nav-links>li>a:hover{color:var(--gold);background:rgba(255,255,255,.08)}
+.arr{font-size:9px;opacity:.5;transition:transform .2s}
+.nav-links>li:hover .arr{transform:rotate(180deg)}
+.dropdown{position:absolute;top:100%;left:0;background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:6px;width:250px;box-shadow:0 12px 36px rgba(0,0,0,.35);opacity:0;visibility:hidden;transform:translateY(6px);transition:all .2s;z-index:200;padding:6px 0;margin-top:4px}
+.nav-links>li:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-links>li.open .dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+.dd-item{display:block;padding:10px 16px;transition:background .15s;cursor:pointer;text-decoration:none;color:var(--text);border-radius:4px;margin:0 6px}
+.dd-item:hover{background:rgba(255,255,255,.06)}
+.dd-item b{font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text);display:block;margin-bottom:2px}
+.dd-item:hover b{color:var(--gold-l)}
+.dd-item p{font-size:11.5px;color:var(--muted);line-height:1.4}
+.btn-nav{background:var(--gold)!important;color:var(--teal)!important;font-family:'Oswald',sans-serif!important;font-size:12.5px!important;font-weight:600!important;letter-spacing:.1em!important;text-transform:uppercase!important;padding:9px 18px!important;border-radius:3px!important;margin-left:10px!important;text-decoration:none!important}
+.btn-nav:hover{background:var(--gold-l)!important}
+.nav-info{display:flex;align-items:center;gap:14px;margin-left:auto;margin-right:16px}
+.nav-info a,.nav-info span{font-size:11.5px;color:rgba(255,255,255,.6);text-decoration:none;display:flex;align-items:center;gap:5px;font-family:'Source Sans 3',sans-serif;white-space:nowrap}
+.nav-info a:hover{color:var(--gold-l)}
+.nav-info .nav-sep{color:rgba(255,255,255,.2);font-size:10px}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text)}
+.mob-menu{display:none;background:var(--bg2);border-top:1px solid var(--border)}
+.mob-menu a{display:block;font-family:'Oswald',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--text);text-decoration:none;padding:14px 20px;border-bottom:1px solid var(--border)}
+.mob-menu a:hover,.mob-menu a.cta{color:var(--gold)}
+.mob-menu.open{display:block}
+
+/* BUTTONS */
+.btn-primary{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;background:var(--gold);color:var(--teal);padding:14px 32px;border-radius:3px;text-decoration:none;transition:background .2s,transform .15s;display:inline-block;border:none;cursor:pointer;white-space:nowrap}
+.btn-primary:hover{background:var(--gold-l);transform:translateY(-1px)}
+.btn-outline{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;background:transparent;color:#fff;padding:14px 32px;border-radius:3px;border:2px solid rgba(255,255,255,.4);text-decoration:none;transition:border-color .2s,color .2s;display:inline-block;white-space:nowrap}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold-l)}
+
+/* SECTIONS */
+section{padding:80px 24px}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:52px}
+.section-label{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.section-header h2{font-family:'Oswald',sans-serif;font-size:clamp(26px,4vw,42px);font-weight:700;text-transform:uppercase;color:var(--text);letter-spacing:.02em;line-height:1.1}
+.section-header p{margin-top:12px;color:var(--muted);font-size:15.5px;max-width:560px;margin-left:auto;margin-right:auto}
+.divider{width:40px;height:3px;background:var(--gold);margin:12px auto 0}
+
+/* HERO */
+.hero{position:relative;min-height:620px;display:flex;align-items:center;overflow:hidden}
+.hero-photo{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(110deg,rgba(7,24,40,.88) 0%,rgba(20,36,52,.72) 50%,rgba(20,36,52,.45) 100%);z-index:1}
+.hero-content{position:relative;z-index:3;max-width:820px;margin:0 auto;padding:100px 24px;width:100%;text-align:center}
+.hero-eyebrow{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-l);margin-bottom:16px}
+.hero h1{font-family:'Oswald',sans-serif;font-size:clamp(38px,6vw,72px);font-weight:700;color:#fff;line-height:1.04;margin-bottom:18px;text-transform:uppercase;letter-spacing:.02em}
+.hero h1 span{color:var(--gold-l)}
+.hero-desc{font-size:17px;color:rgba(255,255,255,.8);max-width:540px;margin:0 auto 36px;line-height:1.75}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+
+/* STRIP */
+.strip{background:var(--teal);position:relative;overflow:visible;z-index:10}
+.strip-inner{max-width:1200px;margin:0 auto;display:flex}
+.strip-item{flex:1;padding:16px 12px;color:rgba(255,255,255,.85);font-family:'Oswald',sans-serif;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:7px;border-right:1px solid rgba(255,255,255,.1);transition:background .2s,color .2s;position:relative;cursor:pointer;text-decoration:none}
+.strip-item:last-child{border-right:none}
+.strip-item:hover{background:rgba(255,255,255,.08);color:var(--gold-l)}
+.strip-dot{display:none}
+.strip-tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--bg2);border-radius:6px;padding:12px 14px;width:210px;box-shadow:0 8px 28px var(--sh);border-top:3px solid var(--gold);opacity:0;visibility:hidden;transition:all .2s;pointer-events:none;z-index:300;text-align:left}
+.strip-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:7px solid transparent;border-top-color:var(--bg2)}
+.strip-item:hover .strip-tip{opacity:1;visibility:visible}
+.strip-tip h5{font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gold-l);margin-bottom:4px}
+.strip-tip p{font-size:11.5px;color:var(--muted);line-height:1.5;text-transform:none;letter-spacing:0;font-family:'Source Sans 3',sans-serif}
+
+/* ABOUT */
+.about{background:var(--bg2);position:relative;overflow:hidden}
+.about::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--gold),var(--teal));opacity:.8}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
+.about-sub{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.about-grid h2{font-family:'Oswald',sans-serif;font-size:clamp(24px,3.5vw,36px);font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:18px;line-height:1.1}
+.about-grid h2 span{color:var(--gold-l)}
+.about-grid p{color:var(--muted);margin-bottom:14px;font-size:15px;line-height:1.75}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}
+.stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:22px 12px;text-align:center;position:relative;overflow:hidden;transition:transform .2s}
+.stat-card:hover{transform:translateY(-2px)}
+.stat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--gold))}
+.stat-icon{font-size:20px;margin-bottom:8px;display:block}
+.stat-num{font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;color:var(--gold-l);line-height:1;display:block;margin-bottom:5px}
+.stat-lbl{font-family:'Oswald',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);display:block}
+.about-img-wrap{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 20px 55px var(--sh)}
+.about-img-wrap img{width:100%;height:440px;object-fit:cover;display:block}
+.about-badge{position:absolute;bottom:20px;left:20px;background:rgba(7,24,40,.94);padding:12px 18px;border-radius:4px;border-left:3px solid var(--gold)}
+.about-badge a,.about-badge a:visited{color:var(--gold-l);text-decoration:none}
+.about-badge .big{font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;color:var(--gold-l);line-height:1}
+.about-badge .small{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.6);margin-top:3px}
+
+/* SERVICES - BENTO LAYOUT */
+.services{background:linear-gradient(180deg,var(--bg) 0%,#091828 100%);position:relative}
+.services::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 50%,rgba(201,168,76,.04) 0%,transparent 60%),radial-gradient(circle at 80% 20%,rgba(7,24,40,.3) 0%,transparent 50%);pointer-events:none}
+.svc-bento{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:auto;gap:14px}
+.svc-tile{position:relative;overflow:hidden;border-radius:6px;border:1px solid var(--border);text-decoration:none;color:inherit;display:block}
+.svc-tile:nth-child(1){grid-column:1/5;min-height:320px}
+.svc-tile:nth-child(2){grid-column:5/9;min-height:320px}
+.svc-tile:nth-child(3){grid-column:9/13;min-height:320px}
+.svc-tile:nth-child(4){grid-column:1/6;min-height:280px}
+.svc-tile:nth-child(5){grid-column:6/9;min-height:280px}
+.svc-tile:nth-child(6){grid-column:9/13;min-height:280px}
+.svc-tile:nth-child(7){grid-column:1/5;min-height:280px}
+.svc-tile:nth-child(8){grid-column:5/13;min-height:280px}
+.svc-tile-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .6s}
+.svc-tile:hover .svc-tile-img{transform:scale(1.05)}
+.svc-tile-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(1,26,28,.92) 0%,rgba(1,26,28,.3) 60%,transparent 100%);transition:background .3s}
+.svc-tile::after{content:'';position:absolute;inset:0;border:2px solid transparent;border-radius:6px;transition:border-color .3s;z-index:3;pointer-events:none}
+.svc-tile:hover::after{border-color:rgba(201,168,76,.5)}
+.svc-tile:hover .svc-tile-overlay{background:linear-gradient(to top,rgba(1,26,28,.96) 0%,rgba(1,26,28,.55) 70%,rgba(1,26,28,.15) 100%)}
+.svc-tile-body{position:absolute;bottom:0;left:0;right:0;padding:20px 22px;z-index:2}
+.svc-tile-num{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.2em;color:var(--gold);margin-bottom:6px;display:block}
+.svc-tile-body h3{font-family:'Oswald',sans-serif;font-size:17px;font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.05em;margin-bottom:0;line-height:1.1}
+.svc-tile-desc{font-size:13px;color:rgba(255,255,255,.75);margin-top:8px;line-height:1.55;max-height:0;overflow:hidden;transition:max-height .35s ease,margin .3s}
+.svc-tile:hover .svc-tile-desc{max-height:80px}
+.svc-tile-arrow{display:inline-flex;align-items:center;gap:5px;margin-top:10px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-l);opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s}
+.svc-tile:hover .svc-tile-arrow{opacity:1;transform:translateY(0)}
+
+/* CTA BAND */
+.cta-band{position:relative;overflow:hidden}
+.cta-band::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:3}
+.cta-photo{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1628624747186-a941c476b7ef?w=1600&q=80') center/cover no-repeat}
+.cta-overlay{position:absolute;inset:0;background:rgba(7,24,40,.88)}
+.cta-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:68px 24px;display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap}
+.cta-band h2{font-family:'Oswald',sans-serif;font-size:clamp(20px,3.5vw,36px);font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.02em}
+.cta-band h2 span{color:var(--gold-l)}
+.cta-band .sub{color:rgba(255,255,255,.65);margin-top:7px;font-size:15px}
+
+/* WHY */
+.why{background:var(--bg2);position:relative;overflow:hidden}
+.why::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.why::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent)}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative;z-index:1}
+.why-card{background:var(--card);border-radius:6px;padding:30px 18px;text-align:center;border:1px solid var(--border);transition:box-shadow .2s,transform .2s,border-color .2s;position:relative;overflow:hidden}
+.why-card:hover{border-color:var(--gold)}
+.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--gold))}
+.why-card:hover{box-shadow:0 10px 32px var(--sh);transform:translateY(-3px)}
+.why-num{font-family:'Oswald',sans-serif;font-size:38px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:10px;display:block;opacity:.2}
+.why-card h4{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text);margin-bottom:8px}
+.why-card p{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* TESTIMONIALS */
+.testimonials{background:var(--bg3);position:relative;overflow:hidden}
+.testimonials::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;position:relative;z-index:1}
+.test-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:28px 24px;transition:box-shadow .2s,transform .2s;position:relative}
+.test-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:8px 8px 0 0}
+.test-card:hover{box-shadow:0 10px 36px var(--sh);transform:translateY(-3px)}
+.stars{color:var(--gold);font-size:16px;letter-spacing:2px;margin-bottom:14px}
+.test-card blockquote{font-size:14.5px;color:var(--muted);line-height:1.75;font-style:italic;margin-bottom:20px}
+.test-author{display:flex;align-items:center;gap:12px}
+.test-avatar{width:42px;height:42px;border-radius:50%;background:var(--teal);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;color:var(--gold-l);flex-shrink:0}
+.test-name{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--text);text-transform:uppercase;letter-spacing:.06em}
+.test-loc{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* CONTACT */
+.contact{background:linear-gradient(135deg,#0d1f35 0%,var(--bg2) 40%,var(--bg2) 100%);position:relative}
+.contact::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 10% 80%,rgba(201,168,76,.06) 0%,transparent 50%);pointer-events:none}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:start}
+.contact-info h3{font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:12px}
+.contact-info>p{color:var(--muted);margin-bottom:24px;line-height:1.75}
+.ci{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
+.ci-icon{width:40px;height:40px;background:var(--teal);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ci-icon svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ci-text{font-size:14px;color:var(--muted);line-height:1.5}
+.ci-text strong{display:block;font-weight:600;color:var(--text);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.ci-text a{color:var(--gold-l);text-decoration:none}
+.contact-form{background:var(--card);border-radius:8px;padding:36px;border:1px solid var(--border)}
+.contact-form h3{font-family:'Oswald',sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:20px;letter-spacing:.06em}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg{margin-bottom:12px}
+.fg label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:4px}
+.fg input,.fg select,.fg textarea{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:3px;font-family:'Source Sans 3',sans-serif;font-size:15px;color:var(--text);background:var(--bg3);transition:border-color .2s;outline:none;-webkit-appearance:none;appearance:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--muted)}
+.fg select option{background:var(--bg3);color:var(--text)}
+.fg textarea{height:108px;resize:vertical}
+.form-submit{width:100%;background:var(--gold);color:var(--teal);border:none;padding:14px;font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:3px;cursor:pointer;transition:background .2s;margin-top:4px}
+.form-submit:hover{background:var(--gold-l)}
+
+/* FOOTER */
+footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:44px;margin-bottom:32px}
+.footer-brand img{height:50px;margin-bottom:12px;display:block}
+.footer-brand p{font-size:13px;line-height:1.7;max-width:270px}
+.footer-contact{margin-top:12px}
+.footer-contact a{color:var(--gold-l);text-decoration:none;font-size:13px;display:block;margin-bottom:4px}
+.footer-contact a:hover{color:#fff}
+.footer-social{display:flex;gap:9px;margin-top:14px}
+.footer-social a{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;opacity:.8;transition:transform .2s,opacity .2s}
+.footer-social a:hover{transform:scale(1.1);opacity:1}
+.footer-col h4{font-family:'Oswald',sans-serif;font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.85);margin-bottom:12px}
+.footer-col ul{list-style:none}
+.footer-col ul li{margin-bottom:7px}
+.footer-col ul a{color:rgba(255,255,255,.4);text-decoration:none;font-size:13px;transition:color .2s}
+.footer-col ul a:hover{color:var(--gold-l)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:12px}
+
+/* SOCIAL FLOAT */
+
+/* SERVICE PAGE */
+.home-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:8px 14px;border:1px solid var(--border);border-radius:3px;margin-bottom:16px;background:var(--card);transition:color .2s,border-color .2s;width:fit-content}
+.home-btn:hover{color:var(--gold-l);border-color:var(--gold)}
+.page-hero{position:relative;min-height:320px;display:flex;align-items:flex-end;overflow:hidden}
+.page-hero-photo{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+.page-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,24,40,.95) 0%,rgba(20,36,52,.65) 55%,rgba(20,36,52,.3) 100%);z-index:1}
+.page-hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:40px 24px 48px;width:100%}
+.breadcrumb{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.breadcrumb a{color:rgba(255,255,255,.5);text-decoration:none}
+.breadcrumb a:hover{color:var(--gold)}
+.page-hero-content h1{font-family:'Oswald',sans-serif;font-size:clamp(30px,5vw,54px);font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.02em;line-height:1.05;margin-bottom:10px}
+.page-hero-content h1 span{color:var(--gold-l)}
+.page-hero-content .sub{color:rgba(255,255,255,.7);font-size:15.5px;max-width:540px}
+.page-body{max-width:1200px;margin:0 auto;padding:60px 24px}
+.page-grid{display:grid;grid-template-columns:1fr 360px;gap:56px;align-items:start}
+.page-content h2{font-family:'Oswald',sans-serif;font-size:26px;font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:14px;letter-spacing:.03em}
+.page-content h2 span{color:var(--gold-l)}
+.page-content p{color:var(--muted);margin-bottom:16px;font-size:15px;line-height:1.78}
+.page-content img{width:100%;border-radius:8px;margin:24px 0;box-shadow:0 14px 44px var(--sh);object-fit:cover;height:300px;display:block}
+.inc-section{margin-top:30px}
+.inc-section h3{font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-l);margin-bottom:14px;padding-bottom:9px;border-bottom:2px solid var(--border)}
+.inc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.inc-item{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:5px;padding:13px 14px}
+.inc-icon{width:26px;height:26px;background:var(--teal);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold-l);font-size:14px;font-weight:700;font-family:'Oswald',sans-serif}
+.inc-text{font-size:13px;color:var(--muted);line-height:1.5}
+.inc-text strong{display:block;color:var(--text);font-size:12.5px;margin-bottom:1px}
+.sidebar{position:sticky;top:96px}
+.sbar-cta{background:var(--teal);border-radius:8px;padding:28px 24px;margin-bottom:20px;border:1px solid var(--border2);text-align:center}
+.sbar-cta h3{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;color:#fff;margin-bottom:8px}
+.sbar-cta p{color:rgba(255,255,255,.65);font-size:13.5px;margin-bottom:18px;line-height:1.6}
+.sbar-phone{display:inline-flex;align-items:center;justify-content:center;gap:8px;color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:16px;font-weight:700;text-decoration:none;padding:12px 18px;border:2px solid var(--gold);border-radius:3px;transition:all .2s;width:100%;box-sizing:border-box;letter-spacing:.08em}
+.sbar-phone:hover{background:var(--gold);color:var(--teal)}
+.sbar-or{display:block;color:rgba(255,255,255,.4);font-size:12px;text-transform:uppercase;letter-spacing:.15em;margin:12px 0}
+.btn-gold{display:block;background:var(--gold);color:var(--teal);font-family:'Oswald',sans-serif;font-size:13.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:13px 18px;border-radius:3px;text-decoration:none;text-align:center;transition:background .2s}
+.btn-gold:hover{background:var(--gold-l)}
+.other-svcs{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px}
+.other-svcs h4{font-family:'Oswald',sans-serif;font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text);margin-bottom:12px}
+.other-svcs a{display:flex;align-items:center;justify-content:space-between;color:var(--muted);text-decoration:none;font-size:13.5px;padding:8px 0;border-bottom:1px solid var(--border);transition:color .2s}
+.other-svcs a:last-child{border-bottom:none}
+.other-svcs a:hover{color:var(--gold-l)}
+.svc-footer{background:#040e0f;color:rgba(255,255,255,.4);padding:22px 24px}
+.svc-footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:12px}
+.svc-footer-inner a{color:var(--gold-l);text-decoration:none;font-size:13px}
+.svc-footer-inner a:hover{color:#fff}
+
+/* ═══════════ RESPONSIVE ═══════════ */
+@media(max-width:1024px){
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+  .svc-bento{grid-template-columns:repeat(2,1fr)}
+  .svc-tile:nth-child(n){grid-column:auto;min-height:240px}
+}
+@media(max-width:860px){
+  .about-grid{grid-template-columns:1fr;gap:32px}
+  .contact-grid{grid-template-columns:1fr;gap:28px}
+  .test-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .footer-brand{grid-column:1/-1}
+  .cta-inner{flex-direction:column;text-align:center;align-items:center}
+  .page-grid{grid-template-columns:1fr}
+  .sidebar{position:static}
+}
+@media(max-width:640px){
+  section{padding:48px 16px}
+  .section-inner{padding-left:0;padding-right:0}
+  .section-header{margin-bottom:32px}
+  .section-header h2{font-size:24px}
+  .section-header p{font-size:14px}
+  .nav-info{display:none}
+  .btn-nav{display:none!important}
+  .nav-inner{height:76px;padding:0 16px}
+  .nav-logo img{height:62px}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .hero{min-height:500px}
+  .hero-content{padding:60px 20px 56px}
+  .hero h1{font-size:34px;margin-bottom:14px}
+  .hero-desc{font-size:14.5px;margin-bottom:28px}
+  .hero-eyebrow{font-size:10px;letter-spacing:.2em;margin-bottom:12px}
+  .hero-btns{flex-direction:column;align-items:stretch;gap:10px;max-width:300px;margin:0 auto}
+  .btn-primary,.btn-outline{width:100%;text-align:center;padding:14px 20px;white-space:normal}
+  .strip-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+  .strip-item{border-right:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1);padding:14px 6px;font-size:10px;letter-spacing:.04em;flex-direction:column;gap:5px;text-align:center}
+  .strip-item:nth-child(3n){border-right:none}
+  .strip-item:nth-child(4),.strip-item:nth-child(5),.strip-item:nth-child(6){border-bottom:none}
+  .strip-dot{width:8px;height:8px}
+  .strip-tip{display:none}
+  .about-img-wrap img{height:220px}
+  .about-badge .big{font-size:16px}
+.about-badge a{color:var(--gold-l);text-decoration:none}
+  .about-stats{grid-template-columns:repeat(3,1fr);gap:8px}
+  .stat-card{padding:14px 6px}
+  .stat-num{font-size:20px}
+  .stat-lbl{font-size:9px}
+  .svc-bento{grid-template-columns:1fr}
+  .svc-tile:nth-child(n){grid-column:auto;min-height:220px}
+  .svc-tile-desc{max-height:80px}
+  .svc-tile-arrow{opacity:1;transform:translateY(0)}
+  .cta-inner{padding:44px 20px}
+  .cta-band h2{font-size:20px}
+  .why-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .why-card{padding:20px 12px}
+  .why-card h4{font-size:12.5px}
+  .why-card p{font-size:12px}
+  .why-num{font-size:30px}
+  .test-card{padding:22px 16px}
+  .test-card blockquote{font-size:14px}
+  .form-row{grid-template-columns:1fr}
+  .contact-form{padding:22px 16px}
+  .contact-form h3{font-size:16px}
+  .contact-info h3{font-size:20px}
+  .footer-top{grid-template-columns:1fr;gap:22px}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .page-hero{min-height:240px}
+  .page-hero-content{padding:28px 16px 32px}
+  .page-hero-content h1{font-size:26px}
+  .page-hero-content .sub{font-size:13.5px}
+  .home-btn{font-size:11px;padding:7px 11px;margin-bottom:12px}
+  .breadcrumb{font-size:10px;margin-bottom:8px}
+  .page-body{padding:32px 16px}
+  .inc-grid{grid-template-columns:1fr}
+  .sbar-cta{padding:20px 16px}
+  .sbar-phone{font-size:17px}
+  .other-svcs{padding:16px}
+  .svc-footer{padding:18px 16px}
+  .svc-footer-inner{flex-direction:column;text-align:center}
+}
+@media(max-width:380px){
+  .hero h1{font-size:29px}
+  .about-stats{grid-template-columns:1fr 1fr}
+  .stat-card:last-child{grid-column:1/-1}
+  .why-grid{grid-template-columns:1fr}
+}
+.acc-list{display:flex;flex-direction:column;gap:6px}.acc-item{background:var(--card);border:1px solid var(--border);border-radius:5px;overflow:hidden}.acc-head{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:none;border:none;color:var(--text);cursor:pointer;font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;text-align:left;transition:background .2s;gap:12px}.acc-head:hover{background:rgba(255,255,255,.06)}.acc-item.open .acc-head{color:var(--gold-l)}.acc-arrow{transition:transform .25s;flex-shrink:0;color:var(--gold)}.acc-item.open .acc-arrow{transform:rotate(180deg)}.acc-body{max-height:0;overflow:hidden;transition:max-height .3s ease}.acc-item.open .acc-body{max-height:200px}.acc-body p{padding:14px 16px;color:var(--muted);font-size:14px;line-height:1.72;margin:0}
+/* Town chips on service-areas page */
+/* LOCATIONS EXPLORER — map + sidebar with searchable region accordions */
+.loc-explorer{display:grid;grid-template-columns:1fr 360px;gap:14px;background:transparent;margin:0;width:100%}
+.loc-map-wrap{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:#eee;min-height:520px}
+.loc-map-wrap .kaim-map{border:none;border-radius:0;width:100%;height:100%;min-height:520px;margin:0}
+.loc-sidebar{background:var(--bg2)!important;border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;overflow:hidden;height:520px;min-height:520px;isolation:isolate}
+.loc-sidebar-head{padding:18px 20px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(201,168,76,.25)}
+.loc-sidebar-head h3{font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#fff;margin:0}
+.loc-count{font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;color:var(--gold-l);background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);border-radius:20px;padding:3px 12px;letter-spacing:.08em}
+.loc-search{padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border);position:relative}
+.loc-search input{width:100%;padding:10px 14px 10px 36px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:14px;outline:none;transition:border-color .15s,box-shadow .15s}
+.loc-search input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12)}
+.loc-search input::placeholder{color:var(--muted)}
+.loc-search-icon{position:absolute;left:28px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.loc-search-icon svg{width:15px;height:15px;display:block}
+.loc-list{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) var(--bg2);background:var(--bg2)!important}
+.loc-list::-webkit-scrollbar{width:6px}
+.loc-list::-webkit-scrollbar-track{background:var(--bg2)}
+.loc-list::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.loc-region{border-bottom:1px solid var(--border);background:var(--bg2)}
+.loc-region:last-child{border-bottom:none}
+.loc-region-head{width:100%;padding:14px 20px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;transition:background .15s;font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text)}
+.loc-region-head:hover{background:rgba(201,168,76,.06)}
+.loc-region-head .loc-region-count{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;color:var(--gold);background:rgba(201,168,76,.1);border-radius:12px;padding:2px 10px;letter-spacing:.06em;margin-left:auto;margin-right:8px}
+.loc-region-arrow{color:var(--gold);transition:transform .25s;flex-shrink:0}
+.loc-region.open .loc-region-arrow{transform:rotate(180deg)}
+.loc-region-body{max-height:0;overflow:hidden;transition:max-height .3s ease;background:var(--bg3)!important}
+.loc-region.open .loc-region-body{max-height:720px;overflow-y:auto}
+.loc-town{display:flex;align-items:center;gap:10px;padding:10px 22px;color:var(--muted);font-size:13.5px;text-decoration:none;cursor:pointer;border-left:3px solid transparent;transition:all .15s;background:transparent}
+.loc-town:hover,.loc-town.active{background:rgba(201,168,76,.08);color:var(--gold-l);border-left-color:var(--gold)}
+.loc-town svg{width:12px;height:12px;color:var(--gold);flex-shrink:0;opacity:.6}
+.loc-town:hover svg,.loc-town.active svg{opacity:1}
+.loc-empty{padding:24px 20px;text-align:center;color:var(--muted);font-size:13px;font-style:italic}
+@media(max-width:860px){
+  .loc-explorer{grid-template-columns:1fr;gap:12px}
+  .loc-map-wrap{min-height:380px;order:1}
+  .loc-map-wrap .kaim-map{min-height:380px}
+  .loc-sidebar{order:2;height:auto;max-height:560px;min-height:auto}
+}
+.town-chips{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:16px}
+.town-chip{display:inline-block;padding:8px 16px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:20px;color:var(--text);font-size:13.5px;font-family:'Source Sans 3',sans-serif;letter-spacing:.02em;transition:all .15s}
+.town-chip:hover{background:rgba(201,168,76,.18);border-color:var(--gold);color:var(--gold-l);transform:translateY(-1px)}
+
+/* LIVE-PLUS-EFFECTS - floating pill nav + scroll reveals. Remove block to revert. */
+nav{position:fixed!important;top:10px!important;left:50%!important;transform:translateX(-50%)!important;width:calc(100% - 24px)!important;max-width:1280px!important;background:rgba(13,30,53,.62)!important;backdrop-filter:saturate(180%) blur(14px)!important;-webkit-backdrop-filter:saturate(180%) blur(14px)!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:18px!important;box-shadow:0 10px 40px rgba(0,0,0,.4),0 2px 10px rgba(0,0,0,.2)!important;z-index:200;transition:background .55s ease,backdrop-filter .55s ease,box-shadow .55s ease,border-color .55s ease,width .55s cubic-bezier(.6,0,.3,1),max-width .55s ease,top .55s cubic-bezier(.6,0,.3,1),border-radius .55s cubic-bezier(.6,0,.3,1)}
+nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;border-radius:0!important;border-left:none!important;border-right:none!important;border-top:none!important;background:rgba(13,30,53,.92)!important;backdrop-filter:saturate(180%) blur(18px)!important;-webkit-backdrop-filter:saturate(180%) blur(18px)!important;border-bottom:1px solid rgba(255,255,255,.06)!important;box-shadow:0 8px 28px rgba(0,0,0,.35)!important}
+.nav-inner{height:74px!important}
+.nav-logo img{height:58px!important}
+@media(max-width:640px){
+  nav{top:0!important;width:100%!important;border-radius:0 0 16px 16px!important;border-top:none!important;border-left:none!important;border-right:none!important}
+  .nav-inner{height:62px!important;padding:0 16px!important}
+  .nav-logo img{height:48px!important}
+}
+.reveal{opacity:0;transform:translateY(60px);transition:opacity 1s cubic-bezier(.2,.65,.2,1),transform 1s cubic-bezier(.2,.65,.2,1);will-change:opacity,transform}
+.reveal.is-in{opacity:1;transform:translateY(0)}
+.reveal-scale{opacity:0;transform:translateY(40px) scale(.95);transition:opacity 1s cubic-bezier(.2,.65,.2,1),transform 1s cubic-bezier(.2,.65,.2,1)}
+.reveal-scale.is-in{opacity:1;transform:translateY(0) scale(1)}
+.stagger-item{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.2,.65,.2,1),transform .8s cubic-bezier(.2,.65,.2,1)}
+.stagger-item.is-in{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.reveal,.reveal-scale,.stagger-item{opacity:1;transform:none;transition:none}}
+/* Gold accent bar on every page-hero bottom edge */
+.page-hero{position:relative}
+.page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:3}
+
+</style>
+</head>
+<body>
+<nav><div class="nav-inner"><a href="index.html" class="nav-logo"><img src="images/logo.webp" alt="Kaim Contracting LLC" width="200" height="60"></a><ul class="nav-links"><li><a href="about.html">About <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="about.html"><b>About Us</b><p>Our story and what we stand for.</p></a><a class="dd-item" href="service-areas.html"><b>Service Areas</b><p>Towns we proudly serve in MA &amp; NH.</p></a><a class="dd-item" href="tools.html"><b>Free Tools</b><p>Paver, mulch &amp; pressure-wash calculators.</p></a><a class="dd-item" href="faq.html"><b>FAQ</b><p>Answers to common questions.</p></a><a class="dd-item" href="blog.html"><b>Blog</b><p>Tips, project highlights, and updates.</p></a></div></li><li><a href="index.html#services">Services <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="pressure-washing.html"><b>Pressure Washing</b><p>Deep cleaning for all outdoor surfaces.</p></a><a class="dd-item" href="pavers.html"><b>Paver Installation</b><p>Walkways, driveways, patios, walls &amp; fire pits.</p></a><a class="dd-item" href="drainage.html"><b>Drainage Solutions</b><p>French drains and water management.</p></a><a class="dd-item" href="landscaping.html"><b>Landscaping</b><p>Design, plantings, beds, mulch &amp; cleanups.</p></a></div></li><li><a href="index.html#contact">Contact</a></li></ul><div class="nav-info"><a href="tel:978-351-2195"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a><span class="nav-sep">|</span><a id="tb-email" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a><span class="nav-sep">|</span><span>Serving Greater Boston &amp; Southern NH &nbsp;|&nbsp; Complimentary Estimates</span></div><a href="index.html#contact" class="btn-nav">Get Started</a><button class="hamburger" onclick="document.querySelector('.mob-menu').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button></div><div class="mob-menu" id="mobMenu"><a href="about.html">About</a><a href="service-areas.html">Service Areas</a><a href="tools.html">Free Tools</a><a href="faq.html">FAQ</a><a href="blog.html">Blog</a><a href="pressure-washing.html">Pressure Washing</a><a href="pavers.html">Paver Installation</a><a href="drainage.html">Drainage Solutions</a><a href="landscaping.html">Landscaping</a><a href="paver-calculator.html">Paver Calculator</a><a href="mulch-calculator.html">Mulch Calculator</a><a href="pressure-washing-calculator.html">Pressure Wash Cost</a><a href="tel:978-351-2195">978-351-2195</a><a href="index.html#contact" class="cta" onclick="document.getElementById('mobMenu').classList.remove('open')">Get Started</a></div></nav>
+<div class="page-hero">
+  <div class="page-hero-photo" style="background-image:url('images/about-landscape.jpg')"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;&#8250;&nbsp; Service Areas</div>
+    <h1>Service Areas in <span>MA &amp; Southern NH</span></h1>
+    <p class="sub">Family run outdoor contracting across Methuen, the Merrimack Valley, and southern New Hampshire.</p>
+  </div>
+</div>
+<div class="page-body">
+  <div class="page-grid">
+    <div class="page-content">
+      <h2>Service Areas in <span>MA &amp; Southern NH</span></h2>
+      <p>Kaim Contracting LLC serves homeowners across the Merrimack Valley and southern New Hampshire. We are based in Methuen, MA and travel throughout the region for paver, landscape, hardscape, drainage, planting, and pressure washing projects.</p>
+      <div class="loc-explorer">
+  <div class="loc-map-wrap">
+    <div id="kaim-map" class="kaim-map"></div>
+  </div>
+  <div class="loc-sidebar">
+    <div class="loc-sidebar-head">
+      <h3>Service Areas</h3>
+      <span class="loc-count">28 towns</span>
+    </div>
+    <div class="loc-search">
+      <span class="loc-search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+      <input type="text" id="loc-search" placeholder="Search a town..." autocomplete="off">
+    </div>
+    <div class="loc-list" id="loc-list">
+      <div class="loc-region open" data-region="MA">
+        <button class="loc-region-head" type="button"><span>Massachusetts</span><span class="loc-region-count">17</span><svg class="loc-region-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="loc-region-body"><a class="loc-town" data-town="Methuen, MA" data-lat="42.7262" data-lon="-71.1909"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Methuen, MA</span></a><a class="loc-town" data-town="Andover, MA" data-lat="42.6583" data-lon="-71.1372"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Andover, MA</span></a><a class="loc-town" data-town="North Andover, MA" data-lat="42.7" data-lon="-71.1167"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>North Andover, MA</span></a><a class="loc-town" data-town="Lawrence, MA" data-lat="42.707" data-lon="-71.1631"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Lawrence, MA</span></a><a class="loc-town" data-town="Haverhill, MA" data-lat="42.7762" data-lon="-71.0773"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Haverhill, MA</span></a><a class="loc-town" data-town="Dracut, MA" data-lat="42.67" data-lon="-71.3025"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Dracut, MA</span></a><a class="loc-town" data-town="Lowell, MA" data-lat="42.6334" data-lon="-71.3162"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Lowell, MA</span></a><a class="loc-town" data-town="Tewksbury, MA" data-lat="42.6109" data-lon="-71.2342"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Tewksbury, MA</span></a><a class="loc-town" data-town="Chelmsford, MA" data-lat="42.5995" data-lon="-71.3673"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Chelmsford, MA</span></a><a class="loc-town" data-town="Groveland, MA" data-lat="42.7625" data-lon="-71.0292"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Groveland, MA</span></a><a class="loc-town" data-town="Georgetown, MA" data-lat="42.7251" data-lon="-70.9939"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Georgetown, MA</span></a><a class="loc-town" data-town="Merrimac, MA" data-lat="42.8323" data-lon="-71.0036"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Merrimac, MA</span></a><a class="loc-town" data-town="Amesbury, MA" data-lat="42.8584" data-lon="-70.93"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Amesbury, MA</span></a><a class="loc-town" data-town="West Newbury, MA" data-lat="42.8062" data-lon="-70.9886"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>West Newbury, MA</span></a><a class="loc-town" data-town="Newbury, MA" data-lat="42.7878" data-lon="-70.8753"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Newbury, MA</span></a><a class="loc-town" data-town="Newburyport, MA" data-lat="42.8126" data-lon="-70.8773"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Newburyport, MA</span></a><a class="loc-town" data-town="Salisbury, MA" data-lat="42.8418" data-lon="-70.8589"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Salisbury, MA</span></a></div>
+      </div>
+      <div class="loc-region" data-region="NH">
+        <button class="loc-region-head" type="button"><span>Southern New Hampshire</span><span class="loc-region-count">11</span><svg class="loc-region-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="loc-region-body"><a class="loc-town" data-town="Salem, NH" data-lat="42.7884" data-lon="-71.2009"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Salem, NH</span></a><a class="loc-town" data-town="Windham, NH" data-lat="42.8042" data-lon="-71.3098"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Windham, NH</span></a><a class="loc-town" data-town="Pelham, NH" data-lat="42.737" data-lon="-71.3267"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Pelham, NH</span></a><a class="loc-town" data-town="Atkinson, NH" data-lat="42.8395" data-lon="-71.1453"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Atkinson, NH</span></a><a class="loc-town" data-town="Hampstead, NH" data-lat="42.8806" data-lon="-71.1798"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Hampstead, NH</span></a><a class="loc-town" data-town="Plaistow, NH" data-lat="42.8362" data-lon="-71.095"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Plaistow, NH</span></a><a class="loc-town" data-town="Derry, NH" data-lat="42.8806" data-lon="-71.3273"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Derry, NH</span></a><a class="loc-town" data-town="Londonderry, NH" data-lat="42.8651" data-lon="-71.3739"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Londonderry, NH</span></a><a class="loc-town" data-town="Hudson, NH" data-lat="42.7644" data-lon="-71.4392"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Hudson, NH</span></a><a class="loc-town" data-town="Auburn, NH" data-lat="42.9959" data-lon="-71.3478"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Auburn, NH</span></a><a class="loc-town" data-town="Manchester, NH" data-lat="42.9956" data-lon="-71.4548"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Manchester, NH</span></a></div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="inc-section">
+        <h3>Not Sure If We Cover Your Town?</h3>
+        <p>If your town is not listed, give us a call at <a href="tel:978-351-2195" style="color:var(--gold-l)">978-351-2195</a>. We frequently take on projects just outside our standard radius and can let you know on the spot.</p>
+      </div>
+    </div>
+<div class="sidebar">
+      <div class="sbar-cta">
+        <h3>Ready to Get Started?</h3>
+        <p>Call us or fill out our quote form and we will respond quickly.</p>
+        <a href="index.html#contact" class="btn-gold">Request an Estimate</a>
+        <span class="sbar-or">or</span>
+        <a href="tel:978-351-2195" class="sbar-phone"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Call 978-351-2195</a>
+      </div>
+      <div class="other-svcs"><h4>More from Kaim</h4><a href="about.html">About Us <span>&#8594;</span></a><a href="faq.html">FAQ <span>&#8594;</span></a><a href="blog.html">Blog <span>&#8594;</span></a><a href="pavers.html">Our Services <span>&#8594;</span></a></div>
+    </div>
+  </div>
+</div>
+<footer class="svc-footer"><div class="svc-footer-inner"><div style="flex-basis:100%;text-align:center;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:4px"><div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:#c9a84c;margin-bottom:6px">Areas We Serve</div><div style="font-size:12.5px;color:rgba(255,255,255,.5);line-height:1.7;max-width:920px;margin:0 auto">Methuen, MA &middot; Andover, MA &middot; North Andover, MA &middot; Lawrence, MA &middot; Haverhill, MA &middot; Dracut, MA &middot; Lowell, MA &middot; Tewksbury, MA &middot; Chelmsford, MA &middot; Groveland, MA &middot; Georgetown, MA &middot; Merrimac, MA &middot; Amesbury, MA &middot; West Newbury, MA &middot; Newbury, MA &middot; Newburyport, MA &middot; Salisbury, MA &middot; Salem, NH &middot; Windham, NH &middot; Pelham, NH &middot; Atkinson, NH &middot; Hampstead, NH &middot; Plaistow, NH &middot; Derry, NH &middot; Londonderry, NH &middot; Hudson, NH &middot; Auburn, NH &middot; Manchester, NH</div></div><span>&copy; 2026 Kaim Contracting LLC. All Rights Reserved.</span><div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center"><a href="tel:978-351-2195">978-351-2195</a><a href="index.html#services">All Services</a><a href="index.html#contact">Get Started</a></div></div></footer>
+<script>function toggleAcc(btn){var item=btn.parentElement;var wasOpen=item.classList.contains('open');document.querySelectorAll('.acc-item.open').forEach(function(el){el.classList.remove('open')});if(!wasOpen){item.classList.add('open')}}</script>
+<script>
+(function(){
+  var em = 'info' + String.fromCharCode(64) + 'kaimcontracting.com';
+  var t = document.getElementById('tb-email');
+  if(t){t.textContent=em;t.href='mailto:'+em;}
+})();
+</script>
+<script>
+(function(){var n=document.querySelector('nav');if(!n)return;function check(){if(window.scrollY>20)n.classList.add('scrolled');else n.classList.remove('scrolled');}check();window.addEventListener('scroll',check,{passive:true});})();
+(function(){
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var revealMap=[];
+  revealMap.forEach(function(m){var el=document.querySelector(m.sel);if(el)el.classList.add(m.cls);});
+  document.querySelectorAll('.inc-item').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*70)+'ms';});
+  
+  var all=document.querySelectorAll('.reveal, .reveal-scale, .stagger-item');
+  if(!('IntersectionObserver' in window)){all.forEach(function(el){el.classList.add('is-in');});return;}
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -10% 0px',threshold:0.08});
+  all.forEach(function(el){io.observe(el);});
+})();
+</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var el=document.getElementById('kaim-map');
+  if(!el||typeof L==='undefined')return;
+  var map=window._kaimMap=L.map('kaim-map',{center:[42.78,-71.20],zoom:10,scrollWheelZoom:false,doubleClickZoom:false,zoomControl:true,attributionControl:true});
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://openstreetmap.org">OSM</a>',maxZoom:18,subdomains:'abcd'}).addTo(map);
+  var towns=[
+    {name:'Methuen, MA',lat:42.7262,lon:-71.1909,home:true},
+    {name:'Andover, MA',lat:42.6583,lon:-71.1372},
+    {name:'North Andover, MA',lat:42.7000,lon:-71.1167},
+    {name:'Lawrence, MA',lat:42.7070,lon:-71.1631},
+    {name:'Haverhill, MA',lat:42.7762,lon:-71.0773},
+    {name:'Dracut, MA',lat:42.6700,lon:-71.3025},
+    {name:'Lowell, MA',lat:42.6334,lon:-71.3162},
+    {name:'Tewksbury, MA',lat:42.6109,lon:-71.2342},
+    {name:'Chelmsford, MA',lat:42.5995,lon:-71.3673},
+    {name:'Groveland, MA',lat:42.7625,lon:-71.0292},
+    {name:'Georgetown, MA',lat:42.7251,lon:-70.9939},
+    {name:'Merrimac, MA',lat:42.8323,lon:-71.0036},
+    {name:'Amesbury, MA',lat:42.8584,lon:-70.9300},
+    {name:'West Newbury, MA',lat:42.8062,lon:-70.9886},
+    {name:'Newbury, MA',lat:42.7878,lon:-70.8753},
+    {name:'Newburyport, MA',lat:42.8126,lon:-70.8773},
+    {name:'Salisbury, MA',lat:42.8418,lon:-70.8589},
+    {name:'Salem, NH',lat:42.7884,lon:-71.2009},
+    {name:'Windham, NH',lat:42.8042,lon:-71.3098},
+    {name:'Pelham, NH',lat:42.7370,lon:-71.3267},
+    {name:'Atkinson, NH',lat:42.8395,lon:-71.1453},
+    {name:'Hampstead, NH',lat:42.8806,lon:-71.1798},
+    {name:'Plaistow, NH',lat:42.8362,lon:-71.0950},
+    {name:'Derry, NH',lat:42.8806,lon:-71.3273},
+    {name:'Londonderry, NH',lat:42.8651,lon:-71.3739},
+    {name:'Hudson, NH',lat:42.7644,lon:-71.4392},
+    {name:'Auburn, NH',lat:42.9959,lon:-71.3478},
+    {name:'Manchester, NH',lat:42.9956,lon:-71.4548}
+  ];
+  towns.forEach(function(t){
+    var icon=L.divIcon({className:'kaim-marker',html:'<div class="kaim-pin'+(t.home?' kaim-pin-home':'')+'"></div>',iconSize:t.home?[18,18]:[11,11],iconAnchor:t.home?[9,9]:[5.5,5.5]});
+    L.marker([t.lat,t.lon],{icon:icon}).bindTooltip(t.name+(t.home?' (Home Base)':''),{direction:'top',offset:[0,-2]}).addTo(map);
+  });
+  // Organic highlighted service area: overlapping circles around each town
+  var coverageLayer=L.featureGroup();
+  towns.forEach(function(t){
+    L.circle([t.lat,t.lon],{radius:9500,color:'transparent',fillColor:'#c9a84c',fillOpacity:0.10,interactive:false}).addTo(coverageLayer);
+  });
+  coverageLayer.addTo(map);
+  // Send coverage circles below the markers
+  coverageLayer.getLayers().forEach(function(l){if(l.bringToBack)l.bringToBack();});
+  map.fitBounds(coverageLayer.getBounds(),{padding:[24,24]});
+});
+</script>
+<script>
+(function(){
+  // Accordion toggle
+  document.querySelectorAll('.loc-region-head').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      btn.parentElement.classList.toggle('open');
+    });
+  });
+  // Search filter
+  var search=document.getElementById('loc-search');
+  if(search){
+    search.addEventListener('input',function(){
+      var q=search.value.trim().toLowerCase();
+      var anyVisible=false;
+      document.querySelectorAll('.loc-region').forEach(function(reg){
+        var visibleCount=0;
+        reg.querySelectorAll('.loc-town').forEach(function(t){
+          var name=t.dataset.town.toLowerCase();
+          var match=!q||name.indexOf(q)!==-1;
+          t.style.display=match?'':'none';
+          if(match)visibleCount++;
+        });
+        if(visibleCount>0&&q){reg.classList.add('open');anyVisible=true;}
+        else if(!q){reg.classList.toggle('open',reg.dataset.region==='MA');}
+        reg.style.display=visibleCount>0||!q?'':'none';
+      });
+    });
+  }
+  // Click town -> pan map
+  document.querySelectorAll('.loc-town').forEach(function(t){
+    t.addEventListener('click',function(e){
+      e.preventDefault();
+      document.querySelectorAll('.loc-town.active').forEach(function(o){o.classList.remove('active');});
+      t.classList.add('active');
+      if(window._kaimMap){
+        var lat=parseFloat(t.dataset.lat),lon=parseFloat(t.dataset.lon);
+        window._kaimMap.flyTo([lat,lon],13,{duration:.9});
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

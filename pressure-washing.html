@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "Service",
-  "serviceType": "Pressure Washing",
-  "name": "Pressure Washing in Methuen, MA & Southern NH",
+  "serviceType": "Pressure Washing & Soft Washing",
+  "name": "Pressure Washing & Soft Washing in Methuen, MA & Southern NH",
   "description": "Pressure and soft washing for driveways, siding, decks, patios, fences and roofs. Serving Greater Boston and Southern NH from Methuen, MA.",
   "url": "https://kaimcontracting.com/pressure-washing.html",
   "image": "https://kaimcontracting.com/images/pressure%20washing%20stock.webp",
@@ -107,7 +107,7 @@ nav{background:var(--bg2);position:sticky;top:0;z-index:150;box-shadow:0 2px 20p
 .dd-item b{font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text);display:block;margin-bottom:2px}
 .dd-item:hover b{color:var(--gold-l)}
 .dd-item p{font-size:11.5px;color:var(--muted);line-height:1.4}
-.btn-nav{background:var(--gold)!important;color:var(--teal)!important;font-family:'Oswald',sans-serif!important;font-size:12.5px!important;font-weight:600!important;letter-spacing:.1em!important;text-transform:uppercase!important;padding:9px 18px!important;border-radius:3px!important;margin-left:10px!important}
+.btn-nav{background:var(--gold)!important;color:var(--teal)!important;font-family:'Oswald',sans-serif!important;font-size:12.5px!important;font-weight:600!important;letter-spacing:.1em!important;text-transform:uppercase!important;padding:9px 18px!important;border-radius:3px!important;margin-left:10px!important;text-decoration:none!important}
 .btn-nav:hover{background:var(--gold-l)!important}
 .nav-info{display:flex;align-items:center;gap:14px;margin-left:auto;margin-right:16px}
 .nav-info a,.nav-info span{font-size:11.5px;color:rgba(255,255,255,.6);text-decoration:none;display:flex;align-items:center;gap:5px;font-family:'Source Sans 3',sans-serif;white-space:nowrap}
@@ -311,7 +311,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
 .page-content p{color:var(--muted);margin-bottom:16px;font-size:15px;line-height:1.78}
 .page-content img{width:100%;border-radius:8px;margin:24px 0;box-shadow:0 14px 44px var(--sh);object-fit:cover;height:300px;display:block}
 .inc-section{margin-top:30px}
-.inc-section h3{font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text);margin-bottom:14px;padding-bottom:9px;border-bottom:2px solid var(--border)}
+.inc-section h3{font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-l);margin-bottom:14px;padding-bottom:9px;border-bottom:2px solid var(--border)}
 .inc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .inc-item{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:5px;padding:13px 14px}
 .inc-icon{width:26px;height:26px;background:var(--teal);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold-l);font-size:14px;font-weight:700;font-family:'Oswald',sans-serif}
@@ -423,61 +423,245 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   .stat-card:last-child{grid-column:1/-1}
   .why-grid{grid-template-columns:1fr}
 }
-.acc-list{display:flex;flex-direction:column;gap:6px}.acc-item{background:var(--card);border:1px solid var(--border);border-radius:5px;overflow:hidden}.acc-head{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:none;border:none;color:var(--text);cursor:pointer;font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;text-align:left;transition:background .2s;gap:12px}.acc-head:hover{background:rgba(255,255,255,.06)}.acc-item.open .acc-head{color:var(--gold-l)}.acc-arrow{transition:transform .25s;flex-shrink:0;color:var(--gold)}.acc-item.open .acc-arrow{transform:rotate(180deg)}.acc-body{max-height:0;overflow:hidden;transition:max-height .35s ease}.acc-item.open .acc-body{max-height:900px}.acc-body p{padding:14px 16px 4px;color:var(--muted);font-size:14px;line-height:1.72;margin:0}.acc-body p:last-child{padding-bottom:14px}</style>
+.acc-list{display:flex;flex-direction:column;gap:6px}.acc-item{background:var(--card);border:1px solid var(--border);border-radius:5px;overflow:hidden}.acc-head{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:none;border:none;color:var(--text);cursor:pointer;font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;text-align:left;transition:background .2s;gap:12px}.acc-head:hover{background:rgba(255,255,255,.06)}.acc-item.open .acc-head{color:var(--gold-l)}.acc-arrow{transition:transform .25s;flex-shrink:0;color:var(--gold)}.acc-item.open .acc-arrow{transform:rotate(180deg)}.acc-body{max-height:0;overflow:hidden;transition:max-height .35s ease}.acc-item.open .acc-body{max-height:900px}.acc-body p{padding:14px 16px 4px;color:var(--muted);font-size:14px;line-height:1.72;margin:0}.acc-body p:last-child{padding-bottom:14px}
+/* LIVE-PLUS-EFFECTS - floating pill nav + scroll reveals. Remove block to revert. */
+nav{position:fixed!important;top:10px!important;left:50%!important;transform:translateX(-50%)!important;width:calc(100% - 24px)!important;max-width:1280px!important;background:rgba(13,30,53,.62)!important;backdrop-filter:saturate(180%) blur(14px)!important;-webkit-backdrop-filter:saturate(180%) blur(14px)!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:18px!important;box-shadow:0 10px 40px rgba(0,0,0,.4),0 2px 10px rgba(0,0,0,.2)!important;z-index:200;transition:background .55s ease,backdrop-filter .55s ease,box-shadow .55s ease,border-color .55s ease,width .55s cubic-bezier(.6,0,.3,1),max-width .55s ease,top .55s cubic-bezier(.6,0,.3,1),border-radius .55s cubic-bezier(.6,0,.3,1)}
+nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;border-radius:0!important;border-left:none!important;border-right:none!important;border-top:none!important;background:rgba(13,30,53,.92)!important;backdrop-filter:saturate(180%) blur(18px)!important;-webkit-backdrop-filter:saturate(180%) blur(18px)!important;border-bottom:1px solid rgba(255,255,255,.06)!important;box-shadow:0 8px 28px rgba(0,0,0,.35)!important}
+.nav-inner{height:74px!important}
+.nav-logo img{height:58px!important}
+@media(max-width:640px){
+  nav{top:0!important;width:100%!important;border-radius:0 0 16px 16px!important;border-top:none!important;border-left:none!important;border-right:none!important}
+  .nav-inner{height:62px!important;padding:0 16px!important}
+  .nav-logo img{height:48px!important}
+}
+.reveal{opacity:0;transform:translateY(60px);transition:opacity 1s cubic-bezier(.2,.65,.2,1),transform 1s cubic-bezier(.2,.65,.2,1);will-change:opacity,transform}
+.reveal.is-in{opacity:1;transform:translateY(0)}
+.reveal-scale{opacity:0;transform:translateY(40px) scale(.95);transition:opacity 1s cubic-bezier(.2,.65,.2,1),transform 1s cubic-bezier(.2,.65,.2,1)}
+.reveal-scale.is-in{opacity:1;transform:translateY(0) scale(1)}
+.stagger-item{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.2,.65,.2,1),transform .8s cubic-bezier(.2,.65,.2,1)}
+.stagger-item.is-in{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.reveal,.reveal-scale,.stagger-item{opacity:1;transform:none;transition:none}}
+/* FAQ list — distinct from the services accordion (no card boxes, clean Q&A list) */
+.svc-faq-list{display:flex;flex-direction:column;gap:0}
+.svc-faq-list .acc-item{background:transparent!important;border:none!important;border-bottom:1px solid var(--border)!important;border-radius:0!important;overflow:visible}
+.svc-faq-list .acc-item:first-child{border-top:1px solid var(--border)!important}
+.svc-faq-list .acc-head{padding:20px 0!important;font-family:'Source Sans 3',sans-serif!important;font-size:16px!important;text-transform:none!important;letter-spacing:0!important;font-weight:600!important;color:var(--text)!important;line-height:1.4}
+.svc-faq-list .acc-head:hover{background:none!important;color:var(--gold-l)!important}
+.svc-faq-list .acc-item.open .acc-head{color:var(--gold-l)!important}
+.svc-faq-list .acc-arrow{width:24px!important;height:24px!important;border-radius:50%!important;background:rgba(201,168,76,.12)!important;border:1px solid rgba(201,168,76,.35)!important;display:inline-flex!important;align-items:center;justify-content:center;color:var(--gold-l)!important;flex-shrink:0;transform-origin:center}
+.svc-faq-list .acc-item.open .acc-arrow{background:var(--gold)!important;color:var(--teal)!important}
+.svc-faq-list .acc-body p{padding:0 0 20px!important;color:var(--muted);font-size:14.5px;line-height:1.75;max-width:780px}
+.svc-faq-list .acc-item.open .acc-body{max-height:600px!important}
+
+/* SERVICE PAGE REWORK (ViewCrew-style flow) — full-width sections, no sidebar */
+.svc-hero{position:relative;min-height:580px;display:flex;align-items:center;overflow:hidden;z-index:2}
+.svc-hero-photo{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+.svc-hero-overlay{position:absolute;inset:0;background:linear-gradient(110deg,rgba(7,24,40,.88) 0%,rgba(20,36,52,.72) 50%,rgba(20,36,52,.45) 100%);z-index:1}
+.svc-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:4}
+.svc-hero-content{position:relative;z-index:3;max-width:1200px;margin:0 auto;padding:120px 24px 80px;width:100%;display:grid;grid-template-columns:1.2fr 1fr;gap:52px;align-items:center}
+.svc-hero-text .svc-eyebrow{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-l);margin-bottom:18px;text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.svc-hero-text h1{font-family:'Oswald',sans-serif;font-size:clamp(30px,4.2vw,50px);font-weight:700;color:#fff;line-height:1.05;margin-bottom:10px;letter-spacing:.01em;text-transform:uppercase;text-shadow:0 2px 24px rgba(0,0,0,.6)}
+.svc-hero-text h1 span{color:var(--gold-l)}
+.svc-hero-text .sub{color:rgba(255,255,255,.92);font-size:16.5px;line-height:1.65;margin:0 0 26px;text-shadow:0 1px 12px rgba(0,0,0,.4);max-width:540px}
+.svc-hero-text .breadcrumb{font-family:'Oswald',sans-serif;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.svc-hero-text .breadcrumb a{color:rgba(255,255,255,.6);text-decoration:none}
+.svc-loc{font-family:'Oswald',sans-serif;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-l);margin-bottom:16px;font-weight:600;text-shadow:0 1px 8px rgba(0,0,0,.7);opacity:.85}
+
+.svc-hero-text .trust{display:flex;gap:20px;flex-wrap:wrap;margin-top:24px}
+.svc-hero-text .trust span{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.78);font-family:'Source Sans 3',sans-serif;font-size:13px;letter-spacing:.02em;text-transform:none;font-weight:600}
+.svc-hero-text .trust svg{width:16px;height:16px;color:var(--gold-l);flex-shrink:0}
+
+.svc-hero-form{background:rgba(13,30,53,.62);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:28px 24px 22px;box-shadow:0 28px 70px rgba(0,0,0,.5)}
+.svc-hero-form h3{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-l);margin-bottom:4px;line-height:1.2}
+.svc-hero-form .svc-hf-sub{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:14px;line-height:1.5}
+.svc-hero-form .hf{margin-bottom:10px}
+.svc-hero-form input,.svc-hero-form select,.svc-hero-form textarea{width:100%;padding:11px 12px;border:1px solid rgba(255,255,255,.15);border-radius:6px;font-family:'Source Sans 3',sans-serif;font-size:14.5px;color:#fff;background:rgba(255,255,255,.06);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s,background .15s}
+.svc-hero-form input::placeholder,.svc-hero-form textarea::placeholder{color:rgba(255,255,255,.55)}
+.svc-hero-form input:focus,.svc-hero-form select:focus,.svc-hero-form textarea:focus{border-color:var(--gold);background:rgba(255,255,255,.12)}
+.svc-hero-form select option{background:#0d1e35;color:#fff}
+.svc-hero-form button{width:100%;background:var(--gold);color:var(--teal);border:none;border-radius:6px;padding:14px;font-family:'Oswald',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin-top:6px;transition:background .15s,transform .15s}
+.svc-hero-form button:hover{background:var(--gold-l);transform:translateY(-1px)}
+.svc-hero-form .svc-hf-foot{margin-top:11px;text-align:center;font-size:12px;color:rgba(255,255,255,.6)}
+.svc-hero-form .svc-hf-foot a{color:var(--gold-l);font-weight:700;text-decoration:none}
+
+.svc-block{padding:80px 24px;position:relative;overflow:hidden}
+.svc-block-dark{background:var(--bg2);position:relative}
+.svc-block-dark::after{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:1500px;opacity:.04;pointer-events:none;z-index:0}
+.svc-block-dark .svc-block-inner{position:relative;z-index:1}
+.svc-block-darker{background:var(--bg)}
+.svc-block-mid{background:var(--bg3);position:relative}
+.svc-block-mid::after{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:1500px;opacity:.04;pointer-events:none;z-index:0}
+.svc-block-mid .svc-block-inner{position:relative;z-index:1}
+.svc-block::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:5;opacity:.6}
+.svc-block-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.svc-block-header{text-align:center;margin-bottom:38px}
+.svc-block-header .svc-label{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:600}
+.svc-block-header h2{font-family:'Oswald',sans-serif;font-size:clamp(24px,3.4vw,36px);font-weight:700;text-transform:uppercase;color:var(--gold-l);letter-spacing:.02em;line-height:1.15}
+.svc-block-header h2 span{color:var(--gold-l)}
+.svc-block-header p{margin-top:12px;color:var(--muted);font-size:15.5px;max-width:640px;margin-left:auto;margin-right:auto;line-height:1.7}
+
+.svc-split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.svc-split-text h2{font-family:'Oswald',sans-serif;font-size:clamp(24px,3.4vw,34px);font-weight:700;text-transform:uppercase;color:var(--text);letter-spacing:.02em;line-height:1.15;margin-bottom:14px}
+.svc-split-text h2 span{color:var(--gold-l)}
+.svc-split-text > p{color:var(--muted);font-size:15.5px;line-height:1.75;margin-bottom:20px}
+.svc-checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px}
+.svc-checklist li{display:flex;gap:12px;color:var(--text);font-size:15px;line-height:1.6;align-items:flex-start}
+.svc-checklist .svc-check{width:24px;height:24px;border-radius:50%;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:var(--gold-l);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700;font-size:13px;margin-top:1px}
+.svc-split-img{border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.45);min-height:360px;position:relative}
+.svc-split-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+
+.svc-rating-band{padding:48px 24px;background:linear-gradient(135deg,var(--teal) 0%,var(--bg3) 100%);text-align:center;border-top:1px solid rgba(201,168,76,.2);border-bottom:1px solid rgba(201,168,76,.2)}
+.svc-rating-stars{font-size:28px;color:var(--gold);letter-spacing:6px;margin-bottom:8px}
+.svc-rating-num{font-family:'Oswald',sans-serif;font-size:42px;font-weight:700;color:var(--gold-l);letter-spacing:.02em;line-height:1;margin-bottom:6px}
+.svc-rating-text{color:rgba(255,255,255,.78);font-size:14.5px;letter-spacing:.04em;max-width:560px;margin:0 auto}
+
+.svc-final{padding:80px 24px;background:linear-gradient(135deg,#071828 0%,#0d1e35 100%);position:relative;overflow:hidden;text-align:center}
+.svc-final::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:5}
+.svc-final-inner{max-width:760px;margin:0 auto;position:relative;z-index:1}
+.svc-final h2{font-family:'Oswald',sans-serif;font-size:clamp(28px,4vw,42px);font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.02em;line-height:1.1;margin-bottom:14px}
+.svc-final h2 span{color:var(--gold-l);font-style:italic;font-weight:600}
+.svc-final p{color:rgba(255,255,255,.78);font-size:16px;line-height:1.65;margin:0 auto 30px;max-width:560px}
+.svc-final .cta-row{display:inline-flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:center}
+.svc-final .btn-gold-cta{display:inline-block;background:var(--gold);color:var(--teal);font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:16px 34px;border-radius:6px;text-decoration:none;transition:background .2s,transform .15s;box-shadow:0 10px 30px rgba(201,168,76,.3)}
+.svc-final .btn-gold-cta:hover{background:var(--gold-l);transform:translateY(-2px)}
+.svc-final .cta-or{color:rgba(255,255,255,.55);font-size:14px}
+.svc-final .cta-or a{color:var(--gold-l);font-weight:700;text-decoration:none}
+
+@media(max-width:860px){
+  .svc-hero{min-height:auto}
+  .svc-hero-content{grid-template-columns:1fr;padding:96px 18px 40px;gap:24px}
+  .svc-hero-form{max-width:420px;margin:0 auto;width:100%}
+  .svc-split{grid-template-columns:1fr;gap:28px}
+  .svc-split-img{min-height:260px;order:2}
+  .svc-block{padding:54px 18px}
+  .svc-final{padding:54px 18px}
+}
+
+.acc-item.acc-featured{border:1px solid var(--gold)!important;border-left:4px solid var(--gold)!important;background:linear-gradient(90deg,rgba(201,168,76,.07),var(--card) 40%);position:relative}
+.acc-item.acc-featured .acc-head{color:var(--gold-l)}
+.acc-featured-badge{display:inline-block;font-family:'Oswald',sans-serif;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--teal);background:var(--gold);padding:3px 9px;border-radius:3px;margin-left:10px;vertical-align:middle;line-height:1}
+
+/* Service-page benefit + process + final-cta sections */
+.svc-benefits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+.svc-benefit{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px 20px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;transition:border-color .2s,transform .2s,box-shadow .2s}
+.svc-benefit:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.svc-benefit-icon{width:46px;height:46px;border-radius:50%;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;color:var(--gold-l);flex-shrink:0}
+.svc-benefit-icon svg{width:22px;height:22px}
+.svc-benefit h4{font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;color:var(--text);letter-spacing:.05em;line-height:1.2}
+.svc-benefit p{color:var(--muted);font-size:13.5px;line-height:1.6;margin:0}
+
+.svc-process{display:flex;align-items:flex-start;justify-content:center;gap:0;margin-top:24px;flex-wrap:nowrap}
+.svc-process-node{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:240px;padding:0 4px}
+.svc-process-circle{width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 32% 28%,var(--bg3) 0%,var(--teal) 78%);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:0 8px 22px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.1);position:relative}
+.svc-process-circle::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px dashed rgba(201,168,76,.3);pointer-events:none}
+.svc-process-num{font-family:'Oswald',sans-serif;font-size:30px;font-weight:700;color:var(--gold-l);text-shadow:0 2px 8px rgba(0,0,0,.6);line-height:1}
+.svc-process-node h4{font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.05em;margin-bottom:6px}
+.svc-process-node h4 span{color:var(--gold-l)}
+.svc-process-node p{color:var(--muted);font-size:13px;line-height:1.55;max-width:200px;margin:0 auto}
+.svc-process-arrow{display:flex;align-items:center;color:var(--gold);padding:26px 4px 0}
+.svc-process-arrow svg{width:24px;height:24px;display:block}
+@media(max-width:720px){.svc-process{flex-direction:column;align-items:center}.svc-process-arrow{padding:8px 0;transform:rotate(90deg)}.svc-process-node{max-width:340px}.svc-benefits-grid{grid-template-columns:1fr}}
+
+.svc-final-cta{margin-top:36px;padding:36px 28px;background:linear-gradient(135deg,var(--teal) 0%,var(--bg3) 100%);border-radius:12px;border:1px solid var(--border2);text-align:center;position:relative;overflow:hidden}
+.svc-final-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%)}
+.svc-final-cta h3{font-family:'Oswald',sans-serif;font-size:clamp(20px,3vw,28px);font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.02em;line-height:1.15;margin-bottom:10px}
+.svc-final-cta h3 span{color:var(--gold-l);font-style:italic;font-weight:600}
+.svc-final-cta p{color:var(--muted);font-size:14.5px;line-height:1.6;max-width:540px;margin:0 auto 22px}
+.svc-final-cta .cta-row{display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap}
+.svc-final-cta .btn-gold-cta{display:inline-block;background:var(--gold);color:var(--teal);font-family:'Oswald',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:14px 28px;border-radius:6px;text-decoration:none;transition:background .2s,transform .15s;box-shadow:0 8px 22px rgba(201,168,76,.25)}
+.svc-final-cta .btn-gold-cta:hover{background:var(--gold-l);transform:translateY(-1px)}
+.svc-final-cta .cta-or{color:var(--muted);font-size:13px}
+.svc-final-cta .cta-or a{color:var(--gold-l);font-weight:700;text-decoration:none}
+
+/* Gold accent bar on every page-hero bottom edge */
+.page-hero{position:relative}
+.page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:3}
+
+</style>
 </head>
 <body>
-<nav><div class="nav-inner"><a href="index.html" class="nav-logo"><img src="images/logo.webp" alt="Kaim Contracting LLC" width="200" height="60"></a><ul class="nav-links"><li><a href="index.html#about">About</a></li><li><a href="index.html#services">Services <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="drainage.html"><b>Drainage Solutions</b><p>French drains and water management.</p></a><a class="dd-item" href="hardscaping.html"><b>Hardscaping</b><p>Retaining walls, steps, and decorative stone.</p></a><a class="dd-item" href="design.html"><b>Landscape Design</b><p>Custom layouts tailored to your property.</p></a><a class="dd-item" href="landscaping.html"><b>Landscaping</b><p>Garden design, installation, and cleanups.</p></a><a class="dd-item" href="pavers.html"><b>Paver Installation</b><p>Walkways, driveways, and patio surfaces.</p></a><a class="dd-item" href="plantings.html"><b>Plantings</b><p>Trees, shrubs, and seasonal plants.</p></a><a class="dd-item" href="pressure-washing.html"><b>Pressure Washing</b><p>Deep cleaning for all outdoor surfaces.</p></a></div></li><li><a href="index.html#contact">Contact</a></li></ul><div class="nav-info"><a href="tel:978-351-2195"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a><span class="nav sep">|</span><a id="tb email" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke width="2" stroke linecap="round" stroke linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a><span class="nav sep">|</span><span>Serving Greater Boston &amp; Southern NH &nbsp;|&nbsp; Complimentary Estimates</span></div><a href="index.html#contact" class="btn nav">Get Started</a><button class="hamburger" onclick="document.querySelector('.mob menu').classList.toggle('open')" aria label="Menu"><span></span><span></span><span></span></button></div><div class="mob menu" id="mobMenu"><a href="index.html#about" onclick="document.getElementById('mobMenu').classList.remove('open')">About</a><a href="index.html#services" onclick="document.getElementById('mobMenu').classList.remove('open')">Services</a><a href="tel:978-351-2195">978-351-2195</a><a href="index.html#contact" class="cta" onclick="document.getElementById('mobMenu').classList.remove('open')">Get Started</a></div></nav>
-<div class="page hero">
-  <div class="page hero photo" style="background image:url('images/tile pressure svc.webp')"></div>
-  <div class="page hero overlay"></div>
-  <div class="page hero content">
-    <a href="index.html" class="home btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke width="2" stroke linecap="round" stroke linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Back to Home</a>
-    <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;&#8250;&nbsp; <a href="index.html#services">Services</a> &nbsp;&#8250;&nbsp; Pressure Washing</div>
-    <h1>Pressure <span>Washing</span> in Methuen, MA &amp; Southern NH</h1>
-    <p class="sub">Pressure and soft washing for driveways, siding, decks, patios &amp; roofs in Methuen, Andover, Lawrence, Salem NH and surrounding towns — safe on every surface.</p>
+<nav><div class="nav-inner"><a href="index.html" class="nav-logo"><img src="images/logo.webp" alt="Kaim Contracting LLC" width="200" height="60"></a><ul class="nav-links"><li><a href="about.html">About <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="about.html"><b>About Us</b><p>Our story and what we stand for.</p></a><a class="dd-item" href="service-areas.html"><b>Service Areas</b><p>Towns we proudly serve in MA &amp; NH.</p></a><a class="dd-item" href="tools.html"><b>Free Tools</b><p>Paver, mulch &amp; pressure-wash calculators.</p></a><a class="dd-item" href="faq.html"><b>FAQ</b><p>Answers to common questions.</p></a><a class="dd-item" href="blog.html"><b>Blog</b><p>Tips, project highlights, and updates.</p></a></div></li><li><a href="index.html#services">Services <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="pressure-washing.html"><b>Pressure Washing</b><p>Deep cleaning for all outdoor surfaces.</p></a><a class="dd-item" href="pavers.html"><b>Paver Installation</b><p>Walkways, driveways, patios, walls &amp; fire pits.</p></a><a class="dd-item" href="drainage.html"><b>Drainage Solutions</b><p>French drains and water management.</p></a><a class="dd-item" href="landscaping.html"><b>Landscaping</b><p>Design, plantings, beds, mulch &amp; cleanups.</p></a></div></li><li><a href="index.html#contact">Contact</a></li></ul><div class="nav-info"><a href="tel:978-351-2195"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a><span class="nav-sep">|</span><a id="tb-email" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a><span class="nav-sep">|</span><span>Serving Greater Boston &amp; Southern NH &nbsp;|&nbsp; Complimentary Estimates</span></div><a href="index.html#contact" class="btn-nav">Get Started</a><button class="hamburger" onclick="document.querySelector('.mob-menu').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button></div><div class="mob-menu" id="mobMenu"><a href="about.html">About</a><a href="service-areas.html">Service Areas</a><a href="tools.html">Free Tools</a><a href="faq.html">FAQ</a><a href="blog.html">Blog</a><a href="index.html#services" onclick="document.getElementById('mobMenu').classList.remove('open')">Services</a><a href="paver-calculator.html">Paver Calculator</a><a href="mulch-calculator.html">Mulch Calculator</a><a href="pressure-washing-calculator.html">Pressure Wash Cost</a><a href="tel:978-351-2195">978-351-2195</a><a href="index.html#contact" class="cta" onclick="document.getElementById('mobMenu').classList.remove('open')">Get Started</a></div></nav>
+<section class="svc-hero" id="top-form">
+  <div class="svc-hero-photo" style="background-image:url('images/pressure washing stock.webp')"></div>
+  <div class="svc-hero-overlay"></div>
+  <div class="svc-hero-content">
+    <div class="svc-hero-text">
+      <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;&#8250;&nbsp; <a href="index.html#services-preview">Services</a> &nbsp;&#8250;&nbsp; Pressure Washing</div>
+      <h1>Pressure &amp; <span>Soft Washing</span></h1>
+      <div class="svc-loc">Methuen, MA &middot; Greater Boston &middot; Southern NH</div>
+      <p class="sub">Eco-friendly soft washing and pressure washing for siding, driveways, decks, fences, and roofs. Safe pressure for every surface, results that last longer than the standard one-and-done blast.</p>
+      <div class="trust"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Free Estimates</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Licensed &amp; Insured</span></div>
+    </div>
+    <form class="svc-hero-form" id="pressure-washing-hero-form" autocomplete="on" novalidate>
+        <h3>Get a Free Pressure Wash Quote</h3>
+        <div class="svc-hf-sub">No pressure, no obligation. We respond within 1 business day.</div>
+        <div style="display:none" aria-hidden="true"><label>Leave empty<input type="text" name="hf_hpot" tabindex="-1" autocomplete="off" value=""></label></div>
+        <div class="hf"><input type="text" name="hf-name" placeholder="Your name" required></div>
+        <div class="hf"><input type="tel" name="hf-phone" placeholder="Phone number" required></div>
+        <div class="hf"><input type="email" name="hf-email" placeholder="Email (optional)"></div>
+        <div class="hf"><textarea name="hf-message" placeholder="Briefly describe your project (optional)" rows="2" style="resize:vertical;min-height:60px"></textarea></div>
+        <button type="submit" id="pressure-washing-hero-submit">Request My Estimate</button>
+        <div class="svc-hf-foot">Or call <a href="tel:978-351-2195">978-351-2195</a></div>
+      </form>
   </div>
-</div>
-<div class="page-body">
-  <div class="page-grid">
-    <div class="page-content">
+</section>
+<section class="svc-block svc-block-dark">
+  <div class="svc-block-inner">
+    <div class="svc-split">
+      <div class="svc-split-text">
+        <h2>Why Soft Wash Your Home?</h2>
+        <p>Most house exteriors should be soft washed, not pressure washed. High pressure on vinyl siding forces water behind panels and creates mold inside your walls. Soft washing uses low pressure + biodegradable cleaning solutions to kill mold and algae at the root.</p>
+        <ul class="svc-checklist"><li><span class="svc-check">&#10003;</span><span>Keeps your home cleaner, for longer (kills growth at the root)</span></li><li><span class="svc-check">&#10003;</span><span>Eliminates mold, mildew, algae, and stains in a single visit</span></li><li><span class="svc-check">&#10003;</span><span>Gentle on siding, paint, roofs, and landscaping</span></li><li><span class="svc-check">&#10003;</span><span>Eco-friendly, biodegradable cleaning solutions safe for kids &amp; pets</span></li></ul>
+      </div>
+      <div class="svc-split-img"><img src="images/pressure washing stock.webp" alt="Before and after soft wash on house siding in Methuen, MA" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="svc-block svc-block-darker">
+  <div class="svc-block-inner" style="max-width:900px">
+    <div class="svc-block-header">
+      <div class="svc-label">Pressure Washing Services</div>
+      <h2>What We <span>Offer</span></h2>
+    </div>
+
       <h2>Professional <span>Pressure Washing</span></h2>
       <p>Pressure washing looks simple from the outside (point a wand, pull a trigger) but it is one of the easiest ways to ruin a home if you do not know what you are doing. The wrong pressure on vinyl siding forces water behind the panels and creates mold inside your walls. Too much pressure on a roof tears granules off shingles and shaves years off its lifespan. Blasting paver joints washes out the polymeric sand and leaves your patio shifting and full of weeds. Concrete can be permanently etched. Wood can be splintered. Paint can be stripped. We see the damage from DIY and box store rental jobs constantly.</p>
       <p>Kaim Contracting LLC uses commercial grade equipment, the right chemicals for each surface, and the right pressure for each material. Soft wash for siding and roofs. Surface cleaners and tuned PSI for hardscape. Bio degradable detergents that kill mold and algae at the root so it does not come back in three months. Each job gets the right approach for the surface, not a one size fits all blast.</p>
-      <img src="images/pressure washing stock.webp" alt="Pressure washing a driveway in Methuen, MA by Kaim Contracting LLC" loading="lazy" width="800" height="300">
       <div class="inc-section">
         <h3>Services We Offer</h3>
-        <div class="acc-list">
+        <div class="acc-list"><div class="acc-item acc-featured"><button class="acc-head" onclick="toggleAcc(this)"><span>Soft Wash (Siding, Roofs &amp; Painted Surfaces) <span class="acc-featured-badge">Most Requested</span></span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Low-pressure cleaning paired with eco-friendly cleaning solutions. The only safe way to clean vinyl siding, painted wood, stucco, and asphalt-shingle roofs without forcing water behind panels, stripping paint, or tearing granules off shingles. Our detergents are biodegradable, kid and pet safe, and rinse clean with no chemical residue. Results last longer than traditional pressure washing because the cleaning solution kills the mold and algae at the root, not just the surface stain.</p></div></div>
           <div class="acc-item">
             <button class="acc-head" onclick="toggleAcc(this)"><span>House Washing</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-            <div class="acc body">
+            <div class="acc-body">
               <p>Vinyl, wood, fiber cement, brick, and stucco all react differently to water and pressure. One wrong setting is enough to force water behind the siding, strip paint, blow out caulking, or void the manufacturer warranty on the panels themselves. Mold inside walls from a bad wash is one of the most expensive insurance claims homeowners file.</p>
               <p>We exclusively soft wash. Low pressure paired with a commercial bio degradable detergent that kills mold, mildew, and algae at the root. The result lasts months longer than rinsing with high pressure alone because we are actually killing the growth instead of just blasting it off. Landscaping, windows, electrical outlets, and HVAC units are all protected before we start.</p>
             </div>
           </div>
           <div class="acc-item">
             <button class="acc-head" onclick="toggleAcc(this)"><span>Roof Washing</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-            <div class="acc body">
+            <div class="acc-body">
               <p>Those black streaks on a shingle roof are a living organism called Gloeocapsa magma. It feeds on limestone in the shingles and spreads year over year. Standard pressure washing on a roof is a catastrophic mistake. High pressure strips the granules off the shingles, removes the UV protective layer, voids the manufacturer warranty, and can shave 5 to 10 years off the roof&#8217;s lifespan in a single afternoon.</p>
               <p>We follow the ARMA (Asphalt Roofing Manufacturers Association) and shingle manufacturer approved soft wash protocol: a calibrated mix of sodium hypochlorite and surfactants applied at near zero pressure. It kills the algae, moss, and lichen at the cellular level and the rain rinses it off. One treatment lasts 4 to 6 years and your warranty stays intact.</p>
             </div>
           </div>
           <div class="acc-item">
             <button class="acc-head" onclick="toggleAcc(this)"><span>Patios, Pavers & Walkways</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-            <div class="acc body">
+            <div class="acc-body">
               <p>Concrete, bluestone, brick, and natural stone each have their own pressure tolerance and surface profile. Pavers are the most commonly damaged surface in DIY pressure washing. The polymeric sand stabilizing the joints is rated for water but not for a 3,000+ PSI direct hit. Once that sand is gone, the pavers shift, weeds invade, and you are looking at a re sanding bill within months.</p>
               <p>We use commercial surface cleaners that distribute pressure across a wider footprint at safer PSI, restoring the original color and removing embedded dirt, algae, and rust without blasting out the joint sand. Stains from oil, leaves, fertilizer, and rust get spot treatment with appropriate chemistry before the final rinse. Joint sand replacement is available as an add on if the joints are already compromised.</p>
             </div>
           </div>
           <div class="acc-item">
             <button class="acc-head" onclick="toggleAcc(this)"><span>Decks, Fences & Retaining Walls</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-            <div class="acc body">
+            <div class="acc-body">
               <p>Wood is unforgiving. Too much pressure carves visible fan shaped marks into the grain that no amount of staining will hide. Pressure treated lumber, cedar, IPE, and composite each have their own correct PSI. We have seen brand new $20,000 decks ruined by a single weekend with a rental machine.</p>
               <p>We dial the pressure down, use a fan tip designed for soft wood, and apply a brightening solution that removes graying and oxidation while killing mold in the grain. Decks come out ready for stain or sealer. Composite decking gets a different chemistry that lifts ground in dirt without etching the surface. Stone and block retaining walls get a low pressure wash that removes algae and efflorescence without eroding the mortar joints.</p>
             </div>
           </div>
           <div class="acc-item">
             <button class="acc-head" onclick="toggleAcc(this)"><span>Oxidation Removal</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-            <div class="acc body">
+            <div class="acc-body">
               <p>If you wipe your hand across your siding and it comes back with a chalky white residue, that is oxidation. It is the top layer of the paint or coating breaking down under years of UV exposure. Standard pressure washing will not remove it. A typical soap wash will not remove it. Repainting masks the symptom but the underlying surface is still degraded.</p>
               <p>Oxidation removal is a specialized restoration process that combines a commercial grade oxidation stripping solution with mechanical buffing to lift the dead layer and re expose the healthy paint or finish underneath. Done properly, faded vinyl, aluminum, fiberglass, and painted surfaces come back to within a shade or two of their original color, often saving thousands compared to re siding or repainting. Done wrong, it leaves streaking, swirl marks, or strips the finish entirely. This is one of those services that almost demands a professional.</p>
             </div>
@@ -486,22 +670,53 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
       </div>
       <div class="inc-section">
         <h3>Frequently Asked Questions</h3>
-        <div class="acc-list"><div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>Will pressure washing damage my siding or roof?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Done wrong, yes. High pressure on vinyl siding can force water behind it, and direct pressure on a shingle roof strips the granules and voids the warranty. We use soft wash (low pressure plus appropriate cleaning solutions) on roofs and delicate surfaces, and only use higher pressure on concrete, brick, and pavers where it's safe.</p></div></div><div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>How often should I pressure wash my house?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Most homes in our area benefit from a soft wash every 2 to 3 years. Driveways and walkways exposed to road salt and traffic show dirt sooner, so annual cleaning keeps them looking new. Decks vary by exposure and finish.</p></div></div><div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>How long does a typical pressure wash take?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Most house washes are done in 2 to 4 hours. Driveways take 1 to 3 hours. A full property package (house, driveway, patio, and deck) is usually a single full day.</p></div></div><div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>How much does pressure washing cost?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>House washing for two story homes starts at $350. Driveways typically run $0.20 to $0.35 per sq ft depending on surface and condition. We give a flat price upfront with no hourly surprises.</p></div></div></div>
+        <div class="acc-list svc-faq-list"><div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>What is the difference between soft washing and pressure washing?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Pressure washing uses high-pressure water to blast dirt and grime off hard surfaces like concrete driveways, brick patios, and pavers. Soft washing uses low-pressure water combined with biodegradable cleaning solutions to gently clean delicate surfaces like vinyl siding, painted wood, stucco, and asphalt roofs. Using high pressure on siding or a roof can force water behind panels, strip paint, tear roof granules, or damage trim. Most house exteriors should be soft washed, not pressure washed. We use the right method for every surface.</p></div></div><div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>Are your cleaning solutions safe for plants and pets?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Yes. We use biodegradable, environmentally friendly detergents that are safe around landscaping, pets, and kids. We pre-rinse plants near the work area and post-rinse to make sure nothing harmful is left on your property. We also let you know when it is safe for the dog or kids to use the yard again.</p></div></div><div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>Will pressure washing damage my siding or roof?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Done wrong, yes. High pressure on vinyl siding can force water behind it, and direct pressure on a shingle roof strips the granules and voids the warranty. We use soft wash (low pressure plus appropriate cleaning solutions) on roofs and delicate surfaces, and only use higher pressure on concrete, brick, and pavers where it's safe.</p></div></div><div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>How often should I pressure wash my house?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Most homes in our area benefit from a soft wash every 2 to 3 years. Driveways and walkways exposed to road salt and traffic show dirt sooner, so annual cleaning keeps them looking new. Decks vary by exposure and finish.</p></div></div><div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>How long does a typical pressure wash take?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Most house washes are done in 2 to 4 hours. Driveways take 1 to 3 hours. A full property package (house, driveway, patio, and deck) is usually a single full day.</p></div></div><div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>How much does pressure washing cost?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>House washing for two story homes starts at $350. Driveways typically run $0.20 to $0.35 per sq ft depending on surface and condition. We give a flat price upfront with no hourly surprises.</p></div></div></div>
       </div>
+    
+  </div>
+</section>
+
+<section class="svc-block svc-block-mid">
+  <div class="svc-block-inner">
+    <div class="svc-block-header">
+      <div class="svc-label">How It Works</div>
+      <h2>From First Call to <span>Finished Project</span></h2>
+      <p>Simple, transparent, and stress free. Here is what working with us looks like.</p>
     </div>
-    <div class="sidebar">
-      <div class="sbar-cta">
-        <h3>Ready to Get Started?</h3>
-        <p>Call us or fill out our quote form and we will respond quickly.</p>
-        <a href="index.html#contact" class="btn-gold">Request an Estimate</a>
-        <span class="sbar-or">or</span>
-        <a href="tel:978-351-2195" class="sbar-phone"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Call 978-351-2195</a>
+    <div class="svc-process">
+      <div class="svc-process-node">
+        <div class="svc-process-circle"><div class="svc-process-num">1</div></div>
+        <h4><span>Free</span> Estimate</h4>
+        <p>Call or fill out the form. We come out, walk the property, and email you a clear written quote within 24 hours.</p>
       </div>
-      <div class="other-svcs"><h4>Our Services</h4><a href="drainage.html">Drainage Solutions <span>&#8594;</span></a><a href="hardscaping.html">Hardscaping <span>&#8594;</span></a><a href="design.html">Landscape Design <span>&#8594;</span></a><a href="landscaping.html">Landscaping <span>&#8594;</span></a><a href="pavers.html">Paver Installation <span>&#8594;</span></a><a href="plantings.html">Plantings <span>&#8594;</span></a></div>
+      <div class="svc-process-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      <div class="svc-process-node">
+        <div class="svc-process-circle"><div class="svc-process-num">2</div></div>
+        <h4>Plan &amp; <span>Schedule</span></h4>
+        <p>You approve the quote. We lock in materials, finalize the plan, and put your job on the schedule with a firm start date.</p>
+      </div>
+      <div class="svc-process-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      <div class="svc-process-node">
+        <div class="svc-process-circle"><div class="svc-process-num">3</div></div>
+        <h4>Sit Back &amp; <span>Enjoy</span></h4>
+        <p>Our crew shows up on time, keeps the site clean, and works until it is done right. You get the result you wanted.</p>
+      </div>
     </div>
   </div>
+</section>
+
+<section class="svc-final" id="final-cta">
+  <div class="svc-final-inner">
+    <h2>Ready to Get Started?</h2>
+    <p>Free on-site estimate. Same-day response on every submission. Booking spring &amp; summer 2026 now.</p>
+    <div class="cta-row">
+      <a href="#top-form" onclick="document.getElementById('top-form').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){var i=document.querySelector('.svc-hero-form input');if(i)i.focus()},700);return false;" class="btn-gold-cta">Request Free Estimate</a>
+      <span class="cta-or">or call <a href="tel:978-351-2195">978-351-2195</a></span>
+    </div>
+  </div>
+</section>
 </div>
-<footer class="svc-footer"><div class="svc-footer-inner"><div style="flex-basis:100%;text-align:center;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:4px"><div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:#c9a84c;margin-bottom:6px">Areas We Serve</div><div style="font-size:12.5px;color:rgba(255,255,255,.5);line-height:1.7;max-width:920px;margin:0 auto">Methuen, MA &middot; Andover, MA &middot; North Andover, MA &middot; Lawrence, MA &middot; Haverhill, MA &middot; Dracut, MA &middot; Lowell, MA &middot; Tewksbury, MA &middot; Chelmsford, MA &middot; Salem, NH &middot; Windham, NH &middot; Pelham, NH &middot; Atkinson, NH &middot; Hampstead, NH &middot; Plaistow, NH &middot; Derry, NH &middot; Londonderry, NH &middot; Hudson, NH</div></div><span>&copy; 2026 Kaim Contracting LLC. All Rights Reserved.</span><div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center"><a href="tel:978-351-2195">978-351-2195</a><a href="index.html#services">All Services</a><a href="index.html#contact">Get Started</a></div></div></footer>
+<footer class="svc-footer"><div class="svc-footer-inner"><div style="flex-basis:100%;text-align:center;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:4px"><div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:#c9a84c;margin-bottom:6px">Areas We Serve</div><div style="font-size:12.5px;color:rgba(255,255,255,.5);line-height:1.7;max-width:920px;margin:0 auto">Methuen, MA &middot; Andover, MA &middot; North Andover, MA &middot; Lawrence, MA &middot; Haverhill, MA &middot; Dracut, MA &middot; Lowell, MA &middot; Tewksbury, MA &middot; Chelmsford, MA &middot; Groveland, MA &middot; Georgetown, MA &middot; Merrimac, MA &middot; Amesbury, MA &middot; West Newbury, MA &middot; Newbury, MA &middot; Newburyport, MA &middot; Salisbury, MA &middot; Salem, NH &middot; Windham, NH &middot; Pelham, NH &middot; Atkinson, NH &middot; Hampstead, NH &middot; Plaistow, NH &middot; Derry, NH &middot; Londonderry, NH &middot; Hudson, NH &middot; Auburn, NH &middot; Manchester, NH</div></div><span>&copy; 2026 Kaim Contracting LLC. All Rights Reserved.</span><div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center"><a href="tel:978-351-2195">978-351-2195</a><a href="index.html#services">All Services</a><a href="index.html#contact">Get Started</a></div></div></footer>
 <script>function toggleAcc(btn){var item=btn.parentElement;var wasOpen=item.classList.contains('open');document.querySelectorAll('.acc-item.open').forEach(function(el){el.classList.remove('open')});if(!wasOpen){item.classList.add('open')}}</script>
 <script>
 (function(){
@@ -510,5 +725,56 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   if(t){t.textContent=em;t.href='mailto:'+em;}
 })();
 </script>
+<script>
+(function(){var n=document.querySelector('nav');if(!n)return;function check(){if(window.scrollY>20)n.classList.add('scrolled');else n.classList.remove('scrolled');}check();window.addEventListener('scroll',check,{passive:true});})();
+(function(){
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var revealMap=[];
+  revealMap.forEach(function(m){var el=document.querySelector(m.sel);if(el)el.classList.add(m.cls);});
+  document.querySelectorAll('.inc-item').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*70)+'ms';});
+  
+  var all=document.querySelectorAll('.reveal, .reveal-scale, .stagger-item');
+  if(!('IntersectionObserver' in window)){all.forEach(function(el){el.classList.add('is-in');});return;}
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -10% 0px',threshold:0.08});
+  all.forEach(function(el){io.observe(el);});
+})();
+</script>
+<script>
+(function(){
+  var form=document.getElementById('pressure-washing-hero-form');
+  if(!form)return;
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var btn=document.getElementById('pressure-washing-hero-submit');
+    btn.disabled=true;
+    var origText=btn.textContent;
+    btn.textContent='Sending...';
+    var fd=new FormData(form);
+    var name=(fd.get('hf-name')||'').toString().trim();
+    var parts=name.split(/\s+/);
+    var payload={
+      first:parts.shift()||'',
+      last:parts.join(' ')||'(not provided)',
+      phone:(fd.get('hf-phone')||'').toString(),
+      email:(fd.get('hf-email')||'').toString(),
+      service:'Pressure Washing',
+      message:(fd.get('hf-message')||'').toString()||'Submitted from Pressure Washing service page hero form.',
+      contactPref:'Phone Call',
+      source:'Pressure Washing Service Page Hero',
+      kc_hpot_xyz:(fd.get('hf_hpot')||'').toString(),
+      attachments:[]
+    };
+    fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+      .then(function(r){if(!r.ok)throw new Error('Submission failed');return r.json();})
+      .then(function(){
+        form.innerHTML='<div style="text-align:center;padding:36px 12px"><div style="display:inline-flex;align-items:center;justify-content:center;width:60px;height:60px;border-radius:50%;background:rgba(201,168,76,.18);border:2px solid #c9a84c;margin-bottom:14px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e2c47a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div style="font-family:\'Oswald\',sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;color:#e2c47a;margin-bottom:6px">Got it!</div><div style="font-size:14px;color:rgba(255,255,255,.7);line-height:1.5">We will be in touch within 1 business day.</div></div>';
+      })
+      .catch(function(){
+        btn.disabled=false;
+        btn.textContent=origText;
+        alert('Submission failed. Please call 978-351-2195.');
+      });
+  });
+})();</script>
 </body>
 </html>

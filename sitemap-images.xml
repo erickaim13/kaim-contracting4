@@ -21,15 +21,7 @@
       <image:title>Paver installation</image:title>
     </image:image>
   </url>
-  <url>
-    <loc>https://kaimcontracting.com/hardscaping.html</loc>
-    <image:image>
-      <image:loc>https://kaimcontracting.com/images/hardscape%20stock%20photo.jpg</image:loc>
-      <image:caption>Hardscaping, retaining walls and fire pits in Methuen, MA and Southern NH</image:caption>
-      <image:title>Hardscaping</image:title>
-    </image:image>
-  </url>
-  <url>
+<url>
     <loc>https://kaimcontracting.com/landscaping.html</loc>
     <image:image>
       <image:loc>https://kaimcontracting.com/images/landscape%20stock%20photo.jpg</image:loc>
@@ -37,15 +29,7 @@
       <image:title>Landscaping</image:title>
     </image:image>
   </url>
-  <url>
-    <loc>https://kaimcontracting.com/design.html</loc>
-    <image:image>
-      <image:loc>https://kaimcontracting.com/images/tile-landscape-design-svc.webp</image:loc>
-      <image:caption>Custom landscape design plans for yards in Methuen, MA and Southern NH</image:caption>
-      <image:title>Landscape design</image:title>
-    </image:image>
-  </url>
-  <url>
+<url>
     <loc>https://kaimcontracting.com/drainage.html</loc>
     <image:image>
       <image:loc>https://kaimcontracting.com/images/tile-french-drain.webp</image:loc>
@@ -53,15 +37,7 @@
       <image:title>Yard drainage</image:title>
     </image:image>
   </url>
-  <url>
-    <loc>https://kaimcontracting.com/plantings.html</loc>
-    <image:image>
-      <image:loc>https://kaimcontracting.com/images/tile-plantings-svc.webp</image:loc>
-      <image:caption>Trees, shrubs and perennial plantings in Methuen, MA and Southern NH</image:caption>
-      <image:title>Plantings</image:title>
-    </image:image>
-  </url>
-  <url>
+<url>
     <loc>https://kaimcontracting.com/pressure-washing.html</loc>
     <image:image>
       <image:loc>https://kaimcontracting.com/images/pressure%20washing%20stock.webp</image:loc>
