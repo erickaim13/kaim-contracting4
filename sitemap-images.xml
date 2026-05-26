@@ -21,15 +21,7 @@
       <image:title>Paver installation</image:title>
     </image:image>
   </url>
-  <url>
-    <loc>https://kaimcontracting.com/hardscaping.html</loc>
-    <image:image>
-      <image:loc>https://kaimcontracting.com/images/hardscape%20stock%20photo.jpg</image:loc>
-      <image:caption>Hardscaping, retaining walls and fire pits in Methuen, MA and Southern NH</image:caption>
-      <image:title>Hardscaping</image:title>
-    </image:image>
-  </url>
-  <url>
+<url>
     <loc>https://kaimcontracting.com/landscaping.html</loc>
     <image:image>
       <image:loc>https://kaimcontracting.com/images/landscape%20stock%20photo.jpg</image:loc>
