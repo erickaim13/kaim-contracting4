@@ -571,7 +571,18 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 }
 
 /* Gold bar at the bottom of the hero so it shows without scrolling */
-.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:4}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:5}
+
+/* "Materials & Partners" brand strip at the bottom of the hero */
+.hero-brands{position:absolute;bottom:3px;left:0;right:0;background:linear-gradient(to top,rgba(7,24,40,.95) 0%,rgba(7,24,40,.55) 100%);padding:12px 24px 16px;z-index:4;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.hero-brands-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;text-align:center;font-weight:600}
+.hero-brands-row{display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;max-width:1200px;margin:0 auto}
+.brand-item{font-family:'Oswald',sans-serif;font-size:13.5px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.65);transition:color .25s;white-space:nowrap;display:inline-flex;align-items:center}
+.brand-item:hover{color:#fff}
+.brand-item img{height:24px;width:auto;display:block;filter:brightness(0) invert(1) opacity(.65);transition:filter .25s,opacity .25s}
+.brand-item:hover img{filter:brightness(0) invert(1) opacity(1);opacity:1}
+@media(max-width:860px){.hero-brands-row{gap:24px}.brand-item{font-size:12px;letter-spacing:.1em}.brand-item img{height:20px}}
+@media(max-width:640px){.hero-brands{padding:8px 14px 12px}.hero-brands-row{gap:14px}.hero-brands-label{font-size:9px;margin-bottom:5px;letter-spacing:.22em}.brand-item{font-size:10.5px;letter-spacing:.06em}.brand-item img{height:16px}}
 /* Gold accent bar between the three-card section and the About section */
 .about{position:relative}
 .about::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:3}
@@ -628,6 +639,17 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
       <button type="submit" id="hf-submit">Get My Free Estimate</button>
       <div class="hero-form-foot">Or call <a href="tel:978-351-2195">978-351-2195</a></div>
     </form>
+  </div>
+  <div class="hero-brands" aria-label="Materials and partners">
+    <div class="hero-brands-label">Materials &amp; Partners</div>
+    <div class="hero-brands-row">
+      <span class="brand-item">Techo-Bloc</span>
+      <span class="brand-item">Unilock</span>
+      <span class="brand-item">Belgard</span>
+      <span class="brand-item">Cambridge</span>
+      <span class="brand-item">EP Henry</span>
+      <span class="brand-item">Nicolock</span>
+    </div>
   </div>
 </section>
 
