@@ -572,6 +572,9 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 
 /* Gold bar at the bottom of the hero so it shows without scrolling */
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:4}
+/* Gold accent bar between the three-card section and the About section */
+.about{position:relative}
+.about::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:3}
 
 /* THREE-CARD "What We Do" preview right below hero */
 .three-card{padding:80px 24px;background:var(--bg2);position:relative;z-index:5;overflow:hidden}
@@ -660,16 +663,6 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
     </div>
   </div>
 </section>
-
-<div class="strip">
-  <div class="strip-inner">
-    <a href="design.html" class="strip-item"><span class="strip-dot"></span>Design<div class="strip-tip"><h5>Landscape Design</h5><p>Custom layouts, plant selection, and full project planning for your property.</p></div></a>
-    <a href="pavers.html" class="strip-item"><span class="strip-dot"></span>Pavers<div class="strip-tip"><h5>Paver Installation</h5><p>Walkways, driveways, and patios using concrete, brick, and natural stone.</p></div></a>
-    <a href="landscaping.html" class="strip-item"><span class="strip-dot"></span>Landscapes<div class="strip-tip"><h5>Landscaping</h5><p>Full garden design, planting installation, and seasonal cleanups.</p></div></a>
-    <a href="pressure-washing.html" class="strip-item"><span class="strip-dot"></span>Pressure Washing<div class="strip-tip"><h5>Pressure Washing</h5><p>Professional cleaning for driveways, patios, walkways, and siding.</p></div></a>
-    <a href="#contact" class="strip-item"><span class="strip-dot"></span>Estimates<div class="strip-tip"><h5>Complimentary Estimates</h5><p>No obligation estimates on all services. Call 978-351-2195.</p></div></a>
-  </div>
-</div>
 
 <section class="about" id="about">
   <div class="topo-bg" aria-hidden="true"></div>
@@ -1009,7 +1002,6 @@ async function submitLead(data,attachments){
   var revealMap=[{sel:'.about',cls:'reveal'},{sel:'.services',cls:'reveal'},{sel:'.cta-band',cls:'reveal-scale'},{sel:'.why',cls:'reveal'},{sel:'.testimonials',cls:'reveal'},{sel:'.serving',cls:'reveal'},{sel:'.contact',cls:'reveal'}];
   revealMap.forEach(function(m){var el=document.querySelector(m.sel);if(el)el.classList.add(m.cls);});
   document.querySelectorAll('.three-card-item').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*140)+'ms';});
-  document.querySelectorAll('.strip-item').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*80)+'ms';});
   document.querySelectorAll('.svc-tile').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*100)+'ms';});
   document.querySelectorAll('.why-card').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*120)+'ms';});
   document.querySelectorAll('.test-card').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*120)+'ms';});
