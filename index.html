@@ -539,6 +539,45 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .stagger-item{opacity:0;transform:translateY(60px);transition:opacity 1s cubic-bezier(.2,.65,.2,1),transform 1s cubic-bezier(.2,.65,.2,1);will-change:opacity,transform}
 .stagger-item.is-in{opacity:1;transform:translateY(0)}
 @media(prefers-reduced-motion:reduce){.reveal,.reveal-scale,.stagger-item{opacity:1;transform:none;transition:none}}
+/* LOCATIONS EXPLORER — map + sidebar with searchable region accordions */
+.loc-explorer{display:grid;grid-template-columns:1fr 360px;gap:14px;background:transparent;margin:0;width:100%}
+.loc-map-wrap{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:#eee;min-height:520px}
+.loc-map-wrap .kaim-map{border:none;border-radius:0;width:100%;height:100%;min-height:520px;margin:0}
+.loc-sidebar{background:var(--bg2);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;overflow:hidden;height:520px;min-height:520px}
+.loc-sidebar-head{padding:18px 20px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(201,168,76,.25)}
+.loc-sidebar-head h3{font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#fff;margin:0}
+.loc-count{font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;color:var(--gold-l);background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);border-radius:20px;padding:3px 12px;letter-spacing:.08em}
+.loc-search{padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border);position:relative}
+.loc-search input{width:100%;padding:10px 14px 10px 36px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:14px;outline:none;transition:border-color .15s,box-shadow .15s}
+.loc-search input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12)}
+.loc-search input::placeholder{color:var(--muted)}
+.loc-search-icon{position:absolute;left:28px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.loc-search-icon svg{width:15px;height:15px;display:block}
+.loc-list{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) var(--bg2)}
+.loc-list::-webkit-scrollbar{width:6px}
+.loc-list::-webkit-scrollbar-track{background:var(--bg2)}
+.loc-list::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.loc-region{border-bottom:1px solid var(--border)}
+.loc-region:last-child{border-bottom:none}
+.loc-region-head{width:100%;padding:14px 20px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;transition:background .15s;font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text)}
+.loc-region-head:hover{background:rgba(201,168,76,.06)}
+.loc-region-head .loc-region-count{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;color:var(--gold);background:rgba(201,168,76,.1);border-radius:12px;padding:2px 10px;letter-spacing:.06em;margin-left:auto;margin-right:8px}
+.loc-region-arrow{color:var(--gold);transition:transform .25s;flex-shrink:0}
+.loc-region.open .loc-region-arrow{transform:rotate(180deg)}
+.loc-region-body{max-height:0;overflow:hidden;transition:max-height .3s ease;background:rgba(0,0,0,.15)}
+.loc-region.open .loc-region-body{max-height:720px;overflow-y:auto}
+.loc-town{display:flex;align-items:center;gap:10px;padding:10px 22px;color:var(--muted);font-size:13.5px;text-decoration:none;cursor:pointer;border-left:3px solid transparent;transition:all .15s;background:transparent}
+.loc-town:hover,.loc-town.active{background:rgba(201,168,76,.08);color:var(--gold-l);border-left-color:var(--gold)}
+.loc-town svg{width:12px;height:12px;color:var(--gold);flex-shrink:0;opacity:.6}
+.loc-town:hover svg,.loc-town.active svg{opacity:1}
+.loc-empty{padding:24px 20px;text-align:center;color:var(--muted);font-size:13px;font-style:italic}
+@media(max-width:860px){
+  .loc-explorer{grid-template-columns:1fr;gap:12px}
+  .loc-map-wrap{min-height:380px;order:1}
+  .loc-map-wrap .kaim-map{min-height:380px}
+  .loc-sidebar{order:2;height:auto;max-height:560px;min-height:auto}
+}
+
 
 /* HERO split layout with quick-quote form */
 .hero-content{max-width:1200px!important;padding:130px 24px 90px!important;display:grid!important;grid-template-columns:1.15fr 1fr!important;gap:52px!important;align-items:center!important;text-align:left!important}
@@ -727,27 +766,37 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 
 <section class="serving" id="serving">
   <div class="topo-bg" aria-hidden="true"></div>
-  <div class="serving-inner">
-    <div class="serving-text">
-      <div class="section-label" style="margin-bottom:10px">Service Area</div>
-      <h2>Proudly Serving <span>Methuen</span> &amp; Surrounding Communities</h2>
-      <p class="serving-sub">Your property deserves expert craftsmanship, no matter where you are. Kaim Contracting provides paver installation, landscaping, hardscaping, pressure washing, and outdoor living services across the Merrimack Valley and beyond, including:</p>
-      <ul class="serving-towns">
-        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Methuen</li>
-        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Andover</li>
-        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>North Andover</li>
-        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Lawrence</li>
-        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Haverhill</li>
-        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Lowell</li>
-        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Amesbury</li>
-        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Newburyport</li>
-        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Salisbury</li>
-        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Salem, NH</li>
-        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Derry, NH</li>
-        <li><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Manchester, NH</li>
-              </ul>
+  <div class="serving-inner" style="display:block;padding:60px 24px;max-width:1280px">
+    <div class="section-header" style="text-align:center;margin-bottom:32px">
+      <div class="section-label" style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Service Area</div>
+      <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(24px,3.5vw,38px);font-weight:700;text-transform:uppercase;color:var(--text);letter-spacing:.02em;line-height:1.1;margin-bottom:10px">Proudly Serving <span style="color:var(--gold-l)">Methuen</span> &amp; 27 Surrounding Towns</h2>
+      <p style="color:var(--muted);font-size:15px;max-width:560px;margin:0 auto">Search the list or click a town on the map to zoom in. Don't see yours? Call us — we frequently take projects just outside our standard radius.</p>
     </div>
-    <div class="serving-map" style="min-height:420px"><div id="kaim-map" class="kaim-map" style="height:100%;min-height:420px;border-radius:0;border:none"></div></div>
+    <div class="loc-explorer">
+  <div class="loc-map-wrap">
+    <div id="kaim-map" class="kaim-map"></div>
+  </div>
+  <div class="loc-sidebar">
+    <div class="loc-sidebar-head">
+      <h3>Service Areas</h3>
+      <span class="loc-count">28 towns</span>
+    </div>
+    <div class="loc-search">
+      <span class="loc-search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+      <input type="text" id="loc-search" placeholder="Search a town..." autocomplete="off">
+    </div>
+    <div class="loc-list" id="loc-list">
+      <div class="loc-region open" data-region="MA">
+        <button class="loc-region-head" type="button"><span>Massachusetts</span><span class="loc-region-count">17</span><svg class="loc-region-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="loc-region-body"><a class="loc-town" data-town="Methuen, MA" data-lat="42.7262" data-lon="-71.1909"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Methuen, MA</span></a><a class="loc-town" data-town="Andover, MA" data-lat="42.6583" data-lon="-71.1372"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Andover, MA</span></a><a class="loc-town" data-town="North Andover, MA" data-lat="42.7" data-lon="-71.1167"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>North Andover, MA</span></a><a class="loc-town" data-town="Lawrence, MA" data-lat="42.707" data-lon="-71.1631"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Lawrence, MA</span></a><a class="loc-town" data-town="Haverhill, MA" data-lat="42.7762" data-lon="-71.0773"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Haverhill, MA</span></a><a class="loc-town" data-town="Dracut, MA" data-lat="42.67" data-lon="-71.3025"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Dracut, MA</span></a><a class="loc-town" data-town="Lowell, MA" data-lat="42.6334" data-lon="-71.3162"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Lowell, MA</span></a><a class="loc-town" data-town="Tewksbury, MA" data-lat="42.6109" data-lon="-71.2342"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Tewksbury, MA</span></a><a class="loc-town" data-town="Chelmsford, MA" data-lat="42.5995" data-lon="-71.3673"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Chelmsford, MA</span></a><a class="loc-town" data-town="Groveland, MA" data-lat="42.7625" data-lon="-71.0292"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Groveland, MA</span></a><a class="loc-town" data-town="Georgetown, MA" data-lat="42.7251" data-lon="-70.9939"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Georgetown, MA</span></a><a class="loc-town" data-town="Merrimac, MA" data-lat="42.8323" data-lon="-71.0036"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Merrimac, MA</span></a><a class="loc-town" data-town="Amesbury, MA" data-lat="42.8584" data-lon="-70.93"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Amesbury, MA</span></a><a class="loc-town" data-town="West Newbury, MA" data-lat="42.8062" data-lon="-70.9886"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>West Newbury, MA</span></a><a class="loc-town" data-town="Newbury, MA" data-lat="42.7878" data-lon="-70.8753"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Newbury, MA</span></a><a class="loc-town" data-town="Newburyport, MA" data-lat="42.8126" data-lon="-70.8773"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Newburyport, MA</span></a><a class="loc-town" data-town="Salisbury, MA" data-lat="42.8418" data-lon="-70.8589"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Salisbury, MA</span></a></div>
+      </div>
+      <div class="loc-region" data-region="NH">
+        <button class="loc-region-head" type="button"><span>Southern New Hampshire</span><span class="loc-region-count">11</span><svg class="loc-region-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="loc-region-body"><a class="loc-town" data-town="Salem, NH" data-lat="42.7884" data-lon="-71.2009"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Salem, NH</span></a><a class="loc-town" data-town="Windham, NH" data-lat="42.8042" data-lon="-71.3098"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Windham, NH</span></a><a class="loc-town" data-town="Pelham, NH" data-lat="42.737" data-lon="-71.3267"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Pelham, NH</span></a><a class="loc-town" data-town="Atkinson, NH" data-lat="42.8395" data-lon="-71.1453"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Atkinson, NH</span></a><a class="loc-town" data-town="Hampstead, NH" data-lat="42.8806" data-lon="-71.1798"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Hampstead, NH</span></a><a class="loc-town" data-town="Plaistow, NH" data-lat="42.8362" data-lon="-71.095"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Plaistow, NH</span></a><a class="loc-town" data-town="Derry, NH" data-lat="42.8806" data-lon="-71.3273"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Derry, NH</span></a><a class="loc-town" data-town="Londonderry, NH" data-lat="42.8651" data-lon="-71.3739"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Londonderry, NH</span></a><a class="loc-town" data-town="Hudson, NH" data-lat="42.7644" data-lon="-71.4392"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Hudson, NH</span></a><a class="loc-town" data-town="Auburn, NH" data-lat="42.9959" data-lon="-71.3478"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Auburn, NH</span></a><a class="loc-town" data-town="Manchester, NH" data-lat="42.9956" data-lon="-71.4548"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Manchester, NH</span></a></div>
+      </div>
+    </div>
+  </div>
+</div>
   </div>
 </section>
 
@@ -1026,7 +1075,7 @@ document.querySelectorAll('input[type="tel"]').forEach(function(inp){
 document.addEventListener('DOMContentLoaded',function(){
   var el=document.getElementById('kaim-map');
   if(!el||typeof L==='undefined')return;
-  var map=L.map('kaim-map',{center:[42.78,-71.20],zoom:10,scrollWheelZoom:false,doubleClickZoom:false,zoomControl:true,attributionControl:true});
+  var map=window._kaimMap=L.map('kaim-map',{center:[42.78,-71.20],zoom:10,scrollWheelZoom:false,doubleClickZoom:false,zoomControl:true,attributionControl:true});
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://openstreetmap.org">OSM</a>',maxZoom:18,subdomains:'abcd'}).addTo(map);
   var towns=[
     {name:'Methuen, MA',lat:42.7262,lon:-71.1909,home:true},
@@ -1072,6 +1121,48 @@ document.addEventListener('DOMContentLoaded',function(){
   coverageLayer.getLayers().forEach(function(l){if(l.bringToBack)l.bringToBack();});
   map.fitBounds(coverageLayer.getBounds(),{padding:[24,24]});
 });
+</script>
+<script>
+(function(){
+  // Accordion toggle
+  document.querySelectorAll('.loc-region-head').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      btn.parentElement.classList.toggle('open');
+    });
+  });
+  // Search filter
+  var search=document.getElementById('loc-search');
+  if(search){
+    search.addEventListener('input',function(){
+      var q=search.value.trim().toLowerCase();
+      var anyVisible=false;
+      document.querySelectorAll('.loc-region').forEach(function(reg){
+        var visibleCount=0;
+        reg.querySelectorAll('.loc-town').forEach(function(t){
+          var name=t.dataset.town.toLowerCase();
+          var match=!q||name.indexOf(q)!==-1;
+          t.style.display=match?'':'none';
+          if(match)visibleCount++;
+        });
+        if(visibleCount>0&&q){reg.classList.add('open');anyVisible=true;}
+        else if(!q){reg.classList.toggle('open',reg.dataset.region==='MA');}
+        reg.style.display=visibleCount>0||!q?'':'none';
+      });
+    });
+  }
+  // Click town -> pan map
+  document.querySelectorAll('.loc-town').forEach(function(t){
+    t.addEventListener('click',function(e){
+      e.preventDefault();
+      document.querySelectorAll('.loc-town.active').forEach(function(o){o.classList.remove('active');});
+      t.classList.add('active');
+      if(window._kaimMap){
+        var lat=parseFloat(t.dataset.lat),lon=parseFloat(t.dataset.lon);
+        window._kaimMap.flyTo([lat,lon],13,{duration:.9});
+      }
+    });
+  });
+})();
 </script>
 </body>
 </html>
