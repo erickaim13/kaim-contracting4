@@ -630,10 +630,11 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .serving-towns li{color:var(--charcoal)!important}
 .serving-towns li svg{stroke:var(--sage)!important}
 
-/* CONTACT */
-.contact{background:var(--paper)!important}
-.contact::before{display:none!important}
+/* CONTACT - bring back the herringbone pattern background, retinted for light */
+.contact{background:var(--paper)!important;position:relative}
+.contact::before{display:block!important;background:url('images/herringbone-pattern.png') repeat!important;background-size:1500px!important;opacity:.09!important;mix-blend-mode:multiply!important;z-index:0}
 .contact::after{background:linear-gradient(90deg,transparent 5%,var(--wood) 25%,var(--wood) 75%,transparent 95%)!important}
+.contact .section-inner{position:relative;z-index:1}
 .contact-info h3{color:var(--charcoal)!important}
 .ci-icon{background:var(--sage)!important;border-radius:8px}
 .ci-icon svg{stroke:#fff!important}
