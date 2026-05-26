@@ -515,24 +515,23 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 html{scroll-behavior:smooth}
 body{background:var(--ivory)!important;color:var(--charcoal)!important}
 
-/* NAV — transparent at top, fills to solid as you scroll */
-nav{background:transparent!important;border-bottom:1px solid transparent!important;box-shadow:none!important;transition:background .4s ease,border-color .4s ease,box-shadow .4s ease,backdrop-filter .4s ease,-webkit-backdrop-filter .4s ease}
-nav.scrolled{background:rgba(255,254,250,.95)!important;backdrop-filter:saturate(180%) blur(14px)!important;-webkit-backdrop-filter:saturate(180%) blur(14px)!important;border-bottom:1px solid var(--line)!important;box-shadow:0 8px 28px rgba(26,36,56,.1)!important}
-.nav-links>li>a{color:var(--charcoal)!important;font-weight:600;letter-spacing:.08em!important;transition:color .4s ease,background .25s ease,text-shadow .4s ease}
+/* NAV — floating frosted-glass pill (Webflow-style) */
+nav{position:fixed!important;top:10px!important;left:50%!important;transform:translateX(-50%)!important;width:calc(100% - 24px)!important;max-width:1280px!important;background:rgba(255,254,250,.72)!important;backdrop-filter:saturate(180%) blur(14px)!important;-webkit-backdrop-filter:saturate(180%) blur(14px)!important;border:1px solid rgba(255,255,255,.55)!important;border-radius:18px!important;box-shadow:0 10px 40px rgba(13,30,53,.15),0 2px 10px rgba(13,30,53,.06)!important;z-index:200;transition:background .4s ease,backdrop-filter .4s ease,box-shadow .4s ease,border-color .4s ease}
+nav.scrolled{background:rgba(255,254,250,.92)!important;backdrop-filter:saturate(180%) blur(18px)!important;-webkit-backdrop-filter:saturate(180%) blur(18px)!important;border-color:rgba(255,255,255,.75)!important;box-shadow:0 14px 50px rgba(13,30,53,.2),0 4px 14px rgba(13,30,53,.1)!important}
+.nav-inner{height:74px!important}
+.nav-logo img{height:58px!important}
+.nav-links>li>a{color:var(--charcoal)!important;font-weight:600;letter-spacing:.08em!important}
 .nav-links>li>a:hover{color:var(--sage)!important;background:var(--sage-wash)!important}
-.arr{color:var(--sage-l)!important;transition:color .4s ease}
-.nav-info a,.nav-info span{color:var(--charcoal-m)!important;font-weight:500;transition:color .4s ease,text-shadow .4s ease}
+.arr{color:var(--sage-l)!important}
+.nav-info a,.nav-info span{color:var(--charcoal-m)!important;font-weight:500}
 .nav-info a:hover{color:var(--sage)!important}
-.nav-info .nav-sep{color:rgba(26,36,56,.18)!important;transition:color .4s ease}
-.hamburger span{transition:background .4s ease}
-/* Transparent state (over hero) */
-nav:not(.scrolled) .nav-links>li>a{color:#fff!important;text-shadow:0 1px 6px rgba(0,0,0,.35)}
-nav:not(.scrolled) .nav-links>li>a:hover{background:rgba(255,255,255,.14)!important;color:#fff!important}
-nav:not(.scrolled) .arr{color:rgba(255,255,255,.75)!important}
-nav:not(.scrolled) .nav-info a,nav:not(.scrolled) .nav-info span{color:rgba(255,255,255,.88)!important;text-shadow:0 1px 4px rgba(0,0,0,.3)}
-nav:not(.scrolled) .nav-info a:hover{color:#fff!important}
-nav:not(.scrolled) .nav-info .nav-sep{color:rgba(255,255,255,.32)!important}
-nav:not(.scrolled) .hamburger span{background:#fff!important}
+.nav-info .nav-sep{color:rgba(26,36,56,.18)!important}
+.hamburger span{background:var(--charcoal)!important}
+@media(max-width:640px){
+  nav{top:0!important;width:100%!important;border-radius:0 0 16px 16px!important;border-top:none!important;border-left:none!important;border-right:none!important;transform:translateX(-50%)!important;left:50%!important}
+  .nav-inner{height:62px!important;padding:0 16px!important}
+  .nav-logo img{height:48px!important}
+}
 .btn-nav{background:var(--sage)!important;color:#fff!important;border-radius:8px!important;letter-spacing:.08em!important;box-shadow:0 4px 12px rgba(47,79,58,.18)}
 .btn-nav:hover{background:var(--sage-d)!important;color:#fff!important}
 .dropdown{background:var(--paper)!important;border:1px solid var(--line)!important;border-radius:10px!important;box-shadow:0 18px 44px rgba(26,36,56,.12)!important}
