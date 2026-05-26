@@ -502,8 +502,8 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
         </div>
         <div class="calc-cost-range">
           <div class="calc-cost-label">Estimated Material Cost (Delivered)</div>
-          <div class="calc-cost-value" id="costRange">$40 - $55</div>
-          <div class="calc-cost-note">Bulk delivery typical for orders over 2 cu yd. Bagged retail is usually 2 to 3 times the bulk price.</div>
+          <div class="calc-cost-value" id="costRange">$72 - $110</div>
+          <div class="calc-cost-note">Reflects contractor-installed pricing in MA &amp; NH (material, delivery, and spreading). Bagged retail at the box store is usually 2 to 3 times the bulk material cost.</div>
         </div>
       </div>
       <div class="calc-cta">
@@ -543,7 +543,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
       calc();
     });
   });
-  var PRICES={mulch:[35,55],topsoil:[30,50],stone:[60,110],compost:[40,60]};
+  var PRICES={mulch:[65,100],topsoil:[55,85],stone:[110,190],compost:[70,110]};
   function fmt(n,d){d=d||0;return new Intl.NumberFormat('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);}
   function calc(){
     var area=0;
