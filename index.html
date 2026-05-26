@@ -674,6 +674,46 @@ nav{background:#ffffff!important;border-bottom:1px solid var(--line)!important;b
 .contact .section-header > div span{background:rgba(201,168,76,.12)!important;color:var(--gold-d)!important;border-color:rgba(201,168,76,.4)!important}
 
 /* Footer stays dark intentionally — adds visual anchor at bottom */
+
+/* ═══════════ SCROLL REVEAL + SOFTER SECTION TRANSITIONS ═══════════ */
+html{scroll-behavior:smooth}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.65,.2,1),transform .9s cubic-bezier(.2,.65,.2,1);will-change:opacity,transform}
+.reveal.is-in{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* Soften dark CTA band edges — gradient bleed at top + bottom */
+.cta-band{padding-top:0;padding-bottom:0}
+.cta-band .cta-overlay{background:linear-gradient(to bottom,rgba(247,244,238,.55) 0%,rgba(7,24,40,.92) 22%,rgba(7,24,40,.92) 78%,rgba(247,244,238,.45) 100%)}
+.cta-band::before{display:none}
+.cta-band::after{content:'';position:absolute;left:0;right:0;bottom:0;height:80px;background:linear-gradient(to bottom,transparent,var(--cream));pointer-events:none;z-index:4}
+.cta-band .cta-inner{padding-top:90px;padding-bottom:90px}
+
+/* Section spacing rhythm so transitions feel breathable */
+.about{padding-top:0!important;padding-bottom:0!important}
+.why{padding:90px 24px!important}
+.serving{padding-top:0!important;padding-bottom:0!important}
+.contact{padding:90px 24px!important}
+
+/* Soft top fade on the dark footer so cream doesn't slam into black */
+footer{position:relative}
+footer::before{content:'';position:absolute;left:0;right:0;top:0;height:60px;background:linear-gradient(to bottom,rgba(247,244,238,.18),transparent);pointer-events:none;z-index:2}
+
+/* Nav bottom soft glow when scrolled */
+nav{transition:box-shadow .25s ease}
+nav.scrolled{box-shadow:0 4px 22px rgba(13,30,53,.1)!important}
+
+/* Strip subtle drop shadow so it sits over content */
+.strip{box-shadow:0 8px 24px rgba(13,30,53,.05)}
+
+/* Paver patio texture behind Request an Estimate */
+.contact{
+  background:
+    linear-gradient(rgba(247,244,238,.88),rgba(247,244,238,.93)),
+    url('https://images.unsplash.com/photo-1628624747186-a941c476b7ef?w=1600&q=80') center/cover no-repeat
+    !important;
+  position:relative;
+}
+.contact::before{display:none!important}
 </style>
 </head>
 <body>
@@ -1030,6 +1070,25 @@ async function submitLead(data,attachments){
   if(t){t.textContent=em;t.href='mailto:'+em;}
   if(c){c.textContent=em;c.href='mailto:'+em;}
   if(f){f.textContent=em;f.href='mailto:'+em;}
+})();
+
+// SCROLL REVEAL — fade sections in as they enter viewport
+(function(){
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var targets=document.querySelectorAll('.about, .why, .serving, .contact, .strip, .cta-band');
+  targets.forEach(function(el){el.classList.add('reveal');});
+  if(!('IntersectionObserver' in window)){targets.forEach(function(el){el.classList.add('is-in');});return;}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);}});
+  },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+  targets.forEach(function(el){io.observe(el);});
+})();
+
+// NAV scrolled shadow
+(function(){
+  var n=document.querySelector('nav');if(!n)return;
+  function check(){if(window.scrollY>20)n.classList.add('scrolled');else n.classList.remove('scrolled');}
+  check();window.addEventListener('scroll',check,{passive:true});
 })();
 
 // Auto-format phone numbers as XXX-XXX-XXXX
