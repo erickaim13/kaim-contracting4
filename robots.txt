@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://kaimcontracting.com/sitemap.xml
+Sitemap: https://kaimcontracting.com/sitemap-images.xml
