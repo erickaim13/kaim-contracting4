@@ -461,16 +461,16 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .svc-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:4}
 .svc-hero-content{position:relative;z-index:3;max-width:1200px;margin:0 auto;padding:120px 24px 80px;width:100%;display:grid;grid-template-columns:1.2fr 1fr;gap:52px;align-items:center}
 .svc-hero-text .svc-eyebrow{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-l);margin-bottom:18px;text-shadow:0 1px 8px rgba(0,0,0,.8)}
-.svc-hero-text h1{font-family:'Oswald',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:700;color:#fff;line-height:1.05;margin-bottom:18px;letter-spacing:.01em;text-transform:uppercase;text-shadow:0 2px 24px rgba(0,0,0,.6)}
+.svc-hero-text h1{font-family:'Oswald',sans-serif;font-size:clamp(30px,4.2vw,50px);font-weight:700;color:#fff;line-height:1.05;margin-bottom:10px;letter-spacing:.01em;text-transform:uppercase;text-shadow:0 2px 24px rgba(0,0,0,.6)}
 .svc-hero-text h1 span{color:var(--gold-l)}
 .svc-hero-text .sub{color:rgba(255,255,255,.92);font-size:16.5px;line-height:1.65;margin:0 0 26px;text-shadow:0 1px 12px rgba(0,0,0,.4);max-width:540px}
 .svc-hero-text .breadcrumb{font-family:'Oswald',sans-serif;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
 .svc-hero-text .breadcrumb a{color:rgba(255,255,255,.6);text-decoration:none}
-.svc-loc{font-family:'Oswald',sans-serif;font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-l);margin-bottom:18px;font-weight:600;text-shadow:0 1px 8px rgba(0,0,0,.7)}
+.svc-loc{font-family:'Oswald',sans-serif;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-l);margin-bottom:16px;font-weight:600;text-shadow:0 1px 8px rgba(0,0,0,.7);opacity:.85}
 
-.svc-hero-text .trust{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px}
-.svc-hero-text .trust span{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.85);font-family:'Oswald',sans-serif;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
-.svc-hero-text .trust svg{width:14px;height:14px;color:var(--gold-l)}
+.svc-hero-text .trust{display:flex;gap:20px;flex-wrap:wrap;margin-top:24px}
+.svc-hero-text .trust span{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.78);font-family:'Source Sans 3',sans-serif;font-size:13px;letter-spacing:.02em;text-transform:none;font-weight:600}
+.svc-hero-text .trust svg{width:16px;height:16px;color:var(--gold-l);flex-shrink:0}
 
 .svc-hero-form{background:rgba(13,30,53,.62);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:28px 24px 22px;box-shadow:0 28px 70px rgba(0,0,0,.5)}
 .svc-hero-form h3{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-l);margin-bottom:4px;line-height:1.2}
@@ -526,7 +526,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 
 @media(max-width:860px){
   .svc-hero{min-height:auto}
-  .svc-hero-content{grid-template-columns:1fr;padding:90px 18px 50px;gap:34px}
+  .svc-hero-content{grid-template-columns:1fr;padding:96px 18px 40px;gap:24px}
   .svc-hero-form{max-width:420px;margin:0 auto;width:100%}
   .svc-split{grid-template-columns:1fr;gap:28px}
   .svc-split-img{min-height:260px;order:2}
@@ -580,11 +580,10 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
   <div class="svc-hero-content">
     <div class="svc-hero-text">
       <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;&#8250;&nbsp; <a href="index.html#services-preview">Services</a> &nbsp;&#8250;&nbsp; Landscaping</div>
-      <div class="svc-eyebrow">Design &middot; Plantings &middot; Beds &middot; Mulch &middot; Cleanups</div>
       <h1>Landscaping, <span>Design &amp; Plantings</span></h1>
       <div class="svc-loc">Methuen, MA &middot; Greater Boston &middot; Southern NH</div>
       <p class="sub">Full-service landscaping for homes across the Merrimack Valley and southern New Hampshire. We design, install, and maintain — single team, single point of contact, real plant warranty.</p>
-      <div class="trust"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Free Estimates</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Licensed &amp; Insured</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>24h Response</span></div>
+      <div class="trust"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Free Estimates</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Licensed &amp; Insured</span></div>
     </div>
     <form class="svc-hero-form" id="landscaping-hero-form" autocomplete="on" novalidate>
         <h3>Get a Free Landscape Consult</h3>
