@@ -439,6 +439,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   .sidebar{position:static}
 }
 @media(max-width:640px){
+  .svc-bento{grid-template-columns:1fr!important;gap:14px!important}
   section{padding:48px 16px}
   .section-inner{padding-left:0;padding-right:0}
   .section-header{margin-bottom:32px}
@@ -467,7 +468,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   .svc-bento{grid-template-columns:repeat(2,1fr)}
   
   
-  .svc-tile-desc,.svc-tile-arrow,.svc-tile-num{display:none}
+  .svc-tile{min-height:260px}.svc-tile-body{padding:16px 18px 18px}.svc-tile-body h3{font-size:16px}.svc-tile-desc{font-size:12.5px}
   .svc-tile-body{padding:12px 14px}
   .svc-tile::after{border-color:rgba(201,168,76,.5)}
   .serving-inner{grid-template-columns:1fr}
