@@ -424,7 +424,55 @@ footer{background:#040e0f;color:rgba(255,255,255,.4);padding:48px 24px 18px}
   .stat-card:last-child{grid-column:1/-1}
   .why-grid{grid-template-columns:1fr}
 }
-.acc-list{display:flex;flex-direction:column;gap:6px}.acc-item{background:var(--card);border:1px solid var(--border);border-radius:5px;overflow:hidden}.acc-head{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:none;border:none;color:var(--text);cursor:pointer;font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;text-align:left;transition:background .2s;gap:12px}.acc-head:hover{background:rgba(255,255,255,.06)}.acc-item.open .acc-head{color:var(--gold-l)}.acc-arrow{transition:transform .25s;flex-shrink:0;color:var(--gold)}.acc-item.open .acc-arrow{transform:rotate(180deg)}.acc-body{max-height:0;overflow:hidden;transition:max-height .3s ease}.acc-item.open .acc-body{max-height:200px}.acc-body p{padding:14px 16px;color:var(--muted);font-size:14px;line-height:1.72;margin:0}</style>
+.acc-list{display:flex;flex-direction:column;gap:6px}.acc-item{background:var(--card);border:1px solid var(--border);border-radius:5px;overflow:hidden}.acc-head{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:none;border:none;color:var(--text);cursor:pointer;font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;text-align:left;transition:background .2s;gap:12px}.acc-head:hover{background:rgba(255,255,255,.06)}.acc-item.open .acc-head{color:var(--gold-l)}.acc-arrow{transition:transform .25s;flex-shrink:0;color:var(--gold)}.acc-item.open .acc-arrow{transform:rotate(180deg)}.acc-body{max-height:0;overflow:hidden;transition:max-height .3s ease}.acc-item.open .acc-body{max-height:200px}.acc-body p{padding:14px 16px;color:var(--muted);font-size:14px;line-height:1.72;margin:0}
+/* LIGHT THEME REDESIGN - service pages. Remove to revert. */
+:root{--cream:#f7f4ee;--ink:#0d1e35;--slate:#1a2438;--slate-m:#5f6b7f;--line:#e6e0d2;--line-2:#d6cebf;--gold-d:#a98a35}
+body{background:var(--cream)!important;color:var(--slate)!important}
+nav{background:#fff!important;border-bottom:1px solid var(--line)!important;box-shadow:0 1px 14px rgba(13,30,53,.06)!important}
+.nav-links>li>a{color:var(--slate)!important}
+.nav-links>li>a:hover{color:var(--gold-d)!important;background:rgba(201,168,76,.08)!important}
+.nav-info a,.nav-info span{color:var(--slate-m)!important}
+.nav-info a:hover{color:var(--gold-d)!important}
+.nav-info .nav-sep{color:rgba(13,30,53,.18)!important}
+.btn-nav{background:var(--ink)!important;color:#fff!important}
+.btn-nav:hover{background:#162c4e!important;color:#fff!important}
+.dropdown{background:#fff!important;border:1px solid var(--line)!important;box-shadow:0 16px 40px rgba(13,30,53,.12)!important}
+.dd-item{color:var(--slate)!important}
+.dd-item:hover{background:rgba(201,168,76,.08)!important}
+.dd-item b{color:var(--slate)!important}
+.dd-item:hover b{color:var(--gold-d)!important}
+.dd-item p{color:var(--slate-m)!important}
+.hamburger span{background:var(--slate)!important}
+.mob-menu{background:#fff!important;border-top:1px solid var(--line)!important}
+.mob-menu a{color:var(--slate)!important;border-bottom:1px solid var(--line)!important}
+.mob-menu a:hover,.mob-menu a.cta{color:var(--gold-d)!important}
+.home-btn{color:var(--slate-m)!important;border:1px solid var(--line)!important;background:#fff!important}
+.home-btn:hover{color:var(--gold-d)!important;border-color:var(--gold)!important}
+.page-content h2{color:var(--slate)!important}
+.page-content h2 span{color:var(--gold-d)!important}
+.page-content p{color:var(--slate-m)!important}
+.page-content img{box-shadow:0 14px 36px rgba(13,30,53,.1)!important}
+.inc-section h3{color:var(--slate)!important;border-bottom:2px solid var(--line)!important}
+.inc-item{background:#fff!important;border:1px solid var(--line)!important;box-shadow:0 2px 6px rgba(13,30,53,.04)}
+.inc-icon{background:var(--ink)!important;color:#e2c47a!important}
+.inc-text{color:var(--slate-m)!important}
+.inc-text strong{color:var(--slate)!important}
+.sbar-cta{background:var(--ink)!important;border:1px solid rgba(255,255,255,.08)!important;box-shadow:0 10px 30px rgba(13,30,53,.18)}
+.sbar-cta h3{color:#fff!important}
+.sbar-cta p{color:rgba(255,255,255,.7)!important}
+.sbar-phone{color:#e2c47a!important}
+.sbar-phone:hover{color:#fff!important}
+.other-svcs{background:#fff!important;border:1px solid var(--line)!important;box-shadow:0 4px 16px rgba(13,30,53,.05)}
+.other-svcs h4{color:var(--slate)!important}
+.other-svcs a{color:var(--slate-m)!important;border-bottom:1px solid var(--line)!important}
+.other-svcs a:hover{color:var(--gold-d)!important}
+.acc-item{background:#fff!important;border:1px solid var(--line)!important;box-shadow:0 2px 8px rgba(13,30,53,.04)}
+.acc-head{color:var(--slate)!important;background:none!important}
+.acc-head:hover{background:rgba(201,168,76,.05)!important}
+.acc-item.open .acc-head{color:var(--gold-d)!important}
+.acc-arrow{color:var(--gold-d)!important}
+.acc-body p{color:var(--slate-m)!important}
+</style>
 </head>
 <body>
 <nav><div class="nav-inner"><a href="index.html" class="nav-logo"><img src="images/logo.webp" alt="Kaim Contracting LLC" width="200" height="60"></a><ul class="nav-links"><li><a href="index.html#about">About</a></li><li><a href="index.html#services">Services <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="drainage.html"><b>Drainage Solutions</b><p>French drains and water management.</p></a><a class="dd-item" href="hardscaping.html"><b>Hardscaping</b><p>Retaining walls, steps, and decorative stone.</p></a><a class="dd-item" href="design.html"><b>Landscape Design</b><p>Custom layouts tailored to your property.</p></a><a class="dd-item" href="landscaping.html"><b>Landscaping</b><p>Garden design, installation, and cleanups.</p></a><a class="dd-item" href="pavers.html"><b>Paver Installation</b><p>Walkways, driveways, and patio surfaces.</p></a><a class="dd-item" href="plantings.html"><b>Plantings</b><p>Trees, shrubs, and seasonal plants.</p></a><a class="dd-item" href="pressure-washing.html"><b>Pressure Washing</b><p>Deep cleaning for all outdoor surfaces.</p></a></div></li><li><a href="index.html#contact">Contact</a></li></ul><div class="nav-info"><a href="tel:978-351-2195"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a><span class="nav-sep">|</span><a id="tb-email" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a><span class="nav-sep">|</span><span>Serving Greater Boston &amp; Southern NH &nbsp;|&nbsp; Complimentary Estimates</span></div><a href="index.html#contact" class="btn-nav">Get Started</a><button class="hamburger" onclick="document.querySelector('.mob-menu').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button></div><div class="mob-menu" id="mobMenu"><a href="index.html#about" onclick="document.getElementById('mobMenu').classList.remove('open')">About</a><a href="index.html#services" onclick="document.getElementById('mobMenu').classList.remove('open')">Services</a><a href="tel:978-351-2195">978-351-2195</a><a href="index.html#contact" class="cta" onclick="document.getElementById('mobMenu').classList.remove('open')">Get Started</a></div></nav>
