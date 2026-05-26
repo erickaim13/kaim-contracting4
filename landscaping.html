@@ -574,10 +574,71 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .page-hero{position:relative}
 .page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:3}
 
+
+/* ===== MOBILE MENU SLIDE-IN PANEL ===== */
+.mob-menu{display:flex!important;flex-direction:column;position:fixed;left:0;top:0;width:300px;max-width:85vw;height:100vh;background:var(--bg);border-right:1px solid var(--gold);transform:translateX(-100%);transition:transform .35s cubic-bezier(.2,.65,.2,1);z-index:1000;overflow-y:auto;box-shadow:none;border-top:none!important;border-radius:0!important}
+.mob-menu.open{transform:translateX(0);box-shadow:8px 0 40px rgba(0,0,0,.6)}
+body.menu-open{overflow:hidden}
+body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;animation:menu-fadein .3s ease}
+@keyframes menu-fadein{from{opacity:0}to{opacity:1}}
+.mob-menu-head{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0}
+.mob-menu-title{font-family:'Oswald',sans-serif;font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.mob-close{background:none;border:none;color:var(--text);font-size:28px;cursor:pointer;padding:0 4px;line-height:1;font-weight:300}
+.mob-close:hover{color:var(--gold-l)}
+.mob-menu-body{flex:1;padding:0;display:flex;flex-direction:column}
+.mob-group{border-bottom:1px solid rgba(255,255,255,.06)}
+.mob-group-head{width:100%;background:none;border:none;display:flex;justify-content:space-between;align-items:center;padding:18px 22px;cursor:pointer;text-align:left;font-family:'Oswald',sans-serif;font-size:14.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text);transition:color .15s}
+.mob-group-head:hover{color:var(--gold-l)}
+.mob-group-head svg{transition:transform .25s;color:var(--gold);flex-shrink:0}
+.mob-group.open .mob-group-head{color:var(--gold-l)}
+.mob-group.open .mob-group-head svg{transform:rotate(180deg)}
+.mob-group-body{max-height:0;overflow:hidden;transition:max-height .3s ease;background:rgba(0,0,0,.2)}
+.mob-group.open .mob-group-body{max-height:400px}
+.mob-group-body a{display:block;padding:13px 22px 13px 38px;color:var(--muted);font-size:14px;text-decoration:none;border-top:1px solid rgba(255,255,255,.04);font-family:'Source Sans 3',sans-serif}
+.mob-group-body a:first-child{border-top:none}
+.mob-group-body a:hover{color:var(--gold-l);background:rgba(201,168,76,.06)}
+.mob-link{display:block;padding:18px 22px;font-family:'Oswald',sans-serif;font-size:14.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.06)}
+.mob-link:hover{color:var(--gold-l)}
+.mob-menu-foot{padding:16px 20px;border-top:1px solid var(--border);background:var(--bg2);display:flex;flex-direction:column;gap:10px;flex-shrink:0}
+.mob-phone{color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;text-decoration:none;text-align:center;padding:10px;border:1px solid var(--gold);border-radius:5px}
+.mob-cta{background:var(--gold);color:var(--teal);font-family:'Oswald',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;text-align:center;padding:12px;border-radius:5px}
+.mob-cta:hover{background:var(--gold-l)}
+@media(min-width:861px){.mob-menu{display:none!important}body.menu-open{overflow:auto}body.menu-open::before{display:none}}
 </style>
 </head>
 <body>
-<nav><div class="nav-inner"><a href="index.html" class="nav-logo"><img src="images/logo.webp" alt="Kaim Contracting LLC" width="200" height="60"></a><ul class="nav-links"><li><a href="about.html">About <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="about.html"><b>About Us</b><p>Our story and what we stand for.</p></a><a class="dd-item" href="service-areas.html"><b>Service Areas</b><p>Towns we proudly serve in MA &amp; NH.</p></a><a class="dd-item" href="tools.html"><b>Free Tools</b><p>Paver, mulch &amp; pressure-wash calculators.</p></a><a class="dd-item" href="faq.html"><b>FAQ</b><p>Answers to common questions.</p></a><a class="dd-item" href="blog.html"><b>Blog</b><p>Tips, project highlights, and updates.</p></a></div></li><li><a href="index.html#services">Services <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="pressure-washing.html"><b>Pressure Washing</b><p>Deep cleaning for all outdoor surfaces.</p></a><a class="dd-item" href="pavers.html"><b>Paver Installation</b><p>Walkways, driveways, patios, walls &amp; fire pits.</p></a><a class="dd-item" href="drainage.html"><b>Drainage Solutions</b><p>French drains and water management.</p></a><a class="dd-item" href="landscaping.html"><b>Landscaping</b><p>Design, plantings, beds, mulch &amp; cleanups.</p></a></div></li><li><a href="index.html#contact">Contact</a></li></ul><div class="nav-info"><a href="tel:978-351-2195"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a><span class="nav-sep">|</span><a id="tb-email" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a><span class="nav-sep">|</span><span>Serving Greater Boston &amp; Southern NH &nbsp;|&nbsp; Complimentary Estimates</span></div><a href="index.html#contact" class="btn-nav">Get Started</a><button class="hamburger" onclick="document.querySelector('.mob-menu').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button></div><div class="mob-menu" id="mobMenu"><a href="about.html">About</a><a href="service-areas.html">Service Areas</a><a href="tools.html">Free Tools</a><a href="faq.html">FAQ</a><a href="blog.html">Blog</a><a href="index.html#services" onclick="document.getElementById('mobMenu').classList.remove('open')">Services</a><a href="paver-calculator.html">Paver Calculator</a><a href="mulch-calculator.html">Mulch Calculator</a><a href="pressure-washing-calculator.html">Pressure Wash Cost</a><a href="tel:978-351-2195">978-351-2195</a><a href="index.html#contact" class="cta" onclick="document.getElementById('mobMenu').classList.remove('open')">Get Started</a></div></nav>
+<nav><div class="nav-inner"><a href="index.html" class="nav-logo"><img src="images/logo.webp" alt="Kaim Contracting LLC" width="200" height="60"></a><ul class="nav-links"><li><a href="about.html">About <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="about.html"><b>About Us</b><p>Our story and what we stand for.</p></a><a class="dd-item" href="service-areas.html"><b>Service Areas</b><p>Towns we proudly serve in MA &amp; NH.</p></a><a class="dd-item" href="tools.html"><b>Free Tools</b><p>Paver, mulch &amp; pressure-wash calculators.</p></a><a class="dd-item" href="faq.html"><b>FAQ</b><p>Answers to common questions.</p></a><a class="dd-item" href="blog.html"><b>Blog</b><p>Tips, project highlights, and updates.</p></a></div></li><li><a href="index.html#services">Services <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="pressure-washing.html"><b>Pressure Washing</b><p>Deep cleaning for all outdoor surfaces.</p></a><a class="dd-item" href="pavers.html"><b>Paver Installation</b><p>Walkways, driveways, patios, walls &amp; fire pits.</p></a><a class="dd-item" href="drainage.html"><b>Drainage Solutions</b><p>French drains and water management.</p></a><a class="dd-item" href="landscaping.html"><b>Landscaping</b><p>Design, plantings, beds, mulch &amp; cleanups.</p></a></div></li><li><a href="index.html#contact">Contact</a></li></ul><div class="nav-info"><a href="tel:978-351-2195"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a><span class="nav-sep">|</span><a id="tb-email" href="#"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a><span class="nav-sep">|</span><span>Serving Greater Boston &amp; Southern NH &nbsp;|&nbsp; Complimentary Estimates</span></div><a href="index.html#contact" class="btn-nav">Get Started</a><button class="hamburger" onclick="var m=document.querySelector('.mob-menu');m.classList.toggle('open');document.body.classList.toggle('menu-open')" aria-label="Menu"><span></span><span></span><span></span></button></div><div class="mob-menu" id="mobMenu">
+  <div class="mob-menu-head">
+    <span class="mob-menu-title">Menu</span>
+    <button class="mob-close" onclick="closeMobMenu()" aria-label="Close menu">&times;</button>
+  </div>
+  <div class="mob-menu-body">
+    <div class="mob-group">
+      <button class="mob-group-head" onclick="this.parentElement.classList.toggle('open')" type="button">About<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="mob-group-body">
+        <a href="about.html" onclick="closeMobMenu()">About Us</a>
+        <a href="service-areas.html" onclick="closeMobMenu()">Service Areas</a>
+        <a href="tools.html" onclick="closeMobMenu()">Free Tools</a>
+        <a href="faq.html" onclick="closeMobMenu()">FAQ</a>
+        <a href="blog.html" onclick="closeMobMenu()">Blog</a>
+      </div>
+    </div>
+    <div class="mob-group">
+      <button class="mob-group-head" onclick="this.parentElement.classList.toggle('open')" type="button">Services<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="mob-group-body">
+        <a href="pressure-washing.html" onclick="closeMobMenu()">Pressure Washing</a>
+        <a href="pavers.html" onclick="closeMobMenu()">Paver Installation</a>
+        <a href="drainage.html" onclick="closeMobMenu()">Drainage Solutions</a>
+        <a href="landscaping.html" onclick="closeMobMenu()">Landscaping</a>
+      </div>
+    </div>
+    <a class="mob-link" href="index.html#contact" onclick="closeMobMenu()">Contact</a>
+  </div>
+  <div class="mob-menu-foot">
+    <a href="tel:978-351-2195" class="mob-phone">&#9742; 978-351-2195</a>
+    <a href="index.html#contact" class="mob-cta" onclick="closeMobMenu()">Request Estimate</a>
+  </div>
+</div></nav>
 <section class="svc-hero" id="top-form">
   <div class="svc-hero-photo" style="background-image:url('images/about-landscape.jpg')"></div>
   <div class="svc-hero-overlay"></div>
@@ -746,5 +807,16 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
       });
   });
 })();</script>
+<script>
+function closeMobMenu(){document.getElementById('mobMenu').classList.remove('open');document.body.classList.remove('menu-open');}
+(function(){
+  document.addEventListener('click', function(e){
+    if(document.body.classList.contains('menu-open')){
+      var m = document.getElementById('mobMenu');
+      if(m && !m.contains(e.target) && !e.target.closest('.hamburger')) closeMobMenu();
+    }
+  });
+})();
+</script>
 </body>
 </html>
