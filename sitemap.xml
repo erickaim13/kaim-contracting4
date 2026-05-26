@@ -19,13 +19,7 @@
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
-  <url>
-    <loc>https://kaimcontracting.com/design.html</loc>
-    <lastmod>2026-05-25</lastmod>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
+<url>
     <loc>https://kaimcontracting.com/drainage.html</loc>
     <lastmod>2026-05-25</lastmod>
     <priority>0.8</priority>
