@@ -898,6 +898,7 @@ async function submitLead(data,attachments){
     service:data.get('service')||'',
     message:data.get('message')||'',
     contactPref:data.getAll('contact-method').join(', '),
+    source:'Homepage Contact Form',
     kc_hpot_xyz:data.get('kc_hpot_xyz')||'',
     attachments:attachments||[]
   };
@@ -974,12 +975,13 @@ async function submitLead(data,attachments){
     var parts=name.split(/\s+/);
     var payload={
       first:parts.shift()||'',
-      last:parts.join(' '),
+      last:parts.join(' ')||'(not provided)',
       phone:(fd.get('hf-phone')||'').toString(),
       email:'',
       service:(fd.get('hf-service')||'').toString(),
-      message:'Submitted from hero quick-quote form on homepage.',
+      message:'Quick-quote from homepage hero. No project details provided — call to gather scope.',
       contactPref:'Phone Call',
+      source:'Homepage Hero Quick-Quote',
       kc_hpot_xyz:(fd.get('hf_hpot')||'').toString(),
       attachments:[]
     };

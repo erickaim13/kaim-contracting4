@@ -96,10 +96,11 @@ export default async function handler(req, res) {
   const service = sanitize(body.service, 60);
   const message = sanitize(body.message, 2000);
   const contactPref = sanitize(body.contactPref, 80);
+  const leadSource = sanitize(body.source, 120) || 'Website (kaimcontracting.com)';
 
-  if (!first || !last) return res.status(400).json({ error: 'Name required' });
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Invalid email' });
+  if (!first) return res.status(400).json({ error: 'Name required' });
   if (!phone || phone.replace(/\D/g, '').length < 10) return res.status(400).json({ error: 'Invalid phone' });
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Invalid email' });
   if (service && !SERVICE_OPTS.has(service)) return res.status(400).json({ error: 'Invalid service' });
 
   const attachments = Array.isArray(body.attachments) ? body.attachments.slice(0, 5).map(a => ({
@@ -124,7 +125,7 @@ export default async function handler(req, res) {
       first, last, phone, email, address: '',
       service,
       val: 0,
-      source: 'Website (kaimcontracting.com)',
+      source: leadSource,
       status: 'new',
       prio: 'normal',
       notes: message,
