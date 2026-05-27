@@ -741,15 +741,6 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 .mob-cta{background:var(--gold);color:var(--teal);font-family:'Oswald',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-align:center;padding:12px;border-radius:4px}
 .mob-cta:hover{background:var(--gold-l)}
 @media(min-width:861px){.mob-menu{display:none!important}body.menu-open{overflow:auto}body.menu-open::before{display:none}}
-
-/* Hero form footer: stacked, centered, boxed call link */
-.hero-form-foot{margin-top:14px!important;display:flex!important;flex-direction:column;align-items:center;gap:10px;text-align:center}
-.hero-form-foot .or-sep{font-family:'Oswald',sans-serif;font-size:10.5px;text-transform:uppercase;letter-spacing:.28em;color:rgba(255,255,255,.42);font-weight:600;position:relative}
-.hero-form-foot .or-sep::before,.hero-form-foot .or-sep::after{content:'';position:absolute;top:50%;width:20px;height:1px;background:rgba(255,255,255,.15)}
-.hero-form-foot .or-sep::before{right:calc(100% + 8px)}
-.hero-form-foot .or-sep::after{left:calc(100% + 8px)}
-.hero-form-foot .call-box{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border:1px solid var(--gold);border-radius:6px;color:var(--gold-l)!important;text-decoration:none;font-family:'Oswald',sans-serif;font-weight:700;font-size:13.5px;letter-spacing:.06em;transition:all .15s;background:transparent}
-.hero-form-foot .call-box:hover{background:var(--gold);color:var(--teal)!important}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do you charge for estimates?","acceptedAnswer":{"@type":"Answer","text":"No. All estimates are free and there is no obligation. We come out, walk the property with you, and give you a clear written quote before any work begins."}},{"@type":"Question","name":"What areas do you serve?","acceptedAnswer":{"@type":"Answer","text":"The Merrimack Valley and southern New Hampshire including Methuen, Andover, Lawrence, Haverhill, Lowell, Newburyport, Salisbury, Salem NH, Derry, Manchester, and surrounding towns."}},{"@type":"Question","name":"How quickly can you start a project?","acceptedAnswer":{"@type":"Answer","text":"Most projects can be scheduled within 2 to 4 weeks of approval. Larger projects or jobs scheduled for spring tend to book out further."}},{"@type":"Question","name":"Are you licensed and insured?","acceptedAnswer":{"@type":"Answer","text":"Yes. Kaim Contracting LLC is fully licensed and insured for work in both Massachusetts and New Hampshire."}},{"@type":"Question","name":"Do you offer financing?","acceptedAnswer":{"@type":"Answer","text":"Yes. We offer pay-over-time financing through Klarna for qualifying projects."}},{"@type":"Question","name":"What is the difference between soft washing and pressure washing?","acceptedAnswer":{"@type":"Answer","text":"Pressure washing uses high-pressure water to blast dirt off hard surfaces like concrete driveways, brick patios, and pavers. Soft washing uses low-pressure water combined with biodegradable cleaning solutions to gently clean delicate surfaces like vinyl siding, painted wood, stucco, and asphalt roofs. Using high pressure on siding or a roof can force water behind panels, strip paint, tear roof granules, or damage trim. Most house exteriors should be soft washed, not pressure washed."}}]}
@@ -808,7 +799,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
       <div class="hf"><input type="tel" name="hf-phone" placeholder="Phone number" required></div>
       <div class="hf"><select name="hf-service" required><option value="">What do you need?</option><option>Paver Installation</option><option>Landscaping</option><option>Hardscaping</option><option>Landscape Design</option><option>Drainage Solutions</option><option>Plantings</option><option>Pressure Washing</option><option>Multiple Services</option></select></div>
       <button type="submit" id="hf-submit">Request My Estimate</button>
-      <div class="hero-form-foot"><span class="or-sep">or</span><a class="call-box" href="tel:978-351-2195">Call 978-351-2195</a></div>
+      <div class="hero-form-foot">Or call <a href="tel:978-351-2195">978-351-2195</a></div>
     </form>
   </div>
   </section>
