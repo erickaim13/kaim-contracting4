@@ -742,6 +742,9 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 .mob-cta{background:var(--gold);color:var(--teal);font-family:'Oswald',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-align:center;padding:12px;border-radius:4px}
 .mob-cta:hover{background:var(--gold-l)}
 @media(min-width:861px){.mob-menu{display:none!important}body.menu-open{overflow:auto}body.menu-open::before{display:none}}
+/* FAQ + Serving: desktop shows FAQ first; mobile flips so Serving comes first */
+.faq-serve-pair{display:flex;flex-direction:column}
+@media(max-width:860px){.faq-serve-pair > .home-faq{order:2}.faq-serve-pair > .serving{order:1}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do you charge for estimates?","acceptedAnswer":{"@type":"Answer","text":"No. All estimates are free and there is no obligation. We come out, walk the property with you, and give you a clear written quote before any work begins."}},{"@type":"Question","name":"What areas do you serve?","acceptedAnswer":{"@type":"Answer","text":"The Merrimack Valley and southern New Hampshire including Methuen, Andover, Lawrence, Haverhill, Lowell, Newburyport, Salisbury, Salem NH, Derry, Manchester, and surrounding towns."}},{"@type":"Question","name":"How quickly can you start a project?","acceptedAnswer":{"@type":"Answer","text":"Most projects can be scheduled within 2 to 4 weeks of approval. Larger projects or jobs scheduled for spring tend to book out further."}},{"@type":"Question","name":"Are you licensed and insured?","acceptedAnswer":{"@type":"Answer","text":"Yes. Kaim Contracting LLC is fully licensed and insured for work in both Massachusetts and New Hampshire."}},{"@type":"Question","name":"Do you offer financing?","acceptedAnswer":{"@type":"Answer","text":"Yes. We offer pay-over-time financing through Klarna for qualifying projects."}},{"@type":"Question","name":"What is the difference between soft washing and pressure washing?","acceptedAnswer":{"@type":"Answer","text":"Pressure washing uses high-pressure water to blast dirt off hard surfaces like concrete driveways, brick patios, and pavers. Soft washing uses low-pressure water combined with biodegradable cleaning solutions to gently clean delicate surfaces like vinyl siding, painted wood, stucco, and asphalt roofs. Using high pressure on siding or a roof can force water behind panels, strip paint, tear roof granules, or damage trim. Most house exteriors should be soft washed, not pressure washed."}}]}
@@ -918,6 +921,26 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 
 
 
+<div class="faq-serve-pair">
+<section class="home-faq" id="faq">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Got Questions?</div>
+      <h2>Frequently Asked <span>Questions</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="acc-list svc-faq-list">
+      <div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>Do you charge for estimates?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>No. All estimates are free and there is no obligation. We come out, walk the property with you, and give you a clear written quote before any work begins.</p></div></div>
+      <div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>What areas do you serve?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>The Merrimack Valley and southern New Hampshire. Methuen, Andover, North Andover, Lawrence, Haverhill, Dracut, Lowell, Tewksbury, Chelmsford, Newburyport, Salisbury, Salem NH, Derry, Manchester, and 13 other towns. See the full list on our service areas page.</p></div></div>
+      <div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>How quickly can you start a project?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Most projects can be scheduled within 2 to 4 weeks of approval. Larger projects or jobs scheduled for spring tend to book out further. Call early to lock in your date.</p></div></div>
+      <div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>Are you licensed and insured?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Yes. Kaim Contracting LLC is fully licensed and insured for work in both Massachusetts and New Hampshire. Proof of insurance available on request.</p></div></div>
+      <div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>Do you offer financing?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Yes. We offer pay-over-time financing through Klarna for qualifying projects. Ask during your estimate and we will walk you through the options.</p></div></div>
+      <div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>What is the difference between soft washing and pressure washing?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Pressure washing uses high-pressure water to blast dirt off hard surfaces like concrete driveways, brick patios, and pavers. Soft washing uses low-pressure water combined with biodegradable cleaning solutions to gently clean delicate surfaces like vinyl siding, painted wood, stucco, and asphalt roofs. Using high pressure on siding or a roof can force water behind panels, strip paint, tear roof granules, or damage trim. Most house exteriors should be soft washed, not pressure washed.</p></div></div>
+    </div>
+    <div class="home-faq-foot"><a href="faq.html">See All Questions &#8594;</a></div>
+  </div>
+</section>
+
 <section class="serving" id="serving">
   <div class="topo-bg" aria-hidden="true"></div>
   <div class="serving-inner" style="display:block;padding:60px 24px;max-width:1280px">
@@ -953,25 +976,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 </div>
   </div>
 </section>
-
-<section class="home-faq" id="faq">
-  <div class="section-inner">
-    <div class="section-header">
-      <div class="section-label">Got Questions?</div>
-      <h2>Frequently Asked <span>Questions</span></h2>
-      <div class="divider"></div>
-    </div>
-    <div class="acc-list svc-faq-list">
-      <div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>Do you charge for estimates?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>No. All estimates are free and there is no obligation. We come out, walk the property with you, and give you a clear written quote before any work begins.</p></div></div>
-      <div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>What areas do you serve?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>The Merrimack Valley and southern New Hampshire. Methuen, Andover, North Andover, Lawrence, Haverhill, Dracut, Lowell, Tewksbury, Chelmsford, Newburyport, Salisbury, Salem NH, Derry, Manchester, and 13 other towns. See the full list on our service areas page.</p></div></div>
-      <div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>How quickly can you start a project?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Most projects can be scheduled within 2 to 4 weeks of approval. Larger projects or jobs scheduled for spring tend to book out further. Call early to lock in your date.</p></div></div>
-      <div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>Are you licensed and insured?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Yes. Kaim Contracting LLC is fully licensed and insured for work in both Massachusetts and New Hampshire. Proof of insurance available on request.</p></div></div>
-      <div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>Do you offer financing?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Yes. We offer pay-over-time financing through Klarna for qualifying projects. Ask during your estimate and we will walk you through the options.</p></div></div>
-      <div class="acc-item"><button class="acc-head" onclick="toggleAcc(this)"><span>What is the difference between soft washing and pressure washing?</span><svg class="acc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body"><p>Pressure washing uses high-pressure water to blast dirt off hard surfaces like concrete driveways, brick patios, and pavers. Soft washing uses low-pressure water combined with biodegradable cleaning solutions to gently clean delicate surfaces like vinyl siding, painted wood, stucco, and asphalt roofs. Using high pressure on siding or a roof can force water behind panels, strip paint, tear roof granules, or damage trim. Most house exteriors should be soft washed, not pressure washed.</p></div></div>
-    </div>
-    <div class="home-faq-foot"><a href="faq.html">See All Questions &#8594;</a></div>
-  </div>
-</section>
+</div>
 
 <section class="contact" id="contact">
   <div class="section-inner">
