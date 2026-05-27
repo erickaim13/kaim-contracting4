@@ -615,6 +615,17 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 .mob-cta{background:var(--gold);color:var(--teal);font-family:'Oswald',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-align:center;padding:12px;border-radius:4px}
 .mob-cta:hover{background:var(--gold-l)}
 @media(min-width:861px){.mob-menu{display:none!important}body.menu-open{overflow:auto}body.menu-open::before{display:none}}
+
+/* MOBILE: match the homepage 1-2-3 step look — bigger circles, bigger numbers, same colors */
+@media(max-width:720px){
+  .svc-process-circle{width:120px!important;height:120px!important;border-width:3px!important;margin-bottom:24px!important;box-shadow:0 12px 32px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.1)!important}
+  .svc-process-circle::before{inset:-10px!important}
+  .svc-process-num{font-size:52px!important;text-shadow:0 2px 10px rgba(0,0,0,.6)!important}
+  .svc-process-node h4{font-size:17px!important;letter-spacing:.06em!important;margin-bottom:10px!important;line-height:1.2}
+  .svc-process-node p{font-size:14px!important;line-height:1.65!important;max-width:240px!important}
+  .svc-process-arrow{padding:8px 0!important}
+  .svc-process-arrow svg{width:40px!important;height:40px!important}
+}
 </style>
 </head>
 <body>
