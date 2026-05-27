@@ -626,6 +626,12 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
   .svc-process-arrow{padding:8px 0!important}
   .svc-process-arrow svg{width:40px!important;height:40px!important}
 }
+
+/* Final CTA: secondary boxed 'Call' button matching the gold CTA size */
+.svc-final .btn-call-cta{display:inline-block;background:transparent;color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:14px 32px;border:2px solid var(--gold);border-radius:6px;text-decoration:none;transition:background .2s,color .2s,transform .15s}
+.svc-final .btn-call-cta:hover{background:var(--gold);color:var(--teal);transform:translateY(-2px)}
+.svc-final .cta-or{color:rgba(255,255,255,.55);font-size:13px;font-family:'Oswald',sans-serif;letter-spacing:.18em;text-transform:uppercase}
+@media(max-width:540px){.svc-final .cta-row{flex-direction:column;gap:10px}.svc-final .btn-gold-cta,.svc-final .btn-call-cta{width:100%;max-width:320px;text-align:center}}
 </style>
 </head>
 <body>
@@ -791,7 +797,8 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
     <p>Free on-site estimate. Same-day response on every submission. Booking spring &amp; summer 2026 now.</p>
     <div class="cta-row">
       <a href="#top-form" onclick="document.getElementById('top-form').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){var i=document.querySelector('.svc-hero-form input');if(i)i.focus()},700);return false;" class="btn-gold-cta">Request Free Estimate</a>
-      <span class="cta-or">or call <a href="tel:978-351-2195">978-351-2195</a></span>
+      <span class="cta-or">or</span>
+      <a href="tel:978-351-2195" class="btn-call-cta">Call 978-351-2195</a>
     </div>
   </div>
 </section>
