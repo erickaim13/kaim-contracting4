@@ -612,6 +612,15 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 .mob-cta{background:var(--gold);color:var(--teal);font-family:'Oswald',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-align:center;padding:12px;border-radius:4px}
 .mob-cta:hover{background:var(--gold-l)}
 @media(min-width:861px){.mob-menu{display:none!important}body.menu-open{overflow:auto}body.menu-open::before{display:none}}
+
+/* Service-page hero form footer: stacked, centered, boxed call link */
+.svc-hf-foot{margin-top:14px!important;display:flex!important;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.svc-hf-foot .or-sep{font-family:'Oswald',sans-serif;font-size:10.5px;text-transform:uppercase;letter-spacing:.28em;color:rgba(255,255,255,.42);font-weight:600;position:relative}
+.svc-hf-foot .or-sep::before,.svc-hf-foot .or-sep::after{content:'';position:absolute;top:50%;width:20px;height:1px;background:rgba(255,255,255,.15)}
+.svc-hf-foot .or-sep::before{right:calc(100% + 8px)}
+.svc-hf-foot .or-sep::after{left:calc(100% + 8px)}
+.svc-hf-foot .call-box{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border:1px solid var(--gold);border-radius:6px;color:var(--gold-l)!important;text-decoration:none;font-family:'Oswald',sans-serif;font-weight:700;font-size:13.5px;letter-spacing:.06em;transition:all .15s;background:transparent}
+.svc-hf-foot .call-box:hover{background:var(--gold);color:var(--teal)!important}
 </style>
 </head>
 <body>
@@ -667,7 +676,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
         <div class="hf"><input type="email" name="hf-email" placeholder="Email (optional)"></div>
         <div class="hf"><textarea name="hf-message" placeholder="Briefly describe your project (optional)" rows="2" style="resize:vertical;min-height:60px"></textarea></div>
         <button type="submit" id="drainage-hero-submit">Request My Estimate</button>
-        <div class="svc-hf-foot">Or call <a href="tel:978-351-2195">978-351-2195</a></div>
+        <div class="svc-hf-foot"><span class="or-sep">or</span><a class="call-box" href="tel:978-351-2195">Call 978-351-2195</a></div>
       </form>
   </div>
 </section>
