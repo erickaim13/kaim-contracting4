@@ -720,7 +720,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
         body:JSON.stringify({first:first,phone:phone,email:email,service:SERVICE,source:SOURCE,notes:getNotes(),kc_hpot_xyz:hpot})});
       var data=await resp.json().catch(function(){return{};});
       if(!resp.ok) throw new Error(data.error||'Submit failed');
-      try{ if(window.gtag){var _ph=phone.replace(/\D/g,'');gtag('event','conversion',{send_to:'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD',value:300.0,currency:'USD',user_data:{email:email||undefined,phone_number:_ph.length>=10?'+1'+_ph.slice(-10):undefined,address:{first_name:first||undefined}}});gtag('event','generate_lead',{lead_source:SOURCE});} }catch(_){}
+      try{ if(window.gtag){var _ph=phone.replace(/\D/g,'');gtag('event','conversion',{send_to:'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD',value:200.0,currency:'USD',user_data:{email:email||undefined,phone_number:_ph.length>=10?'+1'+_ph.slice(-10):undefined,address:{first_name:first||undefined}}});gtag('event','generate_lead',{lead_source:SOURCE});} }catch(_){}
       form.style.display='none';
       msg.style.display='block'; msg.style.color='var(--gold-l)';
       msg.innerHTML='<strong>Got it. Thanks, '+esc(first)+'!</strong><br>We\'ll text you at '+esc(phone)+' within one business day with delivery + install pricing.';
