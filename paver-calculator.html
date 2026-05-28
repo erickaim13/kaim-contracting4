@@ -599,9 +599,18 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
         </div>
       </div>
       <div class="calc-cta">
-        <h3>Want an <span>exact</span> number?</h3>
-        <p>Free on-site estimates throughout the Merrimack Valley and southern NH.</p>
-        <a href="index.html#contact" class="btn-primary">Get My Free Estimate</a>
+        <h3>Want an <span>exact</span> quote based on these numbers?</h3>
+        <p>Free on-site estimate — we'll text you within one business day with a real price tailored to your project.</p>
+        <form id="leadForm" novalidate style="text-align:left;max-width:480px;margin:18px auto 0">
+          <div class="form-row">
+            <div class="fg"><label for="lf-first">First name *</label><input type="text" id="lf-first" name="first" required autocomplete="given-name"></div>
+            <div class="fg"><label for="lf-phone">Phone *</label><input type="tel" id="lf-phone" name="phone" required autocomplete="tel"></div>
+          </div>
+          <div class="fg"><label for="lf-email">Email (optional)</label><input type="email" id="lf-email" name="email" autocomplete="email"></div>
+          <input type="text" name="kc_hpot_xyz" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
+          <button type="submit" class="form-submit" id="lf-submit">Send Me My Quote</button>
+          <div id="lf-msg" style="display:none;margin-top:14px;font-size:14px;line-height:1.55;text-align:center"></div>
+        </form>
       </div>
     </div>
 
@@ -654,6 +663,57 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 })();
 </script>
 <script>
+(function(){
+  var SERVICE='Paver Installation', SOURCE='Paver Calculator (kaimcontracting.com)';
+  function getNotes(){
+    var g=function(id){return document.getElementById(id);};
+    var sel=g('paverSize');
+    return ['Paver Calculator submission:',
+      '- Length: '+g('length').value+' ft',
+      '- Width: '+g('width').value+' ft',
+      '- Paver size: '+(sel.options[sel.selectedIndex]?sel.options[sel.selectedIndex].text:''),
+      '- Waste: '+g('waste').value+'%',
+      '- Base depth: '+g('baseDepth').value+' in',
+      '- Pavers needed: '+g('paverCount').textContent,
+      '- Area: '+g('area').textContent,
+      '- Gravel base: '+g('gravel').textContent,
+      '- Bedding sand: '+g('sand').textContent,
+      '- Polymeric sand: '+g('polysand').textContent,
+      '- Pallets: '+g('pallets').textContent,
+      '- Edge restraint: '+g('edge').textContent,
+      '- Estimated installed cost: '+g('costRange').textContent].join('\n');
+  }
+  var form=document.getElementById('leadForm'); if(!form) return;
+  var esc=function(s){return String(s).replace(/[<>&"']/g,'');};
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();
+    var btn=document.getElementById('lf-submit');
+    var msg=document.getElementById('lf-msg');
+    var first=document.getElementById('lf-first').value.trim();
+    var phone=document.getElementById('lf-phone').value.trim();
+    var email=document.getElementById('lf-email').value.trim();
+    var hpot=form.querySelector('input[name="kc_hpot_xyz"]').value;
+    if(!first||phone.replace(/\D/g,'').length<10){
+      msg.style.display='block'; msg.style.color='#ffb3b3';
+      msg.textContent='Please enter your first name and a valid phone number.'; return;
+    }
+    btn.disabled=true; btn.textContent='Sending…'; msg.style.display='none';
+    try{
+      var resp=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({first:first,phone:phone,email:email,service:SERVICE,source:SOURCE,notes:getNotes(),kc_hpot_xyz:hpot})});
+      var data=await resp.json().catch(function(){return{};});
+      if(!resp.ok) throw new Error(data.error||'Submit failed');
+      try{ if(window.gtag) gtag('event','generate_lead',{lead_source:SOURCE}); }catch(_){}
+      form.style.display='none';
+      msg.style.display='block'; msg.style.color='var(--gold-l)';
+      msg.innerHTML='<strong>Got it — thanks, '+esc(first)+'!</strong><br>We\'ll text you at '+esc(phone)+' within one business day to confirm details and schedule your free on-site estimate.';
+    }catch(err){
+      btn.disabled=false; btn.textContent='Send Me My Quote';
+      msg.style.display='block'; msg.style.color='#ffb3b3';
+      msg.textContent='Sorry, something went wrong. Please call (978) 351-2195 or try again.';
+    }
+  });
+})();
 function closeMobMenu(){document.getElementById('mobMenu').classList.remove('open');document.body.classList.remove('menu-open');}
 (function(){
   document.addEventListener('click', function(e){
