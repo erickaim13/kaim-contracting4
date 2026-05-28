@@ -850,6 +850,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
     fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
       .then(function(r){if(!r.ok)throw new Error('Submission failed');return r.json();})
       .then(function(){
+        try{ if(window.gtag){var _ph=(payload.phone||'').replace(/\D/g,'');gtag('event','conversion',{send_to:'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD',value:300.0,currency:'USD',user_data:{email:payload.email||undefined,phone_number:_ph.length>=10?'+1'+_ph.slice(-10):undefined,address:{first_name:payload.first||undefined}}});gtag('event','generate_lead',{lead_source:payload.source||'Website'});} }catch(_){}
         form.innerHTML='<div style="text-align:center;padding:36px 12px"><div style="display:inline-flex;align-items:center;justify-content:center;width:60px;height:60px;border-radius:50%;background:rgba(201,168,76,.18);border:2px solid #c9a84c;margin-bottom:14px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e2c47a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div style="font-family:\'Oswald\',sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;color:#e2c47a;margin-bottom:6px">Got it!</div><div style="font-size:14px;color:rgba(255,255,255,.7);line-height:1.5">We will be in touch within 1 business day.</div></div>';
       })
       .catch(function(){
