@@ -602,15 +602,20 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       </div>
       <div class="calc-cta">
         <h3>Ready to lock in a <span>date</span>?</h3>
-        <p>Free firm quote based on your numbers — we'll text you within one business day to schedule.</p>
+        <p>Get my exact price + a free in person look at the surfaces. No obligation.</p>
         <form id="leadForm" novalidate style="text-align:left;max-width:480px;margin:18px auto 0">
           <div class="form-row">
             <div class="fg"><label for="lf-first">First name *</label><input type="text" id="lf-first" name="first" required autocomplete="given-name"></div>
-            <div class="fg"><label for="lf-phone">Phone *</label><input type="tel" id="lf-phone" name="phone" required autocomplete="tel"></div>
+            <div class="fg">
+              <label for="lf-phone">Phone *</label>
+              <input type="tel" id="lf-phone" name="phone" required autocomplete="tel">
+              <a href="tel:978-351-2195" style="display:inline-block;font-size:11.5px;color:var(--gold-l);margin-top:6px;text-decoration:none;letter-spacing:.02em">Rather just call? 978.351.2195</a>
+            </div>
           </div>
           <div class="fg"><label for="lf-email">Email (optional)</label><input type="email" id="lf-email" name="email" autocomplete="email"></div>
           <input type="text" name="kc_hpot_xyz" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
           <button type="submit" class="form-submit" id="lf-submit">Claim My Spring Offer</button>
+          <div style="margin-top:10px;font-size:12px;color:var(--muted);text-align:center;letter-spacing:.01em">We don't share your info. No spam.</div>
           <div id="lf-msg" style="display:none;margin-top:14px;font-size:14px;line-height:1.55;text-align:center"></div>
         </form>
       </div>
@@ -700,7 +705,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       try{ if(window.gtag) gtag('event','generate_lead',{lead_source:SOURCE}); }catch(_){}
       form.style.display='none';
       msg.style.display='block'; msg.style.color='var(--gold-l)';
-      msg.innerHTML='<strong>Got it — thanks, '+esc(first)+'!</strong><br>We\'ll text you at '+esc(phone)+' within one business day to lock in your date.';
+      msg.innerHTML='<strong>Got it. Thanks, '+esc(first)+'!</strong><br>We\'ll text you at '+esc(phone)+' within one business day to lock in your date.';
     }catch(err){
       btn.disabled=false; btn.textContent='Claim My Spring Offer';
       msg.style.display='block'; msg.style.color='#ffb3b3';
