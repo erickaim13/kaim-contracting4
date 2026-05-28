@@ -26,7 +26,7 @@ function normalizePhone(p) {
   return digits.length === 10 ? '+1' + digits : '+' + digits;
 }
 const SERVICE_OPTS = new Set([
-  'Paver Installation', 'Landscaping', 'Drainage Solutions',
+  'Paver Installation', 'Paver Restoration', 'Landscaping', 'Drainage Solutions',
   'Hardscaping', 'Landscape Design', 'Pressure Washing',
   'Plantings', 'Multiple Services'
 ]);
