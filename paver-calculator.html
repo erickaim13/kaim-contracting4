@@ -562,29 +562,47 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   <div class="page-hero-content">
     <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;&#8250;&nbsp; Free Tools &nbsp;&#8250;&nbsp; Paver Calculator</div>
     <h1>Free <span>Paver Calculator</span></h1>
-    <p class="sub">Estimate pavers, base, sand, edge restraint, and total cost for your patio or driveway. Built by our crew, calibrated to New England jobs.</p>
+    <p class="sub">Estimate pricing for a new install, restoration, or sealing job. Built by our crew, calibrated to New England patios and driveways.</p>
   </div>
 </div>
 <div class="page-body">
   <div class="page-grid">
     <div class="page-content">
       <h2>Free <span>Paver Calculator</span></h2>
-      <p>Plug in your patio or driveway dimensions and we will tell you how many pavers, how much base gravel, sand, polymeric sand, and edge restraint you need. Built by our installation crew, calibrated to typical New England jobs.</p>
+      <p>Pick a service type and plug in your patio or driveway dimensions. For a new install we'll size up pavers, base gravel, bedding sand, polymeric sand, and edge restraint plus an installed cost range. For restoration or sealing we'll show a rough project range based on similar jobs. Final pricing is confirmed after a quick look at your patio.</p>
       <div class="calc-card">
-        <div class="calc-card-title">Project Dimensions</div>
+        <div class="calc-card-title">Service Type</div>
+        <div class="calc-surface-grid" id="svcGrid">
+          <button class="calc-surface-btn active" data-svc="install" type="button">New Installation</button>
+          <button class="calc-surface-btn" data-svc="restore" type="button">Restoration</button>
+          <button class="calc-surface-btn" data-svc="seal" type="button">Sealing</button>
+        </div>
+        <div class="calc-card-title" style="margin-top:8px">Project Dimensions</div>
         <div class="calc-grid">
           <div class="calc-field"><label for="length">Length (ft)</label><input type="number" id="length" min="0" step="0.5" value="20" inputmode="decimal"></div>
           <div class="calc-field"><label for="width">Width (ft)</label><input type="number" id="width" min="0" step="0.5" value="12" inputmode="decimal"></div>
-          <div class="calc-field calc-field-full"><label for="paverSize">Paver Size</label><select id="paverSize"><option value="0.222" data-pallet="110">4" x 8" (Holland / Brick)</option><option value="0.25" data-pallet="100">6" x 6" (Square)</option><option value="0.375" selected data-pallet="115">6" x 9" (Rectangle)</option><option value="0.444" data-pallet="90">8" x 8" (Large Square)</option><option value="1" data-pallet="75">12" x 12" (Patio Stone)</option><option value="2" data-pallet="80">12" x 24" (Plank)</option></select></div>
-          <div class="calc-field"><label for="waste">Waste % (cuts)</label><input type="number" id="waste" min="0" max="50" step="1" value="10" inputmode="numeric"></div>
-          <div class="calc-field"><label for="baseDepth">Base Depth (in)</label><input type="number" id="baseDepth" min="2" max="12" step="1" value="6" inputmode="numeric"></div>
+          <div class="calc-field calc-field-full" data-mode="install"><label for="paverSize">Paver Size</label><select id="paverSize"><option value="0.222" data-pallet="110">4" x 8" (Holland / Brick)</option><option value="0.25" data-pallet="100">6" x 6" (Square)</option><option value="0.375" selected data-pallet="115">6" x 9" (Rectangle)</option><option value="0.444" data-pallet="90">8" x 8" (Large Square)</option><option value="1" data-pallet="75">12" x 12" (Patio Stone)</option><option value="2" data-pallet="80">12" x 24" (Plank)</option></select></div>
+          <div class="calc-field" data-mode="install"><label for="waste">Waste % (cuts)</label><input type="number" id="waste" min="0" max="50" step="1" value="10" inputmode="numeric"></div>
+          <div class="calc-field" data-mode="install"><label for="baseDepth">Base Depth (in)</label><input type="number" id="baseDepth" min="2" max="12" step="1" value="6" inputmode="numeric"></div>
+          <div class="calc-field calc-field-full" data-mode="restore" style="display:none"><label>Patio Condition</label><div class="calc-condition" id="restoreCondGroup"><button class="calc-condition-btn" data-cond="light" type="button">Light</button><button class="calc-condition-btn active" data-cond="moderate" type="button">Moderate</button><button class="calc-condition-btn" data-cond="heavy" type="button">Heavy</button></div></div>
+          <div class="calc-field calc-field-full" data-mode="seal" style="display:none"><label>Sealer Finish</label><div class="calc-condition" id="sealFinishGroup"><button class="calc-condition-btn active" data-finish="standard" type="button">Standard Satin</button><button class="calc-condition-btn" data-finish="semi" type="button">Semi Gloss</button><button class="calc-condition-btn" data-finish="wet" type="button">Wet Look</button></div></div>
         </div>
       </div>
       <div class="calc-results" id="results">
-        <div class="calc-results-eyebrow">Your Estimate</div>
-        <div class="calc-big" id="paverCount">288</div>
-        <div class="calc-big-label">Pavers Needed</div>
-        <div class="calc-breakdown">
+        <div class="calc-results-eyebrow">Rough Estimate</div>
+        <div data-mode="install">
+          <div class="calc-big" id="paverCount">288</div>
+          <div class="calc-big-label">Pavers Needed</div>
+        </div>
+        <div data-mode="restore" style="display:none">
+          <div class="calc-big" id="restoreCost">$1,200 - $1,920</div>
+          <div class="calc-big-label">Typical Project Range. Final price confirmed after a quick look at your patio.</div>
+        </div>
+        <div data-mode="seal" style="display:none">
+          <div class="calc-big" id="sealCost">$720 - $1,200</div>
+          <div class="calc-big-label">Typical Project Range. Final price confirmed after a quick look at your patio.</div>
+        </div>
+        <div class="calc-breakdown" data-mode="install">
           <div class="calc-row"><span class="calc-row-label">Project area</span><span class="calc-row-value" id="area">240 sq ft</span></div>
           <div class="calc-row"><span class="calc-row-label">Gravel base</span><span class="calc-row-value" id="gravel">4.4 cu yd</span></div>
           <div class="calc-row"><span class="calc-row-label">Bedding sand (1 in)</span><span class="calc-row-value" id="sand">0.74 cu yd</span></div>
@@ -592,7 +610,17 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
           <div class="calc-row"><span class="calc-row-label">Pallets (approx)</span><span class="calc-row-value" id="pallets">3 pallets</span></div>
           <div class="calc-row"><span class="calc-row-label">Edge restraint</span><span class="calc-row-value" id="edge">64 lin ft</span></div>
         </div>
-        <div class="calc-cost-range">
+        <div class="calc-breakdown" data-mode="restore" style="display:none">
+          <div class="calc-row"><span class="calc-row-label">Project area</span><span class="calc-row-value" id="restoreArea">240 sq ft</span></div>
+          <div class="calc-row"><span class="calc-row-label">Condition</span><span class="calc-row-value" id="restoreCondOut">Moderate (some leveling)</span></div>
+          <div class="calc-row"><span class="calc-row-label">Includes</span><span class="calc-row-value">Clean, level, replace, re sand</span></div>
+        </div>
+        <div class="calc-breakdown" data-mode="seal" style="display:none">
+          <div class="calc-row"><span class="calc-row-label">Project area</span><span class="calc-row-value" id="sealArea">240 sq ft</span></div>
+          <div class="calc-row"><span class="calc-row-label">Finish</span><span class="calc-row-value" id="sealFinishOut">Standard Satin</span></div>
+          <div class="calc-row"><span class="calc-row-label">Includes</span><span class="calc-row-value">Pressure wash, re sand, sealer</span></div>
+        </div>
+        <div class="calc-cost-range" data-mode="install">
           <div class="calc-cost-label">Estimated Installed Cost</div>
           <div class="calc-cost-value" id="costRange">$4,800 - $7,200</div>
           <div class="calc-cost-note">Range reflects typical New England material and labor pricing. Actual cost varies by paver selection, site prep, and access.</div>
@@ -639,57 +667,130 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 (function(){
   var $=function(id){return document.getElementById(id);};
   var inputs=['length','width','paverSize','waste','baseDepth'];
+  var RESTORE_RATES={light:{low:3,high:5,label:'Light (clean & re sand)'},moderate:{low:5,high:8,label:'Moderate (some leveling)'},heavy:{low:8,high:14,label:'Heavy (replace & level)'}};
+  var SEAL_RATES={standard:{low:3,high:5,label:'Standard Satin'},semi:{low:4,high:6,label:'Semi Gloss'},wet:{low:5,high:8,label:'Wet Look'}};
+  var MIN_PROJECT=300;
+  var mode='install', restoreCond='moderate', sealFinish='standard';
   function fmt(n,d){d=d||0;return new Intl.NumberFormat('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);}
   function money(n){return '$'+new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(Math.round(n/50)*50);}
+  function syncMode(){
+    document.querySelectorAll('[data-mode]').forEach(function(el){
+      el.style.display=(el.getAttribute('data-mode')===mode)?'':'none';
+    });
+  }
+  document.querySelectorAll('#svcGrid .calc-surface-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('#svcGrid .calc-surface-btn').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');mode=btn.dataset.svc;syncMode();calc();
+    });
+  });
+  document.querySelectorAll('#restoreCondGroup .calc-condition-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('#restoreCondGroup .calc-condition-btn').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');restoreCond=btn.dataset.cond;calc();
+    });
+  });
+  document.querySelectorAll('#sealFinishGroup .calc-condition-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('#sealFinishGroup .calc-condition-btn').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');sealFinish=btn.dataset.finish;calc();
+    });
+  });
   function calc(){
     var L=parseFloat($('length').value)||0;
     var W=parseFloat($('width').value)||0;
-    var sqftPerPaver=parseFloat($('paverSize').value);
-    var waste=(parseFloat($('waste').value)||0)/100;
-    var baseIn=parseFloat($('baseDepth').value)||6;
     var area=L*W;
-    var pavers=Math.ceil((area/sqftPerPaver)*(1+waste));
-    var paverSel=$('paverSize');
-    var sqftPerPallet=parseFloat(paverSel.options[paverSel.selectedIndex].dataset.pallet)||100;
-    var pallets=Math.max(1,Math.ceil((area*(1+waste))/sqftPerPallet));
-    var gravel=(area*(baseIn/12)*1.10)/27;
-    var sand=(area*(1/12))/27;
-    var polysand=Math.ceil(area/100);
-    var edge=2*(L+W);
-    var low=area*20, high=area*30;
-    $('paverCount').textContent=fmt(pavers);
-    $('area').textContent=fmt(area,0)+' sq ft';
-    $('gravel').textContent=fmt(gravel,1)+' cu yd';
-    $('sand').textContent=fmt(sand,2)+' cu yd';
-    $('polysand').textContent=polysand+(polysand===1?' bag':' bags');
-    $('pallets').textContent=pallets+(pallets===1?' pallet':' pallets');
-    $('edge').textContent=fmt(edge,0)+' lin ft';
-    $('costRange').textContent=money(low)+' - '+money(high);
+    if(mode==='install'){
+      var sqftPerPaver=parseFloat($('paverSize').value);
+      var waste=(parseFloat($('waste').value)||0)/100;
+      var baseIn=parseFloat($('baseDepth').value)||6;
+      var pavers=Math.ceil((area/sqftPerPaver)*(1+waste));
+      var paverSel=$('paverSize');
+      var sqftPerPallet=parseFloat(paverSel.options[paverSel.selectedIndex].dataset.pallet)||100;
+      var pallets=Math.max(1,Math.ceil((area*(1+waste))/sqftPerPallet));
+      var gravel=(area*(baseIn/12)*1.10)/27;
+      var sand=(area*(1/12))/27;
+      var polysand=Math.ceil(area/100);
+      var edge=2*(L+W);
+      var low=area*20, high=area*30;
+      $('paverCount').textContent=fmt(pavers);
+      $('area').textContent=fmt(area,0)+' sq ft';
+      $('gravel').textContent=fmt(gravel,1)+' cu yd';
+      $('sand').textContent=fmt(sand,2)+' cu yd';
+      $('polysand').textContent=polysand+(polysand===1?' bag':' bags');
+      $('pallets').textContent=pallets+(pallets===1?' pallet':' pallets');
+      $('edge').textContent=fmt(edge,0)+' lin ft';
+      $('costRange').textContent=money(low)+' - '+money(high);
+      return;
+    }
+    if(mode==='restore'){
+      var r=RESTORE_RATES[restoreCond];
+      var rLow=Math.max(area*r.low,MIN_PROJECT);
+      var rHigh=Math.max(area*r.high,MIN_PROJECT+100);
+      $('restoreCost').textContent=money(rLow)+' - '+money(rHigh);
+      $('restoreArea').textContent=fmt(area,0)+' sq ft';
+      $('restoreCondOut').textContent=r.label;
+      return;
+    }
+    if(mode==='seal'){
+      var s=SEAL_RATES[sealFinish];
+      var sLow=Math.max(area*s.low,MIN_PROJECT);
+      var sHigh=Math.max(area*s.high,MIN_PROJECT+100);
+      $('sealCost').textContent=money(sLow)+' - '+money(sHigh);
+      $('sealArea').textContent=fmt(area,0)+' sq ft';
+      $('sealFinishOut').textContent=SEAL_RATES[sealFinish].label;
+      return;
+    }
   }
-  inputs.forEach(function(id){$(id).addEventListener('input',calc);});
+  inputs.forEach(function(id){var el=$(id);if(el)el.addEventListener('input',calc);});
+  syncMode();
   calc();
 })();
 </script>
 <script>
 (function(){
-  var SERVICE='Paver Installation', SOURCE='Paver Calculator (kaimcontracting.com)';
+  var SOURCE='Paver Calculator (kaimcontracting.com)';
+  var SVC_LABEL={install:'Paver Installation',restore:'Paver Restoration',seal:'Paver Sealing'};
+  function activeMode(){
+    var b=document.querySelector('#svcGrid .calc-surface-btn.active');
+    return b?b.dataset.svc:'install';
+  }
+  function getService(){return SVC_LABEL[activeMode()]||'Paver Installation';}
   function getNotes(){
     var g=function(id){return document.getElementById(id);};
-    var sel=g('paverSize');
-    return ['Paver Calculator submission:',
+    var m=activeMode();
+    var common=['Paver Calculator submission:',
+      '- Service: '+SVC_LABEL[m],
       '- Length: '+g('length').value+' ft',
-      '- Width: '+g('width').value+' ft',
-      '- Paver size: '+(sel.options[sel.selectedIndex]?sel.options[sel.selectedIndex].text:''),
-      '- Waste: '+g('waste').value+'%',
-      '- Base depth: '+g('baseDepth').value+' in',
-      '- Pavers needed: '+g('paverCount').textContent,
-      '- Area: '+g('area').textContent,
-      '- Gravel base: '+g('gravel').textContent,
-      '- Bedding sand: '+g('sand').textContent,
-      '- Polymeric sand: '+g('polysand').textContent,
-      '- Pallets: '+g('pallets').textContent,
-      '- Edge restraint: '+g('edge').textContent,
-      '- Estimated installed cost: '+g('costRange').textContent].join('\n');
+      '- Width: '+g('width').value+' ft'];
+    if(m==='install'){
+      var sel=g('paverSize');
+      return common.concat([
+        '- Paver size: '+(sel.options[sel.selectedIndex]?sel.options[sel.selectedIndex].text:''),
+        '- Waste: '+g('waste').value+'%',
+        '- Base depth: '+g('baseDepth').value+' in',
+        '- Pavers needed: '+g('paverCount').textContent,
+        '- Area: '+g('area').textContent,
+        '- Gravel base: '+g('gravel').textContent,
+        '- Bedding sand: '+g('sand').textContent,
+        '- Polymeric sand: '+g('polysand').textContent,
+        '- Pallets: '+g('pallets').textContent,
+        '- Edge restraint: '+g('edge').textContent,
+        '- Estimated installed cost: '+g('costRange').textContent
+      ]).join('\n');
+    }
+    if(m==='restore'){
+      return common.concat([
+        '- Area: '+g('restoreArea').textContent,
+        '- Condition: '+g('restoreCondOut').textContent,
+        '- Estimated project range: '+g('restoreCost').textContent
+      ]).join('\n');
+    }
+    return common.concat([
+      '- Area: '+g('sealArea').textContent,
+      '- Finish: '+g('sealFinishOut').textContent,
+      '- Estimated project range: '+g('sealCost').textContent
+    ]).join('\n');
   }
   var form=document.getElementById('leadForm'); if(!form) return;
   var esc=function(s){return String(s).replace(/[<>&"']/g,'');};
@@ -708,7 +809,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
     btn.disabled=true; btn.textContent='Sending…'; msg.style.display='none';
     try{
       var resp=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({first:first,phone:phone,email:email,service:SERVICE,source:SOURCE,notes:getNotes(),kc_hpot_xyz:hpot})});
+        body:JSON.stringify({first:first,phone:phone,email:email,service:getService(),source:SOURCE,notes:getNotes(),kc_hpot_xyz:hpot})});
       var data=await resp.json().catch(function(){return{};});
       if(!resp.ok) throw new Error(data.error||'Submit failed');
       try{ if(window.gtag){var _ph=phone.replace(/\D/g,'');gtag('event','conversion',{send_to:'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD',value:1500.0,currency:'USD',user_data:{email:email||undefined,phone_number:_ph.length>=10?'+1'+_ph.slice(-10):undefined,address:{first_name:first||undefined}}});gtag('event','generate_lead',{lead_source:SOURCE});} }catch(_){}
