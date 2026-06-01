@@ -4,7 +4,7 @@
   "description": "Family-run paver, landscaping, hardscaping & pressure washing contractor in Methuen, MA. Serving Greater Boston & Southern NH.",
   "start_url": "/",
   "scope": "/",
-  "display": "standalone",
+  "display": "browser",
   "background_color": "#0d1e35",
   "theme_color": "#0d1e35",
   "orientation": "portrait",
