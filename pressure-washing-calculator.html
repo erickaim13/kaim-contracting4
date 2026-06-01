@@ -573,10 +573,10 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       <div class="calc-card">
         <div class="calc-card-title">Select Surface</div>
         <div class="calc-surface-grid" id="surfaceGrid">
-          <button class="calc-surface-btn active" data-surface="driveway" type="button">Driveway / Concrete</button>
+          <button class="calc-surface-btn" data-surface="driveway" type="button">Driveway / Concrete</button>
           <button class="calc-surface-btn" data-surface="paver" type="button">Paver Patio / Walkway</button>
           <button class="calc-surface-btn" data-surface="deck" type="button">Deck / Wood (Soft Wash)</button>
-          <button class="calc-surface-btn" data-surface="siding" type="button">House Siding (Soft Wash)</button>
+          <button class="calc-surface-btn active" data-surface="siding" type="button">House Siding (Soft Wash)</button>
           <button class="calc-surface-btn" data-surface="fence" type="button">Fence (Soft Wash)</button>
           <button class="calc-surface-btn" data-surface="roof" type="button">Roof (Soft Wash)</button>
         </div>
@@ -647,7 +647,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   var COND={light:{mult:0.85,label:'Light'},moderate:{mult:1.00,label:'Moderate'},heavy:{mult:1.30,label:'Heavy'}};
   var HOUSE_TIERS={single:{low:299,high:399,label:'Single Story Home'},double:{low:449,high:649,label:'Two Story Home'},larger:{low:null,high:null,label:'Larger Home / Heavy Buildup'}};
   var MIN=175;
-  var surface='driveway', condition='moderate', homeSize='single';
+  var surface='siding', condition='moderate', homeSize='single';
   function syncInputs(){
     var isSiding=(surface==='siding');
     $('standardInputs').style.display=isSiding?'none':'';
