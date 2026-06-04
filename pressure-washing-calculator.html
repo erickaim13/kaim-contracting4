@@ -432,6 +432,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .calc-surface-btn:hover{color:var(--text);border-color:var(--gold)}
 .calc-surface-btn.active{background:rgba(201,168,76,.12);color:var(--gold-l);border-color:var(--gold)}
 .calc-condition{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.calc-size-grid{grid-template-columns:repeat(2,1fr)}
 .calc-condition-btn{font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;background:var(--bg3);color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:11px 8px;cursor:pointer;transition:all .15s}
 .calc-condition-btn:hover{color:var(--text);border-color:var(--gold)}
 .calc-condition-btn.active{background:rgba(201,168,76,.12);color:var(--gold-l);border-color:var(--gold)}
@@ -562,7 +563,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   <div class="page-hero-content">
     <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;&#8250;&nbsp; Free Tools &nbsp;&#8250;&nbsp; Pressure Washing Cost</div>
     <h1>Pressure Washing <span>Cost Calculator</span></h1>
-    <p class="sub">Select a surface, enter the square footage, and choose its current condition. We'll provide a rough estimate based on our typical project range. House washing starts at $299 with a free front walkway cleaning included.</p>
+    <p class="sub">Select a surface, enter the square footage, and choose its current condition. We'll provide a rough estimate based on our typical project range. House washing starts at $350 and includes FREE front walkway cleaning (a $125 value).</p>
   </div>
 </div>
 <div class="page-body">
@@ -573,7 +574,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       <div class="calc-card">
         <div class="calc-card-title">Select Surface</div>
         <div class="calc-surface-grid" id="surfaceGrid">
-          <button class="calc-surface-btn" data-surface="driveway" type="button">Driveway / Concrete</button>
+          <button class="calc-surface-btn" data-surface="driveway" type="button">Concrete Patio / Walkway</button>
           <button class="calc-surface-btn" data-surface="paver" type="button">Paver Patio / Walkway</button>
           <button class="calc-surface-btn" data-surface="deck" type="button">Deck / Wood (Soft Wash)</button>
           <button class="calc-surface-btn active" data-surface="siding" type="button">House Siding (Soft Wash)</button>
@@ -585,7 +586,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
           <div class="calc-field calc-field-full"><label>Surface Condition</label><div class="calc-condition" id="conditionGroup"><button class="calc-condition-btn" data-condition="light" type="button">Light</button><button class="calc-condition-btn active" data-condition="moderate" type="button">Moderate</button><button class="calc-condition-btn" data-condition="heavy" type="button">Heavy</button></div></div>
         </div>
         <div class="calc-grid" id="sidingInputs" style="display:none">
-          <div class="calc-field calc-field-full"><label>Home Size</label><div class="calc-condition" id="homeSizeGroup"><button class="calc-condition-btn active" data-home="single" type="button">1 Story</button><button class="calc-condition-btn" data-home="double" type="button">2 Story</button><button class="calc-condition-btn" data-home="larger" type="button">Larger / Custom</button></div></div>
+          <div class="calc-field calc-field-full"><label>House Size (sq ft)</label><div class="calc-condition calc-size-grid" id="homeSizeGroup"><button class="calc-condition-btn" data-home="s1" type="button">Under 1,500</button><button class="calc-condition-btn active" data-home="s2" type="button">1,500 - 2,500</button><button class="calc-condition-btn" data-home="s3" type="button">2,500 - 3,500</button><button class="calc-condition-btn" data-home="s4" type="button">3,500+</button></div></div>
         </div>
       </div>
       <div class="calc-results">
@@ -593,18 +594,18 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
         <div class="calc-big" id="priceRange">$180 - $300</div>
         <div class="calc-big-label">Typical Project Range. Final price confirmed after a quick look at your home.</div>
         <div class="calc-breakdown">
-          <div class="calc-row"><span class="calc-row-label">Surface</span><span class="calc-row-value" id="surfaceOut">Driveway / Concrete</span></div>
+          <div class="calc-row"><span class="calc-row-label">Surface</span><span class="calc-row-value" id="surfaceOut">Concrete Patio / Walkway</span></div>
           <div class="calc-row" id="areaRow"><span class="calc-row-label" id="areaLabel">Area</span><span class="calc-row-value" id="areaOut">600 sq ft</span></div>
           <div class="calc-row" id="conditionRow"><span class="calc-row-label" id="conditionLabel">Condition</span><span class="calc-row-value" id="conditionOut">Moderate</span></div>
           <div class="calc-row" id="rateRow"><span class="calc-row-label">Avg. price per sq ft</span><span class="calc-row-value" id="rateOut">$0.30 - $0.50</span></div>
         </div>
         <div class="calc-offer">
-          <div class="calc-offer-label">House Washing Offer From $299</div>
-          <div class="calc-offer-text"><strong>Spotless or it's free.</strong> Single story homes from $299, two story from $449. Every house wash includes <strong>free front walkway cleaning</strong>. Now booking June. Free quote within 24 hours.</div>
+          <div class="calc-offer-label">House Washing Offer From $350</div>
+          <div class="calc-offer-text"><strong>Love the results or we'll make it right.</strong> House washing starts at $350 and includes <strong>FREE front walkway cleaning</strong> (a $125 value). Cleaning a patio or pavers too? Bundle it with your house wash and <strong>save 15%</strong> on the entire project. Free quote within 24 hours.</div>
         </div>
       </div>
       <div class="calc-cta">
-        <h3>Reserve your <span>June</span> spot</h3>
+        <h3>Reserve your <span>summer</span> spot</h3>
         <p>Get your exact price after a quick on site look. Free quote within 24 hours. No obligation.</p>
         <form id="leadForm" novalidate style="text-align:left;max-width:480px;margin:18px auto 0">
           <div class="form-row">
@@ -618,9 +619,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
           <input type="text" name="kc_hpot_xyz" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
           <button type="submit" class="form-submit" id="lf-submit">Get My Free 24 Hour Quote</button>
           <div style="display:flex;gap:10px;margin-top:10px">
-            <a href="tel:978-351-2195" style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.45);color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:14px 12px;border-radius:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>
-            <a href="sms:+19783512195" style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.45);color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:14px 12px;border-radius:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Text</a>
-          </div>
+            <a href="tel:978-351-2195" style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.45);color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:14px 12px;border-radius:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>          </div>
           <div style="margin-top:10px;font-size:12px;color:var(--muted);text-align:center;letter-spacing:.01em">We don't share your info. No spam.</div>
           <div id="lf-msg" style="display:none;margin-top:14px;font-size:14px;line-height:1.55;text-align:center"></div>
         </form>
@@ -635,7 +634,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 <div class="footer-col"><h4>Payments Accepted</h4><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;justify-content:center"><svg width="38" height="24" viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="3" fill="#1a1f71"/><path d="M15.3 16.5l2-11.7h3.2l-2 11.7h-3.2z" fill="#fff"/><path d="M27.8 5.2c-.6-.3-1.6-.5-2.9-.5-3.2 0-5.4 1.6-5.4 3.9 0 1.7 1.6 2.6 2.8 3.2 1.2.6 1.7.9 1.7 1.5 0 .8-1 1.1-1.9 1.1-1.3 0-2-.2-3-.6l-.4-.2-.5 2.6c.8.3 2.1.6 3.6.6 3.4 0 5.5-1.6 5.6-4 0-1.3-.8-2.4-2.7-3.2-1.1-.5-1.8-.9-1.8-1.5 0-.5.6-1 1.8-1 1-.1 1.8.2 2.4.5l.3.1.4-2.5z" fill="#fff"/><path d="M32.4 4.8h-2.5c-.8 0-1.3.2-1.7 1L23.5 16.5h3.4s.5-1.4.7-1.8h4.1c.1.4.4 1.8.4 1.8h3l-2.7-11.7zm-4 7.5c.3-.7 1.3-3.3 1.3-3.3l.4-1.1.2 1 .8 3.4h-2.7z" fill="#fff"/><path d="M13.3 4.8L10.2 12.8l-.3-1.6c-.6-1.9-2.4-3.9-4.4-4.9l2.9 10.2h3.4l5-11.7h-3.5z" fill="#fff"/><path d="M7 4.8H1.8l-.1.2c4 1 6.7 3.3 7.8 6.1l-1.1-5.4c-.2-.7-.8-.9-1.4-.9z" fill="#f7a600"/></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="3" fill="#252525"/><circle cx="15" cy="12" r="7.5" fill="#eb001b"/><circle cx="23" cy="12" r="7.5" fill="#f79e1b"/><path d="M19 6.3a7.5 7.5 0 000 11.4 7.5 7.5 0 000-11.4z" fill="#ff5f00"/></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="3" fill="#016fd0"/><path d="M19 4l-9.5 7.5h5.3L19 7.8l4.2 3.7h5.3L19 4z" fill="#fff"/><path d="M9.5 12.5L19 20l9.5-7.5h-5.3L19 16.2l-4.2-3.7H9.5z" fill="#fff"/></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="3" fill="#f1f1f1" stroke="rgba(255,255,255,.15)"/><circle cx="22" cy="12" r="6.5" fill="#f47216"/><text x="19" y="21" font-family="Arial" font-weight="700" font-size="5" fill="#333" text-anchor="middle">DISCOVER</text></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="3" fill="#000"/><text x="19" y="15" font-family="Arial" font-weight="600" font-size="8.5" fill="#fff" text-anchor="middle">Pay</text></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none" aria-label="Klarna"><rect width="38" height="24" rx="3" fill="#FFB3C7"/><text x="19" y="16" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="8.5" fill="#0a0a0a" text-anchor="middle">Klarna</text></svg></div></div>
 <div class="footer-col"><h4>Client Portal</h4><p>View estimates, invoices, project updates, and more.</p><p style="margin-top:10px"><a href="https://kaimcontractingapp.com?tab=portal" target="_blank" style="font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase">Log In &rarr;</a></p></div>
 <div class="footer-col"><h4>Contact</h4><p><a href="tel:978-351-2195">978-351-2195</a><br><a id="ft-email" href="#"></a></p><svg width="0" height="0" style="position:absolute"><defs><linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs></svg><div class="footer-social"><a href="https://instagram.com/kaimcontracting" target="_blank" rel="noopener" class="sf-ig" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="url(#igGrad)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a><a href="https://facebook.com/kaimcontracting" target="_blank" rel="noopener" class="sf-fb" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a><a href="https://tiktok.com/@kaimcontracting" target="_blank" rel="noopener" class="sf-tt" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77.39 2.89 2.89 0 012.88-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 105.55 6.27V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a></div></div>
-</div><div style="padding:18px 0;margin-top:18px;border-top:1px solid rgba(255,255,255,.08);text-align:center"><div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Areas We Serve</div><div style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.8;max-width:960px;margin:0 auto;padding:0 16px">Proudly serving the Merrimack Valley, Southern NH, and surrounding towns. <a href="service-areas.html" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.4)">See full list &rarr;</a></div></div><div class="footer-bottom">&copy; 2026 Kaim Contracting LLC. All Rights Reserved.</div></div></footer>
+</div><div style="padding:18px 0;margin-top:18px;border-top:1px solid rgba(255,255,255,.08);text-align:center"><div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Areas We Serve</div><div style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.8;max-width:960px;margin:0 auto;padding:0 16px">Proudly serving the Merrimack Valley, Southern NH, and surrounding towns. <a href="service-areas.html" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.4)">See full list &rarr;</a></div></div><div class="footer-bottom">&copy; 2026 Kaim Contracting LLC. All Rights Reserved. &middot; <a href="index.html#referral" style="color:var(--gold-l);text-decoration:none">Refer &amp; Earn $50</a></div></div></footer>
 <script>function toggleAcc(btn){var item=btn.parentElement;var wasOpen=item.classList.contains('open');document.querySelectorAll('.acc-item.open').forEach(function(el){el.classList.remove('open')});if(!wasOpen){item.classList.add('open')}}</script>
 <script>(function(){var em='info'+String.fromCharCode(64)+'kaimcontracting.com';var t=document.getElementById('tb-email');if(t){t.textContent=em;t.href='mailto:'+em;}})();</script>
 <script>(function(){var n=document.querySelector('nav');if(!n)return;function check(){if(window.scrollY>20)n.classList.add('scrolled');else n.classList.remove('scrolled');}check();window.addEventListener('scroll',check,{passive:true});})();
@@ -643,17 +642,17 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 <script>
 (function(){
   var $=function(id){return document.getElementById(id);};
-  var RATES={driveway:{low:0.20,high:0.40,label:'Driveway / Concrete'},paver:{low:0.30,high:0.55,label:'Paver Patio / Walkway'},deck:{low:0.35,high:0.70,label:'Deck / Wood (Soft Wash)'},siding:{low:0.20,high:0.45,label:'House Siding (Soft Wash)'},fence:{low:0.25,high:0.50,label:'Fence (Soft Wash)'},roof:{low:0.30,high:0.60,label:'Roof (Soft Wash)'}};
+  var RATES={driveway:{low:0.20,high:0.40,label:'Concrete Patio / Walkway'},paver:{low:0.30,high:0.55,label:'Paver Patio / Walkway'},deck:{low:0.35,high:0.70,label:'Deck / Wood (Soft Wash)'},siding:{low:0.20,high:0.45,label:'House Siding (Soft Wash)'},fence:{low:0.25,high:0.50,label:'Fence (Soft Wash)'},roof:{low:0.30,high:0.60,label:'Roof (Soft Wash)'}};
   var COND={light:{mult:0.85,label:'Light'},moderate:{mult:1.00,label:'Moderate'},heavy:{mult:1.30,label:'Heavy'}};
-  var HOUSE_TIERS={single:{low:299,high:399,label:'Single Story Home'},double:{low:449,high:649,label:'Two Story Home'},larger:{low:null,high:null,label:'Larger Home / Heavy Buildup'}};
+  var HOUSE_TIERS={s1:{low:350,high:450,label:'Up to 1,500 sq ft'},s2:{low:450,high:600,label:'1,500 - 2,500 sq ft'},s3:{low:600,high:800,label:'2,500 - 3,500 sq ft'},s4:{low:850,high:1150,label:'3,500+ sq ft'}};
   var MIN=175;
-  var surface='siding', condition='moderate', homeSize='single';
+  var surface='siding', condition='moderate', homeSize='s2';
   function syncInputs(){
     var isSiding=(surface==='siding');
     $('standardInputs').style.display=isSiding?'none':'';
     $('sidingInputs').style.display=isSiding?'':'none';
     $('rateRow').style.display=isSiding?'none':'';
-    $('areaLabel').textContent=isSiding?'Home Size':'Area';
+    $('areaLabel').textContent=isSiding?'House Size':'Area';
     $('conditionLabel').textContent=isSiding?'Includes':'Condition';
   }
   document.querySelectorAll('.calc-surface-btn').forEach(function(btn){
@@ -714,7 +713,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       '- Condition: '+g('conditionOut').textContent,
       '- Avg. price per sq ft: '+g('rateOut').textContent,
       '- Estimated project range: '+g('priceRange').textContent,
-      '- Offer: House Washing from $299 / free front walkway / Spotless or it\'s free / June booking'].join('\n');
+      '- Offer: House Washing from $350 / free front walkway ($125 value) / satisfaction guaranteed / patio bundle save 15%'].join('\n');
   }
   var form=document.getElementById('leadForm'); if(!form) return;
   var esc=function(s){return String(s).replace(/[<>&"']/g,'');};
@@ -741,7 +740,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       msg.style.display='block'; msg.style.color='var(--gold-l)';
       msg.innerHTML='<strong>Got it. Thanks, '+esc(first)+'!</strong><br>We\'ll text you at '+esc(phone)+' within one business day to lock in your date.';
     }catch(err){
-      btn.disabled=false; btn.textContent='Claim My Spring Offer';
+      btn.disabled=false; btn.textContent='Get My Free 24 Hour Quote';
       msg.style.display='block'; msg.style.color='#ffb3b3';
       msg.textContent='Sorry, something went wrong. Please call (978) 351-2195 or try again.';
     }

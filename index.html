@@ -308,7 +308,8 @@ section{padding:80px 24px}
 .ci-text strong{display:block;font-weight:600;color:var(--text);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
 .ci-text a{color:var(--gold-l);text-decoration:none}
 .contact-form{background:var(--card);border-radius:8px;padding:36px;border:1px solid var(--border)}
-.contact-form h3{font-family:'Oswald',sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:20px;letter-spacing:.06em}
+.contact-form h3{font-family:'Oswald',sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:20px;letter-spacing:.06em;text-align:center}
+.contact-form .fg label,.contact-form .fg-label{text-align:center}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fg{margin-bottom:12px}
 .fg label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:4px}
@@ -319,7 +320,7 @@ section{padding:80px 24px}
 .fg textarea{height:108px;resize:vertical}
 
 .fg-label{font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;display:block}
-.contact-pref{display:flex;gap:10px;flex-wrap:wrap}
+.contact-pref{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .cp-option{display:flex;align-items:center;gap:0}
 .cp-option input[type=checkbox]{display:none}
 .cp-option label{display:flex;align-items:center;gap:8px;padding:9px 16px;border:1px solid var(--border2);border-radius:3px;cursor:pointer;font-size:13.5px;color:var(--muted);font-family:'Source Sans 3',sans-serif;transition:all .15s;user-select:none}
@@ -654,7 +655,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .hero-desc{margin:0 0 30px!important;text-align:left!important;max-width:520px}
 .hero-btns{justify-content:flex-start!important}
 .hero-form{background:rgba(13,30,53,.6);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:26px 22px 20px;box-shadow:0 28px 70px rgba(0,0,0,.5)}
-.hero-form-title{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-l);margin-bottom:4px;line-height:1.2}
+.hero-form-title{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-l);margin-bottom:14px;line-height:1.2;text-align:center}
 .hero-form-sub{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:14px;line-height:1.5}
 .hero-form .hf{margin-bottom:10px}
 .hero-form input,.hero-form select{width:100%;padding:11px 12px;border:1px solid rgba(255,255,255,.15);border-radius:6px;font-family:'Source Sans 3',sans-serif;font-size:14.5px;color:#fff;background:rgba(255,255,255,.06);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s,background .15s}
@@ -663,6 +664,15 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .hero-form select option{background:#0d1e35;color:#fff}
 .hero-form button{width:100%;background:var(--gold);color:var(--teal);border:none;border-radius:6px;padding:13px;font-family:'Oswald',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin-top:4px;transition:background .15s,transform .15s}
 .hero-form button:hover{background:var(--gold-l);transform:translateY(-1px)}
+.hf-svc-label{font-family:'Oswald',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:8px;text-align:center}
+.hf-svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hf-svc-grid .hf-svc{width:100%;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:13px 8px;border:1px solid rgba(255,255,255,.15);border-radius:8px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.82);font-family:'Oswald',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;text-align:center;transition:border-color .15s,background .15s,color .15s}
+.hf-svc-grid .hf-svc svg{width:23px;height:23px;color:var(--gold-l);transition:transform .15s}
+.hf-svc-grid .hf-svc:hover{border-color:var(--gold);background:rgba(255,255,255,.1);color:#fff;transform:none}
+.hf-svc-grid .hf-svc:hover svg{transform:scale(1.08)}
+.hf-svc-grid .hf-svc.active{border-color:var(--gold);background:rgba(201,168,76,.16);color:#fff;box-shadow:inset 0 0 0 1px var(--gold)}
+@keyframes hfShake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.hf-svc-grid.hf-shake{animation:hfShake .4s}
 .hero-form-foot{margin-top:11px;text-align:center;font-size:12px;color:rgba(255,255,255,.6)}
 .hero-form-foot a{color:var(--gold-l);font-weight:700;text-decoration:none}
 @media(max-width:860px){
@@ -805,16 +815,22 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
     </div>
     <form class="hero-form" id="hero-form" autocomplete="on" novalidate>
       <div class="hero-form-title">Complimentary Estimate in 24 Hours</div>
-      <div class="hero-form-sub">No pressure, no obligation. Same-day response on every submission.</div>
       <div style="display:none" aria-hidden="true"><label>Leave empty<input type="text" name="hf_hpot" tabindex="-1" autocomplete="off" value=""></label></div>
       <div class="hf"><input type="text" name="hf-name" placeholder="Your name" required></div>
       <div class="hf"><input type="tel" name="hf-phone" placeholder="Phone number" required></div>
-      <div class="hf"><select name="hf-service" required><option value="">What do you need?</option><option>Paver Installation</option><option>Paver Restoration</option><option>Landscaping</option><option>Hardscaping</option><option>Landscape Design</option><option>Drainage Solutions</option><option>Plantings</option><option>Pressure Washing</option><option>Multiple Services</option></select></div>
+      <div class="hf">
+        <div class="hf-svc-label">What do you need?</div>
+        <div class="hf-svc-grid" role="group" aria-label="What do you need?">
+          <button type="button" class="hf-svc" data-service="Pressure Washing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s5.5 6 5.5 10.5a5.5 5.5 0 11-11 0C6.5 9 12 3 12 3z"/></svg>Pressure Washing</button>
+          <button type="button" class="hf-svc" data-service="Paver Installation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="9" y1="5" x2="9" y2="12"/><line x1="15" y1="12" x2="15" y2="19"/></svg>Pavers</button>
+          <button type="button" class="hf-svc" data-service="Drainage Solutions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8c2 0 2 2 4 2s2-2 4-2 2 2 4 2 2-2 4-2"/><path d="M2 14c2 0 2 2 4 2s2-2 4-2 2 2 4 2 2-2 4-2"/></svg>Drainage</button>
+          <button type="button" class="hf-svc" data-service="Landscaping"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 21A8 8 0 014 13C4 7 10 3.5 16 3c1 6-1.5 12-5 16z"/><path d="M8.5 20.5C9.5 16 12 12.5 16 10.5"/></svg>Landscaping</button>
+        </div>
+        <input type="hidden" name="hf-service" id="hf-service" value="">
+      </div>
       <button type="submit" id="hf-submit">Request My Estimate</button>
       <div style="display:flex;gap:8px;margin-top:11px">
-        <a href="tel:978-351-2195" style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.45);color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:11px 10px;border-radius:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>
-        <a href="sms:+19783512195" style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.45);color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:11px 10px;border-radius:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Text</a>
-      </div>
+        <a href="tel:978-351-2195" style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.45);color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:11px 10px;border-radius:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>      </div>
     </form>
   </div>
   </section>
@@ -981,15 +997,70 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 </section>
 </div>
 
+<style>
+.referral{background:linear-gradient(135deg,var(--teal) 0%,var(--bg2) 100%);position:relative;overflow:hidden;padding:80px 24px}
+.referral::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%)}
+.ref-card{display:grid;grid-template-columns:1.05fr 1fr;gap:50px;align-items:center;position:relative;z-index:1}
+.ref-eyebrow{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.referral h2{font-family:'Oswald',sans-serif;font-size:clamp(30px,5vw,52px);font-weight:700;text-transform:uppercase;color:#fff;line-height:1.04;letter-spacing:.01em;margin:0}
+.referral h2 span{color:var(--gold-l)}
+.ref-lead{color:rgba(255,255,255,.78);font-size:16px;line-height:1.7;margin-top:16px;max-width:520px}
+.ref-lead strong{color:var(--gold-l)}
+.ref-cta-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:26px}
+.ref-note{font-size:13px;color:var(--muted);max-width:250px;line-height:1.5}
+.ref-steps{display:flex;flex-direction:column;gap:14px}
+.ref-step{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:18px 20px;transition:border-color .2s,transform .2s}
+.ref-step:hover{border-color:var(--gold);transform:translateX(3px)}
+.ref-step-num{width:42px;height:42px;border-radius:50%;background:rgba(201,168,76,.14);border:1px solid var(--gold);color:var(--gold-l);font-family:'Oswald',sans-serif;font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ref-step h4{font-family:'Oswald',sans-serif;font-size:15px;text-transform:uppercase;color:#fff;margin:0 0 3px;letter-spacing:.04em}
+.ref-step p{color:var(--muted);font-size:13.5px;line-height:1.5;margin:0}
+@media(max-width:860px){.referral{padding:54px 18px}.ref-card{grid-template-columns:1fr;gap:30px}.ref-note{max-width:none}}
+</style>
+<section class="referral" id="referral">
+  <div class="section-inner">
+    <div class="ref-card">
+      <div class="ref-intro">
+        <div class="ref-eyebrow">Refer &amp; Earn</div>
+        <h2>Give <span>$50</span>,<br>Get <span>$50</span></h2>
+        <p class="ref-lead">Know someone who needs work done? Send them our way. Your friend gets <strong>$50 off</strong> their first job, and you get a <strong>$50 reward</strong> the moment they book. Refer as many friends as you like, there is no limit.</p>
+        <div class="ref-cta-row">
+          <a href="#" class="btn-primary" onclick="referFriend();return false;">Share With a Friend</a>
+          <span class="ref-note">Opens your messages so you can send them our link. They mention you when they book, and you both get $50.</span>
+        </div>
+      </div>
+      <div class="ref-steps">
+        <div class="ref-step"><div class="ref-step-num">1</div><div><h4>Spread the word</h4><p>Tell a friend, neighbor, or family member about us.</p></div></div>
+        <div class="ref-step"><div class="ref-step-num">2</div><div><h4>They book a job</h4><p>They mention your name and schedule any service with us.</p></div></div>
+        <div class="ref-step"><div class="ref-step-num">3</div><div><h4>You both win</h4><p>They save $50 on their first job, and we send you $50.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+function referFriend(){
+  var url='https://kaimcontracting.com';
+  var text='I use Kaim Contracting for pavers, landscaping, drainage, and pressure washing. Mention my name when you book and you get $50 off your first job:';
+  if(navigator.share){
+    navigator.share({title:'Kaim Contracting',text:text,url:url}).catch(function(){});
+    return;
+  }
+  var full=text+' '+url;
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(full).then(function(){alert('Referral message copied. Paste it into a text or email to your friend.');},function(){window.location.href='sms:?&body='+encodeURIComponent(full);});
+  }else{
+    window.location.href='sms:?&body='+encodeURIComponent(full);
+  }
+}
+</script>
 <section class="contact" id="contact">
   <div class="section-inner">
-    <div class="section-header"><div class="section-label">Get In Touch</div><h2>Request an Estimate</h2><div class="divider"></div><div style="margin-top:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><span style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:6px 16px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-l)">Booking Now for Spring 2026</span><span style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:6px 16px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-l)">Financing Available</span></div><p>Fill out the form and we will get back to you promptly to discuss your project. Need to spread the cost? Ask about pay-over-time financing through Klarna.</p></div>
+    <div class="section-header"><div class="section-label">Get In Touch</div><h2>Request an Estimate</h2><div class="divider"></div><div style="margin-top:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><span style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:6px 16px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-l)">Booking Now for Summer 2026</span><span style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:6px 16px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-l)">Financing Available</span></div><p>Fill out the form and we will get back to you promptly to discuss your project. Need to spread the cost? Ask about pay-over-time financing through Klarna.</p></div>
     <div class="contact-grid">
       <div class="contact-info">
         <h3>Contact Information</h3>
         <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg></div><div class="ci-text"><strong>Phone</strong><a href="tel:978-351-2195">978-351-2195</a></div></div>
         <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="ci-text"><strong>Email</strong><a id="ci-email" href="#"></a></div></div>
-        <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="ci-text"><strong>Hours</strong>Mon to Fri: 8am to 6pm<br>Sat and Sun: By Appointment</div></div>
+        <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="ci-text"><strong>Hours</strong>Mon to Fri: 7am to 6pm<br>Sat: By Appointment<br>Sun: Closed</div></div>
       </div>
       <div class="contact-form">
         <h3>Tell Us About Your Project</h3>
@@ -1054,7 +1125,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 <div class="footer-col"><h4>Payments Accepted</h4><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;justify-content:center"><svg width="38" height="24" viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="3" fill="#1a1f71"/><path d="M15.3 16.5l2-11.7h3.2l-2 11.7h-3.2z" fill="#fff"/><path d="M27.8 5.2c-.6-.3-1.6-.5-2.9-.5-3.2 0-5.4 1.6-5.4 3.9 0 1.7 1.6 2.6 2.8 3.2 1.2.6 1.7.9 1.7 1.5 0 .8-1 1.1-1.9 1.1-1.3 0-2-.2-3-.6l-.4-.2-.5 2.6c.8.3 2.1.6 3.6.6 3.4 0 5.5-1.6 5.6-4 0-1.3-.8-2.4-2.7-3.2-1.1-.5-1.8-.9-1.8-1.5 0-.5.6-1 1.8-1 1-.1 1.8.2 2.4.5l.3.1.4-2.5z" fill="#fff"/><path d="M32.4 4.8h-2.5c-.8 0-1.3.2-1.7 1L23.5 16.5h3.4s.5-1.4.7-1.8h4.1c.1.4.4 1.8.4 1.8h3l-2.7-11.7zm-4 7.5c.3-.7 1.3-3.3 1.3-3.3l.4-1.1.2 1 .8 3.4h-2.7z" fill="#fff"/><path d="M13.3 4.8L10.2 12.8l-.3-1.6c-.6-1.9-2.4-3.9-4.4-4.9l2.9 10.2h3.4l5-11.7h-3.5z" fill="#fff"/><path d="M7 4.8H1.8l-.1.2c4 1 6.7 3.3 7.8 6.1l-1.1-5.4c-.2-.7-.8-.9-1.4-.9z" fill="#f7a600"/></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="3" fill="#252525"/><circle cx="15" cy="12" r="7.5" fill="#eb001b"/><circle cx="23" cy="12" r="7.5" fill="#f79e1b"/><path d="M19 6.3a7.5 7.5 0 000 11.4 7.5 7.5 0 000-11.4z" fill="#ff5f00"/></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="3" fill="#016fd0"/><path d="M19 4l-9.5 7.5h5.3L19 7.8l4.2 3.7h5.3L19 4z" fill="#fff"/><path d="M9.5 12.5L19 20l9.5-7.5h-5.3L19 16.2l-4.2-3.7H9.5z" fill="#fff"/></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="3" fill="#f1f1f1" stroke="rgba(255,255,255,.15)"/><circle cx="22" cy="12" r="6.5" fill="#f47216"/><text x="19" y="21" font-family="Arial" font-weight="700" font-size="5" fill="#333" text-anchor="middle">DISCOVER</text></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="3" fill="#000"/><text x="19" y="15" font-family="Arial" font-weight="600" font-size="8.5" fill="#fff" text-anchor="middle">Pay</text></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none" aria-label="Klarna"><rect width="38" height="24" rx="3" fill="#FFB3C7"/><text x="19" y="16" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="8.5" fill="#0a0a0a" text-anchor="middle">Klarna</text></svg></div></div>
 <div class="footer-col"><h4>Client Portal</h4><p>View estimates, invoices, project updates, and more.</p><p style="margin-top:10px"><a href="https://kaimcontractingapp.com?tab=portal" target="_blank" style="font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase">Log In &rarr;</a></p></div>
 <div class="footer-col"><h4>Contact</h4><p><a href="tel:978-351-2195">978-351-2195</a><br><a id="ft-email" href="#"></a></p><svg width="0" height="0" style="position:absolute"><defs><linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs></svg><div class="footer-social"><a href="https://instagram.com/kaimcontracting" target="_blank" rel="noopener" class="sf-ig" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="url(#igGrad)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a><a href="https://facebook.com/kaimcontracting" target="_blank" rel="noopener" class="sf-fb" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a><a href="https://tiktok.com/@kaimcontracting" target="_blank" rel="noopener" class="sf-tt" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77.39 2.89 2.89 0 012.88-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 105.55 6.27V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a></div></div>
-</div><div style="padding:18px 0;margin-top:18px;border-top:1px solid rgba(255,255,255,.08);text-align:center"><div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Areas We Serve</div><div style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.8;max-width:960px;margin:0 auto;padding:0 16px">Proudly serving the Merrimack Valley, Southern NH, and surrounding towns. <a href="service-areas.html" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.4)">See full list &rarr;</a></div></div><div class="footer-bottom">&copy; 2026 Kaim Contracting LLC. All Rights Reserved.</div></div></footer>
+</div><div style="padding:18px 0;margin-top:18px;border-top:1px solid rgba(255,255,255,.08);text-align:center"><div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Areas We Serve</div><div style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.8;max-width:960px;margin:0 auto;padding:0 16px">Proudly serving the Merrimack Valley, Southern NH, and surrounding towns. <a href="service-areas.html" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.4)">See full list &rarr;</a></div></div><div class="footer-bottom">&copy; 2026 Kaim Contracting LLC. All Rights Reserved. &middot; <a href="index.html#referral" style="color:var(--gold-l);text-decoration:none">Refer &amp; Earn $50</a></div></div></footer>
 <script>
 // CRM lead injection
 // File upload handling
@@ -1193,6 +1264,7 @@ async function submitLead(data,attachments){
 (function(){
   var form=document.getElementById('hero-form');
   if(!form)return;
+  (function(){var grid=form.querySelector('.hf-svc-grid');if(!grid)return;var hidden=document.getElementById('hf-service');grid.querySelectorAll('.hf-svc').forEach(function(b){b.addEventListener('click',function(){grid.querySelectorAll('.hf-svc').forEach(function(x){x.classList.remove('active');});b.classList.add('active');if(hidden)hidden.value=b.dataset.service;});});})();
   form.addEventListener('submit',function(e){
     e.preventDefault();
     var btn=document.getElementById('hf-submit');
@@ -1200,6 +1272,7 @@ async function submitLead(data,attachments){
     var origText=btn.textContent;
     btn.textContent='Sending...';
     var fd=new FormData(form);
+    if(!(fd.get('hf-service')||'').toString()){var g=form.querySelector('.hf-svc-grid');if(g){g.classList.remove('hf-shake');void g.offsetWidth;g.classList.add('hf-shake');}btn.disabled=false;btn.textContent=origText;return;}
     var name=(fd.get('hf-name')||'').toString().trim();
     var parts=name.split(/\s+/);
     var payload={
