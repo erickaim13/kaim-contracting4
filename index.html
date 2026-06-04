@@ -1013,6 +1013,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 .ref-step{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:18px 20px;transition:border-color .2s,transform .2s}
 .ref-step:hover{border-color:var(--gold);transform:translateX(3px)}
 .ref-step-num{width:42px;height:42px;border-radius:50%;background:rgba(201,168,76,.14);border:1px solid var(--gold);color:var(--gold-l);font-family:'Oswald',sans-serif;font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ref-step-num svg{width:20px;height:20px}
 .ref-step h4{font-family:'Oswald',sans-serif;font-size:15px;text-transform:uppercase;color:#fff;margin:0 0 3px;letter-spacing:.04em}
 .ref-step p{color:var(--muted);font-size:13.5px;line-height:1.5;margin:0}
 @media(max-width:860px){.referral{padding:54px 18px}.ref-card{grid-template-columns:1fr;gap:30px}.ref-note{max-width:none}}
@@ -1031,9 +1032,9 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
         <p class="ref-fine">Reward paid after your referral&#8217;s first job is completed and paid. New customers only. One reward per referred job.</p>
       </div>
       <div class="ref-steps">
-        <div class="ref-step"><div class="ref-step-num">1</div><div><h4>Spread the word</h4><p>Tell a friend, neighbor, or family member about us.</p></div></div>
-        <div class="ref-step"><div class="ref-step-num">2</div><div><h4>They book a job</h4><p>They mention your name and schedule any service with us.</p></div></div>
-        <div class="ref-step"><div class="ref-step-num">3</div><div><h4>You both win</h4><p>They save $50 on their first job, and we send you $50.</p></div></div>
+        <div class="ref-step"><div class="ref-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 11-5.8-1.6"/></svg></div><div><h4>Spread the word</h4><p>Tell a friend, neighbor, or family member about us.</p></div></div>
+        <div class="ref-step"><div class="ref-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg></div><div><h4>They book a job</h4><p>They mention your name and schedule any service with us.</p></div></div>
+        <div class="ref-step"><div class="ref-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg></div><div><h4>You both win</h4><p>They save $50 on their first job, and we send you $50.</p></div></div>
       </div>
     </div>
   </div>
