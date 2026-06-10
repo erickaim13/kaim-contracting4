@@ -150,7 +150,7 @@ export default async function handler(req, res) {
       .eq('id', 1);
     if (writeErr) throw writeErr;
 
-    // 3. Queue iMessages — owner notify (immediate) + auto-reply (2-5 min delay)
+    // 3. Queue iMessages — owner notify (immediate) + auto-reply (30-90s delay)
     const phoneDigits = phone.replace(/\D/g, '');
     const clientNumE164 = phoneDigits.length === 10 ? '+1' + phoneDigits : '+' + phoneDigits;
 
@@ -171,7 +171,7 @@ export default async function handler(req, res) {
       const tplFallback = isBizHours ? FALLBACK_BIZ_HRS : FALLBACK_AFTER_HRS;
       const template = await loadTemplate(tplKey, tplFallback);
       const replyBody = template.replace(/\{name\}/g, client.first).replace(/\{service\}/g, service || 'your project');
-      const delayMs = Math.floor(Math.random() * (300000 - 120000 + 1)) + 120000;
+      const delayMs = Math.floor(Math.random() * (90000 - 30000 + 1)) + 30000;
       const sendAfter = new Date(Date.now() + delayMs).toISOString();
 
       sbAdmin.from('imessage_queue').insert({
