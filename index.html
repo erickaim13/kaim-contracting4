@@ -760,6 +760,29 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 /* FAQ + Serving: desktop shows FAQ first; mobile flips so Serving comes first */
 .faq-serve-pair{display:flex;flex-direction:column}
 @media(max-width:860px){.faq-serve-pair > .home-faq{order:2}.faq-serve-pair > .serving{order:1}}
+
+/* Condensed mobile hero: shrink everything so the next section peeks above the fold */
+@media(max-width:640px){
+  .hero{min-height:0}
+  .hero-content{padding:78px 16px 16px!important;gap:14px!important}
+  .hero-eyebrow{margin-bottom:8px}
+  .hero h1{font-size:30px!important;margin-bottom:8px}
+  .hero-desc{font-size:13.5px;line-height:1.55;margin:0 auto 12px!important;max-width:420px}
+  .hero-trust{gap:6px 14px;justify-content:center}
+  .hero-trust li{font-size:10px;letter-spacing:.08em;gap:5px}
+  .hero-trust svg{width:12px;height:12px}
+  .hero-form{padding:16px 14px 13px;border-radius:12px}
+  .hero-form-title{font-size:14.5px;margin-bottom:10px}
+  .hero-form input,.hero-form select{padding:9px 11px;font-size:14px}
+  .hero-form .hf{margin-bottom:8px}
+  .hf-svc-label{margin-bottom:6px}
+  .hf-svc-grid{gap:6px}
+  .hf-svc-grid .hf-svc{padding:8px 6px;gap:4px;font-size:10.5px}
+  .hf-svc-grid .hf-svc svg{width:18px;height:18px}
+  #hf-submit{padding:11px}
+  .three-card{padding-top:32px}
+  .three-card-header{margin-bottom:24px}
+}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do you charge for estimates?","acceptedAnswer":{"@type":"Answer","text":"No. All estimates are free and there is no obligation. We come out, walk the property with you, and give you a clear written quote before any work begins."}},{"@type":"Question","name":"What areas do you serve?","acceptedAnswer":{"@type":"Answer","text":"The Merrimack Valley and southern New Hampshire including Methuen, Andover, Lawrence, Haverhill, Lowell, Newburyport, Salisbury, Salem NH, Derry, Manchester, and surrounding towns."}},{"@type":"Question","name":"How quickly can you start a project?","acceptedAnswer":{"@type":"Answer","text":"Most projects can be scheduled within 2 to 4 weeks of approval. Larger projects or jobs scheduled for spring tend to book out further."}},{"@type":"Question","name":"Are you licensed and insured?","acceptedAnswer":{"@type":"Answer","text":"Yes. Kaim Contracting LLC is fully licensed and insured for work in both Massachusetts and New Hampshire."}},{"@type":"Question","name":"Do you offer financing?","acceptedAnswer":{"@type":"Answer","text":"Yes. We offer pay-over-time financing through Klarna for qualifying projects."}},{"@type":"Question","name":"What is the difference between soft washing and pressure washing?","acceptedAnswer":{"@type":"Answer","text":"Pressure washing uses high-pressure water to blast dirt off hard surfaces like concrete driveways, brick patios, and pavers. Soft washing uses low-pressure water combined with biodegradable cleaning solutions to gently clean delicate surfaces like vinyl siding, painted wood, stucco, and asphalt roofs. Using high pressure on siding or a roof can force water behind panels, strip paint, tear roof granules, or damage trim. Most house exteriors should be soft washed, not pressure washed."}}]}
