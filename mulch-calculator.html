@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8HBEMX0PPR"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8HBEMX0PPR');gtag('config','AW-18069179134');</script>
+<!-- Meta Pixel Code --><script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '2473426716452281'); fbq('track', 'PageView');</script><noscript> <img height="1" width="1" src="https://www.facebook.com/tr?id=2473426716452281&ev=PageView&noscript=1"/></noscript><!-- End Meta Pixel Code -->
 <title>Free Mulch Calculator - Cubic Yards & Bags | Kaim Contracting</title>
 <meta name="description" content="Free mulch, topsoil, and stone calculator. Enter your bed area and depth and we tell you cubic yards, bags, and estimated delivered cost. Built by Kaim Contracting in Methuen, MA.">
 <link rel="canonical" href="https://kaimcontracting.com/mulch-calculator.html">
@@ -720,7 +721,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
         body:JSON.stringify({first:first,phone:phone,email:email,service:SERVICE,source:SOURCE,notes:getNotes(),kc_hpot_xyz:hpot})});
       var data=await resp.json().catch(function(){return{};});
       if(!resp.ok) throw new Error(data.error||'Submit failed');
-      try{ if(window.gtag){var _ph=phone.replace(/\D/g,'');gtag('event','conversion',{send_to:'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD',value:200.0,currency:'USD',user_data:{email:email||undefined,phone_number:_ph.length>=10?'+1'+_ph.slice(-10):undefined,address:{first_name:first||undefined}}});gtag('event','generate_lead',{lead_source:SOURCE});} }catch(_){}
+      try{ if(window.gtag){var _ph=phone.replace(/\D/g,'');gtag('event','conversion',{send_to:'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD',value:200.0,currency:'USD',user_data:{email:email||undefined,phone_number:_ph.length>=10?'+1'+_ph.slice(-10):undefined,address:{first_name:first||undefined}}});gtag('event','generate_lead',{lead_source:SOURCE});if(window.fbq)fbq('track','Lead');} }catch(_){}
       form.style.display='none';
       msg.style.display='block'; msg.style.color='var(--gold-l)';
       msg.innerHTML='<strong>Got it. Thanks, '+esc(first)+'!</strong><br>We\'ll text you at '+esc(phone)+' within one business day with delivery + install pricing.';
