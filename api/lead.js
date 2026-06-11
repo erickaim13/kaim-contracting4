@@ -31,8 +31,8 @@ const SERVICE_OPTS = new Set([
   'Plantings', 'Multiple Services'
 ]);
 
-const FALLBACK_BIZ_HRS = 'Hey {name}, thanks for reaching out to Kaim Contracting! Got your request for {service}. Quick question to help prep your quote: are you looking to get this done in the next 30 days, or just gathering info?';
-const FALLBACK_AFTER_HRS = "Hey {name}, thanks for reaching out to Kaim Contracting! It's after hours, so Eric will personally follow up first thing in the morning. In the meantime, mind sharing if you're hoping to get this done in the next 30 days or just exploring? It helps us prep.";
+const FALLBACK_BIZ_HRS = "Hey {name}, thanks for reaching out about {service}! We'd love to swing by for a free in-person estimate. What day or two works best for you this week?";
+const FALLBACK_AFTER_HRS = "Hey {name}, thanks for reaching out about {service}! Our office is closed for the night but we'll be in touch in the morning to lock in a free in-person estimate. Feel free to send over the days that work best for you.";
 
 const sanitize = (s, max = 200) =>
   String(s || '').replace(/[\u0000-\u001F\u007F]/g, '').trim().slice(0, max);
