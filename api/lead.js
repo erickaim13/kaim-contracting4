@@ -166,7 +166,7 @@ export default async function handler(req, res) {
 
     if (phoneDigits.length >= 10) {
       const etHour = parseInt(new Date().toLocaleString('en-US', { timeZone: 'America/New_York', hour: 'numeric', hour12: false }), 10);
-      const isBizHours = etHour >= 7 && etHour < 20;
+      const isBizHours = etHour >= 7 && etHour < 21;
       const tplKey = isBizHours ? 'lead_biz_hours' : 'lead_after_hours';
       const tplFallback = isBizHours ? FALLBACK_BIZ_HRS : FALLBACK_AFTER_HRS;
       const template = await loadTemplate(tplKey, tplFallback);
