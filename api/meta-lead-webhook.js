@@ -36,7 +36,11 @@ const FORM_SERVICE = {
 };
 
 // Used only when the form isn't mapped above and no service question is found.
-const DEFAULT_META_SERVICE = 'Pressure Washing';
+// Empty on purpose: intakeLead renders an empty service as the neutral
+// "your project" in the auto-reply (and "a service" in the owner notify), so an
+// unclassified lead never goes out with a wrong service. The owner can set the
+// real service in the CRM after reading the lead notes.
+const DEFAULT_META_SERVICE = '';
 
 // Best-effort match of a free-text / dropdown answer to a canonical service.
 function matchService(answer) {
