@@ -21,9 +21,46 @@ export const config = { api: { bodyParser: false } };
 
 const GRAPH_VERSION = 'v21.0';
 
-// Service these lead forms map to. The questions (what to clean / how many
-// stories) are pressure-washing specific; change here if you run other forms.
-const META_LEAD_SERVICE = 'Pressure Washing';
+// CRM's canonical service labels — keep in sync with SERVICE_OPTS in lead.js.
+const SERVICES = [
+  'Paver Installation', 'Paver Restoration', 'Landscaping', 'Drainage Solutions',
+  'Hardscaping', 'Landscape Design', 'Pressure Washing', 'Plantings', 'Multiple Services'
+];
+
+// Map each Meta lead form to a CRM service. As you launch forms for other
+// services, add the form's ID here. Every incoming lead logs its form_id (see
+// the console.log in the handler), or find it in Meta's Instant Forms library.
+const FORM_SERVICE = {
+  // '1234567890123456': 'Paver Installation',
+  // '2345678901234567': 'Drainage Solutions',
+};
+
+// Used only when the form isn't mapped above and no service question is found.
+const DEFAULT_META_SERVICE = 'Pressure Washing';
+
+// Best-effort match of a free-text / dropdown answer to a canonical service.
+function matchService(answer) {
+  const a = String(answer || '').toLowerCase().trim();
+  if (!a) return '';
+  const exact = SERVICES.find(s => s.toLowerCase() === a);
+  if (exact) return exact;
+  if (a.includes('paver') && a.includes('restor')) return 'Paver Restoration';
+  if (a.includes('paver')) return 'Paver Installation';
+  if (a.includes('drain')) return 'Drainage Solutions';
+  if (a.includes('hardscap')) return 'Hardscaping';
+  if (a.includes('design')) return 'Landscape Design';
+  if (a.includes('plant')) return 'Plantings';
+  if (a.includes('pressure') || a.includes('wash')) return 'Pressure Washing';
+  if (a.includes('landscap')) return 'Landscaping';
+  if (a.includes('multiple') || a.includes('several')) return 'Multiple Services';
+  return '';
+}
+
+// Resolve the CRM service for a lead: explicit form map wins, then a detected
+// service question, then the default.
+function resolveService(formId, serviceRaw) {
+  return FORM_SERVICE[String(formId || '')] || matchService(serviceRaw) || DEFAULT_META_SERVICE;
+}
 
 function readRawBody(req) {
   return new Promise((resolve, reject) => {
@@ -61,7 +98,7 @@ async function fetchLead(leadgenId, token) {
 // `name` keys are derived by Meta from the question text, so we match on
 // keywords and keep anything unrecognized in `extras` so nothing is lost.
 function parseFields(fieldData) {
-  const out = { fullName: '', first: '', last: '', phone: '', email: '', whatClean: '', howSoon: '', stories: '', extras: [] };
+  const out = { fullName: '', first: '', last: '', phone: '', email: '', serviceRaw: '', whatClean: '', howSoon: '', stories: '', extras: [] };
   for (const f of (fieldData || [])) {
     const key = String(f?.name || '').toLowerCase();
     const val = sanitize(Array.isArray(f?.values) ? f.values.join(', ') : '', 500);
@@ -71,6 +108,7 @@ function parseFields(fieldData) {
     else if (key.includes('full_name') || key === 'name' || key === 'your_name') out.fullName = val;
     else if (key.includes('phone')) out.phone = val;
     else if (key.includes('email')) out.email = val;
+    else if (key.includes('service') || key.includes('interested') || key.includes('project_type')) out.serviceRaw = val;
     else if (key.includes('clean')) out.whatClean = val;
     else if (key.includes('soon') || key.includes('when') || key.includes('timeline') || key.includes('start')) out.howSoon = val;
     else if (key.includes('stor') || key.includes('level') || key.includes('floor')) out.stories = val;
@@ -87,6 +125,7 @@ function parseFields(fieldData) {
 
 function buildNotes(p) {
   const lines = ['Meta Lead Ad submission.'];
+  if (p.serviceRaw) lines.push('Service requested: ' + p.serviceRaw);
   if (p.whatClean) lines.push('What to clean: ' + p.whatClean);
   if (p.howSoon) lines.push('Timeline: ' + p.howSoon);
   if (p.stories) lines.push('Stories: ' + p.stories);
@@ -146,13 +185,15 @@ export default async function handler(req, res) {
     try {
       const lead = await fetchLead(leadgenId, token);
       const parsed = parseFields(lead.field_data);
+      const service = resolveService(lead.form_id, parsed.serviceRaw);
+      console.log('[meta-lead-webhook] lead', leadgenId, 'form', lead.form_id, '-> service', service);
 
       const result = await intakeLead({
         first: parsed.first || '(no name)',
         last: parsed.last,
         phone: parsed.phone,
         email: parsed.email,
-        service: META_LEAD_SERVICE,
+        service,
         message: buildNotes(parsed),
         contactPref: '',
         leadSource: 'meta_lead_ad',
