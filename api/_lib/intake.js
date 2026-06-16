@@ -32,8 +32,10 @@ export function normalizePhone(p) {
   return digits.length === 10 ? '+1' + digits : '+' + digits;
 }
 
-const FALLBACK_BIZ_HRS = "Hey {name}, thanks for reaching out about {service}! Quick one so we can prep: are you hoping to get this done in the next 30 days, or just gathering info? Either way, happy to come out for a free in-person estimate whenever works for you.";
-const FALLBACK_AFTER_HRS = "Hey {name}, thanks for reaching out about {service}! Quick one so we can prep: are you hoping to get this done in the next 30 days, or just gathering info? Our office is closed for the night but we'll be in touch in the morning to lock in a free in-person estimate.";
+// First text a new lead gets. First person, as Eric himself (see
+// feedback_first_person_messaging). Editable in Supabase message_templates
+// under key 'lead_autoreply'; this is the fallback if that row is missing.
+const FALLBACK_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about {service}! When are you free for me to come by for a free in person estimate? I'm available Monday to Friday 8am to 6pm and Saturday mornings.";
 
 export const sanitize = (s, max = 200) =>
   String(s || '').replace(/[\u0000-\u001F\u007F]/g, '').trim().slice(0, max);
@@ -162,12 +164,11 @@ export async function intakeLead(opts) {
     trigger_type: 'lead_notify'
   }).then(() => {}, err => console.error('owner notify error', err?.message));
 
-  if (phoneDigits.length >= 10) {
-    const etHour = parseInt(new Date().toLocaleString('en-US', { timeZone: 'America/New_York', hour: 'numeric', hour12: false }), 10);
-    const isBizHours = etHour >= 7 && etHour < 21;
-    const tplKey = isBizHours ? 'lead_biz_hours' : 'lead_after_hours';
-    const tplFallback = isBizHours ? FALLBACK_BIZ_HRS : FALLBACK_AFTER_HRS;
-    const template = await loadTemplate(tplKey, tplFallback);
+  // Auto-reply to the lead — single template, any time of day. Gated by the
+  // master "Automated Lead Texting" switch (settings.aiScheduler); when off,
+  // the owner notify above still fires but the lead gets no auto-text.
+  if (phoneDigits.length >= 10 && db.settings?.aiScheduler !== false) {
+    const template = await loadTemplate('lead_autoreply', FALLBACK_AUTOREPLY);
     const replyBody = template.replace(/\{name\}/g, client.first).replace(/\{service\}/g, service || 'your project');
     const delayMs = Math.floor(Math.random() * (90000 - 30000 + 1)) + 30000;
     const sendAfter = new Date(Date.now() + delayMs).toISOString();
