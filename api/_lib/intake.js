@@ -35,7 +35,7 @@ export function normalizePhone(p) {
 // First text a new lead gets. First person, as Eric himself (see
 // feedback_first_person_messaging). Editable in Supabase message_templates
 // under key 'lead_autoreply'; this is the fallback if that row is missing.
-const FALLBACK_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about {service}! When are you free for me to come by for a free in person estimate? I'm available Monday to Friday 8am to 6pm and Saturday mornings.";
+const FALLBACK_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about {service}! When are you available for me to come by for a free in person estimate? I'm available Monday to Friday 8am to 6pm and Saturday mornings.";
 
 export const sanitize = (s, max = 200) =>
   String(s || '').replace(/[\u0000-\u001F\u007F]/g, '').trim().slice(0, max);
