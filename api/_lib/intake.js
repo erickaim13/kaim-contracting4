@@ -107,10 +107,20 @@ export async function intakeLead(opts) {
     .from('crm_data').select('data').eq('id', 1).single();
   if (readErr) throw readErr;
 
-  const db = (row?.data && row.data.clients) ? row.data : {
-    clients: [], estimates: [], invoices: [], messages: [],
-    activity: [], settings: {}, _nc: 1, _ne: 1001, _ni: 2001, jobs: []
-  };
+  // Merge any missing top-level keys onto the EXISTING blob rather than
+  // replacing it. A partial/corrupted row (data present but missing `clients`)
+  // must never cause us to overwrite the whole CRM with a fresh skeleton.
+  const db = row?.data || {};
+  db.clients = db.clients || [];
+  db.estimates = db.estimates || [];
+  db.invoices = db.invoices || [];
+  db.messages = db.messages || [];
+  db.activity = db.activity || [];
+  db.settings = db.settings || {};
+  db.jobs = db.jobs || [];
+  if (db._nc == null) db._nc = 1;
+  if (db._ne == null) db._ne = 1001;
+  if (db._ni == null) db._ni = 2001;
 
   // Dedupe — same Meta leadgen_id must never create two leads.
   if (dedupeKey) {
@@ -154,15 +164,24 @@ export async function intakeLead(opts) {
   const phoneDigits = String(phone).replace(/\D/g, '');
   const clientNumE164 = phoneDigits.length === 10 ? '+1' + phoneDigits : '+' + phoneDigits;
 
+  // Queue inserts are AWAITED (via allSettled below). Vercel freezes the
+  // function once the handler returns, so a fire-and-forget insert can be
+  // dropped — critically for no-email leads, where nothing else is awaited
+  // and the owner would silently never learn about the lead.
+  const queueInserts = [];
+
   const ownerNotifyPhone = normalizePhone(db.settings?.notifyPhone) || normalizePhone(db.settings?.phone) || DEFAULT_OWNER_PHONE;
-  sbAdmin.from('imessage_queue').insert({
-    phone: ownerNotifyPhone,
-    body: 'New quote request from ' + client.first + ' ' + client.last + ' for ' + (service || 'a service') + '\nPhone: ' + phone,
-    direction: 'outgoing',
-    status: 'pending',
-    client_name: client.first + ' ' + client.last,
-    trigger_type: 'lead_notify'
-  }).then(() => {}, err => console.error('owner notify error', err?.message));
+  queueInserts.push(
+    sbAdmin.from('imessage_queue').insert({
+      phone: ownerNotifyPhone,
+      body: 'New quote request from ' + client.first + ' ' + client.last + ' for ' + (service || 'a service') + '\nPhone: ' + phone,
+      direction: 'outgoing',
+      status: 'pending',
+      client_name: client.first + ' ' + client.last,
+      trigger_type: 'lead_notify'
+    }).then(r => { if (r?.error) console.error('owner notify error', r.error.message); },
+      err => console.error('owner notify error', err?.message))
+  );
 
   // Auto-reply to the lead — single template, any time of day. Gated by the
   // master "Automated Lead Texting" switch (settings.aiScheduler); when off,
@@ -173,16 +192,21 @@ export async function intakeLead(opts) {
     const delayMs = Math.floor(Math.random() * (90000 - 30000 + 1)) + 30000;
     const sendAfter = new Date(Date.now() + delayMs).toISOString();
 
-    sbAdmin.from('imessage_queue').insert({
-      phone: clientNumE164,
-      body: replyBody,
-      direction: 'outgoing',
-      status: 'pending',
-      client_name: client.first + ' ' + client.last,
-      trigger_type: 'lead_autoreply',
-      send_after: sendAfter
-    }).then(() => {}, err => console.error('autoreply error', err?.message));
+    queueInserts.push(
+      sbAdmin.from('imessage_queue').insert({
+        phone: clientNumE164,
+        body: replyBody,
+        direction: 'outgoing',
+        status: 'pending',
+        client_name: client.first + ' ' + client.last,
+        trigger_type: 'lead_autoreply',
+        send_after: sendAfter
+      }).then(r => { if (r?.error) console.error('autoreply error', r.error.message); },
+        err => console.error('autoreply error', err?.message))
+    );
   }
+
+  await Promise.allSettled(queueInserts);
 
   // 4. Confirmation email to client — AWAITED so the Vercel function doesn't
   // freeze before the SMTP handshake completes. SMTP takes ~1-2s; if we

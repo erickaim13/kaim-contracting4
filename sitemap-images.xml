@@ -9,12 +9,12 @@
       <image:title>Kaim Contracting outdoor living</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://kaimcontracting.com/images/landscape%20stock%20photo.jpg</image:loc>
+      <image:loc>https://kaimcontracting.com/images/about-landscape.jpg</image:loc>
       <image:caption>Professional landscaping work in Greater Boston and Southern NH</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://kaimcontracting.com/pavers.html</loc>
+    <loc>https://kaimcontracting.com/pavers</loc>
     <image:image>
       <image:loc>https://kaimcontracting.com/images/tile-paver-svc.webp</image:loc>
       <image:caption>Paver driveway, walkway and patio installation in Methuen, MA</image:caption>
@@ -22,7 +22,7 @@
     </image:image>
   </url>
 <url>
-    <loc>https://kaimcontracting.com/landscaping.html</loc>
+    <loc>https://kaimcontracting.com/landscaping</loc>
     <image:image>
       <image:loc>https://kaimcontracting.com/images/landscape%20stock%20photo.jpg</image:loc>
       <image:caption>Landscaping design, installation and maintenance in Methuen, MA</image:caption>
@@ -30,7 +30,7 @@
     </image:image>
   </url>
 <url>
-    <loc>https://kaimcontracting.com/drainage.html</loc>
+    <loc>https://kaimcontracting.com/drainage</loc>
     <image:image>
       <image:loc>https://kaimcontracting.com/images/tile-french-drain.webp</image:loc>
       <image:caption>French drain and yard drainage installation in Methuen, MA</image:caption>
@@ -38,7 +38,7 @@
     </image:image>
   </url>
 <url>
-    <loc>https://kaimcontracting.com/pressure-washing.html</loc>
+    <loc>https://kaimcontracting.com/pressure-washing</loc>
     <image:image>
       <image:loc>https://kaimcontracting.com/images/pressure%20washing%20stock.webp</image:loc>
       <image:caption>Pressure and soft washing for driveways, siding and decks in Methuen, MA</image:caption>

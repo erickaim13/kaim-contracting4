@@ -8,15 +8,16 @@
 <!-- Meta Pixel Code --><script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '1685883162337390'); fbq('track', 'PageView');</script><noscript> <img height="1" width="1" src="https://www.facebook.com/tr?id=1685883162337390&ev=PageView&noscript=1"/></noscript><!-- End Meta Pixel Code -->
 <title>Yard Drainage & French Drains in Methuen, MA | Kaim Contracting</title>
 <meta name="description" content="Fix wet yards, basement leaks & erosion. Yard drainage, French drains, catch basins & regrading in Methuen, Andover, Lawrence & Southern NH. Free site visit. Call 978-351-2195.">
-<link rel="canonical" href="https://kaimcontracting.com/drainage.html">
+<link rel="canonical" href="https://kaimcontracting.com/drainage">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="Kaim Contracting LLC">
 <meta property="og:title" content="Yard Drainage & French Drains in Methuen, MA | Kaim Contracting">
 <meta property="og:description" content="Fix wet yards, basement leaks & erosion. French drains, catch basins & regrading in Methuen and Southern NH.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://kaimcontracting.com/drainage.html">
+<meta property="og:url" content="https://kaimcontracting.com/drainage">
 <meta property="og:image" content="https://kaimcontracting.com/images/tile-french-drain.webp">
 <meta property="og:site_name" content="Kaim Contracting LLC">
+<meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Yard Drainage & French Drains in Methuen, MA | Kaim Contracting">
 <meta name="twitter:description" content="Fix wet yards, basement leaks & erosion. French drains, catch basins & regrading.">
@@ -31,7 +32,7 @@
   "@type": "Service",
   "serviceType": "Yard Drainage",
   "name": "Yard Drainage & French Drains in Methuen, MA & Southern NH",
-  "description": "Yard drainage solutions — French drains, catch basins, downspout extensions, regrading and erosion control. Serving Merrimack Valley and Southern NH from Methuen, MA.",
+  "description": "Yard drainage solutions including French drains, catch basins, downspout extensions, regrading and erosion control. Serving Merrimack Valley and Southern NH from Methuen, MA.",
   "url": "https://kaimcontracting.com/drainage.html",
   "image": "https://kaimcontracting.com/images/tile-french-drain.webp",
   "provider": {
@@ -846,6 +847,8 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       kc_hpot_xyz:(fd.get('hf_hpot')||'').toString(),
       attachments:[]
     };
+    var _pd=(payload.phone||'').replace(/\D/g,'');
+    if(!payload.first||_pd.length<10){btn.disabled=false;btn.textContent=origText;alert('Please enter your name and a valid phone number so we can reach you.');return;}
     fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
       .then(function(r){if(!r.ok)throw new Error('Submission failed');return r.json();})
       .then(function(){

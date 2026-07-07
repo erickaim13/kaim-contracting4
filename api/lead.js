@@ -46,7 +46,9 @@ export default async function handler(req, res) {
   const phone = sanitize(body.phone, 30);
   const email = sanitize(body.email, 120);
   const service = sanitize(body.service, 60);
-  const message = sanitize(body.message, 2000);
+  // Calculators post their project detail under `notes`; the hero/service forms
+  // use `message`. Accept either so calculator context isn't silently dropped.
+  const message = sanitize(body.message || body.notes, 2000);
   const contactPref = sanitize(body.contactPref, 80);
   const leadSource = sanitize(body.source, 120) || 'Website (kaimcontracting.com)';
 
@@ -55,10 +57,19 @@ export default async function handler(req, res) {
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Invalid email' });
   if (service && !SERVICE_OPTS.has(service)) return res.status(400).json({ error: 'Invalid service' });
 
-  const attachments = Array.isArray(body.attachments) ? body.attachments.slice(0, 5).map(a => ({
-    name: sanitize(a?.name, 80),
-    data: typeof a?.data === 'string' && a.data.length < 2_500_000 ? a.data : null
-  })).filter(a => a.data) : [];
+  // Attachments must be real base64 image data URIs (not arbitrary strings) and
+  // are capped both per-item and in total so a forged POST can't bloat the row.
+  let attachTotal = 0;
+  const attachments = Array.isArray(body.attachments) ? body.attachments.slice(0, 5).map(a => {
+    const data = typeof a?.data === 'string'
+      && /^data:image\/(png|jpe?g|webp|gif);base64,/.test(a.data)
+      && a.data.length < 2_500_000 ? a.data : null;
+    return { name: sanitize(a?.name, 80), data };
+  }).filter(a => {
+    if (!a.data) return false;
+    attachTotal += a.data.length;
+    return attachTotal < 6_000_000; // ~6MB total across all attachments
+  }) : [];
 
   try {
     await intakeLead({
