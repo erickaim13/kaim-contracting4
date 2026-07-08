@@ -563,14 +563,14 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   <div class="page-hero-content">
     <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;&#8250;&nbsp; Free Tools &nbsp;&#8250;&nbsp; Pressure Washing Cost</div>
     <h1>Pressure Washing <span>Cost Calculator</span></h1>
-    <p class="sub">Select a surface, enter the square footage, and choose its current condition. We'll provide a rough estimate based on our typical project range. House washing starts at $350 and includes FREE front walkway cleaning (a $125 value).</p>
+    <p class="sub">Select a surface and its approximate size. We'll provide a rough estimate based on our typical project range. House washing starts at $350 and includes FREE front walkway cleaning (a $125 value).</p>
   </div>
 </div>
 <div class="page-body">
   <div class="page-grid">
     <div class="page-content">
       <h2>Pressure Washing <span>Cost Calculator</span></h2>
-      <p>A rough estimate for any outdoor surface in Methuen, the Merrimack Valley, and southern NH. Select the surface, enter the square footage, and choose its current condition. We'll show our typical project range based on similar jobs. Final pricing is confirmed after an on site walkthrough. Soft wash surfaces (house siding, fences, decks &amp; wood, and roofs) are cleaned with low pressure, professional grade detergents rather than high pressure water, which protects the material while removing dirt, mildew, and algae at the root.</p>
+      <p>A rough estimate for any outdoor surface in Methuen, the Merrimack Valley, and southern NH. Select the surface and its approximate size and we'll show our typical project range based on similar jobs. Final pricing is confirmed after an on site walkthrough. Soft wash surfaces (house siding, fences, decks &amp; wood, and roofs) are cleaned with low pressure, professional grade detergents rather than high pressure water, which protects the material while removing dirt, mildew, and algae at the root.</p>
       <div class="calc-card">
         <div class="calc-card-title">Select Surface</div>
         <div class="calc-surface-grid" id="surfaceGrid">
@@ -582,8 +582,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
           <button class="calc-surface-btn" data-surface="roof" type="button">Roof (Soft Wash)</button>
         </div>
         <div class="calc-grid" id="standardInputs">
-          <div class="calc-field calc-field-full"><label for="sqft">Approximate Square Footage</label><input type="number" id="sqft" min="0" step="10" value="600" inputmode="decimal"></div>
-          <div class="calc-field calc-field-full"><label>Surface Condition</label><div class="calc-condition" id="conditionGroup"><button class="calc-condition-btn" data-condition="light" type="button">Light</button><button class="calc-condition-btn active" data-condition="moderate" type="button">Moderate</button><button class="calc-condition-btn" data-condition="heavy" type="button">Heavy</button></div></div>
+          <div class="calc-field calc-field-full"><label id="sizeLabel">Approximate Size (sq ft)</label><div class="calc-condition calc-size-grid" id="sizeGroup"></div></div>
         </div>
         <div class="calc-grid" id="sidingInputs" style="display:none">
           <div class="calc-field calc-field-full"><label>House Size (sq ft)</label><div class="calc-condition calc-size-grid" id="homeSizeGroup"><button class="calc-condition-btn" data-home="s1" type="button">Under 1,500</button><button class="calc-condition-btn active" data-home="s2" type="button">1,500 - 2,500</button><button class="calc-condition-btn" data-home="s3" type="button">2,500 - 3,500</button><button class="calc-condition-btn" data-home="s4" type="button">3,500+</button></div></div>
@@ -596,8 +595,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
         <div class="calc-breakdown">
           <div class="calc-row"><span class="calc-row-label">Surface</span><span class="calc-row-value" id="surfaceOut">Concrete Patio / Walkway</span></div>
           <div class="calc-row" id="areaRow"><span class="calc-row-label" id="areaLabel">Area</span><span class="calc-row-value" id="areaOut">600 sq ft</span></div>
-          <div class="calc-row" id="conditionRow"><span class="calc-row-label" id="conditionLabel">Condition</span><span class="calc-row-value" id="conditionOut">Moderate</span></div>
-          <div class="calc-row" id="rateRow"><span class="calc-row-label">Avg. price per sq ft</span><span class="calc-row-value" id="rateOut">$0.30 - $0.50</span></div>
+          <div class="calc-row" id="conditionRow"><span class="calc-row-label" id="conditionLabel">Includes</span><span class="calc-row-value" id="conditionOut">Pro-grade cleaning</span></div>
         </div>
         <div class="calc-offer">
           <div class="calc-offer-label">House Washing Offer From $350</div>
@@ -642,29 +640,61 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 <script>
 (function(){
   var $=function(id){return document.getElementById(id);};
-  var RATES={driveway:{low:0.20,high:0.40,label:'Concrete Patio / Walkway'},paver:{low:0.30,high:0.55,label:'Paver Patio / Walkway'},deck:{low:0.35,high:0.70,label:'Deck / Wood (Soft Wash)'},siding:{low:0.20,high:0.45,label:'House Siding (Soft Wash)'},fence:{low:0.25,high:0.50,label:'Fence (Soft Wash)'},roof:{low:0.30,high:0.60,label:'Roof (Soft Wash)'}};
-  var COND={light:{mult:0.85,label:'Light'},moderate:{mult:1.00,label:'Moderate'},heavy:{mult:1.30,label:'Heavy'}};
+  // Flat size-tier pricing (like house washing) — ranges set to typical MA market, upper-middle
+  var TIERS={
+    driveway:{label:'Concrete Patio / Walkway',unit:'Approximate Size (sq ft)',includes:'Pro surface cleaner + detail rinse',sizes:[
+      {btn:'Under 300',label:'Under 300 sq ft',low:200,high:300},
+      {btn:'300 - 600',label:'300 - 600 sq ft',low:250,high:400},
+      {btn:'600 - 1,000',label:'600 - 1,000 sq ft',low:350,high:550},
+      {btn:'1,000+',label:'1,000+ sq ft',low:500,high:800}]},
+    paver:{label:'Paver Patio / Walkway',unit:'Approximate Size (sq ft)',includes:'Low-pressure wash, safe for joint sand',sizes:[
+      {btn:'Under 300',label:'Under 300 sq ft',low:225,high:350},
+      {btn:'300 - 600',label:'300 - 600 sq ft',low:300,high:475},
+      {btn:'600 - 1,000',label:'600 - 1,000 sq ft',low:425,high:650},
+      {btn:'1,000+',label:'1,000+ sq ft',low:600,high:950}]},
+    deck:{label:'Deck / Wood (Soft Wash)',unit:'Approximate Size (sq ft)',includes:'Gentle soft wash, wood-safe detergents',sizes:[
+      {btn:'Under 200',label:'Under 200 sq ft',low:225,high:350},
+      {btn:'200 - 400',label:'200 - 400 sq ft',low:300,high:500},
+      {btn:'400 - 700',label:'400 - 700 sq ft',low:450,high:700},
+      {btn:'700+',label:'700+ sq ft',low:650,high:1000}]},
+    fence:{label:'Fence (Soft Wash)',unit:'Approximate Length (linear ft)',includes:'Gentle soft wash, wood & vinyl safe',sizes:[
+      {btn:'Under 100',label:'Under 100 linear ft',low:250,high:400},
+      {btn:'100 - 200',label:'100 - 200 linear ft',low:350,high:550},
+      {btn:'200 - 300',label:'200 - 300 linear ft',low:500,high:750},
+      {btn:'300+',label:'300+ linear ft',low:700,high:1100}]},
+    roof:{label:'Roof (Soft Wash)',unit:'House Size (sq ft)',includes:'Soft wash algae & moss treatment',sizes:[
+      {btn:'Under 1,500',label:'Under 1,500 sq ft home',low:450,high:650},
+      {btn:'1,500 - 2,500',label:'1,500 - 2,500 sq ft home',low:600,high:850},
+      {btn:'2,500 - 3,500',label:'2,500 - 3,500 sq ft home',low:800,high:1100},
+      {btn:'3,500+',label:'3,500+ sq ft home',low:1000,high:1500}]}
+  };
   var HOUSE_TIERS={s1:{low:350,high:450,label:'Up to 1,500 sq ft'},s2:{low:450,high:600,label:'1,500 - 2,500 sq ft'},s3:{low:600,high:800,label:'2,500 - 3,500 sq ft'},s4:{low:850,high:1150,label:'3,500+ sq ft'}};
-  var MIN=175;
-  var surface='siding', condition='moderate', homeSize='s2';
+  var surface='siding', sizeIdx=1, homeSize='s2';
+  function buildSizeButtons(){
+    if(surface==='siding')return;
+    var t=TIERS[surface];
+    $('sizeLabel').textContent=t.unit;
+    $('sizeGroup').innerHTML=t.sizes.map(function(s,i){
+      return '<button class="calc-condition-btn'+(i===sizeIdx?' active':'')+'" data-idx="'+i+'" type="button">'+s.btn+'</button>';
+    }).join('');
+    $('sizeGroup').querySelectorAll('.calc-condition-btn').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        $('sizeGroup').querySelectorAll('.calc-condition-btn').forEach(function(b){b.classList.remove('active');});
+        btn.classList.add('active');sizeIdx=parseInt(btn.dataset.idx);calc();
+      });
+    });
+  }
   function syncInputs(){
     var isSiding=(surface==='siding');
     $('standardInputs').style.display=isSiding?'none':'';
     $('sidingInputs').style.display=isSiding?'':'none';
-    $('rateRow').style.display=isSiding?'none':'';
-    $('areaLabel').textContent=isSiding?'House Size':'Area';
-    $('conditionLabel').textContent=isSiding?'Includes':'Condition';
+    $('areaLabel').textContent=(isSiding||surface==='roof')?'House Size':'Size';
+    buildSizeButtons();
   }
   document.querySelectorAll('.calc-surface-btn').forEach(function(btn){
     btn.addEventListener('click',function(){
       document.querySelectorAll('.calc-surface-btn').forEach(function(b){b.classList.remove('active');});
-      btn.classList.add('active');surface=btn.dataset.surface;syncInputs();calc();
-    });
-  });
-  document.querySelectorAll('#conditionGroup .calc-condition-btn').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      document.querySelectorAll('#conditionGroup .calc-condition-btn').forEach(function(b){b.classList.remove('active');});
-      btn.classList.add('active');condition=btn.dataset.condition;calc();
+      btn.classList.add('active');surface=btn.dataset.surface;sizeIdx=1;syncInputs();calc();
     });
   });
   document.querySelectorAll('#homeSizeGroup .calc-condition-btn').forEach(function(btn){
@@ -675,9 +705,8 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   });
   function money(n){return '$'+new Intl.NumberFormat('en-US').format(Math.round(n/5)*5);}
   function calc(){
-    var rate=RATES[surface];
-    $('surfaceOut').textContent=rate.label;
     if(surface==='siding'){
+      $('surfaceOut').textContent='House Siding (Soft Wash)';
       var tier=HOUSE_TIERS[homeSize];
       if(tier.low===null){
         $('priceRange').textContent='Custom Quote';
@@ -688,16 +717,12 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       $('conditionOut').textContent='Free front walkway cleaning';
       return;
     }
-    var sqft=parseFloat($('sqft').value)||0;
-    var cond=COND[condition];
-    var low=Math.max(sqft*rate.low*cond.mult,MIN);
-    var high=Math.max(sqft*rate.high*cond.mult,MIN+100);
-    $('priceRange').textContent=money(low)+' - '+money(high);
-    $('areaOut').textContent=new Intl.NumberFormat('en-US').format(sqft)+' sq ft';
-    $('conditionOut').textContent=cond.label;
-    $('rateOut').textContent='$'+(rate.low*cond.mult).toFixed(2)+' - $'+(rate.high*cond.mult).toFixed(2);
+    var t=TIERS[surface],s=t.sizes[sizeIdx];
+    $('surfaceOut').textContent=t.label;
+    $('priceRange').textContent=money(s.low)+' - '+money(s.high);
+    $('areaOut').textContent=s.label;
+    $('conditionOut').textContent=t.includes;
   }
-  $('sqft').addEventListener('input',calc);
   syncInputs();
   calc();
 })();
@@ -709,9 +734,8 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
     var g=function(id){return document.getElementById(id);};
     return ['Pressure Washing Calculator submission:',
       '- Surface: '+g('surfaceOut').textContent,
-      '- Area: '+g('areaOut').textContent,
-      '- Condition: '+g('conditionOut').textContent,
-      '- Avg. price per sq ft: '+g('rateOut').textContent,
+      '- Size: '+g('areaOut').textContent,
+      '- Includes: '+g('conditionOut').textContent,
       '- Estimated project range: '+g('priceRange').textContent,
       '- Offer: House Washing from $350 / free front walkway ($125 value) / satisfaction guaranteed / patio bundle save 15%'].join('\n');
   }
