@@ -2,7 +2,7 @@
 //
 // This is the single source of truth for "a new lead arrived": it writes the
 // lead into crm_data.clients, logs an activity entry, queues the owner-notify
-// and delayed auto-reply iMessages, and sends the branded confirmation email.
+// and near-instant auto-reply iMessages, and sends the branded confirmation email.
 //
 // Both the public website form (api/lead.js) and the Meta Lead Ads webhook
 // (api/meta-lead-webhook.js) call intakeLead() so there is exactly one code
@@ -160,7 +160,7 @@ export async function intakeLead(opts) {
     .eq('id', 1);
   if (writeErr) throw writeErr;
 
-  // 3. Queue iMessages — owner notify (immediate) + auto-reply (30-90s delay)
+  // 3. Queue iMessages — owner notify (immediate) + auto-reply (2-6s delay)
   const phoneDigits = String(phone).replace(/\D/g, '');
   const clientNumE164 = phoneDigits.length === 10 ? '+1' + phoneDigits : '+' + phoneDigits;
 
@@ -189,7 +189,9 @@ export async function intakeLead(opts) {
   if (phoneDigits.length >= 10 && db.settings?.aiScheduler !== false) {
     const template = await loadTemplate('lead_autoreply', FALLBACK_AUTOREPLY);
     const replyBody = template.replace(/\{name\}/g, client.first).replace(/\{service\}/g, service || 'your project');
-    const delayMs = Math.floor(Math.random() * (90000 - 30000 + 1)) + 30000;
+    // Near-instant: 2-6s here + the Mac sender's 10s poll = lead hears back in
+    // well under 30 seconds. Speed-to-lead beats looking casual.
+    const delayMs = Math.floor(Math.random() * (6000 - 2000 + 1)) + 2000;
     const sendAfter = new Date(Date.now() + delayMs).toISOString();
 
     queueInserts.push(
@@ -223,7 +225,7 @@ export async function intakeLead(opts) {
         html: brandedHtml(`
           <h2 style="margin:0 0 8px;font-size:22px;color:#1a1a1a">Thanks for Reaching Out!</h2>
           <p style="margin:0 0 20px;font-size:15px;color:#555;line-height:1.6">Hi ${first.replace(/[<>&"']/g, '')},</p>
-          <p style="margin:0 0 12px;font-size:15px;color:#555;line-height:1.6">We received your quote request${service ? ' for <strong>' + service.replace(/[<>&"']/g, '') + '</strong>' : ''}. We'll get back to you within one business day to go over the details.</p>
+          <p style="margin:0 0 12px;font-size:15px;color:#555;line-height:1.6">We received your quote request${service ? ' for <strong>' + service.replace(/[<>&"']/g, '') + '</strong>' : ''}. You'll hear from us shortly, typically within the hour, to go over the details.</p>
           <p style="margin:0 0 24px;font-size:15px;color:#555;line-height:1.6">In the meantime, feel free to give us a call or reply to this email with any questions.</p>
           <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px"><tr><td style="background:#f8f8f8;border-radius:8px;padding:20px 24px;text-align:center">
             <div style="font-size:13px;color:#999;margin-bottom:6px">Call or text us anytime</div>

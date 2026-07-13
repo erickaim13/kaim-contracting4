@@ -908,7 +908,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
         <div class="hf"><input type="text" name="hf-name" placeholder="Your name" required autocomplete="name"></div>
         <div class="hf"><input type="tel" name="hf-phone" placeholder="Phone number" required autocomplete="tel"></div>
         <button type="submit" id="hf-submit">Get My Free Estimate</button>
-        <div class="hero-form-foot">We respond within 1 business day. No spam, ever.</div>
+        <div class="hero-form-foot">We typically respond within the hour. No spam, ever.</div>
       </div>
 
       <div style="display:flex;gap:8px;margin-top:11px">
@@ -1197,7 +1197,7 @@ function referFriend(){
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
           <h3 style="color:var(--gold);font-size:1.4rem;font-weight:700;letter-spacing:.02em;margin:0 0 10px;">Request Submitted</h3>
-          <p style="color:var(--text);font-size:1rem;margin:0 0 6px;">Thank you! We&rsquo;ll be in touch within 1 business day.</p>
+          <p style="color:var(--text);font-size:1rem;margin:0 0 6px;">Thank you! We&rsquo;ll be in touch typically within the hour.</p>
         </div>
       </div>
     </div>
@@ -1400,7 +1400,7 @@ async function submitLead(data,attachments){
       .then(function(r){if(!r.ok)throw new Error('Submission failed');return r.json();})
       .then(function(){
         try{ if(window.gtag){var _ph=(payload.phone||'').replace(/\D/g,'');var _val=({'Paver Installation':1500,'Paver Restoration':800,'Paver Sealing':400,'Drainage Solutions':700,'Hardscaping':1200,'Landscape Design':500,'Landscaping':400,'Plantings':200,'Pressure Washing':150,'Multiple Services':1000})[payload.service||'']||300;gtag('event','conversion',{send_to:'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD',value:_val,currency:'USD',user_data:{email:payload.email||undefined,phone_number:_ph.length>=10?'+1'+_ph.slice(-10):undefined,address:{first_name:payload.first||undefined}}});gtag('event','generate_lead',{lead_source:payload.source||'Website'});} if(window.fbq)fbq('track','Lead'); }catch(_){}
-        form.innerHTML='<div style="text-align:center;padding:36px 12px"><div style="display:inline-flex;align-items:center;justify-content:center;width:60px;height:60px;border-radius:50%;background:rgba(201,168,76,.18);border:2px solid #c9a84c;margin-bottom:14px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e2c47a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div style="font-family:\'Oswald\',sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;color:#e2c47a;margin-bottom:6px">Got it!</div><div style="font-size:14px;color:rgba(255,255,255,.7);line-height:1.5">We will be in touch within 1 business day.</div></div>';
+        form.innerHTML='<div style="text-align:center;padding:36px 12px"><div style="display:inline-flex;align-items:center;justify-content:center;width:60px;height:60px;border-radius:50%;background:rgba(201,168,76,.18);border:2px solid #c9a84c;margin-bottom:14px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e2c47a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div style="font-family:\'Oswald\',sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;color:#e2c47a;margin-bottom:6px">Got it!</div><div style="font-size:14px;color:rgba(255,255,255,.7);line-height:1.5">We typically respond within the hour. Keep an eye on your texts!</div></div>';
       })
       .catch(function(){
         btn.disabled=false;
