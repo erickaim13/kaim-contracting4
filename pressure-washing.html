@@ -485,6 +485,20 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .svc-hero-form button:hover{background:var(--gold-l);transform:translateY(-1px)}
 .svc-hero-form .svc-hf-foot{margin-top:11px;text-align:center;font-size:12px;color:rgba(255,255,255,.6)}
 .svc-hero-form .svc-hf-foot a{color:var(--gold-l);font-weight:700;text-decoration:none}
+.msq-progress{display:flex;gap:5px;margin-bottom:14px;justify-content:center}
+.msq-progress span{width:26px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);transition:background .25s}
+.msq-progress span.on{background:var(--gold)}
+.msq-step{display:none;animation:msqIn .25s ease}
+.msq-step.on{display:block}
+@keyframes msqIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.msq-q{font-size:14.5px;font-weight:600;color:#fff;margin-bottom:10px;text-align:center;line-height:1.4}
+.msq-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.msq-grid-1{grid-template-columns:1fr}
+.svc-hero-form button.msq-chip{display:flex;align-items:center;justify-content:center;gap:6px;width:auto;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:12px 10px;margin:0;color:rgba(255,255,255,.88);font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .15s;text-align:center;line-height:1.3}
+.svc-hero-form button.msq-chip:hover{border-color:var(--gold);background:rgba(201,168,76,.1);transform:none}
+.svc-hero-form button.msq-chip.sel{border-color:var(--gold);background:rgba(201,168,76,.18);color:var(--gold-l)}
+.svc-hero-form button.msq-back{width:auto;background:none;border:none;color:rgba(255,255,255,.55);font-size:12px;cursor:pointer;padding:2px 0;margin:0 0 8px;display:inline-flex;align-items:center;gap:4px;font-family:'Source Sans 3',sans-serif;font-weight:400;letter-spacing:0;text-transform:none}
+.svc-hero-form button.msq-back:hover{color:var(--gold-l);background:none;transform:none}
 
 .svc-block{padding:80px 24px;position:relative;overflow:hidden}
 .svc-block-dark{background:var(--bg2);position:relative}
@@ -799,14 +813,35 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
     </div>
     <form class="svc-hero-form" id="pressure-washing-hero-form" autocomplete="on" novalidate>
         <h3>Get a Free Pressure Wash Quote</h3>
-        <div class="svc-hf-sub">No pressure, no obligation. We typically respond within the hour.</div>
         <div id="pw-offer-banner" class="pw-offer-banner" style="display:none"></div>
+        <div class="msq-progress" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
         <div style="display:none" aria-hidden="true"><label>Leave empty<input type="text" name="hf_hpot" tabindex="-1" autocomplete="off" value=""></label></div>
-        <div class="hf"><input type="text" name="hf-name" placeholder="Your name" required></div>
-        <div class="hf"><input type="tel" name="hf-phone" placeholder="Phone number" required></div>
-        <div class="hf"><input type="email" name="hf-email" placeholder="Email (optional)"></div>
-        <div class="hf"><textarea name="hf-message" placeholder="Briefly describe your project (optional)" rows="2" style="resize:vertical;min-height:60px"></textarea></div>
-        <button type="submit" id="pressure-washing-hero-submit">Request My Estimate</button>
+        <div class="msq-step on" data-key="timing">
+          <div class="msq-q">How soon are you hoping to get it done?</div>
+          <div class="msq-grid msq-grid-1">
+            <button type="button" class="msq-chip" data-v="As soon as possible">As soon as possible</button>
+            <button type="button" class="msq-chip" data-v="In the next few weeks">In the next few weeks</button>
+            <button type="button" class="msq-chip" data-v="Sometime this season">Sometime this season</button>
+            <button type="button" class="msq-chip" data-v="Just looking for pricing">Just looking for pricing</button>
+          </div>
+        </div>
+        <div class="msq-step" data-key="town">
+          <button type="button" class="msq-back">&larr; Back</button>
+          <div class="msq-q">What town is the property in?</div>
+          <div class="hf"><input type="text" id="hf-town" list="hf-town-list" placeholder="Start typing your town..." autocomplete="address-level2"></div>
+          <datalist id="hf-town-list">
+            <option value="Methuen, MA"></option><option value="Andover, MA"></option><option value="North Andover, MA"></option><option value="Lawrence, MA"></option><option value="Haverhill, MA"></option><option value="Dracut, MA"></option><option value="Lowell, MA"></option><option value="Tewksbury, MA"></option><option value="Chelmsford, MA"></option><option value="Groveland, MA"></option><option value="Georgetown, MA"></option><option value="Merrimac, MA"></option><option value="Amesbury, MA"></option><option value="West Newbury, MA"></option><option value="Newbury, MA"></option><option value="Newburyport, MA"></option><option value="Salisbury, MA"></option><option value="Salem, NH"></option><option value="Windham, NH"></option><option value="Pelham, NH"></option><option value="Atkinson, NH"></option><option value="Hampstead, NH"></option><option value="Plaistow, NH"></option><option value="Derry, NH"></option><option value="Londonderry, NH"></option><option value="Manchester, NH"></option>
+          </datalist>
+          <button type="button" id="hf-town-next">Continue</button>
+        </div>
+        <div class="msq-step" data-key="contact">
+          <button type="button" class="msq-back">&larr; Back</button>
+          <div class="msq-q">Last step. Where should we send your free estimate?</div>
+          <div class="hf"><input type="text" name="hf-name" placeholder="Your name" required autocomplete="name"></div>
+          <div class="hf"><input type="tel" name="hf-phone" placeholder="Phone number" required autocomplete="tel"></div>
+          <button type="submit" id="pressure-washing-hero-submit">Request My Estimate</button>
+          <div class="svc-hf-foot">We typically respond within the hour. No spam, ever.</div>
+        </div>
         <div style="display:flex;gap:8px;margin-top:11px">
           <a href="tel:978-351-2195" style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.45);color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:11px 10px;border-radius:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a>        </div>
       </form>
@@ -1061,6 +1096,37 @@ function pwClearOffer(){
 (function(){
   var form=document.getElementById('pressure-washing-hero-form');
   if(!form)return;
+  var msq={timing:'',town:''};
+  var steps=[].slice.call(form.querySelectorAll('.msq-step'));
+  var dots=[].slice.call(form.querySelectorAll('.msq-progress span'));
+  function go(n){
+    if(n<0||n>=steps.length)return;
+    steps.forEach(function(s,i){s.classList.toggle('on',i===n);});
+    dots.forEach(function(d,i){d.classList.toggle('on',i<=n);});
+    if(steps[n].dataset.key==='contact'){var inp=form.querySelector('[name="hf-name"]');if(inp)setTimeout(function(){inp.focus();},260);}
+  }
+  steps.forEach(function(step,si){
+    step.querySelectorAll('.msq-chip').forEach(function(ch){
+      ch.addEventListener('click',function(){
+        step.querySelectorAll('.msq-chip').forEach(function(x){x.classList.remove('sel');});
+        ch.classList.add('sel');
+        msq[step.dataset.key]=ch.dataset.v;
+        setTimeout(function(){go(si+1);},170);
+      });
+    });
+    var back=step.querySelector('.msq-back');
+    if(back)back.addEventListener('click',function(){go(si-1);});
+  });
+  var townInp=form.querySelector('#hf-town'),townBtn=form.querySelector('#hf-town-next');
+  if(townInp&&townBtn){
+    var townIdx=-1;steps.forEach(function(s,i){if(s.dataset.key==='town')townIdx=i;});
+    townBtn.addEventListener('click',function(){
+      var v=(townInp.value||'').trim();
+      if(!v){townInp.focus();townInp.setAttribute('placeholder','Please type your town');return;}
+      msq.town=v;go(townIdx+1);
+    });
+    townInp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();townBtn.click();}});
+  }
   form.addEventListener('submit',function(e){
     e.preventDefault();
     var btn=document.getElementById('pressure-washing-hero-submit');
@@ -1070,15 +1136,18 @@ function pwClearOffer(){
     var fd=new FormData(form);
     var name=(fd.get('hf-name')||'').toString().trim();
     var parts=name.split(/\s+/);
+    var offer=form.getAttribute('data-offer');
+    var msgLines=['Pressure Washing page quick quote:','- Timing: '+(msq.timing||'not answered'),'- Town: '+(msq.town||'not answered')];
+    if(offer)msgLines.push('- Offer: '+offer);
     var payload={
       first:parts.shift()||'',
       last:parts.join(' ')||'(not provided)',
       phone:(fd.get('hf-phone')||'').toString(),
-      email:(fd.get('hf-email')||'').toString(),
+      email:'',
       service:'Pressure Washing',
-      message:(fd.get('hf-message')||'').toString()||'Submitted from Pressure Washing service page hero form.',
+      message:msgLines.join('\n'),
       contactPref:'Phone Call',
-      source:(function(){var _o=form.getAttribute('data-offer');return _o?('Pressure Washing Service Page Hero | Offer: '+_o):'Pressure Washing Service Page Hero';})(),
+      source:offer?('Pressure Washing Service Page Hero | Offer: '+offer):'Pressure Washing Service Page Hero',
       kc_hpot_xyz:(fd.get('hf_hpot')||'').toString(),
       attachments:[]
     };
