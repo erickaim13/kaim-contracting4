@@ -502,6 +502,11 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .svc-hero-form button.msq-chip.sel{border-color:var(--gold);background:rgba(201,168,76,.18);color:var(--gold-l)}
 .svc-hero-form button.msq-back{width:auto;background:none;border:none;color:rgba(255,255,255,.55);font-size:12px;cursor:pointer;padding:2px 0;margin:0 0 8px;display:inline-flex;align-items:center;gap:4px;font-family:'Source Sans 3',sans-serif;font-weight:400;letter-spacing:0;text-transform:none}
 .svc-hero-form button.msq-back:hover{color:var(--gold-l);background:none;transform:none}
+.msq-town-wrap{position:relative}
+.msq-town-sug{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#12233f;border:1px solid rgba(201,168,76,.4);border-radius:8px;z-index:40;box-shadow:0 14px 34px rgba(0,0,0,.55);display:none;max-height:200px;overflow-y:auto}
+.msq-town-sug.open{display:block}
+.msq-town-sug button{display:block;width:100%;text-align:left;background:none;border:none;border-radius:0;padding:10px 13px;margin:0;color:rgba(255,255,255,.9);font-family:'Source Sans 3',sans-serif;font-size:14px;font-weight:400;letter-spacing:0;text-transform:none;cursor:pointer;transition:none}
+.msq-town-sug button:hover,.msq-town-sug button.hl{background:rgba(201,168,76,.16);color:var(--gold-l);transform:none}
 
 .svc-block{padding:80px 24px;position:relative;overflow:hidden}
 .svc-block-dark{background:var(--bg2);position:relative}
@@ -735,10 +740,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
         <div class="msq-step" data-key="town">
           <button type="button" class="msq-back">&larr; Back</button>
           <div class="msq-q">What town is the property in?</div>
-          <div class="hf"><input type="text" id="hf-town" list="hf-town-list" placeholder="Start typing your town..." autocomplete="address-level2"></div>
-          <datalist id="hf-town-list">
-            <option value="Methuen, MA"></option><option value="Andover, MA"></option><option value="North Andover, MA"></option><option value="Lawrence, MA"></option><option value="Haverhill, MA"></option><option value="Dracut, MA"></option><option value="Lowell, MA"></option><option value="Tewksbury, MA"></option><option value="Chelmsford, MA"></option><option value="Groveland, MA"></option><option value="Georgetown, MA"></option><option value="Merrimac, MA"></option><option value="Amesbury, MA"></option><option value="West Newbury, MA"></option><option value="Newbury, MA"></option><option value="Newburyport, MA"></option><option value="Salisbury, MA"></option><option value="Salem, NH"></option><option value="Windham, NH"></option><option value="Pelham, NH"></option><option value="Atkinson, NH"></option><option value="Hampstead, NH"></option><option value="Plaistow, NH"></option><option value="Derry, NH"></option><option value="Londonderry, NH"></option><option value="Manchester, NH"></option>
-          </datalist>
+          <div class="hf msq-town-wrap"><input type="text" id="hf-town" placeholder="Start typing your town..." autocomplete="off"><div class="msq-town-sug" id="hf-town-sug"></div></div>
           <button type="button" id="hf-town-next">Continue</button>
         </div>
         <div class="msq-step" data-key="contact">
@@ -897,7 +899,31 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       if(!v){townInp.focus();townInp.setAttribute('placeholder','Please type your town');return;}
       msq.town=v;go(townIdx+1);
     });
-    townInp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();townBtn.click();}});
+    var TOWNS=['Methuen, MA','Andover, MA','North Andover, MA','Lawrence, MA','Haverhill, MA','Dracut, MA','Lowell, MA','Tewksbury, MA','Chelmsford, MA','Groveland, MA','Georgetown, MA','Merrimac, MA','Amesbury, MA','West Newbury, MA','Newbury, MA','Newburyport, MA','Salisbury, MA','Salem, NH','Windham, NH','Pelham, NH','Atkinson, NH','Hampstead, NH','Plaistow, NH','Derry, NH','Londonderry, NH','Manchester, NH'];
+    var sug=form.querySelector('#hf-town-sug'),hl=-1;
+    function closeSug(){if(sug){sug.classList.remove('open');sug.innerHTML='';hl=-1;}}
+    function renderSug(){
+      if(!sug)return;
+      var q=(townInp.value||'').trim().toLowerCase();
+      var list=q?TOWNS.filter(function(t){return t.toLowerCase().indexOf(q)!==-1;}):TOWNS;
+      if(!list.length){closeSug();return;}
+      hl=-1;
+      sug.innerHTML=list.map(function(t){return '<button type="button" data-t="'+t+'">'+t+'</button>';}).join('');
+      sug.classList.add('open');
+      sug.querySelectorAll('button').forEach(function(b){
+        b.addEventListener('mousedown',function(e){e.preventDefault();townInp.value=b.getAttribute('data-t');closeSug();townBtn.click();});
+      });
+    }
+    townInp.addEventListener('input',renderSug);
+    townInp.addEventListener('focus',renderSug);
+    townInp.addEventListener('blur',function(){setTimeout(closeSug,150);});
+    townInp.addEventListener('keydown',function(e){
+      var btns=sug?[].slice.call(sug.querySelectorAll('button')):[];
+      if(e.key==='ArrowDown'&&btns.length){e.preventDefault();hl=(hl+1)%btns.length;btns.forEach(function(b,i){b.classList.toggle('hl',i===hl);});btns[hl].scrollIntoView({block:'nearest'});return;}
+      if(e.key==='ArrowUp'&&btns.length){e.preventDefault();hl=(hl-1+btns.length)%btns.length;btns.forEach(function(b,i){b.classList.toggle('hl',i===hl);});btns[hl].scrollIntoView({block:'nearest'});return;}
+      if(e.key==='Escape'){closeSug();return;}
+      if(e.key==='Enter'){e.preventDefault();if(hl>=0&&btns[hl]){townInp.value=btns[hl].getAttribute('data-t');}closeSug();townBtn.click();}
+    });
   }
   form.addEventListener('submit',function(e){
     e.preventDefault();
