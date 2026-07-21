@@ -744,9 +744,9 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 /* ===== BEFORE / AFTER SLIDER ===== */
 .ba-slider{position:absolute;inset:0;overflow:hidden;border-radius:12px;--pos:50%;touch-action:none;user-select:none;-webkit-user-select:none;background:var(--bg3)}
 .svc-split-img:has(.ba-slider){aspect-ratio:1/1;min-height:0}
-.ba-img{position:absolute;inset:0;background-repeat:no-repeat;background-size:200% auto;background-image:url('images/pressure washing stock.webp')}
-.ba-after{background-position:100% 50%}
-.ba-before{background-position:0% 50%;clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.ba-img{position:absolute;inset:0;background-repeat:no-repeat;background-size:cover;background-position:center}
+.ba-after{background-image:url('images/ba-siding-after.webp')}
+.ba-before{background-image:url('images/ba-siding-before.webp');clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
 .ba-label{position:absolute;top:14px;font-family:'Oswald',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(7,24,40,.7);padding:5px 11px;border-radius:4px;z-index:4;pointer-events:none;transition:opacity .18s ease}
 .ba-label-before{left:14px}
 .ba-label-after{right:14px}
@@ -755,6 +755,14 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 .ba-handle-grip{position:relative;width:46px;height:46px;border-radius:50%;background:var(--gold);border:3px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.45);color:var(--teal)}
 .ba-handle-grip svg{width:22px;height:22px}
 .ba-range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;z-index:6;pointer-events:none}
+
+/* ===== BEFORE / AFTER SIDE-BY-SIDE PAIR ===== */
+.ba-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ba-pair figure{position:relative;margin:0;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08)}
+.ba-pair img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
+.ba-pair figcaption{position:absolute;top:14px;left:14px;font-family:'Oswald',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(7,24,40,.7);padding:5px 11px;border-radius:4px;pointer-events:none}
+.ba-pair .ba-cap-after{background:var(--gold);color:var(--teal);font-weight:700}
+@media(max-width:860px){.ba-pair{gap:10px}.ba-pair figcaption{top:10px;left:10px;font-size:9.5px;padding:4px 9px}}
 
 /* ===== OFFER-CLAIM FORM BANNER ===== */
 .pw-offer-banner{display:flex;align-items:center;gap:9px;background:rgba(201,168,76,.16);border:1px solid rgba(201,168,76,.5);border-radius:9px;padding:10px 12px;margin-bottom:14px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:rgba(255,255,255,.85);line-height:1.35}
@@ -910,13 +918,34 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       </div>
       <div class="svc-split-img">
         <div class="ba-slider" id="baSlider" role="group" aria-label="Before and after soft wash comparison slider">
-          <div class="ba-img ba-after" role="img" aria-label="House exterior after a Kaim Contracting soft wash"></div>
+          <div class="ba-img ba-after" role="img" aria-label="Vinyl siding clean and bright after a Kaim Contracting soft wash"></div>
           <div class="ba-img ba-before" aria-hidden="true"></div>
           <span class="ba-label ba-label-before">Before</span>
           <span class="ba-label ba-label-after">After</span>
           <div class="ba-handle" aria-hidden="true"><span class="ba-handle-line"></span><span class="ba-handle-grip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 7 4 12 9 17"/><polyline points="15 7 20 12 15 17"/></svg></span></div>
           <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="svc-block svc-block-mid">
+  <div class="svc-block-inner">
+    <div class="svc-split">
+      <div class="svc-split-text">
+        <div class="section-label">Real Results</div>
+        <h2>Decks &amp; Stairs, <span>Brought Back</span></h2>
+        <p>These composite stairs were coated in years of lichen and algae, slippery every time it rained. One visit later, they look brand new. No harsh pressure, no damaged boards, just the right process for the surface.</p>
+        <ul class="svc-checklist">
+          <li><span class="svc-check">&#10003;</span><span>Safe for composite decking, wood, and railings</span></li>
+          <li><span class="svc-check">&#10003;</span><span>Removes lichen, algae, and slippery buildup at the root</span></li>
+          <li><span class="svc-check">&#10003;</span><span>Real photos from a recent local job, not stock images</span></li>
+        </ul>
+      </div>
+      <div class="ba-pair">
+        <figure><img src="images/ba-deck-before.webp" alt="Composite deck stairs covered in lichen and algae before cleaning" loading="lazy" width="960" height="1200"><figcaption>Before</figcaption></figure>
+        <figure><img src="images/ba-deck-after.webp" alt="The same composite deck stairs clean and restored after a Kaim Contracting wash" loading="lazy" width="960" height="1200"><figcaption class="ba-cap-after">After</figcaption></figure>
       </div>
     </div>
   </div>

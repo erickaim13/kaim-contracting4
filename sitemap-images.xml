@@ -40,9 +40,24 @@
 <url>
     <loc>https://kaimcontracting.com/pressure-washing</loc>
     <image:image>
-      <image:loc>https://kaimcontracting.com/images/pressure%20washing%20stock.webp</image:loc>
-      <image:caption>Pressure and soft washing for driveways, siding and decks in Methuen, MA</image:caption>
-      <image:title>Pressure washing</image:title>
+      <image:loc>https://kaimcontracting.com/images/ba-siding-before.webp</image:loc>
+      <image:caption>Vinyl siding with mold and algae before a soft wash in the Merrimack Valley</image:caption>
+      <image:title>House siding before soft washing</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://kaimcontracting.com/images/ba-siding-after.webp</image:loc>
+      <image:caption>Clean vinyl siding after a Kaim Contracting soft wash</image:caption>
+      <image:title>House siding after soft washing</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://kaimcontracting.com/images/ba-deck-before.webp</image:loc>
+      <image:caption>Composite deck stairs covered in lichen and algae before cleaning</image:caption>
+      <image:title>Deck stairs before cleaning</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://kaimcontracting.com/images/ba-deck-after.webp</image:loc>
+      <image:caption>Composite deck stairs restored after a Kaim Contracting wash</image:caption>
+      <image:title>Deck stairs after cleaning</image:title>
     </image:image>
   </url>
 </urlset>
