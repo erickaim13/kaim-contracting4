@@ -1133,7 +1133,7 @@ function referFriend(){
 </script>
 <section class="contact" id="contact">
   <div class="section-inner">
-    <div class="section-header"><div class="section-label">Get In Touch</div><h2>Request an Estimate</h2><div class="divider"></div><div style="margin-top:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><span style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:6px 16px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-l)">Booking Now for Late Summer &amp; Fall</span><span style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:6px 16px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-l)">Financing Available</span></div><p>Fill out the form and we will get back to you promptly to discuss your project. Need to spread the cost? Ask about pay-over-time financing through Klarna.</p></div>
+    <div class="section-header"><div class="section-label">Get In Touch</div><h2>Request an Estimate</h2><div class="divider"></div><div style="margin-top:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><span style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:6px 16px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-l)">Booking Now for <span class="kc-szn" data-k="booking-title">Late Summer &amp; Fall</span></span><span style="display:inline-block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:6px 16px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-l)">Financing Available</span></div><p>Fill out the form and we will get back to you promptly to discuss your project. Need to spread the cost? Ask about pay-over-time financing through Klarna.</p></div>
     <div class="contact-grid">
       <div class="contact-info">
         <h3>Contact Information</h3>
@@ -1561,5 +1561,24 @@ function closeMobMenu(){document.getElementById('mobMenu').classList.remove('ope
 })();
 </script>
 <script>(function(){function _kcCallConv(){try{if(window.gtag)gtag('event','conversion',{send_to:'AW-18069179134/RzbeCLOWh7UcEP6Vh6hD',value:200.0,currency:'USD'});}catch(_){}}document.addEventListener('click',function(e){var el=e.target&&e.target.closest&&e.target.closest('a[href^="tel:"]');if(el)_kcCallConv();},true);})();</script><script>(function(){var _leadSent=false;document.addEventListener('click',function(e){var a=e.target.closest?e.target.closest('a[href^="tel:"]'):null;if(!a||_leadSent)return;_leadSent=true;if(window.fbq)fbq('track','Lead',{lead_source:'Call Button'});},true);})();</script>
+<script>
+(function(){
+  var d=new Date(),m=d.getMonth()+1,y=d.getFullYear();
+  var pill,book,title,cta;
+  if(m>=3&&m<=5){pill='Spring Specials';book='spring &amp; summer '+y;title='Spring &amp; Summer';cta='spring';}
+  else if(m===6){pill='Summer Specials';book='summer &amp; fall '+y;title='Summer &amp; Fall';cta='summer';}
+  else if(m>=7&&m<=8){pill='Late Summer Specials';book='late summer &amp; fall '+y;title='Late Summer &amp; Fall';cta='fall';}
+  else if(m>=9&&m<=10){pill='Fall Specials';book='fall '+y;title='Fall';cta='fall';}
+  else{var yy=(m>=11)?y+1:y;pill='Early Bird Specials';book='spring '+yy;title='Spring';cta='spring';}
+  function set(el,html){el.innerHTML=html;}
+  document.querySelectorAll('.kc-szn').forEach(function(el){
+    var k=el.getAttribute('data-k');
+    if(k==='pill')set(el,pill);
+    else if(k==='booking')set(el,book);
+    else if(k==='booking-title')set(el,title);
+    else if(k==='cta')set(el,'The '+cta+' schedule is already filling, lock in your spot now.');
+  });
+})();
+</script>
 </body>
 </html>

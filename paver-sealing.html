@@ -966,7 +966,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 <section class="svc-final" id="final-cta">
   <div class="svc-final-inner">
     <h2>Ready to Get Started?</h2>
-    <p>Free on-site estimate. Same-day response on every submission. Booking late summer &amp; fall 2026 now.</p>
+    <p>Free on-site estimate. Same-day response on every submission. Booking <span class="kc-szn" data-k="booking">late summer &amp; fall 2026</span> now.</p>
     <div class="cta-row">
       <a href="#top-form" onclick="document.getElementById('top-form').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){var i=document.querySelector('.svc-hero-form input');if(i)i.focus()},700);return false;" class="btn-gold-cta">Request Free Estimate</a>
       <span class="cta-or">or</span>
@@ -1133,5 +1133,24 @@ function closeMobMenu(){document.getElementById('mobMenu').classList.remove('ope
 })();
 </script>
 <script>(function(){function _kcCallConv(){try{if(window.gtag)gtag('event','conversion',{send_to:'AW-18069179134/RzbeCLOWh7UcEP6Vh6hD',value:200.0,currency:'USD'});}catch(_){}}document.addEventListener('click',function(e){var el=e.target&&e.target.closest&&e.target.closest('a[href^="tel:"]');if(el)_kcCallConv();},true);})();</script><script>(function(){var _leadSent=false;document.addEventListener('click',function(e){var a=e.target.closest?e.target.closest('a[href^="tel:"]'):null;if(!a||_leadSent)return;_leadSent=true;if(window.fbq)fbq('track','Lead',{lead_source:'Call Button'});},true);})();</script>
+<script>
+(function(){
+  var d=new Date(),m=d.getMonth()+1,y=d.getFullYear();
+  var pill,book,title,cta;
+  if(m>=3&&m<=5){pill='Spring Specials';book='spring &amp; summer '+y;title='Spring &amp; Summer';cta='spring';}
+  else if(m===6){pill='Summer Specials';book='summer &amp; fall '+y;title='Summer &amp; Fall';cta='summer';}
+  else if(m>=7&&m<=8){pill='Late Summer Specials';book='late summer &amp; fall '+y;title='Late Summer &amp; Fall';cta='fall';}
+  else if(m>=9&&m<=10){pill='Fall Specials';book='fall '+y;title='Fall';cta='fall';}
+  else{var yy=(m>=11)?y+1:y;pill='Early Bird Specials';book='spring '+yy;title='Spring';cta='spring';}
+  function set(el,html){el.innerHTML=html;}
+  document.querySelectorAll('.kc-szn').forEach(function(el){
+    var k=el.getAttribute('data-k');
+    if(k==='pill')set(el,pill);
+    else if(k==='booking')set(el,book);
+    else if(k==='booking-title')set(el,title);
+    else if(k==='cta')set(el,'The '+cta+' schedule is already filling, lock in your spot now.');
+  });
+})();
+</script>
 </body>
 </html>

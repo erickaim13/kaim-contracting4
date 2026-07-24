@@ -878,7 +878,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 <section class="pw-offers" id="offers">
   <div class="pw-offers-inner">
     <div class="pw-offers-head">
-      <span class="pw-offers-pill">Late Summer Specials</span>
+      <span class="pw-offers-pill kc-szn" data-k="pill">Late Summer Specials</span>
       <h2>Pick Your <span class="hl">Deal</span></h2>
       <p>Two easy ways to make the neighbors wonder who you hired. Same-day quotes, and no pressure (except on the dirt).</p>
     </div>
@@ -1071,7 +1071,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 <section class="svc-final" id="final-cta">
   <div class="svc-final-inner">
     <h2>Ready to Love <span>Pulling Into Your Driveway?</span></h2>
-    <p>Free walkway cleaning with any house wash, or 15% off when you bundle the patio. Free in-person estimates, answers within the hour, and a crew that actually shows up. The fall schedule is already filling, lock in your spot now.</p>
+    <p>Free walkway cleaning with any house wash, or 15% off when you bundle the patio. Free in-person estimates, answers within the hour, and a crew that actually shows up. <span class="kc-szn" data-k="cta">The fall schedule is already filling, lock in your spot now.</span></p>
     <div class="cta-row">
       <a href="#top-form" onclick="document.getElementById('top-form').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){var i=document.querySelector('.svc-hero-form input');if(i)i.focus()},700);return false;" class="btn-gold-cta">Request Free Estimate</a>
       <span class="cta-or">or</span>
@@ -1256,5 +1256,24 @@ function closeMobMenu(){document.getElementById('mobMenu').classList.remove('ope
 })();
 </script>
 <script>(function(){function _kcCallConv(){try{if(window.gtag)gtag('event','conversion',{send_to:'AW-18069179134/RzbeCLOWh7UcEP6Vh6hD',value:200.0,currency:'USD'});}catch(_){}}document.addEventListener('click',function(e){var el=e.target&&e.target.closest&&e.target.closest('a[href^="tel:"]');if(el)_kcCallConv();},true);})();</script><script>(function(){var _leadSent=false;document.addEventListener('click',function(e){var a=e.target.closest?e.target.closest('a[href^="tel:"]'):null;if(!a||_leadSent)return;_leadSent=true;if(window.fbq)fbq('track','Lead',{lead_source:'Call Button'});},true);})();</script>
+<script>
+(function(){
+  var d=new Date(),m=d.getMonth()+1,y=d.getFullYear();
+  var pill,book,title,cta;
+  if(m>=3&&m<=5){pill='Spring Specials';book='spring &amp; summer '+y;title='Spring &amp; Summer';cta='spring';}
+  else if(m===6){pill='Summer Specials';book='summer &amp; fall '+y;title='Summer &amp; Fall';cta='summer';}
+  else if(m>=7&&m<=8){pill='Late Summer Specials';book='late summer &amp; fall '+y;title='Late Summer &amp; Fall';cta='fall';}
+  else if(m>=9&&m<=10){pill='Fall Specials';book='fall '+y;title='Fall';cta='fall';}
+  else{var yy=(m>=11)?y+1:y;pill='Early Bird Specials';book='spring '+yy;title='Spring';cta='spring';}
+  function set(el,html){el.innerHTML=html;}
+  document.querySelectorAll('.kc-szn').forEach(function(el){
+    var k=el.getAttribute('data-k');
+    if(k==='pill')set(el,pill);
+    else if(k==='booking')set(el,book);
+    else if(k==='booking-title')set(el,title);
+    else if(k==='cta')set(el,'The '+cta+' schedule is already filling, lock in your spot now.');
+  });
+})();
+</script>
 </body>
 </html>
