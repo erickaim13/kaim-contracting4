@@ -588,7 +588,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .nav-inner{height:74px!important}
 .nav-logo img{height:58px!important}
 @media(max-width:640px){
-  nav{top:0!important;width:100%!important;border-radius:0 0 16px 16px!important;border-top:none!important;border-left:none!important;border-right:none!important}
+  nav{top:0!important;width:100%!important;border-radius:0!important;border-top:none!important;border-left:none!important;border-right:none!important}
   .nav-inner{height:62px!important;padding:0 16px!important}
   .nav-logo img{height:48px!important}
 }
@@ -681,6 +681,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .msq-progress span.on{background:var(--gold)}
 .msq-step{display:none;animation:msqIn .25s ease}
 .msq-step.on{display:flex;flex-direction:column;justify-content:center;min-height:256px;position:relative;padding-top:24px}
+.msq-step.on[data-key="service"],.msq-step.on[data-key="job"]{padding-top:0}
 .msq-step.on .msq-grid{flex:1;grid-auto-rows:minmax(44px,1fr);align-items:stretch}
 .msq-cheer{font-family:'Oswald',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-l);text-align:center;margin-bottom:5px;opacity:.9}
 .msq-hint{font-size:11.5px;color:rgba(255,255,255,.45);text-align:center;margin-top:10px}
@@ -816,8 +817,8 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 }
 
 .mob-call-row{display:none}
-@media(max-width:640px){.mob-call-row{display:flex;position:fixed;top:80px;left:50%;transform:translateX(-50%);width:calc(100% - 24px);max-width:1280px;z-index:1490;align-items:center;justify-content:center;gap:8px;padding:12px 0;background:linear-gradient(180deg,var(--gold-l,#e2c56f),var(--gold,#c9a84c));color:#0d1e35;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.35);font-family:'Oswald',sans-serif;font-size:16.5px;font-weight:700;letter-spacing:.12em;text-decoration:none}.mob-call-row svg{width:16px;height:16px}}
-@media(max-width:640px){.hero-content{padding-top:132px!important}}
+@media(max-width:640px){.mob-call-row{display:flex;position:fixed;top:62px;left:0;width:100%;z-index:1490;align-items:center;justify-content:center;gap:7px;padding:8px 0;background:linear-gradient(180deg,var(--gold-l,#e2c56f),var(--gold,#c9a84c));color:#0d1e35;border-radius:0 0 14px 14px;box-shadow:0 6px 18px rgba(0,0,0,.3);font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-decoration:none}.mob-call-row svg{width:14px;height:14px}}
+@media(max-width:640px){.hero-content{padding-top:106px!important}.hero-eyebrow,.hero-trust{display:none!important}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do you charge for estimates?","acceptedAnswer":{"@type":"Answer","text":"No. All estimates are free and there is no obligation. We come out, walk the property with you, and give you a clear written quote before any work begins."}},{"@type":"Question","name":"What areas do you serve?","acceptedAnswer":{"@type":"Answer","text":"The Merrimack Valley and southern New Hampshire including Methuen, Andover, Lawrence, Haverhill, Lowell, Newburyport, Salisbury, Salem NH, Derry, Manchester, and surrounding towns."}},{"@type":"Question","name":"How quickly can you start a project?","acceptedAnswer":{"@type":"Answer","text":"Most projects can be scheduled within 2 to 4 weeks of approval. Larger projects or jobs scheduled for spring tend to book out further."}},{"@type":"Question","name":"Are you licensed and insured?","acceptedAnswer":{"@type":"Answer","text":"Yes. Kaim Contracting LLC is fully licensed and insured for work in both Massachusetts and New Hampshire."}},{"@type":"Question","name":"Do you offer financing?","acceptedAnswer":{"@type":"Answer","text":"Yes. We offer pay-over-time financing through Klarna for qualifying projects."}},{"@type":"Question","name":"What is the difference between soft washing and pressure washing?","acceptedAnswer":{"@type":"Answer","text":"Pressure washing uses high-pressure water to blast dirt off hard surfaces like concrete driveways, brick patios, and pavers. Soft washing uses low-pressure water combined with biodegradable cleaning solutions to gently clean delicate surfaces like vinyl siding, painted wood, stucco, and asphalt roofs. Using high pressure on siding or a roof can force water behind panels, strip paint, tear roof granules, or damage trim. Most house exteriors should be soft washed, not pressure washed."}}]}
