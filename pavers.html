@@ -492,7 +492,10 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .msq-progress span{width:26px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);transition:background .25s}
 .msq-progress span.on{background:var(--gold)}
 .msq-step{display:none;animation:msqIn .25s ease}
-.msq-step.on{display:block}
+.msq-step.on{display:flex;flex-direction:column;min-height:268px}
+.msq-cheer{font-family:'Oswald',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-l);text-align:center;margin-bottom:5px;opacity:.9}
+.msq-hint{font-size:11.5px;color:rgba(255,255,255,.45);text-align:center;margin-top:10px}
+#hf-zip{text-align:center;font-size:17px;letter-spacing:.3em;font-weight:600}
 @keyframes msqIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
 .msq-q{font-size:14.5px;font-weight:600;color:#fff;margin-bottom:10px;text-align:center;line-height:1.4}
 .msq-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -726,26 +729,40 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
     </div>
     <form class="svc-hero-form" id="pavers-hero-form" autocomplete="on" novalidate>
         <h3>Get a Free Paver Estimate</h3>
-        <div class="msq-progress" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
+        <div class="msq-progress" aria-hidden="true"><span class="on"></span><span></span><span></span><span></span></div>
         <div style="display:none" aria-hidden="true"><label>Leave empty<input type="text" name="hf_hpot" tabindex="-1" autocomplete="off" value=""></label></div>
-        <div class="msq-step on" data-key="timing">
+        <div class="msq-step on" data-key="job">
+          <div class="msq-q">What are you dreaming of?</div>
+          <div class="msq-grid" role="group" aria-label="What are you dreaming of?">
+            <button type="button" class="msq-chip" data-v="Patio">Patio</button>
+            <button type="button" class="msq-chip" data-v="Walkway">Walkway</button>
+            <button type="button" class="msq-chip" data-v="Driveway">Driveway</button>
+            <button type="button" class="msq-chip" data-v="Fire Pit or Wall">Fire Pit or Wall</button>
+          </div>
+        </div>
+        <div class="msq-step" data-key="timing">
+          <button type="button" class="msq-back">&larr; Back</button>
+          <div class="msq-cheer">Good choice &middot; two quick questions left</div>
           <div class="msq-q">How soon are you hoping to get it done?</div>
-          <div class="msq-grid msq-grid-1">
+          <div class="msq-grid">
             <button type="button" class="msq-chip" data-v="As soon as possible">As soon as possible</button>
             <button type="button" class="msq-chip" data-v="In the next few weeks">In the next few weeks</button>
             <button type="button" class="msq-chip" data-v="Sometime this season">Sometime this season</button>
             <button type="button" class="msq-chip" data-v="Just looking for pricing">Just looking for pricing</button>
           </div>
         </div>
-        <div class="msq-step" data-key="town">
+        <div class="msq-step" data-key="zip">
           <button type="button" class="msq-back">&larr; Back</button>
-          <div class="msq-q">What town is the property in?</div>
-          <div class="hf msq-town-wrap"><input type="text" id="hf-town" placeholder="Start typing your town..." autocomplete="off"><div class="msq-town-sug" id="hf-town-sug"></div></div>
-          <button type="button" id="hf-town-next">Continue</button>
+          <div class="msq-cheer">Almost there</div>
+          <div class="msq-q">What's the property ZIP code?</div>
+          <div class="hf"><input type="text" id="hf-zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="01844"></div>
+          <button type="button" id="hf-zip-next">Continue</button>
+          <div class="msq-hint">Proudly serving the Merrimack Valley &amp; Southern NH</div>
         </div>
         <div class="msq-step" data-key="contact">
           <button type="button" class="msq-back">&larr; Back</button>
-          <div class="msq-q">Last step. Where should we send your free estimate?</div>
+          <div class="msq-cheer">Last one, promise</div>
+          <div class="msq-q">Where should we send your free estimate?</div>
           <div class="hf"><input type="text" name="hf-name" placeholder="Your name" required autocomplete="name"></div>
           <div class="hf"><input type="tel" name="hf-phone" placeholder="Phone number" required autocomplete="tel"></div>
           <button type="submit" id="pavers-hero-submit">Request My Estimate</button>
@@ -870,7 +887,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 (function(){
   var form=document.getElementById('pavers-hero-form');
   if(!form)return;
-  var msq={timing:'',town:''};
+  var msq={job:'',timing:'',zip:'',town:''};
   var steps=[].slice.call(form.querySelectorAll('.msq-step'));
   var dots=[].slice.call(form.querySelectorAll('.msq-progress span'));
   function go(n){
@@ -891,39 +908,24 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
     var back=step.querySelector('.msq-back');
     if(back)back.addEventListener('click',function(){go(si-1);});
   });
-  var townInp=form.querySelector('#hf-town'),townBtn=form.querySelector('#hf-town-next');
-  if(townInp&&townBtn){
-    var townIdx=-1;steps.forEach(function(s,i){if(s.dataset.key==='town')townIdx=i;});
-    townBtn.addEventListener('click',function(){
-      var v=(townInp.value||'').trim();
-      if(!v){townInp.focus();townInp.setAttribute('placeholder','Please type your town');return;}
-      msq.town=v;go(townIdx+1);
-    });
-    var TOWNS=['Methuen, MA','Andover, MA','North Andover, MA','Lawrence, MA','Haverhill, MA','Dracut, MA','Lowell, MA','Tewksbury, MA','Chelmsford, MA','Groveland, MA','Georgetown, MA','Merrimac, MA','Amesbury, MA','West Newbury, MA','Newbury, MA','Newburyport, MA','Salisbury, MA','Salem, NH','Windham, NH','Pelham, NH','Atkinson, NH','Hampstead, NH','Plaistow, NH','Derry, NH','Londonderry, NH','Manchester, NH'];
-    var sug=form.querySelector('#hf-town-sug'),hl=-1;
-    function closeSug(){if(sug){sug.classList.remove('open');sug.innerHTML='';hl=-1;}}
-    function renderSug(){
-      if(!sug)return;
-      var q=(townInp.value||'').trim().toLowerCase();
-      var list=q?TOWNS.filter(function(t){return t.toLowerCase().indexOf(q)!==-1;}):TOWNS;
-      if(!list.length){closeSug();return;}
-      hl=-1;
-      sug.innerHTML=list.map(function(t){return '<button type="button" data-t="'+t+'">'+t+'</button>';}).join('');
-      sug.classList.add('open');
-      sug.querySelectorAll('button').forEach(function(b){
-        b.addEventListener('mousedown',function(e){e.preventDefault();townInp.value=b.getAttribute('data-t');closeSug();townBtn.click();});
-      });
+  var zipInp=form.querySelector('#hf-zip'),zipBtn=form.querySelector('#hf-zip-next');
+  if(zipInp&&zipBtn){
+    var ZIPMAP={'01844':'Methuen, MA','01810':'Andover, MA','01845':'North Andover, MA','01840':'Lawrence, MA','01841':'Lawrence, MA','01843':'Lawrence, MA','01830':'Haverhill, MA','01832':'Haverhill, MA','01835':'Haverhill, MA','01826':'Dracut, MA','01850':'Lowell, MA','01851':'Lowell, MA','01852':'Lowell, MA','01854':'Lowell, MA','01876':'Tewksbury, MA','01824':'Chelmsford, MA','01834':'Groveland, MA','01833':'Georgetown, MA','01860':'Merrimac, MA','01913':'Amesbury, MA','01985':'West Newbury, MA','01951':'Newbury, MA','01950':'Newburyport, MA','01952':'Salisbury, MA','03079':'Salem, NH','03087':'Windham, NH','03076':'Pelham, NH','03811':'Atkinson, NH','03841':'Hampstead, NH','03865':'Plaistow, NH','03038':'Derry, NH','03053':'Londonderry, NH','03101':'Manchester, NH','03102':'Manchester, NH','03103':'Manchester, NH','03104':'Manchester, NH','03109':'Manchester, NH','03110':'Manchester, NH'};
+    var zipIdx=-1;steps.forEach(function(st,i){if(st.dataset.key==='zip')zipIdx=i;});
+    var zipDone=false;
+    function zipGo(){
+      var v=(zipInp.value||'').replace(/\D/g,'');
+      if(v.length!==5){zipInp.focus();zipInp.setAttribute('placeholder','5-digit ZIP');return;}
+      msq.zip=v;msq.town=ZIPMAP[v]||'';
+      go(zipIdx+1);
     }
-    townInp.addEventListener('input',renderSug);
-    townInp.addEventListener('focus',renderSug);
-    townInp.addEventListener('blur',function(){setTimeout(closeSug,150);});
-    townInp.addEventListener('keydown',function(e){
-      var btns=sug?[].slice.call(sug.querySelectorAll('button')):[];
-      if(e.key==='ArrowDown'&&btns.length){e.preventDefault();hl=(hl+1)%btns.length;btns.forEach(function(b,i){b.classList.toggle('hl',i===hl);});btns[hl].scrollIntoView({block:'nearest'});return;}
-      if(e.key==='ArrowUp'&&btns.length){e.preventDefault();hl=(hl-1+btns.length)%btns.length;btns.forEach(function(b,i){b.classList.toggle('hl',i===hl);});btns[hl].scrollIntoView({block:'nearest'});return;}
-      if(e.key==='Escape'){closeSug();return;}
-      if(e.key==='Enter'){e.preventDefault();if(hl>=0&&btns[hl]){townInp.value=btns[hl].getAttribute('data-t');}closeSug();townBtn.click();}
+    zipInp.addEventListener('input',function(){
+      var v=zipInp.value.replace(/\D/g,'').slice(0,5);
+      if(zipInp.value!==v)zipInp.value=v;
+      if(v.length===5&&!zipDone){zipDone=true;setTimeout(function(){zipGo();zipDone=false;},220);}
     });
+    zipInp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();zipGo();}});
+    zipBtn.addEventListener('click',zipGo);
   }
   form.addEventListener('submit',function(e){
     e.preventDefault();
@@ -935,7 +937,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
     var name=(fd.get('hf-name')||'').toString().trim();
     var parts=name.split(/\s+/);
     var offer=form.getAttribute('data-offer');
-    var msgLines=['Paver Installation page quick quote:','- Timing: '+(msq.timing||'not answered'),'- Town: '+(msq.town||'not answered')];
+    var msgLines=['Paver Installation page quick quote:','- Project: '+(msq.job||'not answered'),'- Timing: '+(msq.timing||'not answered'),'- Location: '+(msq.town?msq.town+' ('+msq.zip+')':(msq.zip||'not answered'))];
     if(offer)msgLines.push('- Offer: '+offer);
     var payload={
       first:parts.shift()||'',
