@@ -752,7 +752,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 @media(max-width:760px){.pw-offers{padding:54px 16px}.pw-offers-grid{grid-template-columns:1fr;gap:30px}.deal{padding:30px 22px 26px}.deal-burst{width:76px;height:76px;top:-17px;right:18px}.deal-burst .big{font-size:23px}.deal-title{max-width:none}}
 
 /* ===== BEFORE / AFTER SLIDER ===== */
-.ba-slider{position:absolute;inset:0;overflow:hidden;border-radius:12px;--pos:50%;touch-action:none;user-select:none;-webkit-user-select:none;background:var(--bg3)}
+.ba-slider{position:absolute;inset:0;overflow:hidden;border-radius:12px;--pos:50%;touch-action:pan-y;user-select:none;-webkit-user-select:none;background:var(--bg3)}
 .svc-split-img:has(.ba-slider){aspect-ratio:1/1;min-height:0}
 .ba-img{position:absolute;inset:0;background-repeat:no-repeat;background-size:200% auto;background-image:url('images/pressure washing stock.webp')}
 .ba-after{background-position:100% 50%}
@@ -762,7 +762,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 .ba-label-after{right:14px}
 .ba-handle{position:absolute;top:0;bottom:0;left:var(--pos);transform:translateX(-50%);width:46px;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none}
 .ba-handle-line{position:absolute;top:0;bottom:0;left:50%;width:3px;transform:translateX(-50%);background:#fff;box-shadow:0 0 12px rgba(0,0,0,.5)}
-.ba-handle-grip{position:relative;width:46px;height:46px;border-radius:50%;background:var(--gold);border:3px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.45);color:var(--teal)}
+.ba-handle-grip{position:relative;width:46px;height:46px;border-radius:50%;background:var(--gold);border:3px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.45);color:var(--teal);pointer-events:auto;touch-action:none;cursor:grab}
 .ba-handle-grip svg{width:22px;height:22px}
 .ba-range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;z-index:6;pointer-events:none}
 
@@ -1108,11 +1108,14 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   function clamp01(v){return Math.max(0,Math.min(1,v));}
   function set(p){p=Math.max(0,Math.min(100,p));s.style.setProperty('--pos',p+'%');if(range&&parseFloat(range.value)!==p)range.value=p;if(lblBefore)lblBefore.style.opacity=clamp01((p-6)/14);if(lblAfter)lblAfter.style.opacity=clamp01((94-p)/14);}
   var dragging=false;
+  var grip=s.querySelector('.ba-handle-grip');
   function pct(e){var r=s.getBoundingClientRect();var cx=(e.clientX!=null)?e.clientX:(e.touches&&e.touches[0]?e.touches[0].clientX:r.left);return r.width?((cx-r.left)/r.width)*100:50;}
-  s.addEventListener('pointerdown',function(e){dragging=true;try{s.setPointerCapture(e.pointerId);}catch(_){}set(pct(e));});
-  s.addEventListener('pointermove',function(e){if(dragging)set(pct(e));});
-  s.addEventListener('pointerup',function(){dragging=false;});
-  s.addEventListener('pointercancel',function(){dragging=false;});
+  if(grip){
+    grip.addEventListener('pointerdown',function(e){dragging=true;e.preventDefault();try{grip.setPointerCapture(e.pointerId);}catch(_){}});
+    grip.addEventListener('pointermove',function(e){if(dragging)set(pct(e));});
+    grip.addEventListener('pointerup',function(){dragging=false;});
+    grip.addEventListener('pointercancel',function(){dragging=false;});
+  }
   if(range)range.addEventListener('input',function(){set(parseFloat(range.value));});
   set(50);
 })();
