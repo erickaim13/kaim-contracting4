@@ -710,9 +710,10 @@ input[name="hf-name"],input[name="hf-phone"]{text-align:center}
 .hero-form-kicker{font-size:12px;color:rgba(255,255,255,.55);text-align:center;margin-bottom:10px}
 .msq-progress{gap:6px;margin-bottom:10px}
 .msq-progress span{width:34px}
-.msq-step.on{min-height:240px}
+.msq-step.on{min-height:240px;justify-content:flex-start;padding-top:24px}
+.msq-step.on[data-key="service"]{padding-top:24px}
 .msq-q{font-size:15px;margin-bottom:12px}
-.msq-step.on[data-key="contact"]{padding-top:20px}
+.msq-step.on[data-key="contact"]{padding-top:24px}
 .msq-step[data-key="contact"] .hf{margin-bottom:8px}
 .msq-step[data-key="contact"] .hf input{padding:10px 12px}
 .msq-step[data-key="contact"] .hero-form-foot{margin-top:5px}
@@ -721,7 +722,7 @@ input[name="hf-name"],input[name="hf-phone"]{text-align:center}
 .msq-step[data-key="contact"] button[type="submit"]{margin-top:2px;padding:12px}
 .hero-form button.msq-chip{border-radius:10px;background:rgba(255,255,255,.07)}
 .hero-form button.msq-chip:hover{transform:translateY(-1px)}
-.msq-step.on[data-key="service"] .msq-grid{flex:0 0 auto}
+.msq-step.on[data-key="service"] .msq-grid{grid-auto-rows:minmax(64px,1fr)}
 .msq-grid-3{gap:10px}
 .hero-form button.msq-chip.msq-card{flex-direction:row;justify-content:flex-start;gap:13px;padding:15px 14px;text-align:left;border-radius:12px}
 .msq-card-ic{width:44px;height:44px;border-radius:11px;background:rgba(201,168,76,.13);border:1px solid rgba(201,168,76,.35);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -911,6 +912,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
       <div style="display:none" aria-hidden="true"><label>Leave empty<input type="text" name="hf_hpot" tabindex="-1" autocomplete="off" value=""></label></div>
 
       <div class="msq-step on" data-key="service">
+        <div class="msq-cheer">Free estimate &middot; No obligation</div>
         <div class="msq-q">What do you have in mind?</div>
         <div class="msq-grid msq-grid-3" role="group" aria-label="What do you have in mind?">
           <button type="button" class="msq-chip msq-card" data-v="Pressure Washing"><span class="msq-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s5.5 6 5.5 10.5a5.5 5.5 0 11-11 0C6.5 9 12 3 12 3z"/></svg></span><span class="msq-card-tx"><b>Pressure Washing</b><small>House, roof, driveway &amp; more</small></span><svg class="msq-card-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
