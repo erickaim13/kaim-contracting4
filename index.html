@@ -705,6 +705,23 @@ input[name="hf-name"],input[name="hf-phone"]{text-align:center}
 .msq-town-sug.open{display:block}
 .msq-town-sug button{display:block;width:100%;text-align:left;background:none;border:none;border-radius:0;padding:10px 13px;margin:0;color:rgba(255,255,255,.9);font-family:'Source Sans 3',sans-serif;font-size:14px;font-weight:400;letter-spacing:0;text-transform:none;cursor:pointer;transition:none}
 .msq-town-sug button:hover,.msq-town-sug button.hl{background:rgba(201,168,76,.16);color:var(--gold-l);transform:none}
+.hero-form{border-radius:16px;border-color:rgba(255,255,255,.14);box-shadow:0 28px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.09)}
+.hero-form-title{margin-bottom:4px}
+.hero-form-kicker{font-size:12px;color:rgba(255,255,255,.55);text-align:center;margin-bottom:12px}
+.msq-progress span{width:34px}
+.hero-form button.msq-chip{border-radius:10px;background:rgba(255,255,255,.07)}
+.hero-form button.msq-chip:hover{transform:translateY(-1px)}
+.msq-step.on[data-key="service"] .msq-grid{flex:0 0 auto}
+.msq-grid-3{gap:10px}
+.hero-form button.msq-chip.msq-card{flex-direction:row;justify-content:flex-start;gap:13px;padding:13px 14px;text-align:left;border-radius:12px}
+.msq-card-ic{width:42px;height:42px;border-radius:11px;background:rgba(201,168,76,.13);border:1px solid rgba(201,168,76,.35);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.msq-card-tx{display:flex;flex-direction:column;gap:3px;min-width:0}
+.msq-card-tx b{font-size:13.5px;letter-spacing:.06em;color:#fff;font-weight:600}
+.hero-form button.msq-chip.msq-card .msq-card-tx small{font-family:'Source Sans 3',sans-serif;font-size:12.5px;font-weight:400;letter-spacing:0;text-transform:none;color:rgba(255,255,255,.6);line-height:1.35}
+.hero-form button.msq-chip.msq-card .msq-card-arr{width:16px;height:16px;margin-left:auto;color:rgba(255,255,255,.35);flex-shrink:0;transition:color .15s,transform .15s}
+.hero-form button.msq-chip.msq-card:hover .msq-card-arr{color:var(--gold-l);transform:translateX(2px)}
+.hero-form button.msq-chip.msq-card:hover .msq-card-tx b,.hero-form button.msq-chip.msq-card.sel .msq-card-tx b{color:var(--gold-l)}
+@media(max-width:640px){.msq-card-ic{width:38px;height:38px}.hero-form button.msq-chip.msq-card{padding:11px 12px;gap:11px}}
 .hero-trust{font-family:'Oswald',sans-serif;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72);text-shadow:0 1px 8px rgba(0,0,0,.7);line-height:1.9;text-align:left}
 .hero-trust span{color:var(--gold);padding:0 6px}
 @media(max-width:860px){
@@ -878,15 +895,16 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
       <div class="hero-trust">Licensed &amp; Insured <span>&middot;</span> Free In-Person Estimates</div>
     </div>
     <form class="hero-form" id="hero-form" autocomplete="on" novalidate>
-      <div class="hero-form-title">Complimentary Estimate in 24 Hours</div>
+      <div class="hero-form-title">Get Your Free Estimate</div>
+      <div class="hero-form-kicker">Takes about 20 seconds</div>
       <div class="msq-progress" aria-hidden="true"><span class="on"></span><span></span><span></span><span></span></div>
       <div style="display:none" aria-hidden="true"><label>Leave empty<input type="text" name="hf_hpot" tabindex="-1" autocomplete="off" value=""></label></div>
 
       <div class="msq-step on" data-key="service">
         <div class="msq-q">What do you have in mind?</div>
         <div class="msq-grid msq-grid-3" role="group" aria-label="What do you have in mind?">
-          <button type="button" class="msq-chip" data-v="Pressure Washing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s5.5 6 5.5 10.5a5.5 5.5 0 11-11 0C6.5 9 12 3 12 3z"/></svg>Pressure Washing</button>
-          <button type="button" class="msq-chip" data-v="Paver Sealing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l1.2 2.8L16 6.5l-2.8 1.2L12 10.5l-1.2-2.8L8 6.5l2.8-1.2z"/><path d="M18.5 10l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z"/><rect x="3" y="14" width="18" height="7" rx="1"/><line x1="9" y1="14" x2="9" y2="21"/><line x1="15" y1="14" x2="15" y2="21"/></svg>Paver Sealing</button>
+          <button type="button" class="msq-chip msq-card" data-v="Pressure Washing"><span class="msq-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s5.5 6 5.5 10.5a5.5 5.5 0 11-11 0C6.5 9 12 3 12 3z"/></svg></span><span class="msq-card-tx"><b>Pressure Washing</b><small>House, roof, driveway &amp; more</small></span><svg class="msq-card-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+          <button type="button" class="msq-chip msq-card" data-v="Paver Sealing"><span class="msq-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l1.2 2.8L16 6.5l-2.8 1.2L12 10.5l-1.2-2.8L8 6.5l2.8-1.2z"/><path d="M18.5 10l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z"/><rect x="3" y="14" width="18" height="7" rx="1"/><line x1="9" y1="14" x2="9" y2="21"/><line x1="15" y1="14" x2="15" y2="21"/></svg></span><span class="msq-card-tx"><b>Paver Sealing</b><small>Deep clean, fresh sand &amp; sealer</small></span><svg class="msq-card-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
         </div>
       </div>
 
