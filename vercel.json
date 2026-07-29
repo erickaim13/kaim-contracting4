@@ -1,6 +1,15 @@
 {
   "redirects": [
-    { "source": "/index.html", "destination": "/", "permanent": true }
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/stain-removal",
+      "destination": "/gutter-brightening",
+      "permanent": true
+    }
   ],
   "cleanUrls": true
 }
