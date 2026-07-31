@@ -661,35 +661,39 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .hero-form{background:rgba(13,30,53,.72);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:26px 22px 18px;box-shadow:0 28px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.09)}
 .hero-form-title{font-family:'Oswald',sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-l);margin-bottom:4px;line-height:1.2;text-align:center}
 .hero-form-kicker{font-size:12.5px;color:rgba(255,255,255,.55);text-align:center;margin-bottom:12px}
-.qf-dots{display:flex;gap:6px;margin-bottom:16px;justify-content:center}
-.qf-dots span{width:38px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);transition:background .25s}
-.qf-dots span.on{background:var(--gold)}
-.qf-step{display:none}
-.qf-step.on{display:flex;flex-direction:column;min-height:322px;position:relative;animation:qfIn .28s ease}
-@keyframes qfIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
-.qf-label{display:block;font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.65);margin:0 0 7px 2px;text-align:left}
-.qf-field{margin-bottom:14px}
-.hero-form input,.hero-form select,.hero-form textarea{width:100%;min-height:52px;padding:14px;border:1px solid rgba(255,255,255,.16);border-radius:10px;font-family:'Source Sans 3',sans-serif;font-size:16px;color:#fff;background:rgba(255,255,255,.07);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s,background .15s,box-shadow .15s}
-.hero-form textarea{min-height:58px;resize:none;line-height:1.45;display:block}
-.hero-form input::placeholder,.hero-form textarea::placeholder{color:rgba(255,255,255,.5)}
-.hero-form input:focus,.hero-form select:focus,.hero-form textarea:focus{border-color:var(--gold);background:rgba(255,255,255,.11);box-shadow:0 0 0 3px rgba(201,168,76,.22)}
-.hero-form select{cursor:pointer;padding-right:40px}
-.hero-form select option{background:#0d1e35;color:#fff}
-.hero-form select.qf-empty{color:rgba(255,255,255,.5)}
-.qf-selwrap{position:relative}
-.qf-selwrap svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--gold-l);pointer-events:none}
-.qf-err{border-color:#e05d5d!important;box-shadow:0 0 0 3px rgba(224,93,93,.22)!important}
-.hero-form button.qf-cta{width:100%;min-height:54px;background:linear-gradient(180deg,var(--gold-l,#e2c56f),var(--gold,#c9a84c));color:var(--teal);border:none;border-radius:10px;padding:15px;font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:filter .15s,transform .15s;box-shadow:0 10px 26px rgba(201,168,76,.25)}
-.hero-form button.qf-cta:hover{filter:brightness(1.06);transform:translateY(-1px)}
-.hero-form button.qf-cta:disabled{opacity:.7;cursor:default;transform:none;filter:none}
-.qf-step[data-step="1"] .qf-cta{margin-top:auto}
-.qf-hint{font-size:11.5px;color:rgba(255,255,255,.45);text-align:center;margin-top:11px}
-.qf-step[data-step="2"]{padding-top:22px}
-.hero-form button.qf-back{position:absolute;top:0;left:0;width:auto;min-height:0;background:none;border:none;color:rgba(255,255,255,.55);font-size:12.5px;cursor:pointer;padding:2px 0;margin:0;display:inline-flex;align-items:center;gap:4px;font-family:'Source Sans 3',sans-serif;font-weight:400;letter-spacing:0;text-transform:none;z-index:3}
-.hero-form button.qf-back:hover{color:var(--gold-l)}
-.qf-q{font-size:15.5px;font-weight:600;color:#fff;margin-bottom:12px;text-align:center;line-height:1.4}
-.qf-step[data-step="2"] .qf-field{margin-bottom:10px}
-.qf-step[data-step="2"] .qf-cta{margin-top:auto}
+/* ── Quick-quote wizard (qq) — 4 taps: service → timing → ZIP → contact ── */
+.qq-bar{display:flex;gap:6px;margin-bottom:16px;justify-content:center}
+.qq-bar span{width:38px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);transition:background .3s}
+.qq-bar span.on{background:var(--gold)}
+.qq-step{display:none}
+/* Every step locks to the same height, content top-aligned, so the card never
+   resizes or lets the question float between steps */
+.qq-step.on{display:flex;flex-direction:column;min-height:288px;position:relative;padding-top:24px;animation:qqIn .28s ease}
+.qq-step.on[data-key="service"]{padding-top:0}
+@keyframes qqIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+.qq-cheer{font-size:11.5px;font-weight:600;color:var(--gold-l);text-align:center;margin-bottom:5px;letter-spacing:.02em}
+.qq-q{font-size:16px;font-weight:700;color:#fff;text-align:center;margin-bottom:12px;line-height:1.35}
+.qq-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qq-step.on[data-key="service"] .qq-grid,.qq-step.on[data-key="timing"] .qq-grid{flex:1;grid-auto-rows:1fr}
+button.qq-chip{min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:10px;color:#fff;font-family:'Source Sans 3',sans-serif;font-size:13.5px;font-weight:600;line-height:1.25;text-align:center;cursor:pointer;transition:border-color .15s,background .15s,transform .15s}
+button.qq-chip:hover{border-color:var(--gold);background:rgba(201,168,76,.1);transform:translateY(-1px)}
+button.qq-chip:active{transform:none;background:rgba(201,168,76,.16)}
+button.qq-chip svg{width:17px;height:17px;color:var(--gold-l);flex-shrink:0}
+.qq-wide{grid-column:1/-1}
+.hero-form input{width:100%;min-height:52px;padding:14px;border:1px solid rgba(255,255,255,.16);border-radius:10px;font-family:'Source Sans 3',sans-serif;font-size:16px;color:#fff;background:rgba(255,255,255,.07);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s,background .15s,box-shadow .15s}
+.hero-form input::placeholder{color:rgba(255,255,255,.5)}
+.hero-form input:focus{border-color:var(--gold);background:rgba(255,255,255,.11);box-shadow:0 0 0 3px rgba(201,168,76,.22)}
+.qq-err{border-color:#e05d5d!important;box-shadow:0 0 0 3px rgba(224,93,93,.22)!important}
+#qq-zip{max-width:220px;margin:0 auto;text-align:center;font-size:22px;font-weight:700;letter-spacing:.35em}
+#qq-zip::placeholder{letter-spacing:.35em;font-weight:400}
+.qq-zip-town{min-height:22px;font-size:13.5px;font-weight:600;color:var(--gold-l);text-align:center;margin-top:10px}
+.qq-field{margin-bottom:10px}
+button.qq-cta{width:100%;min-height:54px;background:linear-gradient(180deg,var(--gold-l,#e2c56f),var(--gold,#c9a84c));color:var(--teal);border:none;border-radius:10px;padding:15px;font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:filter .15s,transform .15s;box-shadow:0 10px 26px rgba(201,168,76,.25)}
+button.qq-cta:hover{filter:brightness(1.06);transform:translateY(-1px)}
+button.qq-cta:disabled{opacity:.7;cursor:default;transform:none;filter:none}
+button.qq-back{position:absolute;top:0;left:0;width:auto;min-height:0;background:none;border:none;color:rgba(255,255,255,.55);font-size:12.5px;cursor:pointer;padding:2px 0;margin:0;display:inline-flex;align-items:center;gap:4px;font-family:'Source Sans 3',sans-serif;font-weight:400;letter-spacing:0;text-transform:none;z-index:3}
+button.qq-back:hover{color:var(--gold-l)}
+.qq-hint{font-size:11.5px;color:rgba(255,255,255,.45);text-align:center;margin-top:auto;padding-top:12px}
 .hero-form-foot{margin-top:9px;text-align:center;font-size:12px;color:rgba(255,255,255,.6)}
 .hero-form-foot a{color:var(--gold-l);font-weight:700;text-decoration:none}
 @media(max-width:640px){.hf-call-row{display:none!important}}
@@ -788,8 +792,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
   .hero-trust{font-size:9.5px;letter-spacing:.09em;text-align:center;line-height:1.8}
   .hero-form{padding:18px 16px 14px;border-radius:14px}
   .hero-form-title{font-size:15.5px}
-  .qf-dots{margin-bottom:13px}
-  .qf-step.on{min-height:308px}
+  .qq-bar{margin-bottom:13px}
   .three-card{padding-top:32px}
   .three-card-header{margin-bottom:24px}
 }
@@ -860,44 +863,52 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
     </div>
     <form class="hero-form" id="hero-form" autocomplete="on" novalidate>
       <div class="hero-form-title">Get Your Free Estimate</div>
-      <div class="hero-form-kicker">Two quick steps &middot; no obligation</div>
-      <div class="qf-dots" aria-hidden="true"><span class="on"></span><span></span></div>
+      <div class="hero-form-kicker">Takes about 20 seconds</div>
+      <div class="qq-bar" aria-hidden="true"><span class="on"></span><span></span><span></span><span></span></div>
       <div style="display:none" aria-hidden="true"><label>Leave empty<input type="text" name="hf_hpot" tabindex="-1" autocomplete="off" value=""></label></div>
 
-      <div class="qf-step on" data-step="1">
-        <div class="qf-field">
-          <label class="qf-label" for="qf-service">What do you need done?</label>
-          <div class="qf-selwrap">
-            <select id="qf-service" class="qf-empty" required aria-label="Service needed">
-              <option value="" disabled selected>Choose a service</option>
-              <option>House Washing</option>
-              <option>Roof Cleaning</option>
-              <option>Driveway or Walkway Cleaning</option>
-              <option>Patio or Pool Deck Cleaning</option>
-              <option>Deck or Fence Cleaning</option>
-              <option>Paver Sealing</option>
-              <option>Oxidation Removal</option>
-              <option>Gutter Brightening</option>
-              <option>Something Else</option>
-            </select>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
+      <div class="qq-step on" data-key="service">
+        <div class="qq-cheer">Free estimate &middot; no obligation</div>
+        <div class="qq-q">What do you need done?</div>
+        <div class="qq-grid">
+          <button type="button" class="qq-chip" data-v="House Washing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>House Washing</button>
+          <button type="button" class="qq-chip" data-v="Roof Cleaning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L12 3l10 9"/><path d="M17 6.8V4h3v5.5"/></svg>Roof Cleaning</button>
+          <button type="button" class="qq-chip" data-v="Driveway or Walkway"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21L10 3"/><path d="M18 21L14 3"/><line x1="12" y1="8" x2="12" y2="10"/><line x1="12" y1="14" x2="12" y2="16"/></svg>Driveway &amp; Walkway</button>
+          <button type="button" class="qq-chip" data-v="Patio or Pool Deck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="12" y1="3" x2="12" y2="21"/></svg>Patio &amp; Pool Deck</button>
+          <button type="button" class="qq-chip" data-v="Deck or Fence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V6l2-2 2 2v15"/><path d="M15 21V6l2-2 2 2v15"/><line x1="3" y1="11" x2="21" y2="11"/><line x1="3" y1="17" x2="21" y2="17"/></svg>Deck &amp; Fence</button>
+          <button type="button" class="qq-chip" data-v="Paver Sealing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Paver Sealing</button>
+          <button type="button" class="qq-chip qq-wide" data-v="Something Else"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Something Else</button>
         </div>
-        <div class="qf-field">
-          <label class="qf-label" for="qf-town">Property address or town</label>
-          <input type="text" id="qf-town" placeholder="e.g. Methuen" autocomplete="address-level2">
-        </div>
-        <button type="button" class="qf-cta" id="qf-next">Continue</button>
-        <div class="qf-hint">Serving the Merrimack Valley &amp; Southern NH</div>
       </div>
 
-      <div class="qf-step" data-step="2">
-        <button type="button" class="qf-back" id="qf-back">&larr; Back</button>
-        <div class="qf-q">Where should we send your free estimate?</div>
-        <div class="qf-field"><input type="text" id="qf-name" name="qf-name" placeholder="Your name" required autocomplete="name" aria-label="Your name"></div>
-        <div class="qf-field"><input type="tel" id="qf-phone" name="qf-phone" placeholder="Phone number" required autocomplete="tel" inputmode="tel" aria-label="Phone number"></div>
-        <div class="qf-field"><textarea id="qf-msg" name="qf-msg" rows="2" placeholder="Anything we should know? (optional)" aria-label="Optional message"></textarea></div>
-        <button type="submit" class="qf-cta" id="hf-submit">Get My Free Estimate</button>
+      <div class="qq-step" data-key="timing">
+        <button type="button" class="qq-back">&larr; Back</button>
+        <div class="qq-cheer">Good choice &middot; two quick questions left</div>
+        <div class="qq-q">How soon are you hoping to get it done?</div>
+        <div class="qq-grid">
+          <button type="button" class="qq-chip" data-v="As soon as possible">As soon as possible</button>
+          <button type="button" class="qq-chip" data-v="In the next few weeks">In the next few weeks</button>
+          <button type="button" class="qq-chip" data-v="Sometime this season">Sometime this season</button>
+          <button type="button" class="qq-chip" data-v="Just looking for pricing">Just looking for pricing</button>
+        </div>
+      </div>
+
+      <div class="qq-step" data-key="zip">
+        <button type="button" class="qq-back">&larr; Back</button>
+        <div class="qq-cheer">Almost there</div>
+        <div class="qq-q">What's your ZIP code?</div>
+        <input type="text" id="qq-zip" inputmode="numeric" pattern="[0-9]*" maxlength="5" placeholder="01844" autocomplete="postal-code" aria-label="ZIP code">
+        <div class="qq-zip-town" id="qq-zip-town"></div>
+        <div class="qq-hint">Serving the Merrimack Valley &amp; Southern NH</div>
+      </div>
+
+      <div class="qq-step" data-key="contact">
+        <button type="button" class="qq-back">&larr; Back</button>
+        <div class="qq-cheer">Last one, promise</div>
+        <div class="qq-q">Where should we send your estimate?</div>
+        <div class="qq-field"><input type="text" id="qq-name" placeholder="Your name" autocomplete="name" aria-label="Your name"></div>
+        <div class="qq-field"><input type="tel" id="qq-phone" placeholder="Phone number" autocomplete="tel" inputmode="tel" aria-label="Phone number"></div>
+        <button type="submit" class="qq-cta" id="qq-submit">Get My Free Estimate</button>
         <div class="hero-form-foot">We typically respond within the hour. No spam, ever.</div>
       </div>
 
@@ -1323,49 +1334,67 @@ async function submitLead(data,attachments){
 })();
 
 
-// HERO QUICK-QUOTE FORM (two-step)
+// HERO QUICK-QUOTE WIZARD — 4 taps: service → timing → ZIP → name/phone
 (function(){
   var form=document.getElementById('hero-form');
   if(!form)return;
-  var steps=[].slice.call(form.querySelectorAll('.qf-step'));
-  var dots=[].slice.call(form.querySelectorAll('.qf-dots span'));
-  var svc=document.getElementById('qf-service'),town=document.getElementById('qf-town');
+  var ZIPMAP={'01844':'Methuen, MA','01810':'Andover, MA','01845':'North Andover, MA','01840':'Lawrence, MA','01841':'Lawrence, MA','01843':'Lawrence, MA','01830':'Haverhill, MA','01832':'Haverhill, MA','01835':'Haverhill, MA','01826':'Dracut, MA','01850':'Lowell, MA','01851':'Lowell, MA','01852':'Lowell, MA','01854':'Lowell, MA','01876':'Tewksbury, MA','01824':'Chelmsford, MA','01834':'Groveland, MA','01833':'Georgetown, MA','01860':'Merrimac, MA','01913':'Amesbury, MA','01985':'West Newbury, MA','01951':'Newbury, MA','01950':'Newburyport, MA','01952':'Salisbury, MA','03079':'Salem, NH','03087':'Windham, NH','03076':'Pelham, NH','03811':'Atkinson, NH','03841':'Hampstead, NH','03865':'Plaistow, NH','03038':'Derry, NH','03053':'Londonderry, NH','03101':'Manchester, NH','03102':'Manchester, NH','03103':'Manchester, NH','03104':'Manchester, NH','03109':'Manchester, NH','03110':'Manchester, NH'};
+  var steps=[].slice.call(form.querySelectorAll('.qq-step'));
+  var bars=[].slice.call(form.querySelectorAll('.qq-bar span'));
+  var ans={service:'',timing:'',zip:'',town:''};
+  var idx=0;
   function go(n){
-    steps.forEach(function(s,i){s.classList.toggle('on',i===n);});
-    dots.forEach(function(d,i){d.classList.toggle('on',i<=n);});
-    if(n===1){var inp=document.getElementById('qf-name');if(inp)setTimeout(function(){inp.focus();},290);}
+    idx=Math.max(0,Math.min(n,steps.length-1));
+    steps.forEach(function(s,i){s.classList.toggle('on',i===idx);});
+    bars.forEach(function(b,i){b.classList.toggle('on',i<=idx);});
+    var key=steps[idx].getAttribute('data-key');
+    if(key==='zip')setTimeout(function(){var z=document.getElementById('qq-zip');if(z)z.focus();},300);
+    if(key==='contact')setTimeout(function(){var nm=document.getElementById('qq-name');if(nm)nm.focus();},300);
   }
-  svc.addEventListener('change',function(){svc.classList.remove('qf-err');svc.classList.toggle('qf-empty',!svc.value);});
-  ['qf-town','qf-name','qf-phone'].forEach(function(id){var el=document.getElementById(id);el.addEventListener('input',function(){el.classList.remove('qf-err');});});
-  document.getElementById('qf-next').addEventListener('click',function(){
-    var ok=true;
-    if(!svc.value){svc.classList.add('qf-err');ok=false;}
-    if(!town.value.trim()){town.classList.add('qf-err');ok=false;}
-    if(!ok){(svc.value?town:svc).focus();return;}
-    go(1);
+  [].slice.call(form.querySelectorAll('.qq-step[data-key="service"] .qq-chip')).forEach(function(ch){
+    ch.addEventListener('click',function(){ans.service=ch.getAttribute('data-v');go(1);});
   });
-  document.getElementById('qf-back').addEventListener('click',function(){go(0);});
+  [].slice.call(form.querySelectorAll('.qq-step[data-key="timing"] .qq-chip')).forEach(function(ch){
+    ch.addEventListener('click',function(){ans.timing=ch.getAttribute('data-v');go(2);});
+  });
+  [].slice.call(form.querySelectorAll('.qq-back')).forEach(function(b){
+    b.addEventListener('click',function(){go(idx-1);});
+  });
+  var zipEl=document.getElementById('qq-zip'),townEl=document.getElementById('qq-zip-town');
+  zipEl.addEventListener('input',function(){
+    var v=zipEl.value.replace(/\D/g,'').slice(0,5);
+    zipEl.value=v;zipEl.classList.remove('qq-err');
+    if(v.length===5){
+      ans.zip=v;ans.town=ZIPMAP[v]||'';
+      townEl.textContent=ans.town?ans.town+' ✓':'';
+      setTimeout(function(){if(idx===2)go(3);},ans.town?400:150);
+    }else{townEl.textContent='';ans.zip='';ans.town='';}
+  });
+  zipEl.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();if(zipEl.value.length===5)go(3);else zipEl.classList.add('qq-err');}
+  });
+  ['qq-name','qq-phone'].forEach(function(id){var el=document.getElementById(id);el.addEventListener('input',function(){el.classList.remove('qq-err');});});
   form.addEventListener('submit',function(e){
     e.preventDefault();
-    var btn=document.getElementById('hf-submit');
+    if(steps[idx].getAttribute('data-key')!=='contact')return;
+    var btn=document.getElementById('qq-submit');
     if(btn.disabled)return;
+    if(!ans.service){go(0);return;}
     var origText=btn.textContent;
     var fd=new FormData(form);
-    if(!svc.value){go(0);return;}
-    var choice=svc.value;
-    var nameEl=document.getElementById('qf-name'),phEl=document.getElementById('qf-phone');
+    var nameEl=document.getElementById('qq-name'),phEl=document.getElementById('qq-phone');
     var name=(nameEl.value||'').trim();
     var phone=(phEl.value||'');
-    var note=(document.getElementById('qf-msg').value||'').trim();
     var parts=name.split(/\s+/);
-    var lines=['Homepage quick quote:','- Looking for: '+choice,'- Location: '+town.value.trim()];
-    if(note)lines.push('- Note: '+note);
+    var lines=['Homepage quick quote:','- Looking for: '+ans.service];
+    if(ans.timing)lines.push('- Timing: '+ans.timing);
+    if(ans.zip)lines.push('- Location: '+(ans.town?ans.town+' ('+ans.zip+')':'ZIP '+ans.zip));
     var payload={
       first:parts.shift()||'',
       last:parts.join(' ')||'(not provided)',
       phone:phone,
       email:'',
-      service:choice==='Paver Sealing'?'Paver Sealing':'Pressure Washing',
+      service:ans.service==='Paver Sealing'?'Paver Sealing':'Pressure Washing',
       message:lines.join('\n'),
       contactPref:'Phone Call',
       source:'Homepage Hero Quick-Quote',
@@ -1374,8 +1403,8 @@ async function submitLead(data,attachments){
     };
     var _pd=phone.replace(/\D/g,'');
     var ok=true;
-    if(!payload.first){nameEl.classList.add('qf-err');ok=false;}
-    if(_pd.length<10){phEl.classList.add('qf-err');ok=false;}
+    if(!payload.first){nameEl.classList.add('qq-err');ok=false;}
+    if(_pd.length<10){phEl.classList.add('qq-err');ok=false;}
     if(!ok){(payload.first?phEl:nameEl).focus();return;}
     btn.disabled=true;
     btn.textContent='Sending...';
