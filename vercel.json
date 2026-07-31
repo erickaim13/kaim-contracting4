@@ -9,6 +9,31 @@
       "source": "/stain-removal",
       "destination": "/gutter-brightening",
       "permanent": true
+    },
+    {
+      "source": "/landscaping",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/drainage",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/pavers",
+      "destination": "/paver-sealing",
+      "permanent": true
+    },
+    {
+      "source": "/paver-calculator",
+      "destination": "/paver-sealing-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/mulch-calculator",
+      "destination": "/tools",
+      "permanent": true
     }
   ],
   "cleanUrls": true
