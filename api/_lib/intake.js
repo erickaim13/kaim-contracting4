@@ -94,6 +94,7 @@ export async function intakeLead(opts) {
   const {
     first = '', last = '', phone = '', email = '', service = '',
     message = '', contactPref = '', leadSource = '',
+    attribution = null,
     attachments = [],
     dedupeKey = null,
     extraClientFields = {},
@@ -144,6 +145,19 @@ export async function intakeLead(opts) {
     ...extraClientFields
   };
   if (attachments.length) client.attachments = attachments;
+
+  // Attribution: keep the raw object on the client (gclid is what makes Google
+  // Ads offline-conversion imports possible later) and add a human-readable
+  // line to private notes so it's visible in the CRM without new UI.
+  if (attribution) {
+    client.attribution = attribution;
+    const attrLine = (attribution.gclid || attribution.gbraid || attribution.wbraid)
+      ? 'Came from a Google Ads click'
+      : attribution.utm_source
+        ? 'Came from tagged link: ' + attribution.utm_source + (attribution.utm_campaign ? ' (' + attribution.utm_campaign + ')' : '')
+        : attribution.referrer ? 'Came from: ' + attribution.referrer : '';
+    if (attrLine) client.priv = (client.priv ? client.priv + ' · ' : '') + attrLine;
+  }
 
   db.clients.unshift(client);
   db.activity = db.activity || [];

@@ -13,7 +13,7 @@ const ALLOWED_ORIGINS = new Set([
 
 const SERVICE_OPTS = new Set([
   'Paver Installation', 'Paver Restoration', 'Landscaping', 'Drainage Solutions',
-  'Hardscaping', 'Landscape Design', 'Pressure Washing',
+  'Hardscaping', 'Landscape Design', 'Pressure Washing', 'Paver Sealing',
   'Plantings', 'Multiple Services'
 ]);
 
@@ -71,10 +71,22 @@ export default async function handler(req, res) {
     return attachTotal < 6_000_000; // ~6MB total across all attachments
   }) : [];
 
+  // Traffic-source attribution captured client-side (gclid for Google Ads
+  // offline-conversion imports later, UTMs for GBP/social links, referrer for
+  // organic). Whitelisted keys only, length-capped like every other field.
+  const rawAttr = (body.attribution && typeof body.attribution === 'object') ? body.attribution : {};
+  const attribution = {};
+  for (const k of ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'referrer', 'landing']) {
+    const v = sanitize(rawAttr[k], 200);
+    if (v) attribution[k] = v;
+  }
+  if (Number.isFinite(rawAttr.captured)) attribution.captured = rawAttr.captured;
+
   try {
     await intakeLead({
       first, last, phone, email, service, message, contactPref,
-      leadSource, attachments
+      leadSource, attachments,
+      attribution: Object.keys(attribution).length ? attribution : null
     });
     return res.status(200).json({ ok: true });
   } catch (e) {
