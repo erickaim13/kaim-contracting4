@@ -681,10 +681,10 @@ button.qq-chip:hover{border-color:var(--gold);background:rgba(201,168,76,.1);tra
 button.qq-chip:active{transform:none;background:rgba(201,168,76,.16)}
 button.qq-chip svg{width:17px;height:17px;color:var(--gold-l);flex-shrink:0}
 .qq-wide{grid-column:1/-1}
-/* Service options: full-width rows stacked, icon beside label (Eric: options
-   should line up on top of each other, not sit in columns) */
-.qq-step[data-key="service"] .qq-grid{grid-template-columns:1fr;gap:6px}
-.qq-step[data-key="service"] button.qq-chip{min-height:32px;justify-content:flex-start;padding:6px 16px;text-align:left}
+/* Options line up as full-width rows, one per line (Eric: options should
+   stack on top of each other, not sit in columns) */
+.qq-step[data-key="service"] .qq-grid,.qq-step[data-key="timing"] .qq-grid{grid-template-columns:1fr;gap:6px}
+.qq-step[data-key="service"] button.qq-chip,.qq-step[data-key="timing"] button.qq-chip{min-height:32px;justify-content:flex-start;padding:6px 16px;text-align:left}
 .hero-form input{width:100%;min-height:52px;padding:14px;border:1px solid rgba(255,255,255,.16);border-radius:10px;font-family:'Source Sans 3',sans-serif;font-size:16px;color:#fff;background:rgba(255,255,255,.07);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s,background .15s,box-shadow .15s}
 .hero-form input::placeholder{color:rgba(255,255,255,.5)}
 .hero-form input:focus{border-color:var(--gold);background:rgba(255,255,255,.11);box-shadow:0 0 0 3px rgba(201,168,76,.22)}
