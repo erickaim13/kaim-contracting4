@@ -669,7 +669,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .qq-step{display:none}
 /* Every step locks to the same height, content top-aligned, so the card never
    resizes or lets the question float between steps */
-.qq-step.on{display:flex;flex-direction:column;min-height:288px;position:relative;padding-top:24px;animation:qqIn .28s ease}
+.qq-step.on{display:flex;flex-direction:column;min-height:332px;position:relative;padding-top:24px;animation:qqIn .28s ease}
 .qq-step.on[data-key="service"]{padding-top:0}
 @keyframes qqIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
 .qq-cheer{font-size:11.5px;font-weight:600;color:var(--gold-l);text-align:center;margin-bottom:5px;letter-spacing:.02em}
@@ -681,6 +681,10 @@ button.qq-chip:hover{border-color:var(--gold);background:rgba(201,168,76,.1);tra
 button.qq-chip:active{transform:none;background:rgba(201,168,76,.16)}
 button.qq-chip svg{width:17px;height:17px;color:var(--gold-l);flex-shrink:0}
 .qq-wide{grid-column:1/-1}
+/* Service options: full-width rows stacked, icon beside label (Eric: options
+   should line up on top of each other, not sit in columns) */
+.qq-step[data-key="service"] .qq-grid{grid-template-columns:1fr;gap:6px}
+.qq-step[data-key="service"] button.qq-chip{min-height:32px;justify-content:flex-start;padding:6px 16px;text-align:left}
 .hero-form input{width:100%;min-height:52px;padding:14px;border:1px solid rgba(255,255,255,.16);border-radius:10px;font-family:'Source Sans 3',sans-serif;font-size:16px;color:#fff;background:rgba(255,255,255,.07);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s,background .15s,box-shadow .15s}
 .hero-form input::placeholder{color:rgba(255,255,255,.5)}
 .hero-form input:focus{border-color:var(--gold);background:rgba(255,255,255,.11);box-shadow:0 0 0 3px rgba(201,168,76,.22)}
