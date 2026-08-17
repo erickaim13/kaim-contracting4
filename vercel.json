@@ -36,5 +36,8 @@
       "permanent": true
     }
   ],
-  "cleanUrls": true
+  "cleanUrls": true,
+  "crons": [
+    { "path": "/api/queue-health", "schedule": "0 11 * * *" }
+  ]
 }

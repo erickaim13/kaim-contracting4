@@ -103,76 +103,105 @@ export async function intakeLead(opts) {
     confirmationEmail = true
   } = opts || {};
 
-  // 1. Read crm_data
-  const { data: row, error: readErr } = await sbAdmin
-    .from('crm_data').select('data').eq('id', 1).single();
-  if (readErr) throw readErr;
+  // 1 + 2. Read crm_data, add the lead, write it back — as a compare-and-swap
+  // keyed on updated_at. The whole CRM is one JSONB row, so a blind
+  // read-modify-write loses the first writer whenever two things save at the
+  // same instant (two leads at once, or a lead landing while the Mac's
+  // reply-watcher writes a customer reply). The UPDATE only lands if updated_at
+  // still matches what we read; if another write beat us to it, zero rows match
+  // and we re-read the fresh blob and retry. Any other code that writes crm_data
+  // must do the same and must always bump updated_at.
+  const MAX_ATTEMPTS = 4;
+  let db = null;
+  let client = null;
+  let now = null;
+  let savedOk = false;
 
-  // Merge any missing top-level keys onto the EXISTING blob rather than
-  // replacing it. A partial/corrupted row (data present but missing `clients`)
-  // must never cause us to overwrite the whole CRM with a fresh skeleton.
-  const db = row?.data || {};
-  db.clients = db.clients || [];
-  db.estimates = db.estimates || [];
-  db.invoices = db.invoices || [];
-  db.messages = db.messages || [];
-  db.activity = db.activity || [];
-  db.settings = db.settings || {};
-  db.jobs = db.jobs || [];
-  if (db._nc == null) db._nc = 1;
-  if (db._ne == null) db._ne = 1001;
-  if (db._ni == null) db._ni = 2001;
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS && !savedOk; attempt++) {
+    const { data: row, error: readErr } = await sbAdmin
+      .from('crm_data').select('data, updated_at').eq('id', 1).single();
+    if (readErr) throw readErr;
 
-  // Dedupe — same Meta leadgen_id must never create two leads.
-  if (dedupeKey) {
-    const exists = (db.clients || []).some(c => c && c.metaLeadgenId === dedupeKey);
-    if (exists) return { ok: true, duplicate: true };
+    // Merge any missing top-level keys onto the EXISTING blob rather than
+    // replacing it. A partial/corrupted row (data present but missing `clients`)
+    // must never cause us to overwrite the whole CRM with a fresh skeleton.
+    db = row?.data || {};
+    db.clients = db.clients || [];
+    db.estimates = db.estimates || [];
+    db.invoices = db.invoices || [];
+    db.messages = db.messages || [];
+    db.activity = db.activity || [];
+    db.settings = db.settings || {};
+    db.jobs = db.jobs || [];
+    if (db._nc == null) db._nc = 1;
+    if (db._ne == null) db._ne = 1001;
+    if (db._ni == null) db._ni = 2001;
+    const prevUpdatedAt = row?.updated_at ?? null;
+
+    // Dedupe — same Meta leadgen_id must never create two leads.
+    if (dedupeKey) {
+      const exists = (db.clients || []).some(c => c && c.metaLeadgenId === dedupeKey);
+      if (exists) return { ok: true, duplicate: true };
+    }
+
+    now = new Date();
+    client = {
+      id: db._nc++,
+      first, last, phone, email, address: '',
+      service,
+      val: 0,
+      source: leadSource,
+      status: 'new',
+      prio: 'normal',
+      notes: message,
+      priv: contactPref ? `Preferred contact: ${contactPref}` : '',
+      added: now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      addedRaw: now.toISOString(),
+      ...extraClientFields
+    };
+    if (attachments.length) client.attachments = attachments;
+
+    // Attribution: keep the raw object on the client (gclid is what makes Google
+    // Ads offline-conversion imports possible later) and add a human-readable
+    // line to private notes so it's visible in the CRM without new UI.
+    if (attribution) {
+      client.attribution = attribution;
+      const attrLine = (attribution.gclid || attribution.gbraid || attribution.wbraid)
+        ? 'Came from a Google Ads click'
+        : attribution.utm_source
+          ? 'Came from tagged link: ' + attribution.utm_source + (attribution.utm_campaign ? ' (' + attribution.utm_campaign + ')' : '')
+          : attribution.referrer ? 'Came from: ' + attribution.referrer : '';
+      if (attrLine) client.priv = (client.priv ? client.priv + ' · ' : '') + attrLine;
+    }
+
+    db.clients.unshift(client);
+    db.activity.unshift({
+      text: activityText || ('New website lead: ' + client.first + ' ' + client.last + (attachments.length ? ' (' + attachments.length + ' photo' + (attachments.length > 1 ? 's' : '') + ')' : '')),
+      ico: activityIco,
+      time: now.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
+    });
+
+    // Conditional write: only lands if nobody else wrote since our read.
+    let writeQuery = sbAdmin
+      .from('crm_data')
+      .update({ data: db, updated_at: now.toISOString() })
+      .eq('id', 1);
+    writeQuery = prevUpdatedAt === null
+      ? writeQuery.is('updated_at', null)
+      : writeQuery.eq('updated_at', prevUpdatedAt);
+    const { data: written, error: writeErr } = await writeQuery.select('id');
+    if (writeErr) throw writeErr;
+
+    if (written && written.length > 0) {
+      savedOk = true;
+    } else {
+      // Someone else wrote between our read and write. Back off briefly, retry.
+      console.warn('[intake] crm_data write conflict, attempt ' + attempt + ' of ' + MAX_ATTEMPTS);
+      await new Promise(r => setTimeout(r, 150 * attempt + Math.floor(Math.random() * 200)));
+    }
   }
 
-  const now = new Date();
-  const client = {
-    id: db._nc++,
-    first, last, phone, email, address: '',
-    service,
-    val: 0,
-    source: leadSource,
-    status: 'new',
-    prio: 'normal',
-    notes: message,
-    priv: contactPref ? `Preferred contact: ${contactPref}` : '',
-    added: now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-    addedRaw: now.toISOString(),
-    ...extraClientFields
-  };
-  if (attachments.length) client.attachments = attachments;
-
-  // Attribution: keep the raw object on the client (gclid is what makes Google
-  // Ads offline-conversion imports possible later) and add a human-readable
-  // line to private notes so it's visible in the CRM without new UI.
-  if (attribution) {
-    client.attribution = attribution;
-    const attrLine = (attribution.gclid || attribution.gbraid || attribution.wbraid)
-      ? 'Came from a Google Ads click'
-      : attribution.utm_source
-        ? 'Came from tagged link: ' + attribution.utm_source + (attribution.utm_campaign ? ' (' + attribution.utm_campaign + ')' : '')
-        : attribution.referrer ? 'Came from: ' + attribution.referrer : '';
-    if (attrLine) client.priv = (client.priv ? client.priv + ' · ' : '') + attrLine;
-  }
-
-  db.clients.unshift(client);
-  db.activity = db.activity || [];
-  db.activity.unshift({
-    text: activityText || ('New website lead: ' + client.first + ' ' + client.last + (attachments.length ? ' (' + attachments.length + ' photo' + (attachments.length > 1 ? 's' : '') + ')' : '')),
-    ico: activityIco,
-    time: now.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
-  });
-
-  // 2. Write back
-  const { error: writeErr } = await sbAdmin
-    .from('crm_data')
-    .update({ data: db, updated_at: now.toISOString() })
-    .eq('id', 1);
-  if (writeErr) throw writeErr;
+  if (!savedOk) throw new Error('crm_data write conflict persisted after ' + MAX_ATTEMPTS + ' attempts');
 
   // 3. Queue iMessages — owner notify (immediate) + auto-reply (2-6s delay)
   const phoneDigits = String(phone).replace(/\D/g, '');
