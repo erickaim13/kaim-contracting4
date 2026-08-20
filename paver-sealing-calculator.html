@@ -626,7 +626,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       <div class="calc-results" id="results">
         <div class="calc-results-eyebrow">Rough Estimate</div>
         <div data-mode="seal">
-          <div class="calc-big" id="sealCost">$720 - $1,200</div>
+          <div class="calc-big" id="sealCost">$1,200 - $1,300</div>
           <div class="calc-big-label">Typical Project Range. Final price confirmed after a quick look at your patio.</div>
         </div>
         <div class="calc-breakdown" data-mode="seal">
@@ -754,7 +754,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   var $=function(id){return document.getElementById(id);};
   var inputs=['length','width'];
   var SEAL_RATES={standard:{low:3,high:5,label:'Standard Satin'},semi:{low:4,high:6,label:'Semi Gloss'},wet:{low:5,high:8,label:'Wet Look'}};
-  var MIN_PROJECT=300;
+  var MIN_PROJECT=1200;
   var mode='seal', sealFinish='standard';
   function fmt(n,d){d=d||0;return new Intl.NumberFormat('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);}
   function money(n){return '$'+new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(Math.round(n/50)*50);}
