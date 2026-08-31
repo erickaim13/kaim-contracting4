@@ -15,7 +15,7 @@
 <meta property="og:description" content="Tell us what you need and book your free estimate visit online. Pressure washing & paver sealing in the Merrimack Valley & Southern NH.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kaimcontracting.com/quote">
-<meta property="og:image" content="https://kaimcontracting.com/images/hero-firepit.webp">
+<meta property="og:image" content="https://kaimcontracting.com/images/ps-hero-after.webp">
 <meta property="og:site_name" content="Kaim Contracting LLC">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -77,6 +77,37 @@ body{font-family:'Source Sans 3',sans-serif;background:linear-gradient(180deg,#0
   .hero-form-title{font-size:15.5px}
   .qf-step.on{min-height:308px}
 }
+
+/* v2 layout: substance beside the form */
+.qp-main{max-width:1060px;margin:0 auto;padding:36px 20px 64px;width:100%;flex:1;display:block}
+.qp-grid{display:grid;grid-template-columns:1.02fr .98fr;grid-template-areas:'intro form' 'proof form';gap:8px 52px;align-items:start}
+.qp-intro{grid-area:intro}.qp-formcol{grid-area:form}.qp-proof{grid-area:proof}
+.qp-eyebrow{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-l);margin-bottom:12px}
+.qp-grid .qp-h1{text-align:left;margin-bottom:10px}
+.qp-grid .qp-sub{text-align:left;margin-bottom:0;max-width:480px;font-size:15px;line-height:1.6}
+.qp-checks{list-style:none;margin:24px 0 4px;padding:0;display:grid;gap:13px}
+.qp-checks li{display:flex;align-items:flex-start;gap:11px;font-size:15px;line-height:1.5;color:rgba(255,255,255,.87)}
+.qp-ck{flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;background:rgba(201,168,76,.16);border:1px solid rgba(201,168,76,.55);color:var(--gold-l);font-size:11px;font-weight:700;margin-top:1px}
+.qp-proof{margin-top:30px}
+.qp-proof-label{font-family:'Oswald',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-l);margin-bottom:10px}
+.qp-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 16px}
+.qp-pair figure{position:relative;margin:0;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 40px rgba(0,0,0,.4)}
+.qp-pair img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+.qp-pair figcaption{position:absolute;top:10px;left:10px;font-family:'Oswald',sans-serif;font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(7,24,40,.72);padding:4px 9px;border-radius:4px;pointer-events:none}
+.qp-pair figcaption.after{background:var(--gold);color:var(--teal);font-weight:700}
+.qp-badges{display:flex;flex-wrap:wrap;gap:8px}
+.qp-badges span{font-family:'Oswald',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:7px 13px;display:inline-flex;align-items:center;gap:6px}
+.qp-badges b{color:var(--gold-l);font-weight:700}
+.qp-formcol .kc-form-slot{margin:0 auto}
+.qp-formcol .qp-trust{margin-top:16px}
+@media(max-width:900px){
+  .qp-main{padding-top:26px}
+  .qp-grid{grid-template-columns:1fr;grid-template-areas:'intro' 'form' 'proof';gap:0 0}
+  .qp-eyebrow,.qp-grid .qp-h1,.qp-grid .qp-sub{text-align:center}
+  .qp-grid .qp-sub{margin:0 auto}
+  .qp-checks{max-width:430px;margin:20px auto 16px}
+  .qp-proof{max-width:430px;margin:28px auto 0}
+}
 </style>
 </head>
 <body>
@@ -87,15 +118,39 @@ body{font-family:'Source Sans 3',sans-serif;background:linear-gradient(180deg,#0
 </header>
 
 <main class="qp-main">
-  <h1 class="qp-h1">Get Your <span>Free Quote</span></h1>
-  <div class="qp-sub">Takes about 20 seconds, and you can lock in your free estimate visit at the end.</div>
-
-  <div class="kc-form-slot" style="width:100%;max-width:430px" data-kc='{"title": "Get Your Free Estimate", "kicker": "Takes about 20 seconds", "serviceStep": true, "source": "Quote Page", "prefix": "Quote page request:", "jobQ": "What do you need done?", "submitLabel": "Get My Free Estimate"}'></div>
+  <div class="qp-grid">
+    <div class="qp-intro">
+      <div class="qp-eyebrow">Free In-Person Estimates &middot; Merrimack Valley &amp; Southern NH</div>
+      <h1 class="qp-h1">Get Your <span>Free Quote</span></h1>
+      <div class="qp-sub">Takes about 20 seconds. Tell us what you need, and you can lock in a day for your free estimate before you even leave this page.</div>
+      <ul class="qp-checks">
+        <li><span class="qp-ck">&#10003;</span><span>We typically respond <b>within the hour</b>, not in three business days</span></li>
+        <li><span class="qp-ck">&#10003;</span><span>Your estimate is done in person by Eric, the owner, not a call center</span></li>
+        <li><span class="qp-ck">&#10003;</span><span>Pick a day for your visit right here, zero phone tag</span></li>
+        <li><span class="qp-ck">&#10003;</span><span>You walk the finished job and approve it before the final payment</span></li>
+      </ul>
+    </div>
+    <div class="qp-formcol">
+      <div class="kc-form-slot" style="width:100%;max-width:430px" data-kc='{"title": "Get Your Free Estimate", "kicker": "Takes about 20 seconds", "serviceStep": true, "source": "Quote Page", "prefix": "Quote page request:", "jobQ": "What do you need done?", "submitLabel": "Get My Free Estimate"}'></div>
 <script src="js/kc-form.js?v=2" defer></script>
-
-  <div class="qp-trust">
+      <div class="qp-trust">
     Licensed &amp; Insured &middot; Free In-Person Estimates<br>
     Prefer to talk? <a href="tel:978-351-2195">Call 978-351-2195</a>
+  </div>
+    </div>
+    <div class="qp-proof">
+      <div class="qp-proof-label">Real Results, Not Stock Photos</div>
+      <div class="qp-pair">
+        <figure><img src="images/ps-real-before.webp" alt="Paver patio gray and mossy before Kaim Contracting's clean, sand and seal" loading="lazy" width="900" height="1125"><figcaption>Before</figcaption></figure>
+        <figure><img src="images/ps-real-after-2.webp" alt="The same paver patio with its color restored after the sand and seal" loading="lazy" width="900" height="1125"><figcaption class="after">After</figcaption></figure>
+      </div>
+      <div class="qp-badges">
+        <span><b>&#10003;</b> Licensed &amp; Insured</span>
+        <span><b>&#10003;</b> Family Owned &amp; Local</span>
+        <span><b>&#10003;</b> Same-Day Response</span>
+        <span><b>&#10003;</b> No Hidden Fees</span>
+      </div>
+    </div>
   </div>
 </main>
 
