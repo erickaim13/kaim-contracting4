@@ -1086,58 +1086,9 @@ function referFriend(){
         <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="ci-text"><strong>Email</strong><a id="ci-email" href="#"></a></div></div>
         <div class="ci"><div class="ci-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="ci-text"><strong>Hours</strong>Mon to Fri: 7am to 6pm<br>Sat: By Appointment<br>Sun: Closed</div></div>
       </div>
-      <div class="contact-form">
-        <h3>Tell Us About Your Project</h3>
-        <form name="quote-request" id="quote-form" method="POST" action="/api/lead" autocomplete="on">
-          <div style="display:none" aria-hidden="true">
-            <label>Leave this empty<input type="text" name="kc_hpot_xyz" tabindex="-1" autocomplete="off" value=""></label>
-          </div>
-          <div class="form-row">
-            <div class="fg"><label>First Name</label><input type="text" name="first-name" placeholder="John" required></div>
-            <div class="fg"><label>Last Name</label><input type="text" name="last-name" placeholder="Smith" required></div>
-          </div>
-          <div class="form-row">
-            <div class="fg"><label>Phone</label><input type="tel" name="phone" placeholder="(978) 000-0000" required></div>
-            <div class="fg"><label>Email</label><input type="email" name="email" placeholder="john@example.com" required></div>
-          </div>
-          <div class="fg"><label>Service Needed</label><select name="service" required><option value="">Select a service...</option><option>Pressure Washing</option><option>Paver Sealing</option><option>Paver Restoration</option><option>Hardscaping</option><option>Multiple Services</option></select></div>
-          <div class="fg"><label>Tell Us About Your Project</label><textarea name="message" placeholder="Describe your project, property size, timeline, or any other details..."></textarea></div>
-          <div class="fg">
-            <label>Upload Photos <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;opacity:.6">(optional)</span></label>
-            <div class="file-upload" id="fileUploadZone">
-              <input type="file" id="fileInput" accept="image/*,.pdf" multiple onchange="handleFileSelect(this.files)">
-              <div class="file-upload-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
-              <div class="file-upload-text"><strong>Click to upload</strong> or drag photos here</div>
-              <div class="file-upload-hint">Photos of your property or project area help us prepare a more accurate estimate. Max 5 files.</div>
-            </div>
-            <div class="file-previews" id="filePreviews"></div>
-          </div>
-          <div class="fg" style="margin-bottom:16px">
-            <span class="fg-label">Preferred Contact Method</span>
-            <div class="contact-pref">
-              <div class="cp-option">
-                <input type="checkbox" id="cp-call" name="contact-method" value="Phone Call">
-                <label for="cp-call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Phone Call</label>
-              </div>
-              <div class="cp-option">
-                <input type="checkbox" id="cp-text" name="contact-method" value="Text Message">
-                <label for="cp-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Text Message</label>
-              </div>
-              <div class="cp-option">
-                <input type="checkbox" id="cp-email" name="contact-method" value="Email">
-                <label for="cp-email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</label>
-              </div>
-            </div>
-          </div>
-          <button type="submit" class="form-submit" id="form-submit-btn">Send My Request</button>
-        </form>
-        <div id="form-success" style="display:none;text-align:center;padding:48px 32px;border:1px solid var(--border2);border-radius:12px;background:var(--bg3);margin-top:16px;">
-          <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:50%;background:rgba(201,168,76,.12);border:2px solid var(--gold);margin-bottom:20px;">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <h3 style="color:var(--gold);font-size:1.4rem;font-weight:700;letter-spacing:.02em;margin:0 0 10px;">Request Submitted</h3>
-          <p style="color:var(--text);font-size:1rem;margin:0 0 6px;">Thank you! We&rsquo;ll be in touch typically within the hour.</p>
-        </div>
+      <div class="contact-form" style="background:none;border:none;padding:0">
+        <div class="kc-form-slot" data-kc='{"title":"Tell Us About Your Project","source":"Homepage Contact Form","photos":true}'></div>
+        <script src="js/kc-form.js?v=6" defer></script>
       </div>
     </div>
   </div>
@@ -1152,128 +1103,6 @@ function referFriend(){
 </div><div style="padding:18px 0;margin-top:18px;border-top:1px solid rgba(255,255,255,.08);text-align:center"><div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Areas We Serve</div><div style="font-size:13px;color:rgba(255,255,255,.55);line-height:1.8;max-width:960px;margin:0 auto;padding:0 16px">Proudly serving the Merrimack Valley, Southern NH, and surrounding towns. <a href="service-areas.html" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.4)">See full list &rarr;</a></div></div><div class="footer-bottom">&copy; 2026 Kaim Contracting LLC. All Rights Reserved. &middot; <a href="index.html#referral" style="color:var(--gold-l);text-decoration:none">Refer &amp; Earn $50</a></div></div></footer>
 <script>
 // CRM lead injection
-// File upload handling
-var _selectedFiles=[];
-function handleFileSelect(files){
-  var remaining=5-_selectedFiles.length;
-  var newFiles=Array.from(files).slice(0,remaining);
-  newFiles.forEach(function(f){
-    if(f.size>10*1024*1024)return;
-    _selectedFiles.push(f);
-  });
-  renderPreviews();
-}
-function removeFile(idx){
-  _selectedFiles.splice(idx,1);
-  renderPreviews();
-}
-function renderPreviews(){
-  var container=document.getElementById('filePreviews');
-  container.innerHTML='';
-  _selectedFiles.forEach(function(f,i){
-    var div=document.createElement('div');div.className='file-thumb';
-    if(f.type.startsWith('image/')){
-      var img=document.createElement('img');
-      img.src=URL.createObjectURL(f);
-      div.appendChild(img);
-    }else{
-      div.innerHTML='<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg3);font-size:9px;color:var(--muted);text-transform:uppercase">PDF</div>';
-    }
-    var btn=document.createElement('button');btn.className='file-thumb-remove';btn.textContent='\u00d7';btn.onclick=function(){removeFile(i);};
-    div.appendChild(btn);
-    container.appendChild(div);
-  });
-}
-function compressImage(file,maxW,quality){
-  return new Promise(function(resolve){
-    if(!file.type.startsWith('image/')){
-      var r=new FileReader();
-      r.onload=function(e){resolve({data:e.target.result,name:file.name});};
-      r.readAsDataURL(file);
-      return;
-    }
-    var reader=new FileReader();
-    reader.onload=function(e){
-      var img=new Image();
-      img.onload=function(){
-        var w=img.width,h=img.height;
-        if(w>maxW){h=Math.round(h*(maxW/w));w=maxW;}
-        var c=document.createElement('canvas');c.width=w;c.height=h;
-        c.getContext('2d').drawImage(img,0,0,w,h);
-        resolve({data:c.toDataURL('image/jpeg',quality||0.6),name:file.name});
-      };
-      img.src=e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
-function processUploads(){
-  if(!_selectedFiles.length)return Promise.resolve([]);
-  return Promise.all(_selectedFiles.map(function(f){return compressImage(f,1200,0.6);}));
-}
-
-async function submitLead(data,attachments){
-  var payload={
-    first:data.get('first-name')||'',
-    last:data.get('last-name')||'',
-    phone:data.get('phone')||'',
-    email:data.get('email')||'',
-    service:data.get('service')||'',
-    message:data.get('message')||'',
-    contactPref:data.getAll('contact-method').join(', '),
-    source:'Homepage Contact Form',
-    kc_hpot_xyz:data.get('kc_hpot_xyz')||'',
-    attachments:attachments||[]
-  };
-  var _pd=(payload.phone||'').replace(/\D/g,'');
-  if(!payload.first||_pd.length<10){throw new Error('Please enter your name and a valid phone number');}
-  var res=await fetch('/api/lead',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(payload)
-  });
-  if(!res.ok){
-    var err='Submission failed';
-    try{var j=await res.json();err=j.error||err;}catch(e){}
-    throw new Error(err);
-  }
-  return res.json();
-}
-
-// Form AJAX submission
-(function(){
-  var form = document.getElementById('quote-form');
-  if(!form) return;
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var btn = document.getElementById('form-submit-btn');
-    btn.disabled = true;
-    btn.textContent = _selectedFiles.length ? 'Uploading photos...' : 'Sending...';
-    var data = new FormData(form);
-    processUploads().then(function(attachments){
-      btn.textContent = 'Sending...';
-      return submitLead(data,attachments);
-    }).then(function(){
-        form.style.display = 'none';
-        document.getElementById('form-success').style.display = 'block';
-        try{ if(window.gtag){var _ph=(data.get('phone')||'').replace(/\D/g,'');var _em=data.get('email')||'';var _fn=data.get('first-name')||'';var _svc=data.get('service')||'';var _val=({'Paver Restoration':800,'Paver Sealing':400,'Drainage Solutions':700,'Hardscaping':1200,'Landscape Design':500,'Landscaping':400,'Plantings':200,'Pressure Washing':150,'Multiple Services':1000})[_svc]||300;gtag('event','conversion',{send_to:'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD',value:_val,currency:'USD',user_data:{email:_em||undefined,phone_number:_ph.length>=10?'+1'+_ph.slice(-10):undefined,address:{first_name:_fn||undefined}}});gtag('event','generate_lead',{lead_source:'Homepage Contact Form'});} if(window.fbq)fbq('track','Lead'); }catch(_){}
-    }).catch(function(err){
-      btn.disabled = false;
-      btn.textContent = 'Send My Request';
-      alert((err&&err.message?err.message+'. ':'')+'Please call us at 978-351-2195.');
-    });
-  });
-})();
-
-// Drag & drop on upload zone
-(function(){
-  var zone=document.getElementById('fileUploadZone');
-  if(!zone)return;
-  ['dragenter','dragover'].forEach(function(ev){zone.addEventListener(ev,function(e){e.preventDefault();zone.style.borderColor='var(--gold)';zone.style.background='rgba(201,168,76,.06)';});});
-  ['dragleave','drop'].forEach(function(ev){zone.addEventListener(ev,function(e){e.preventDefault();zone.style.borderColor='';zone.style.background='';});});
-  zone.addEventListener('drop',function(e){e.preventDefault();handleFileSelect(e.dataTransfer.files);});
-})();
-
 // Email injection (prevents Cloudflare obfuscation)
 (function(){
   var em = 'info' + String.fromCharCode(64) + 'kaimcontracting.com';
@@ -1333,7 +1162,7 @@ window._kaimInitMap=function(){
   var el=document.getElementById('kaim-map');
   if(!el||typeof L==='undefined')return;
   var map=window._kaimMap=L.map('kaim-map',{center:[42.78,-71.20],zoom:10,scrollWheelZoom:false,doubleClickZoom:false,zoomControl:true,attributionControl:true});
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://openstreetmap.org">OSM</a>',maxZoom:18,subdomains:'abcd'}).addTo(map);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors',maxZoom:19}).addTo(map);
   var towns=[
     {name:'Methuen, MA',lat:42.7262,lon:-71.1909,home:true},
     {name:'Andover, MA',lat:42.6583,lon:-71.1372},

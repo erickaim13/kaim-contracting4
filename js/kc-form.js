@@ -60,6 +60,11 @@
     + '.kcf-ddpanel button.sel{color:#e2c47a;font-weight:700;background:rgba(201,168,76,.08)}'
     + '.kcf-sug{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#122843;border:1px solid rgba(201,168,76,.4);border-radius:10px;overflow:hidden;z-index:30;display:none;box-shadow:0 18px 40px rgba(0,0,0,.5)}'
     + '.kcf-sug button{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.07);color:rgba(255,255,255,.88);font-family:"Source Sans 3",sans-serif;font-size:14px;padding:11px 13px;cursor:pointer}.kcf-sug button:hover{background:rgba(201,168,76,.14)}.kcf-sug button:last-child{border-bottom:none}'
+    + '.kcf-file{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;border:1px dashed rgba(255,255,255,.28);border-radius:10px;color:rgba(255,255,255,.65);font-family:"Source Sans 3",sans-serif;font-size:14px;cursor:pointer;transition:border-color .15s,color .15s;padding:12px;width:100%}'
+    + '.kcf-file:hover{border-color:#c9a84c;color:#e2c47a}'
+    + '.kcf-files{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}'
+    + '.kcf-files span{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:4px 9px;font-size:12px;color:rgba(255,255,255,.8)}'
+    + '.kcf-files button{background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:14px;padding:0;line-height:1}.kcf-files button:hover{color:#ff9d8f}'
     + '@media(max-width:640px){.kcf{padding:20px 16px 14px}.kcf-title{font-size:16px}}';
 
   var PHONE_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>';
@@ -92,15 +97,16 @@
       + '<div class="kcf-kicker">' + esc(cfg.kicker) + '</div>'
       + '<div class="kcf-offer" data-kcf="offer"></div>'
       + '<div style="display:none" aria-hidden="true"><label>Leave empty<input type="text" name="hf_hpot" tabindex="-1" autocomplete="off" value=""></label></div>'
-      + '<div class="kcf-field kcf-selwrap"><input type="hidden" data-kcf="service" value="' + esc(SERVICES.indexOf(preService) > -1 ? preService : '') + '">'
+      + (cfg.service ? '<input type="hidden" data-kcf="service" value="' + esc(cfg.service) + '">' : '<div class="kcf-field kcf-selwrap"><input type="hidden" data-kcf="service" value="' + esc(SERVICES.indexOf(preService) > -1 ? preService : '') + '">'
       + '<button type="button" class="kcf-dd' + (SERVICES.indexOf(preService) > -1 ? '' : ' kcf-empty') + '" data-kcf="ddbtn" aria-haspopup="listbox" aria-label="What do you need done?"><span>' + esc(SERVICES.indexOf(preService) > -1 ? preService : 'What do you need done?') + '</span></button>'
       + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>'
-      + '<div class="kcf-ddpanel" data-kcf="ddpanel" role="listbox">' + SERVICES.map(function (s) { return '<button type="button" role="option" data-v="' + esc(s) + '"' + (s === preService ? ' class="sel"' : '') + '>' + esc(s) + '</button>'; }).join('') + '</div></div>'
+      + '<div class="kcf-ddpanel" data-kcf="ddpanel" role="listbox">' + SERVICES.map(function (s) { return '<button type="button" role="option" data-v="' + esc(s) + '"' + (s === preService ? ' class="sel"' : '') + '>' + esc(s) + '</button>'; }).join('') + '</div></div>')
       + '<div class="kcf-field" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input type="text" data-kcf="name" placeholder="First name" autocomplete="given-name" aria-label="First name"><input type="text" data-kcf="lname" placeholder="Last name" autocomplete="family-name" aria-label="Last name"></div>'
       + '<div class="kcf-field"><input type="tel" data-kcf="phone" placeholder="Phone number" autocomplete="tel" inputmode="tel" aria-label="Phone number"></div>'
       + '<div class="kcf-field"><input type="email" data-kcf="email" placeholder="Email (optional)" autocomplete="email" aria-label="Email"></div>'
       + '<div class="kcf-field" style="position:relative"><input type="text" data-kcf="address" placeholder="Property address" autocomplete="off" aria-label="Property address"><div class="kcf-sug" data-kcf="asug"></div></div>'
       + '<div class="kcf-field"><textarea data-kcf="note" rows="2" placeholder="Anything we should know? (optional)" aria-label="Optional message"></textarea></div>'
+      + (cfg.photos ? '<div class="kcf-field"><label class="kcf-file"><input type="file" data-kcf="files" accept="image/*" multiple style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Add photos of the project (optional)</label><div class="kcf-files" data-kcf="filelist"></div></div>' : '')
       + '<button type="submit" class="kcf-cta" data-kcf="submit">' + esc(cfg.submitLabel) + '</button>'
       + '<div class="kcf-fail" data-kcf="fail">Could not send. Please try again or <a href="tel:978-351-2195">call 978-351-2195</a>.</div>'
       + '<div class="kcf-foot">We typically respond within the hour. No spam, ever.</div>'
@@ -112,11 +118,11 @@
     var offer = null;
 
     var ddBtn = q('ddbtn'), ddPanel = q('ddpanel'), svcInp = q('service');
-    ddBtn.addEventListener('click', function (e) {
+    if (ddBtn) ddBtn.addEventListener('click', function (e) {
       e.stopPropagation();
       ddPanel.classList.toggle('open'); ddBtn.classList.toggle('open');
     });
-    [].slice.call(ddPanel.querySelectorAll('button')).forEach(function (b) {
+    if (ddPanel) [].slice.call(ddPanel.querySelectorAll('button')).forEach(function (b) {
       b.addEventListener('click', function () {
         svcInp.value = b.getAttribute('data-v');
         ddBtn.querySelector('span').textContent = b.getAttribute('data-v');
@@ -125,7 +131,7 @@
         ddPanel.classList.remove('open'); ddBtn.classList.remove('open');
       });
     });
-    document.addEventListener('click', function (e) {
+    if (ddPanel) document.addEventListener('click', function (e) {
       if (!ddPanel.contains(e.target)) { ddPanel.classList.remove('open'); ddBtn.classList.remove('open'); }
     });
 
@@ -177,7 +183,43 @@
     });
     aEl.addEventListener('blur', function () { setTimeout(function () { sug.style.display = 'none'; }, 200); });
 
+    // Optional photo attachments: compressed client-side like the old
+    // homepage form (max 1200px wide JPEG), capped at 5.
+    var photos = [];
+    if (cfg.photos) {
+      var fInp = q('files'), fList = q('filelist');
+      var renderFiles = function () {
+        fList.innerHTML = photos.map(function (ph, i) {
+          return '<span>' + esc(ph.name) + '<button type="button" data-i="' + i + '" aria-label="Remove">&times;</button></span>';
+        }).join('');
+        [].slice.call(fList.querySelectorAll('button')).forEach(function (b) {
+          b.addEventListener('click', function () { photos.splice(Number(b.getAttribute('data-i')), 1); renderFiles(); });
+        });
+      };
+      fInp.addEventListener('change', function () {
+        [].slice.call(fInp.files).slice(0, 5 - photos.length).forEach(function (file) {
+          if (!/^image\//.test(file.type)) return;
+          var reader = new FileReader();
+          reader.onload = function (ev) {
+            var img = new Image();
+            img.onload = function () {
+              var w = img.width, h = img.height, maxW = 1200;
+              if (w > maxW) { h = Math.round(h * (maxW / w)); w = maxW; }
+              var c = document.createElement('canvas'); c.width = w; c.height = h;
+              c.getContext('2d').drawImage(img, 0, 0, w, h);
+              photos.push({ name: file.name, data: c.toDataURL('image/jpeg', 0.6) });
+              renderFiles();
+            };
+            img.src = ev.target.result;
+          };
+          reader.readAsDataURL(file);
+        });
+        fInp.value = '';
+      });
+    }
+
     var lead = null;
+    var extraLines = [];
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -192,7 +234,7 @@
       var note = (q('note').value || '').trim();
 
       var bad = null;
-      if (!svc) { q('ddbtn').classList.add('kcf-err'); bad = bad || q('ddbtn'); }
+      if (!svc && ddBtn) { ddBtn.classList.add('kcf-err'); bad = bad || ddBtn; }
       if (!first) { q('name').classList.add('kcf-err'); bad = bad || q('name'); }
       if (phone.replace(/\D/g, '').length < 10) { phoneEl.classList.add('kcf-err'); bad = bad || phoneEl; }
       if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { q('email').classList.add('kcf-err'); bad = bad || q('email'); }
@@ -202,6 +244,7 @@
       var lines = ['Quote page request:', '- Looking for: ' + svc, '- Address: ' + address];
       if (note) lines.push('- Note: ' + note);
       if (offer) lines.push('- Offer: ' + offer);
+      extraLines.forEach(function (l) { lines.push(l); });
 
       var source = cfg.source + (srcPage ? ' (from ' + srcPage + ')' : '');
       if (offer) source += ' | Offer: ' + offer;
@@ -217,7 +260,7 @@
         contactPref: 'Phone Call',
         source: source,
         kc_hpot_xyz: (new FormData(form).get('hf_hpot') || '').toString(),
-        attachments: []
+        attachments: photos
       };
       lead = payload;
 
@@ -312,14 +355,16 @@
       clearOffer: function () {
         offer = null;
         var box = q('offer'); if (box) { box.style.display = 'none'; box.innerHTML = ''; }
-      }
+      },
+      setExtra: function (lines) { extraLines = Array.isArray(lines) ? lines : []; }
     };
     if (urlOffer) inst.armOffer(urlOffer);
   }
 
   window.KCForm = {
     armOffer: function (n) { if (inst) inst.armOffer(n); },
-    clearOffer: function () { if (inst) inst.clearOffer(); }
+    clearOffer: function () { if (inst) inst.clearOffer(); },
+    setExtra: function (l) { if (inst) inst.setExtra(l); }
   };
 
   function init() { [].slice.call(document.querySelectorAll('.kc-form-slot')).forEach(mount); }

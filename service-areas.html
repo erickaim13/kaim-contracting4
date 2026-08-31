@@ -672,7 +672,7 @@ window._kaimInitMap=function(){
   var el=document.getElementById('kaim-map');
   if(!el||typeof L==='undefined')return;
   var map=window._kaimMap=L.map('kaim-map',{center:[42.78,-71.20],zoom:10,scrollWheelZoom:false,doubleClickZoom:false,zoomControl:true,attributionControl:true});
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://openstreetmap.org">OSM</a>',maxZoom:18,subdomains:'abcd'}).addTo(map);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors',maxZoom:19}).addTo(map);
   var towns=[
     {name:'Andover, MA',lat:42.6583,lon:-71.1372},
     {name:'North Andover, MA',lat:42.7000,lon:-71.1167},
