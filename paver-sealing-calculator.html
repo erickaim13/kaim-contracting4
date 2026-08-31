@@ -614,12 +614,16 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   <div class="page-grid">
     <div class="page-content">
       <h2>Free <span>Sand &amp; Seal Calculator</span></h2>
-      <p>Plug in your patio or driveway dimensions and pick a finish. We'll estimate the polymeric sand your joints need and a project price range for the full clean, re-sand, and seal. It is the same process you'll see on our <a href="paver-sealing.html" style="color:var(--gold-l)">Paver Sealing page</a>. Final pricing is confirmed after a quick look at your pavers.</p>
+      <p>Tell us the size, condition, and age of your pavers and pick a finish. We'll estimate the polymeric sand your joints need and a project price range for the full clean, re-sand, and seal. It is the same process you'll see on our <a href="paver-sealing.html" style="color:var(--gold-l)">Paver Sealing page</a>. Final pricing is confirmed after a quick look at your pavers.</p>
       <div class="calc-card">
         <div class="calc-card-title">Project Dimensions</div>
         <div class="calc-grid">
           <div class="calc-field"><label for="length">Length (ft)</label><input type="number" id="length" min="0" step="0.5" value="20" inputmode="decimal"></div>
           <div class="calc-field"><label for="width">Width (ft)</label><input type="number" id="width" min="0" step="0.5" value="12" inputmode="decimal"></div>
+          <div class="calc-field"><label for="sqftDirect">Know the total? Enter sq ft</label><input type="number" id="sqftDirect" min="0" step="10" placeholder="Optional, overrides L x W" inputmode="numeric"></div>
+          <div class="calc-field"><label for="dirtLevel">How dirty are they?</label><select id="dirtLevel"><option value="light">Lightly faded, no real growth</option><option value="mod" selected>Moderate grime, some moss or weeds</option><option value="heavy">Heavy moss, weeds, or staining</option></select></div>
+          <div class="calc-field"><label for="paverType">Paver type &amp; pattern</label><select id="paverType"><option value="tight" selected>Standard brick pavers, tight joints</option><option value="wide">Tumbled or cobblestone, wider joints</option><option value="stone">Natural stone or irregular pattern</option></select></div>
+          <div class="calc-field"><label for="paverAge">Age of the pavers</label><select id="paverAge"><option value="new">Under 5 years</option><option value="mid" selected>5 to 15 years</option><option value="old">Over 15 years</option></select></div>
           <div class="calc-field calc-field-full" data-mode="seal"><label>Sealer Finish</label><div class="calc-condition" id="sealFinishGroup"><button class="calc-condition-btn active" data-finish="standard" type="button">Standard Satin</button><button class="calc-condition-btn" data-finish="semi" type="button">Semi Gloss</button><button class="calc-condition-btn" data-finish="wet" type="button">Wet Look</button></div></div>
         </div>
       </div>
@@ -684,19 +688,19 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
           <div class="finish-card pop">
             <span class="finish-tag">Most Popular</span>
             <h4>Standard Satin</h4>
-            <div class="finish-rate">$3 - $5 / sq ft</div>
+            <div class="finish-rate">$4 - $6 / sq ft</div>
             <p>A clean, natural look with a subtle low sheen. Protects everything without changing the character of your pavers.</p>
           </div>
           <div class="finish-card">
             <span class="finish-tag">Richer Color</span>
             <h4>Semi Gloss</h4>
-            <div class="finish-rate">$4 - $6 / sq ft</div>
+            <div class="finish-rate">$4.50 - $6.50 / sq ft</div>
             <p>Deepens the color and adds a noticeable sheen that makes the surface pop, without going full wet look.</p>
           </div>
           <div class="finish-card">
             <span class="finish-tag">Boldest Look</span>
             <h4>Wet Look</h4>
-            <div class="finish-rate">$5 - $8 / sq ft</div>
+            <div class="finish-rate">$5 - $7 / sq ft</div>
             <p>Maximum color enhancement, like your pavers right after a rain storm. The most dramatic before and after.</p>
           </div>
         </div>
@@ -752,8 +756,15 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 <script>
 (function(){
   var $=function(id){return document.getElementById(id);};
-  var inputs=['length','width'];
-  var SEAL_RATES={standard:{low:3,high:5,label:'Standard Satin'},semi:{low:4,high:6,label:'Semi Gloss'},wet:{low:5,high:8,label:'Wet Look'}};
+  var inputs=['length','width','sqftDirect'];
+  // Rates are calibrated against real job costs (materials per coverage,
+  // multi-day labor with a helper, equipment rental) so the range holds up
+  // when Eric prices the job in person. Condition multipliers below adjust
+  // for cleaning effort (dirt), joint volume (pattern), and sealer soak (age).
+  var SEAL_RATES={standard:{low:4.25,high:5.5,label:'Standard Satin'},semi:{low:4.75,high:6.25,label:'Semi Gloss'},wet:{low:5.25,high:7,label:'Wet Look'}};
+  var DIRT={light:1.0,mod:1.08,heavy:1.18};
+  var JOINT={tight:{mult:1.0,cov:85},wide:{mult:1.08,cov:55},stone:{mult:1.18,cov:40}};
+  var AGE={new:1.0,mid:1.05,old:1.12};
   var MIN_PROJECT=1200;
   var mode='seal', sealFinish='standard';
   function fmt(n,d){d=d||0;return new Intl.NumberFormat('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);}
@@ -772,17 +783,20 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   function calc(){
     var L=parseFloat($('length').value)||0;
     var W=parseFloat($('width').value)||0;
-    var area=L*W;
+    var direct=parseFloat($('sqftDirect').value)||0;
+    var area=direct>0?direct:L*W;
     var s=SEAL_RATES[sealFinish];
-    var sLow=Math.max(area*s.low,MIN_PROJECT);
-    var sHigh=Math.max(area*s.high,MIN_PROJECT+100);
-    var bags=Math.max(1,Math.ceil(area/80));
+    var m=DIRT[$('dirtLevel').value]*JOINT[$('paverType').value].mult*AGE[$('paverAge').value];
+    var sLow=Math.max(area*s.low*m,MIN_PROJECT);
+    var sHigh=Math.max(area*s.high*m,sLow+150);
+    var bags=Math.max(1,Math.ceil(area/JOINT[$('paverType').value].cov));
     $('sealCost').textContent=money(sLow)+' - '+money(sHigh);
     $('sealArea').textContent=fmt(area,0)+' sq ft';
     $('sealFinishOut').textContent=SEAL_RATES[sealFinish].label;
     $('sealSand').textContent=bags+(bags===1?' bag':' bags');
   }
   inputs.forEach(function(id){var el=$(id);if(el)el.addEventListener('input',calc);});
+  ['dirtLevel','paverType','paverAge'].forEach(function(id){var el=$(id);if(el)el.addEventListener('change',calc);});
   syncMode();
   calc();
 })();
@@ -797,7 +811,10 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       '- Service: Paver Sealing',
       '- Length: '+g('length').value+' ft',
       '- Width: '+g('width').value+' ft',
-      '- Area: '+g('sealArea').textContent,
+      '- Area: '+g('sealArea').textContent+(g('sqftDirect').value?' (entered directly)':''),
+      '- Condition: '+g('dirtLevel').options[g('dirtLevel').selectedIndex].text,
+      '- Pavers: '+g('paverType').options[g('paverType').selectedIndex].text,
+      '- Age: '+g('paverAge').options[g('paverAge').selectedIndex].text,
       '- Finish: '+g('sealFinishOut').textContent,
       '- Polymeric sand: '+g('sealSand').textContent,
       '- Estimated project range: '+g('sealCost').textContent,

@@ -49,6 +49,8 @@
     + '.kcf-day:hover{border-color:#c9a84c;background:rgba(201,168,76,.12)}.kcf-day:disabled{opacity:.6;cursor:default}'
     + '.kcf-day .d{font-weight:700;font-size:14.5px}.kcf-day .t{font-family:Oswald,sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#e2c47a;white-space:nowrap}'
     + '.kcf-skip{display:block;margin:12px auto 2px;background:none;border:none;color:rgba(255,255,255,.55);font-size:12.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:"Source Sans 3",sans-serif}.kcf-skip:hover{color:#e2c47a}'
+    + '.kcf-sug{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#122843;border:1px solid rgba(201,168,76,.4);border-radius:10px;overflow:hidden;z-index:30;display:none;box-shadow:0 18px 40px rgba(0,0,0,.5)}'
+    + '.kcf-sug button{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.07);color:rgba(255,255,255,.88);font-family:"Source Sans 3",sans-serif;font-size:14px;padding:11px 13px;cursor:pointer}.kcf-sug button:hover{background:rgba(201,168,76,.14)}.kcf-sug button:last-child{border-bottom:none}'
     + '@media(max-width:640px){.kcf{padding:20px 16px 14px}.kcf-title{font-size:16px}}';
 
   var PHONE_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>';
@@ -85,10 +87,10 @@
       + '<option value="" disabled selected>What do you need done?</option>'
       + SERVICES.map(function (s) { return '<option' + (s === preService ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('')
       + '</select><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div></div>'
-      + '<div class="kcf-field"><input type="text" data-kcf="name" placeholder="Your name" autocomplete="name" aria-label="Your name"></div>'
+      + '<div class="kcf-field" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input type="text" data-kcf="name" placeholder="First name" autocomplete="given-name" aria-label="First name"><input type="text" data-kcf="lname" placeholder="Last name" autocomplete="family-name" aria-label="Last name"></div>'
       + '<div class="kcf-field"><input type="tel" data-kcf="phone" placeholder="Phone number" autocomplete="tel" inputmode="tel" aria-label="Phone number"></div>'
       + '<div class="kcf-field"><input type="email" data-kcf="email" placeholder="Email (optional)" autocomplete="email" aria-label="Email"></div>'
-      + '<div class="kcf-field"><input type="text" data-kcf="address" placeholder="Property address" autocomplete="street-address" aria-label="Property address"></div>'
+      + '<div class="kcf-field" style="position:relative"><input type="text" data-kcf="address" placeholder="Property address" autocomplete="off" aria-label="Property address"><div class="kcf-sug" data-kcf="asug"></div></div>'
       + '<div class="kcf-field"><textarea data-kcf="note" rows="2" placeholder="Anything we should know? (optional)" aria-label="Optional message"></textarea></div>'
       + '<button type="submit" class="kcf-cta" data-kcf="submit">' + esc(cfg.submitLabel) + '</button>'
       + '<div class="kcf-fail" data-kcf="fail">Could not send. Please try again or <a href="tel:978-351-2195">call 978-351-2195</a>.</div>'
@@ -119,9 +121,40 @@
       else if (d.length > 3) out = d.slice(0, 3) + '-' + d.slice(3);
       phoneEl.value = out; phoneEl.classList.remove('kcf-err');
     });
-    ['name', 'email', 'address', 'note'].forEach(function (id) {
+    ['name', 'lname', 'email', 'note'].forEach(function (id) {
       q(id).addEventListener('input', function () { q(id).classList.remove('kcf-err'); });
     });
+
+    // Address autocomplete (OpenStreetMap/Photon, biased to the Merrimack Valley).
+    var aEl = q('address'), sug = q('asug'), aTimer = null;
+    aEl.addEventListener('input', function () {
+      aEl.classList.remove('kcf-err');
+      clearTimeout(aTimer);
+      var v = aEl.value.trim();
+      if (v.length < 4) { sug.style.display = 'none'; return; }
+      aTimer = setTimeout(function () {
+        fetch('https://photon.komoot.io/api/?q=' + encodeURIComponent(v) + '&limit=5&lat=42.73&lon=-71.19&lang=en')
+          .then(function (r) { return r.json(); })
+          .then(function (j) {
+            var items = (j.features || []).filter(function (f) {
+              var p = (f && f.properties) || {};
+              return (p.countrycode === 'US' || p.country === 'United States');
+            }).map(function (f) {
+              var p = f.properties || {};
+              var street = ((p.housenumber ? p.housenumber + ' ' : '') + (p.street || p.name || '')).trim();
+              return [street, p.city || p.town || p.village || p.district, p.state, p.postcode].filter(Boolean).join(', ');
+            }).filter(function (x, i, a) { return x && a.indexOf(x) === i; }).slice(0, 4);
+            if (!items.length || document.activeElement !== aEl) { sug.style.display = 'none'; return; }
+            sug.innerHTML = items.map(function (t) { return '<button type="button">' + esc(t) + '</button>'; }).join('');
+            sug.style.display = 'block';
+            [].slice.call(sug.querySelectorAll('button')).forEach(function (b) {
+              b.addEventListener('mousedown', function (ev) { ev.preventDefault(); aEl.value = b.textContent; sug.style.display = 'none'; });
+            });
+          })
+          .catch(function () { sug.style.display = 'none'; });
+      }, 250);
+    });
+    aEl.addEventListener('blur', function () { setTimeout(function () { sug.style.display = 'none'; }, 200); });
 
     var lead = null;
 
@@ -130,7 +163,8 @@
       var btn = q('submit');
       if (btn.disabled) return;
       var svc = q('service').value;
-      var name = (q('name').value || '').trim();
+      var first = (q('name').value || '').trim();
+      var lastName = (q('lname').value || '').trim();
       var phone = phoneEl.value || '';
       var email = (q('email').value || '').trim();
       var address = (q('address').value || '').trim();
@@ -138,13 +172,12 @@
 
       var bad = null;
       if (!svc) { q('service').classList.add('kcf-err'); bad = bad || q('service'); }
-      if (!name) { q('name').classList.add('kcf-err'); bad = bad || q('name'); }
+      if (!first) { q('name').classList.add('kcf-err'); bad = bad || q('name'); }
       if (phone.replace(/\D/g, '').length < 10) { phoneEl.classList.add('kcf-err'); bad = bad || phoneEl; }
       if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { q('email').classList.add('kcf-err'); bad = bad || q('email'); }
       if (!address) { q('address').classList.add('kcf-err'); bad = bad || q('address'); }
       if (bad) { bad.focus(); return; }
 
-      var parts = name.split(/\s+/);
       var lines = ['Quote page request:', '- Looking for: ' + svc, '- Address: ' + address];
       if (note) lines.push('- Note: ' + note);
       if (offer) lines.push('- Offer: ' + offer);
@@ -153,10 +186,12 @@
       if (offer) source += ' | Offer: ' + offer;
 
       var payload = {
-        first: parts.shift() || '',
-        last: parts.join(' ') || '(not provided)',
+        first: first,
+        last: lastName || '(not provided)',
         phone: phone, email: email, address: address,
-        service: svc === 'Paver Sealing' ? 'Paver Sealing' : 'Pressure Washing',
+        // Send the specific service label - the auto-reply text uses it
+        // verbatim ("thanks for reaching out about Roof Cleaning!").
+        service: svc === 'Something Else' ? 'Pressure Washing' : svc,
         message: lines.join('\n'),
         contactPref: 'Phone Call',
         source: source,
@@ -229,7 +264,7 @@
         .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
         .then(function (res) {
           if (res.ok && res.j && res.j.ok) {
-            try { if (window.gtag) gtag('event', 'book_estimate_visit', { lead_source: cfg.source }); } catch (_) { }
+            try { if (window.gtag) { gtag('event', 'conversion', { send_to: 'AW-18069179134/dCX4CJKEtuscEP6Vh6hD', value: 600.0, currency: 'USD' }); gtag('event', 'book_estimate_visit', { lead_source: cfg.source }); } } catch (_) { }
             showDone('<div class="kcf-done-h">You\'re on the schedule!</div><div class="kcf-done-p"><b>' + esc(res.j.label || (day.label + ' at ' + day.time)) + '</b><br>It\'s locked in. A confirmation text is on its way, and Eric will text when he\'s on the way over.</div>');
           } else if (res.j && res.j.error === 'slot_taken') {
             days = days.filter(function (d) { return d.date !== day.date; });

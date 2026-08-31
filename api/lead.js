@@ -14,7 +14,11 @@ const ALLOWED_ORIGINS = new Set([
 const SERVICE_OPTS = new Set([
   'Paver Installation', 'Paver Restoration', 'Landscaping', 'Drainage Solutions',
   'Hardscaping', 'Landscape Design', 'Pressure Washing', 'Paver Sealing',
-  'Plantings', 'Multiple Services'
+  'Plantings', 'Multiple Services',
+  // Specific service labels from the quote form dropdown - keep in sync with
+  // js/kc-form.js SERVICES. The auto-reply text uses this label verbatim.
+  'House Washing', 'Roof Cleaning', 'Driveway or Walkway', 'Patio or Pool Deck',
+  'Deck or Fence', 'Oxidation Removal', 'Gutter Brightening'
 ]);
 
 export default async function handler(req, res) {

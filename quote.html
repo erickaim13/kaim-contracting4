@@ -24,6 +24,8 @@
 :root{--teal:#0d1e35;--gold:#c9a84c;--gold-l:#e2c47a;}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Source Sans 3',sans-serif;background:linear-gradient(180deg,#0a1729 0%,#0d1e35 60%,#12253f 100%);color:#fff;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:1500px;opacity:.05;pointer-events:none;z-index:0}
+.qp-head,.qp-main{position:relative;z-index:1}
 .qp-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;max-width:640px;margin:0 auto;width:100%}
 .qp-brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none}
 .qp-brand img{height:40px;width:auto;border-radius:6px}
@@ -132,7 +134,7 @@ body{font-family:'Source Sans 3',sans-serif;background:linear-gradient(180deg,#0
     </div>
     <div class="qp-formcol">
       <div class="kc-form-slot" style="width:100%;max-width:430px" data-kc='{"title": "Get Your Free Estimate", "kicker": "Takes about 20 seconds", "serviceStep": true, "source": "Quote Page", "prefix": "Quote page request:", "jobQ": "What do you need done?", "submitLabel": "Get My Free Estimate"}'></div>
-<script src="js/kc-form.js?v=2" defer></script>
+<script src="js/kc-form.js?v=3" defer></script>
       <div class="qp-trust">
     Licensed &amp; Insured &middot; Free In-Person Estimates<br>
     Prefer to talk? <a href="tel:978-351-2195">Call 978-351-2195</a>
