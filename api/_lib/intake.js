@@ -45,9 +45,9 @@ function brandedHtml(body) {
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;padding:32px 16px">
 <tr><td align="center">
 <table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08)">
-<tr><td style="background:#1a1a1a;padding:32px;text-align:center">
-<div style="font-family:Georgia,'Times New Roman',serif;font-size:26px;font-weight:700;color:#c9a84c;letter-spacing:.18em">KAIM CONTRACTING</div>
-<div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:600;color:#9a8a5a;letter-spacing:.35em;margin-top:8px">LANDSCAPING &middot; HARDSCAPING &middot; PRESSURE WASHING</div>
+<tr><td style="background:#0d1e35;padding:30px 32px 26px;text-align:center;border-bottom:3px solid #c9a84c">
+<div style="font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:700;color:#e2c47a;letter-spacing:4px">KAIM CONTRACTING</div>
+<div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:600;color:#8fa3bd;letter-spacing:3px;margin-top:9px">PRESSURE WASHING &middot; PAVER SEALING</div>
 </td></tr>
 <tr><td style="padding:32px 32px 28px">${body}</td></tr>
 <tr><td style="padding:0 32px 28px;border-top:1px solid #eee;padding-top:20px;text-align:center">
