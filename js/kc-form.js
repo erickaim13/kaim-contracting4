@@ -1,0 +1,360 @@
+/* Kaim Contracting shared quick-quote wizard.
+ *
+ * ONE form implementation for every page. A page drops in:
+ *   <div class="kc-form-slot" data-kc='{ ...config }'></div>
+ *   <script src="js/kc-form.js?v=1" defer></script>
+ * and this script renders the multi-step wizard (job/service -> timing ->
+ * ZIP -> contact), posts to /api/lead, then offers three open days to
+ * self-book the free in-person estimate via /api/estimate-visit.
+ *
+ * Config keys:
+ *   title, kicker            card header
+ *   service                  backend service ('Paver Sealing'|'Pressure Washing')
+ *   source                   lead source string
+ *   value                    Google Ads conversion value
+ *   prefix                   first line of the CRM message
+ *   jobKey, jobQ, jobs       optional first step (array of chip labels)
+ *   serviceStep: true        homepage/quote variant: pick from all services
+ *   submitLabel              submit button text
+ * Pages with offer cards call KCForm.armOffer(name, btnText) / KCForm.clearOffer().
+ */
+(function () {
+  'use strict';
+
+  var ZIPMAP = { '01844': 'Methuen, MA', '01810': 'Andover, MA', '01845': 'North Andover, MA', '01840': 'Lawrence, MA', '01841': 'Lawrence, MA', '01843': 'Lawrence, MA', '01830': 'Haverhill, MA', '01832': 'Haverhill, MA', '01835': 'Haverhill, MA', '01826': 'Dracut, MA', '01850': 'Lowell, MA', '01851': 'Lowell, MA', '01852': 'Lowell, MA', '01854': 'Lowell, MA', '01876': 'Tewksbury, MA', '01824': 'Chelmsford, MA', '01834': 'Groveland, MA', '01833': 'Georgetown, MA', '01860': 'Merrimac, MA', '01913': 'Amesbury, MA', '01985': 'West Newbury, MA', '01951': 'Newbury, MA', '01950': 'Newburyport, MA', '01952': 'Salisbury, MA', '03079': 'Salem, NH', '03087': 'Windham, NH', '03076': 'Pelham, NH', '03811': 'Atkinson, NH', '03841': 'Hampstead, NH', '03865': 'Plaistow, NH', '03038': 'Derry, NH', '03053': 'Londonderry, NH', '03101': 'Manchester, NH', '03102': 'Manchester, NH', '03103': 'Manchester, NH', '03104': 'Manchester, NH', '03109': 'Manchester, NH', '03110': 'Manchester, NH' };
+
+  var ICONS = {
+    'House Washing': '<path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>',
+    'Roof Cleaning': '<path d="M2 12L12 3l10 9"/><path d="M17 6.8V4h3v5.5"/>',
+    'Driveway or Walkway': '<path d="M6 21L10 3"/><path d="M18 21L14 3"/><line x1="12" y1="8" x2="12" y2="10"/><line x1="12" y1="14" x2="12" y2="16"/>',
+    'Patio or Pool Deck': '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="12" y1="3" x2="12" y2="21"/>',
+    'Deck or Fence': '<path d="M5 21V6l2-2 2 2v15"/><path d="M15 21V6l2-2 2 2v15"/><line x1="3" y1="11" x2="21" y2="11"/><line x1="3" y1="17" x2="21" y2="17"/>',
+    'Paver Sealing': '<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/>',
+    'Something Else': '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>'
+  };
+  ICONS['House Wash'] = ICONS['House Washing'];
+  ICONS['Deck or Stairs'] = ICONS['Deck or Fence'];
+  ICONS['Patio'] = ICONS['Patio or Pool Deck'];
+  ICONS['Pool Deck'] = ICONS['Patio or Pool Deck'];
+  ICONS['Walkway'] = ICONS['Driveway or Walkway'];
+  ICONS['Driveway'] = ICONS['Driveway or Walkway'];
+  var SERVICES = ['House Washing', 'Roof Cleaning', 'Driveway or Walkway', 'Patio or Pool Deck', 'Deck or Fence', 'Paver Sealing', 'Something Else'];
+
+  var CSS = '.kcf{background:rgba(13,30,53,.72);-webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:26px 22px 18px;box-shadow:0 28px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.09);width:100%;color:#fff;font-family:"Source Sans 3",sans-serif;text-align:left}'
+    + '.kcf-title{font-family:Oswald,sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#e2c47a;margin:0 0 4px;line-height:1.2;text-align:center}'
+    + '.kcf-kicker{font-size:12.5px;color:rgba(255,255,255,.55);text-align:center;margin-bottom:12px}'
+    + '.kcf-bar{display:flex;gap:6px;margin-bottom:14px;justify-content:center}.kcf-bar span{flex:1;max-width:44px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);transition:background .25s}.kcf-bar span.on{background:#c9a84c}'
+    + '.kcf-step{display:none}.kcf-step.on{display:flex;flex-direction:column;min-height:300px;position:relative;padding-top:24px;animation:kcfIn .28s ease}.kcf-step.on[data-key="job"]{padding-top:0}'
+    + '@keyframes kcfIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}'
+    + '.kcf-cheer{font-family:Oswald,sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#e2c47a;text-align:center;margin-bottom:8px}'
+    + '.kcf-q{font-size:16.5px;font-weight:700;text-align:center;margin-bottom:12px;line-height:1.35}'
+    + '.kcf-grid{display:grid;grid-template-columns:1fr;gap:7px;flex:1;grid-auto-rows:minmax(34px,1fr)}'
+    + '.kcf-grid-2{grid-template-columns:1fr 1fr}'
+    + '.kcf-chip{display:flex;align-items:center;justify-content:flex-start;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:8px 16px;color:rgba(255,255,255,.9);font-family:Oswald,sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .15s;text-align:left;line-height:1.3;width:100%}'
+    + '.kcf-chip svg{width:17px;height:17px;color:#e2c47a;flex-shrink:0}'
+    + '.kcf-chip:hover{border-color:#c9a84c;background:rgba(201,168,76,.1)}.kcf-chip.sel{border-color:#c9a84c;background:rgba(201,168,76,.18);color:#e2c47a}'
+    + '.kcf-back{position:absolute;top:0;left:0;background:none;border:none;color:rgba(255,255,255,.55);font-size:12px;cursor:pointer;padding:2px 0;display:inline-flex;align-items:center;gap:4px;font-family:"Source Sans 3",sans-serif;z-index:3}.kcf-back:hover{color:#e2c47a}'
+    + '.kcf input{width:100%;min-height:50px;padding:13px 14px;border:1px solid rgba(255,255,255,.16);border-radius:10px;font-family:"Source Sans 3",sans-serif;font-size:16px;color:#fff;background:rgba(255,255,255,.07);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s,background .15s,box-shadow .15s}'
+    + '.kcf input::placeholder{color:rgba(255,255,255,.5)}'
+    + '.kcf input:focus{border-color:#c9a84c;background:rgba(255,255,255,.11);box-shadow:0 0 0 3px rgba(201,168,76,.22)}'
+    + '.kcf input.kcf-err{border-color:#e06a5a;box-shadow:0 0 0 3px rgba(224,106,90,.18)}'
+    + '.kcf-field{margin-bottom:10px}'
+    + '.kcf-zip-town{min-height:20px;font-size:13.5px;color:#e2c47a;font-weight:700;text-align:center;margin-top:10px}'
+    + '.kcf-hint{margin-top:auto;padding-top:10px;text-align:center;font-size:12px;color:rgba(255,255,255,.55)}'
+    + '.kcf-cta{width:100%;background:#c9a84c;color:#0d1e35;border:none;border-radius:10px;padding:15px;font-family:Oswald,sans-serif;font-size:13.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin-top:6px;transition:background .15s,transform .15s}'
+    + '.kcf-cta:hover{background:#e2c47a;transform:translateY(-1px)}.kcf-cta:disabled{opacity:.7;cursor:default;transform:none}'
+    + '.kcf-foot{margin-top:10px;text-align:center;font-size:12px;color:rgba(255,255,255,.6)}'
+    + '.kcf-fail{display:none;margin-top:9px;text-align:center;font-size:13px;color:#ff9d8f}.kcf-fail a{color:#e2c47a;font-weight:700;text-decoration:none}'
+    + '.kcf-callrow{display:flex;gap:8px;margin-top:11px}'
+    + '.kcf-callrow a{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.45);color:#e2c47a;font-family:Oswald,sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:11px 10px;border-radius:8px}'
+    + '.kcf-offer{display:none;align-items:center;gap:8px;background:rgba(201,168,76,.14);border:1px solid rgba(201,168,76,.5);border-radius:8px;padding:8px 11px;font-size:12.5px;color:#e2c47a;margin-bottom:12px;line-height:1.35}.kcf-offer svg{width:14px;height:14px;flex-shrink:0}.kcf-offer b{font-weight:700}.kcf-offer button{margin-left:auto;background:none;border:none;color:rgba(255,255,255,.6);font-size:16px;cursor:pointer;padding:0 2px;line-height:1}'
+    + '.kcf-done{text-align:center;padding:10px 2px 6px}'
+    + '.kcf-done-ico{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:50%;background:rgba(201,168,76,.18);border:2px solid #c9a84c;margin-bottom:12px}'
+    + '.kcf-done-h{font-family:Oswald,sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;color:#e2c47a;margin-bottom:5px}'
+    + '.kcf-done-p{font-size:14px;color:rgba(255,255,255,.72);line-height:1.55}'
+    + '.kcf-days{display:grid;gap:8px;margin:16px 0 4px}'
+    + '.kcf-day{display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:13px 15px;cursor:pointer;color:#fff;width:100%;font-family:"Source Sans 3",sans-serif;transition:all .15s;text-align:left}'
+    + '.kcf-day:hover{border-color:#c9a84c;background:rgba(201,168,76,.12)}.kcf-day:disabled{opacity:.6;cursor:default}'
+    + '.kcf-day .d{font-weight:700;font-size:14.5px}.kcf-day .t{font-family:Oswald,sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#e2c47a;white-space:nowrap}'
+    + '.kcf-skip{display:block;margin:12px auto 2px;background:none;border:none;color:rgba(255,255,255,.55);font-size:12.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:"Source Sans 3",sans-serif}.kcf-skip:hover{color:#e2c47a}'
+    + '@media(max-width:640px){.kcf{max-width:420px;margin:0 auto;padding:20px 16px 14px}.kcf-title{font-size:16px}}';
+
+  var PHONE_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>';
+  var CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+  function chipSvg(label) {
+    var p = ICONS[label];
+    return p ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>' : '';
+  }
+  function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+  var inst = null; // single form per page today
+
+  function mount(slot) {
+    var cfg;
+    try { cfg = JSON.parse(slot.getAttribute('data-kc') || '{}'); } catch (e) { cfg = {}; }
+    cfg.title = cfg.title || 'Get Your Free Estimate';
+    cfg.kicker = cfg.kicker || 'Takes about 20 seconds';
+    cfg.submitLabel = cfg.submitLabel || 'Get My Free Estimate';
+    cfg.prefix = cfg.prefix || 'Website quick quote:';
+    cfg.source = cfg.source || 'Website (kaimcontracting.com)';
+
+    if (!document.getElementById('kcf-css')) {
+      var st = document.createElement('style'); st.id = 'kcf-css'; st.textContent = CSS;
+      document.head.appendChild(st);
+    }
+
+    var timingChips = ['As soon as possible', 'In the next few weeks', 'Sometime this season', 'Just looking for pricing'];
+    var stepsHtml = '';
+    var firstQ, firstChips, jobKey;
+    if (cfg.serviceStep) {
+      jobKey = 'Looking for';
+      firstQ = cfg.jobQ || 'What do you need done?';
+      firstChips = SERVICES;
+    } else {
+      jobKey = cfg.jobKey || 'Looking for';
+      firstQ = cfg.jobQ;
+      firstChips = cfg.jobs || null;
+    }
+    var nSteps = (firstChips ? 1 : 0) + 3;
+
+    if (firstChips) {
+      stepsHtml += '<div class="kcf-step on" data-key="job"><div class="kcf-cheer">Free estimate &middot; no obligation</div><div class="kcf-q">' + esc(firstQ) + '</div><div class="kcf-grid' + (!cfg.serviceStep && firstChips.length === 4 ? ' kcf-grid-2' : '') + '">'
+        + firstChips.map(function (c) { return '<button type="button" class="kcf-chip" data-v="' + esc(c) + '">' + chipSvg(c) + esc(c).replace(/ or /g, ' &amp; ') + '</button>'; }).join('')
+        + '</div></div>';
+    }
+    stepsHtml += '<div class="kcf-step' + (firstChips ? '' : ' on') + '" data-key="timing">'
+      + (firstChips ? '<button type="button" class="kcf-back">&larr; Back</button><div class="kcf-cheer">Good choice &middot; two quick questions left</div>' : '<div class="kcf-cheer">Free estimate &middot; no obligation</div>')
+      + '<div class="kcf-q">How soon are you hoping to get it done?</div><div class="kcf-grid">'
+      + timingChips.map(function (c) { return '<button type="button" class="kcf-chip" data-v="' + esc(c) + '">' + esc(c) + '</button>'; }).join('')
+      + '</div></div>';
+    stepsHtml += '<div class="kcf-step" data-key="zip"><button type="button" class="kcf-back">&larr; Back</button><div class="kcf-cheer">Almost there</div><div class="kcf-q">What\'s the property ZIP code?</div>'
+      + '<input type="text" data-kcf="zip" inputmode="numeric" pattern="[0-9]*" maxlength="5" placeholder="01844" autocomplete="postal-code" aria-label="ZIP code"><div class="kcf-zip-town" data-kcf="ziptown"></div>'
+      + '<div class="kcf-hint">Serving the Merrimack Valley &amp; Southern NH</div></div>';
+    stepsHtml += '<div class="kcf-step" data-key="contact"><button type="button" class="kcf-back">&larr; Back</button><div class="kcf-cheer">Last one, promise</div><div class="kcf-q">Where should we send your free estimate?</div>'
+      + '<div class="kcf-field"><input type="text" data-kcf="name" placeholder="Your name" autocomplete="name" aria-label="Your name"></div>'
+      + '<div class="kcf-field"><input type="tel" data-kcf="phone" placeholder="Phone number" autocomplete="tel" inputmode="tel" aria-label="Phone number"></div>'
+      + '<button type="submit" class="kcf-cta" data-kcf="submit">' + esc(cfg.submitLabel) + '</button>'
+      + '<div class="kcf-fail" data-kcf="fail">Could not send. Please try again or <a href="tel:978-351-2195">call 978-351-2195</a>.</div>'
+      + '<div class="kcf-foot">We typically respond within the hour. No spam, ever.</div></div>';
+
+    var bar = ''; for (var i = 0; i < nSteps; i++) bar += '<span' + (i === 0 ? ' class="on"' : '') + '></span>';
+
+    slot.innerHTML = '<form class="kcf" novalidate autocomplete="on">'
+      + '<div class="kcf-title">' + esc(cfg.title) + '</div>'
+      + '<div class="kcf-kicker">' + esc(cfg.kicker) + '</div>'
+      + '<div class="kcf-offer" data-kcf="offer"></div>'
+      + '<div class="kcf-bar" aria-hidden="true">' + bar + '</div>'
+      + '<div style="display:none" aria-hidden="true"><label>Leave empty<input type="text" name="hf_hpot" tabindex="-1" autocomplete="off" value=""></label></div>'
+      + stepsHtml
+      + '<div class="kcf-callrow"><a href="tel:978-351-2195">' + PHONE_SVG + 'Call 978-351-2195</a></div>'
+      + '</form>';
+
+    var form = slot.querySelector('form');
+    var steps = [].slice.call(form.querySelectorAll('.kcf-step'));
+    var bars = [].slice.call(form.querySelectorAll('.kcf-bar span'));
+    var ans = { job: '', timing: '', zip: '', town: '' };
+    var offer = null;
+    var idx = 0;
+
+    // Prefetch open estimate days so the booking step is instant.
+    var days = null;
+    fetch('/api/estimate-visit').then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { if (j && j.ok && Array.isArray(j.days) && j.days.length) days = j.days; })
+      .catch(function () { });
+
+    function q(sel) { return form.querySelector('[data-kcf="' + sel + '"]'); }
+    function go(n) {
+      idx = Math.max(0, Math.min(n, steps.length - 1));
+      steps.forEach(function (s, i) { s.classList.toggle('on', i === idx); });
+      bars.forEach(function (b, i) { b.classList.toggle('on', i <= idx); });
+      var key = steps[idx].getAttribute('data-key');
+      if (key === 'zip') setTimeout(function () { q('zip').focus(); }, 280);
+      if (key === 'contact') setTimeout(function () { q('name').focus(); }, 280);
+    }
+
+    steps.forEach(function (step, si) {
+      [].slice.call(step.querySelectorAll('.kcf-chip')).forEach(function (ch) {
+        ch.addEventListener('click', function () {
+          [].slice.call(step.querySelectorAll('.kcf-chip')).forEach(function (x) { x.classList.remove('sel'); });
+          ch.classList.add('sel');
+          ans[step.getAttribute('data-key')] = ch.getAttribute('data-v');
+          setTimeout(function () { go(si + 1); }, 160);
+        });
+      });
+      var back = step.querySelector('.kcf-back');
+      if (back) back.addEventListener('click', function () { go(si - 1); });
+    });
+
+    var zipEl = q('zip'), townEl = q('ziptown');
+    zipEl.addEventListener('input', function () {
+      var v = zipEl.value.replace(/\D/g, '').slice(0, 5);
+      zipEl.value = v; zipEl.classList.remove('kcf-err');
+      if (v.length === 5) {
+        ans.zip = v; ans.town = ZIPMAP[v] || '';
+        townEl.textContent = ans.town ? ans.town + ' ✓' : '';
+        var here = idx;
+        setTimeout(function () { if (idx === here) go(here + 1); }, ans.town ? 420 : 160);
+      } else { townEl.textContent = ''; ans.zip = ''; ans.town = ''; }
+    });
+    zipEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); if (zipEl.value.length === 5) go(idx + 1); else zipEl.classList.add('kcf-err'); }
+    });
+
+    var phoneEl = q('phone');
+    phoneEl.addEventListener('input', function () {
+      var d = phoneEl.value.replace(/\D/g, '').slice(0, 10), out = d;
+      if (d.length > 6) out = d.slice(0, 3) + '-' + d.slice(3, 6) + '-' + d.slice(6);
+      else if (d.length > 3) out = d.slice(0, 3) + '-' + d.slice(3);
+      phoneEl.value = out; phoneEl.classList.remove('kcf-err');
+    });
+    q('name').addEventListener('input', function () { q('name').classList.remove('kcf-err'); });
+
+    function resolveService() {
+      if (cfg.serviceStep) return ans.job === 'Paver Sealing' ? 'Paver Sealing' : 'Pressure Washing';
+      return cfg.service || 'Pressure Washing';
+    }
+    function resolveValue() {
+      if (cfg.serviceStep) return ans.job === 'Paver Sealing' ? 400 : 150;
+      return cfg.value || 150;
+    }
+
+    var lead = null; // remembered for the booking call
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (steps[idx].getAttribute('data-key') !== 'contact') return;
+      var btn = q('submit');
+      if (btn.disabled) return;
+      var name = (q('name').value || '').trim();
+      var phone = phoneEl.value || '';
+      var ok = true;
+      if (!name) { q('name').classList.add('kcf-err'); ok = false; }
+      if (phone.replace(/\D/g, '').length < 10) { phoneEl.classList.add('kcf-err'); ok = false; }
+      if (!ok) { (name ? phoneEl : q('name')).focus(); return; }
+
+      var parts = name.split(/\s+/);
+      var lines = [cfg.prefix];
+      if (ans.job) lines.push('- ' + jobKey + ': ' + ans.job);
+      if (ans.timing) lines.push('- Timing: ' + ans.timing);
+      if (ans.zip) lines.push('- Location: ' + (ans.town ? ans.town + ' (' + ans.zip + ')' : 'ZIP ' + ans.zip));
+      if (offer) lines.push('- Offer: ' + offer);
+
+      var payload = {
+        first: parts.shift() || '',
+        last: parts.join(' ') || '(not provided)',
+        phone: phone, email: '',
+        service: resolveService(),
+        message: lines.join('\n'),
+        contactPref: 'Phone Call',
+        source: offer ? (cfg.source + ' | Offer: ' + offer) : cfg.source,
+        kc_hpot_xyz: (new FormData(form).get('hf_hpot') || '').toString(),
+        attachments: []
+      };
+      lead = payload;
+
+      var origText = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Sending...';
+      q('fail').style.display = 'none';
+
+      fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(function (r) { if (!r.ok) throw new Error('fail'); return r.json(); })
+        .then(function () {
+          try {
+            if (window.gtag) {
+              var ph = (payload.phone || '').replace(/\D/g, '');
+              gtag('event', 'conversion', { send_to: 'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD', value: resolveValue(), currency: 'USD', user_data: { phone_number: ph.length >= 10 ? '+1' + ph.slice(-10) : undefined, address: { first_name: payload.first || undefined } } });
+              gtag('event', 'generate_lead', { lead_source: payload.source || 'Website' });
+            }
+            if (window.fbq) fbq('track', 'Lead');
+          } catch (_) { }
+          showBooking();
+        })
+        .catch(function () {
+          btn.disabled = false; btn.textContent = origText;
+          q('fail').style.display = 'block';
+        });
+    });
+
+    function showDone(extraHtml) {
+      form.innerHTML = '<div class="kcf-done"><div class="kcf-done-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#e2c47a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>' + extraHtml + '</div>';
+    }
+
+    function showBooking() {
+      if (!days || !days.length) {
+        showDone('<div class="kcf-done-h">Got it!</div><div class="kcf-done-p">We typically respond within the hour. Keep an eye on your texts!</div>');
+        return;
+      }
+      form.innerHTML = '<div class="kcf-done"><div class="kcf-done-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#e2c47a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'
+        + '<div class="kcf-done-h">Request received!</div>'
+        + '<div class="kcf-done-p">Want to skip the phone tag? Grab a day for your <b>free in-person estimate</b> right now:</div>'
+        + '<div class="kcf-days">'
+        + days.slice(0, 3).map(function (d, i) {
+          var short = new Date(d.date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+          return '<button type="button" class="kcf-day" data-i="' + i + '"><span class="d">' + esc(short) + '</span><span class="t">' + esc(d.time) + '</span></button>';
+        }).join('')
+        + '</div>'
+        + '<button type="button" class="kcf-skip">No thanks, just text me</button>'
+        + '<div class="kcf-fail" data-kcf="bfail">That one just got taken. Pick another day or we\'ll text you.</div>'
+        + '</div>';
+      [].slice.call(form.querySelectorAll('.kcf-day')).forEach(function (b) {
+        b.addEventListener('click', function () { book(days[Number(b.getAttribute('data-i'))], b); });
+      });
+      form.querySelector('.kcf-skip').addEventListener('click', function () {
+        showDone('<div class="kcf-done-h">Got it!</div><div class="kcf-done-p">We typically respond within the hour. Keep an eye on your texts!</div>');
+      });
+    }
+
+    function book(day, btnEl) {
+      if (!lead || !day) return;
+      [].slice.call(form.querySelectorAll('.kcf-day')).forEach(function (b) { b.disabled = true; });
+      btnEl.querySelector('.t').textContent = 'Booking...';
+      fetch('/api/estimate-visit', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ first: lead.first, last: lead.last, phone: lead.phone, service: lead.service, date: day.date, time: day.time })
+      })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          if (res.ok && res.j && res.j.ok) {
+            try { if (window.gtag) gtag('event', 'book_estimate_visit', { lead_source: cfg.source }); } catch (_) { }
+            showDone('<div class="kcf-done-h">You\'re on the schedule!</div><div class="kcf-done-p"><b>' + esc(res.j.label || (day.label + ' at ' + day.time)) + '</b><br>It\'s locked in. A confirmation text is on its way, and Eric will text when he\'s on the way over.</div>');
+          } else if (res.j && res.j.error === 'slot_taken') {
+            days = days.filter(function (d) { return d.date !== day.date; });
+            fetch('/api/estimate-visit').then(function (r) { return r.ok ? r.json() : null; })
+              .then(function (j) { if (j && j.ok && j.days) days = j.days; showBooking(); var bf = form.querySelector('[data-kcf="bfail"]'); if (bf) bf.style.display = 'block'; })
+              .catch(function () { showBooking(); });
+          } else { throw new Error('fail'); }
+        })
+        .catch(function () {
+          showDone('<div class="kcf-done-h">Got it!</div><div class="kcf-done-p">We could not lock the day automatically, but your request went through. We typically respond within the hour!</div>');
+        });
+    }
+
+    inst = {
+      armOffer: function (name, btnText) {
+        offer = name || null;
+        var box = q('offer');
+        if (box) {
+          box.style.display = 'flex';
+          box.innerHTML = CHECK_SVG + '<span>You\'re claiming <b>' + esc(name) + '</b></span><button type="button" aria-label="Remove this offer">&times;</button>';
+          box.querySelector('button').addEventListener('click', function () { inst.clearOffer(); });
+        }
+        var sb = q('submit'); if (sb && btnText) sb.textContent = btnText;
+        var nm = q('name'); if (nm) setTimeout(function () { nm.focus(); }, 650);
+      },
+      clearOffer: function () {
+        offer = null;
+        var box = q('offer'); if (box) { box.style.display = 'none'; box.innerHTML = ''; }
+        var sb = q('submit'); if (sb) sb.textContent = cfg.submitLabel;
+      }
+    };
+  }
+
+  window.KCForm = {
+    armOffer: function (n, b) { if (inst) inst.armOffer(n, b); },
+    clearOffer: function () { if (inst) inst.clearOffer(); }
+  };
+
+  function init() { [].slice.call(document.querySelectorAll('.kc-form-slot')).forEach(mount); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
