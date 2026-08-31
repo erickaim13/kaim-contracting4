@@ -834,8 +834,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       <p class="sub">The green film on your siding and the black streaks on your roof are quietly wearing down your biggest investment. One soft wash and your home looks sharp, cared for, and protected again. House washing from $350 with a free walkway cleaning, gentle enough to be safe around kids, pets, and plants.</p>
       <div class="trust"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Free Estimates</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Licensed &amp; Insured</span></div>
     </div>
-    <div class="kc-form-slot" data-kc='{"service": "Pressure Washing", "source": "Pressure Washing Service Page Hero", "value": 150, "prefix": "Pressure Washing page quick quote:", "jobKey": "Looking for", "jobQ": "What are you looking to have done?", "jobs": ["House Wash", "Roof Cleaning", "Driveway or Walkway", "Patio or Pool Deck", "Deck or Stairs", "Something Else"], "submitLabel": "Get Your Free Estimate Now!", "title": "Get a Free Pressure Wash Quote"}'></div>
-<script src="js/kc-form.js?v=1" defer></script>
+    <div class="kc-cta-card" style="background:rgba(13,30,53,.72);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:30px 26px 24px;box-shadow:0 28px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.09);text-align:center;color:#fff;width:100%"><div style="font-family:'Oswald',sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#e2c47a;margin-bottom:8px;line-height:1.25">Get a Free Pressure Wash Quote</div><p style="font-size:13.5px;color:rgba(255,255,255,.68);line-height:1.55;margin:0 0 18px">Takes about 20 seconds, and you can pick a day for your free in-person estimate at the end.</p><a href="quote.html?src=pressure-washing" style="display:block;background:#c9a84c;color:#0d1e35;border-radius:10px;padding:16px;font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;margin-bottom:10px">Get My Free Quote &rarr;</a><a href="tel:978-351-2195" style="display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.45);color:#e2c47a;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:11px 10px;border-radius:8px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Call 978-351-2195</a><div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.55)">Free estimates &middot; Licensed &amp; Insured &middot; No spam, ever</div></div>
   </div>
 </section>
 <section class="svc-block svc-block-dark pw-lasts">
@@ -1107,10 +1106,8 @@ function pwSelectOffer(kind){
     free:{name:'Free Walkway With Any House Wash',msg:"I'd like to claim the Free Walkway offer (free front walkway or step cleaning with my house wash).",btn:'Claim My Free Walkway'},
     bundle:{name:'Patio + House Wash Bundle (save 15%)',msg:"I'd like to claim the Patio + House Wash Bundle and save 15% on the whole job.",btn:'Get My 15% Bundle'}
   };
-  var o=offers[kind]; if(!o||!window.KCForm)return;
-  KCForm.armOffer(o.name,o.btn);
-  var top=document.getElementById('top-form');
-  if(top)top.scrollIntoView({behavior:'smooth',block:'start'});
+  var o=offers[kind]; if(!o)return;
+  location.href='quote.html?'+''+'src=pressure-washing&offer='+encodeURIComponent(o.name);
 }
 </script>
 

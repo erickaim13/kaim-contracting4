@@ -46,6 +46,7 @@ export default async function handler(req, res) {
   const phone = sanitize(body.phone, 30);
   const email = sanitize(body.email, 120);
   const service = sanitize(body.service, 60);
+  const address = sanitize(body.address, 160);
   // Calculators post their project detail under `notes`; the hero/service forms
   // use `message`. Accept either so calculator context isn't silently dropped.
   const message = sanitize(body.message || body.notes, 2000);
@@ -84,7 +85,7 @@ export default async function handler(req, res) {
 
   try {
     await intakeLead({
-      first, last, phone, email, service, message, contactPref,
+      first, last, phone, email, address, service, message, contactPref,
       leadSource, attachments,
       attribution: Object.keys(attribution).length ? attribution : null
     });

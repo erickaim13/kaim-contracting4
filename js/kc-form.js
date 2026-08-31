@@ -1,66 +1,38 @@
-/* Kaim Contracting shared quick-quote wizard.
+/* Kaim Contracting quote form (v2 - classic single-screen form).
  *
- * ONE form implementation for every page. A page drops in:
- *   <div class="kc-form-slot" data-kc='{ ...config }'></div>
- *   <script src="js/kc-form.js?v=1" defer></script>
- * and this script renders the multi-step wizard (job/service -> timing ->
- * ZIP -> contact), posts to /api/lead, then offers three open days to
- * self-book the free in-person estimate via /api/estimate-visit.
+ * Lives on quote.html only; every other page shows a "Get My Free Quote"
+ * button that links here. Renders into:
+ *   <div class="kc-form-slot" data-kc='{ "source": "Quote Page" }'></div>
+ *   <script src="js/kc-form.js?v=2" defer></script>
  *
- * Config keys:
- *   title, kicker            card header
- *   service                  backend service ('Paver Sealing'|'Pressure Washing')
- *   source                   lead source string
- *   value                    Google Ads conversion value
- *   prefix                   first line of the CRM message
- *   jobKey, jobQ, jobs       optional first step (array of chip labels)
- *   serviceStep: true        homepage/quote variant: pick from all services
- *   submitLabel              submit button text
- * Pages with offer cards call KCForm.armOffer(name, btnText) / KCForm.clearOffer().
+ * Fields: service, name, phone, email (optional), property address, note.
+ * On submit -> POST /api/lead, then offers three open days to self-book the
+ * free in-person estimate via /api/estimate-visit (address rides along onto
+ * the calendar entry).
+ *
+ * URL params: ?service=Paver%20Sealing preselects the dropdown,
+ *             ?src=paver-sealing tags the lead source with the page it came from,
+ *             ?offer=... arms an offer banner (from the deal cards).
  */
 (function () {
   'use strict';
 
-  var ZIPMAP = { '01844': 'Methuen, MA', '01810': 'Andover, MA', '01845': 'North Andover, MA', '01840': 'Lawrence, MA', '01841': 'Lawrence, MA', '01843': 'Lawrence, MA', '01830': 'Haverhill, MA', '01832': 'Haverhill, MA', '01835': 'Haverhill, MA', '01826': 'Dracut, MA', '01850': 'Lowell, MA', '01851': 'Lowell, MA', '01852': 'Lowell, MA', '01854': 'Lowell, MA', '01876': 'Tewksbury, MA', '01824': 'Chelmsford, MA', '01834': 'Groveland, MA', '01833': 'Georgetown, MA', '01860': 'Merrimac, MA', '01913': 'Amesbury, MA', '01985': 'West Newbury, MA', '01951': 'Newbury, MA', '01950': 'Newburyport, MA', '01952': 'Salisbury, MA', '03079': 'Salem, NH', '03087': 'Windham, NH', '03076': 'Pelham, NH', '03811': 'Atkinson, NH', '03841': 'Hampstead, NH', '03865': 'Plaistow, NH', '03038': 'Derry, NH', '03053': 'Londonderry, NH', '03101': 'Manchester, NH', '03102': 'Manchester, NH', '03103': 'Manchester, NH', '03104': 'Manchester, NH', '03109': 'Manchester, NH', '03110': 'Manchester, NH' };
-
-  var ICONS = {
-    'House Washing': '<path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>',
-    'Roof Cleaning': '<path d="M2 12L12 3l10 9"/><path d="M17 6.8V4h3v5.5"/>',
-    'Driveway or Walkway': '<path d="M6 21L10 3"/><path d="M18 21L14 3"/><line x1="12" y1="8" x2="12" y2="10"/><line x1="12" y1="14" x2="12" y2="16"/>',
-    'Patio or Pool Deck': '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="12" y1="3" x2="12" y2="21"/>',
-    'Deck or Fence': '<path d="M5 21V6l2-2 2 2v15"/><path d="M15 21V6l2-2 2 2v15"/><line x1="3" y1="11" x2="21" y2="11"/><line x1="3" y1="17" x2="21" y2="17"/>',
-    'Paver Sealing': '<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/>',
-    'Something Else': '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>'
-  };
-  ICONS['House Wash'] = ICONS['House Washing'];
-  ICONS['Deck or Stairs'] = ICONS['Deck or Fence'];
-  ICONS['Patio'] = ICONS['Patio or Pool Deck'];
-  ICONS['Pool Deck'] = ICONS['Patio or Pool Deck'];
-  ICONS['Walkway'] = ICONS['Driveway or Walkway'];
-  ICONS['Driveway'] = ICONS['Driveway or Walkway'];
-  var SERVICES = ['House Washing', 'Roof Cleaning', 'Driveway or Walkway', 'Patio or Pool Deck', 'Deck or Fence', 'Paver Sealing', 'Something Else'];
+  var SERVICES = ['House Washing', 'Roof Cleaning', 'Driveway or Walkway', 'Patio or Pool Deck',
+    'Deck or Fence', 'Paver Sealing', 'Oxidation Removal', 'Gutter Brightening', 'Something Else'];
 
   var CSS = '.kcf{background:rgba(13,30,53,.72);-webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:26px 22px 18px;box-shadow:0 28px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.09);width:100%;color:#fff;font-family:"Source Sans 3",sans-serif;text-align:left}'
     + '.kcf-title{font-family:Oswald,sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#e2c47a;margin:0 0 4px;line-height:1.2;text-align:center}'
-    + '.kcf-kicker{font-size:12.5px;color:rgba(255,255,255,.55);text-align:center;margin-bottom:12px}'
-    + '.kcf-bar{display:flex;gap:6px;margin-bottom:14px;justify-content:center}.kcf-bar span{flex:1;max-width:44px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);transition:background .25s}.kcf-bar span.on{background:#c9a84c}'
-    + '.kcf-step{display:none}.kcf-step.on{display:flex;flex-direction:column;min-height:300px;position:relative;padding-top:24px;animation:kcfIn .28s ease}.kcf-step.on[data-key="job"]{padding-top:0}'
-    + '@keyframes kcfIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}'
-    + '.kcf-cheer{font-family:Oswald,sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#e2c47a;text-align:center;margin-bottom:8px}'
-    + '.kcf-q{font-size:16.5px;font-weight:700;text-align:center;margin-bottom:12px;line-height:1.35}'
-    + '.kcf-grid{display:grid;grid-template-columns:1fr;gap:7px;flex:1;grid-auto-rows:minmax(34px,1fr)}'
-    + '.kcf-grid-2{grid-template-columns:1fr 1fr}'
-    + '.kcf-chip{display:flex;align-items:center;justify-content:flex-start;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:8px 16px;color:rgba(255,255,255,.9);font-family:Oswald,sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .15s;text-align:left;line-height:1.3;width:100%}'
-    + '.kcf-chip svg{width:17px;height:17px;color:#e2c47a;flex-shrink:0}'
-    + '.kcf-chip:hover{border-color:#c9a84c;background:rgba(201,168,76,.1)}.kcf-chip.sel{border-color:#c9a84c;background:rgba(201,168,76,.18);color:#e2c47a}'
-    + '.kcf-back{position:absolute;top:0;left:0;background:none;border:none;color:rgba(255,255,255,.55);font-size:12px;cursor:pointer;padding:2px 0;display:inline-flex;align-items:center;gap:4px;font-family:"Source Sans 3",sans-serif;z-index:3}.kcf-back:hover{color:#e2c47a}'
-    + '.kcf input{width:100%;min-height:50px;padding:13px 14px;border:1px solid rgba(255,255,255,.16);border-radius:10px;font-family:"Source Sans 3",sans-serif;font-size:16px;color:#fff;background:rgba(255,255,255,.07);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s,background .15s,box-shadow .15s}'
-    + '.kcf input::placeholder{color:rgba(255,255,255,.5)}'
-    + '.kcf input:focus{border-color:#c9a84c;background:rgba(255,255,255,.11);box-shadow:0 0 0 3px rgba(201,168,76,.22)}'
-    + '.kcf input.kcf-err{border-color:#e06a5a;box-shadow:0 0 0 3px rgba(224,106,90,.18)}'
+    + '.kcf-kicker{font-size:12.5px;color:rgba(255,255,255,.55);text-align:center;margin-bottom:16px}'
     + '.kcf-field{margin-bottom:10px}'
-    + '.kcf-zip-town{min-height:20px;font-size:13.5px;color:#e2c47a;font-weight:700;text-align:center;margin-top:10px}'
-    + '.kcf-hint{margin-top:auto;padding-top:10px;text-align:center;font-size:12px;color:rgba(255,255,255,.55)}'
+    + '.kcf input,.kcf select,.kcf textarea{width:100%;min-height:50px;padding:13px 14px;border:1px solid rgba(255,255,255,.16);border-radius:10px;font-family:"Source Sans 3",sans-serif;font-size:16px;color:#fff;background:rgba(255,255,255,.07);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s,background .15s,box-shadow .15s}'
+    + '.kcf textarea{min-height:64px;resize:vertical}'
+    + '.kcf input::placeholder,.kcf textarea::placeholder{color:rgba(255,255,255,.5)}'
+    + '.kcf input:focus,.kcf select:focus,.kcf textarea:focus{border-color:#c9a84c;background:rgba(255,255,255,.11);box-shadow:0 0 0 3px rgba(201,168,76,.22)}'
+    + '.kcf .kcf-err{border-color:#e06a5a!important;box-shadow:0 0 0 3px rgba(224,106,90,.18)!important}'
+    + '.kcf-selwrap{position:relative}'
+    + '.kcf-selwrap svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:#e2c47a;pointer-events:none}'
+    + '.kcf select{cursor:pointer}.kcf select.kcf-empty{color:rgba(255,255,255,.5)}'
+    + '.kcf select option{background:#0d1e35;color:#fff}'
     + '.kcf-cta{width:100%;background:#c9a84c;color:#0d1e35;border:none;border-radius:10px;padding:15px;font-family:Oswald,sans-serif;font-size:13.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin-top:6px;transition:background .15s,transform .15s}'
     + '.kcf-cta:hover{background:#e2c47a;transform:translateY(-1px)}.kcf-cta:disabled{opacity:.7;cursor:default;transform:none}'
     + '.kcf-foot{margin-top:10px;text-align:center;font-size:12px;color:rgba(255,255,255,.6)}'
@@ -77,18 +49,14 @@
     + '.kcf-day:hover{border-color:#c9a84c;background:rgba(201,168,76,.12)}.kcf-day:disabled{opacity:.6;cursor:default}'
     + '.kcf-day .d{font-weight:700;font-size:14.5px}.kcf-day .t{font-family:Oswald,sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#e2c47a;white-space:nowrap}'
     + '.kcf-skip{display:block;margin:12px auto 2px;background:none;border:none;color:rgba(255,255,255,.55);font-size:12.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:"Source Sans 3",sans-serif}.kcf-skip:hover{color:#e2c47a}'
-    + '@media(max-width:640px){.kcf{max-width:420px;margin:0 auto;padding:20px 16px 14px}.kcf-title{font-size:16px}}';
+    + '@media(max-width:640px){.kcf{padding:20px 16px 14px}.kcf-title{font-size:16px}}';
 
   var PHONE_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>';
   var CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 
-  function chipSvg(label) {
-    var p = ICONS[label];
-    return p ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>' : '';
-  }
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
-  var inst = null; // single form per page today
+  var inst = null;
 
   function mount(slot) {
     var cfg;
@@ -96,110 +64,53 @@
     cfg.title = cfg.title || 'Get Your Free Estimate';
     cfg.kicker = cfg.kicker || 'Takes about 20 seconds';
     cfg.submitLabel = cfg.submitLabel || 'Get My Free Estimate';
-    cfg.prefix = cfg.prefix || 'Website quick quote:';
-    cfg.source = cfg.source || 'Website (kaimcontracting.com)';
+    cfg.source = cfg.source || 'Quote Page';
 
     if (!document.getElementById('kcf-css')) {
       var st = document.createElement('style'); st.id = 'kcf-css'; st.textContent = CSS;
       document.head.appendChild(st);
     }
 
-    var timingChips = ['As soon as possible', 'In the next few weeks', 'Sometime this season', 'Just looking for pricing'];
-    var stepsHtml = '';
-    var firstQ, firstChips, jobKey;
-    if (cfg.serviceStep) {
-      jobKey = 'Looking for';
-      firstQ = cfg.jobQ || 'What do you need done?';
-      firstChips = SERVICES;
-    } else {
-      jobKey = cfg.jobKey || 'Looking for';
-      firstQ = cfg.jobQ;
-      firstChips = cfg.jobs || null;
-    }
-    var nSteps = (firstChips ? 1 : 0) + 3;
-
-    if (firstChips) {
-      stepsHtml += '<div class="kcf-step on" data-key="job"><div class="kcf-cheer">Free estimate &middot; no obligation</div><div class="kcf-q">' + esc(firstQ) + '</div><div class="kcf-grid' + (!cfg.serviceStep && firstChips.length === 4 ? ' kcf-grid-2' : '') + '">'
-        + firstChips.map(function (c) { return '<button type="button" class="kcf-chip" data-v="' + esc(c) + '">' + chipSvg(c) + esc(c).replace(/ or /g, ' &amp; ') + '</button>'; }).join('')
-        + '</div></div>';
-    }
-    stepsHtml += '<div class="kcf-step' + (firstChips ? '' : ' on') + '" data-key="timing">'
-      + (firstChips ? '<button type="button" class="kcf-back">&larr; Back</button><div class="kcf-cheer">Good choice &middot; two quick questions left</div>' : '<div class="kcf-cheer">Free estimate &middot; no obligation</div>')
-      + '<div class="kcf-q">How soon are you hoping to get it done?</div><div class="kcf-grid">'
-      + timingChips.map(function (c) { return '<button type="button" class="kcf-chip" data-v="' + esc(c) + '">' + esc(c) + '</button>'; }).join('')
-      + '</div></div>';
-    stepsHtml += '<div class="kcf-step" data-key="zip"><button type="button" class="kcf-back">&larr; Back</button><div class="kcf-cheer">Almost there</div><div class="kcf-q">What\'s the property ZIP code?</div>'
-      + '<input type="text" data-kcf="zip" inputmode="numeric" pattern="[0-9]*" maxlength="5" placeholder="01844" autocomplete="postal-code" aria-label="ZIP code"><div class="kcf-zip-town" data-kcf="ziptown"></div>'
-      + '<div class="kcf-hint">Serving the Merrimack Valley &amp; Southern NH</div></div>';
-    stepsHtml += '<div class="kcf-step" data-key="contact"><button type="button" class="kcf-back">&larr; Back</button><div class="kcf-cheer">Last one, promise</div><div class="kcf-q">Where should we send your free estimate?</div>'
-      + '<div class="kcf-field"><input type="text" data-kcf="name" placeholder="Your name" autocomplete="name" aria-label="Your name"></div>'
-      + '<div class="kcf-field"><input type="tel" data-kcf="phone" placeholder="Phone number" autocomplete="tel" inputmode="tel" aria-label="Phone number"></div>'
-      + '<button type="submit" class="kcf-cta" data-kcf="submit">' + esc(cfg.submitLabel) + '</button>'
-      + '<div class="kcf-fail" data-kcf="fail">Could not send. Please try again or <a href="tel:978-351-2195">call 978-351-2195</a>.</div>'
-      + '<div class="kcf-foot">We typically respond within the hour. No spam, ever.</div></div>';
-
-    var bar = ''; for (var i = 0; i < nSteps; i++) bar += '<span' + (i === 0 ? ' class="on"' : '') + '></span>';
+    var params = new URLSearchParams(location.search);
+    var preService = params.get('service') || '';
+    var srcPage = (params.get('src') || '').replace(/[^a-z0-9-]/gi, '').slice(0, 40);
+    var urlOffer = (params.get('offer') || '').slice(0, 120);
 
     slot.innerHTML = '<form class="kcf" novalidate autocomplete="on">'
       + '<div class="kcf-title">' + esc(cfg.title) + '</div>'
       + '<div class="kcf-kicker">' + esc(cfg.kicker) + '</div>'
       + '<div class="kcf-offer" data-kcf="offer"></div>'
-      + '<div class="kcf-bar" aria-hidden="true">' + bar + '</div>'
       + '<div style="display:none" aria-hidden="true"><label>Leave empty<input type="text" name="hf_hpot" tabindex="-1" autocomplete="off" value=""></label></div>'
-      + stepsHtml
+      + '<div class="kcf-field"><div class="kcf-selwrap"><select data-kcf="service" aria-label="What do you need done?" class="kcf-empty">'
+      + '<option value="" disabled selected>What do you need done?</option>'
+      + SERVICES.map(function (s) { return '<option' + (s === preService ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('')
+      + '</select><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div></div>'
+      + '<div class="kcf-field"><input type="text" data-kcf="name" placeholder="Your name" autocomplete="name" aria-label="Your name"></div>'
+      + '<div class="kcf-field"><input type="tel" data-kcf="phone" placeholder="Phone number" autocomplete="tel" inputmode="tel" aria-label="Phone number"></div>'
+      + '<div class="kcf-field"><input type="email" data-kcf="email" placeholder="Email (optional)" autocomplete="email" aria-label="Email"></div>'
+      + '<div class="kcf-field"><input type="text" data-kcf="address" placeholder="Property address" autocomplete="street-address" aria-label="Property address"></div>'
+      + '<div class="kcf-field"><textarea data-kcf="note" rows="2" placeholder="Anything we should know? (optional)" aria-label="Optional message"></textarea></div>'
+      + '<button type="submit" class="kcf-cta" data-kcf="submit">' + esc(cfg.submitLabel) + '</button>'
+      + '<div class="kcf-fail" data-kcf="fail">Could not send. Please try again or <a href="tel:978-351-2195">call 978-351-2195</a>.</div>'
+      + '<div class="kcf-foot">We typically respond within the hour. No spam, ever.</div>'
       + '<div class="kcf-callrow"><a href="tel:978-351-2195">' + PHONE_SVG + 'Call 978-351-2195</a></div>'
       + '</form>';
 
     var form = slot.querySelector('form');
-    var steps = [].slice.call(form.querySelectorAll('.kcf-step'));
-    var bars = [].slice.call(form.querySelectorAll('.kcf-bar span'));
-    var ans = { job: '', timing: '', zip: '', town: '' };
+    function q(sel) { return form.querySelector('[data-kcf="' + sel + '"]'); }
     var offer = null;
-    var idx = 0;
+
+    if (preService && SERVICES.indexOf(preService) > -1) q('service').classList.remove('kcf-empty');
+    q('service').addEventListener('change', function () {
+      q('service').classList.remove('kcf-err');
+      q('service').classList.toggle('kcf-empty', !q('service').value);
+    });
 
     // Prefetch open estimate days so the booking step is instant.
     var days = null;
     fetch('/api/estimate-visit').then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) { if (j && j.ok && Array.isArray(j.days) && j.days.length) days = j.days; })
       .catch(function () { });
-
-    function q(sel) { return form.querySelector('[data-kcf="' + sel + '"]'); }
-    function go(n) {
-      idx = Math.max(0, Math.min(n, steps.length - 1));
-      steps.forEach(function (s, i) { s.classList.toggle('on', i === idx); });
-      bars.forEach(function (b, i) { b.classList.toggle('on', i <= idx); });
-      var key = steps[idx].getAttribute('data-key');
-      if (key === 'zip') setTimeout(function () { q('zip').focus(); }, 280);
-      if (key === 'contact') setTimeout(function () { q('name').focus(); }, 280);
-    }
-
-    steps.forEach(function (step, si) {
-      [].slice.call(step.querySelectorAll('.kcf-chip')).forEach(function (ch) {
-        ch.addEventListener('click', function () {
-          [].slice.call(step.querySelectorAll('.kcf-chip')).forEach(function (x) { x.classList.remove('sel'); });
-          ch.classList.add('sel');
-          ans[step.getAttribute('data-key')] = ch.getAttribute('data-v');
-          setTimeout(function () { go(si + 1); }, 160);
-        });
-      });
-      var back = step.querySelector('.kcf-back');
-      if (back) back.addEventListener('click', function () { go(si - 1); });
-    });
-
-    var zipEl = q('zip'), townEl = q('ziptown');
-    zipEl.addEventListener('input', function () {
-      var v = zipEl.value.replace(/\D/g, '').slice(0, 5);
-      zipEl.value = v; zipEl.classList.remove('kcf-err');
-      if (v.length === 5) {
-        ans.zip = v; ans.town = ZIPMAP[v] || '';
-        townEl.textContent = ans.town ? ans.town + ' ✓' : '';
-        var here = idx;
-        setTimeout(function () { if (idx === here) go(here + 1); }, ans.town ? 420 : 160);
-      } else { townEl.textContent = ''; ans.zip = ''; ans.town = ''; }
-    });
-    zipEl.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') { e.preventDefault(); if (zipEl.value.length === 5) go(idx + 1); else zipEl.classList.add('kcf-err'); }
-    });
 
     var phoneEl = q('phone');
     phoneEl.addEventListener('input', function () {
@@ -208,46 +119,47 @@
       else if (d.length > 3) out = d.slice(0, 3) + '-' + d.slice(3);
       phoneEl.value = out; phoneEl.classList.remove('kcf-err');
     });
-    q('name').addEventListener('input', function () { q('name').classList.remove('kcf-err'); });
+    ['name', 'email', 'address', 'note'].forEach(function (id) {
+      q(id).addEventListener('input', function () { q(id).classList.remove('kcf-err'); });
+    });
 
-    function resolveService() {
-      if (cfg.serviceStep) return ans.job === 'Paver Sealing' ? 'Paver Sealing' : 'Pressure Washing';
-      return cfg.service || 'Pressure Washing';
-    }
-    function resolveValue() {
-      if (cfg.serviceStep) return ans.job === 'Paver Sealing' ? 400 : 150;
-      return cfg.value || 150;
-    }
-
-    var lead = null; // remembered for the booking call
+    var lead = null;
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      if (steps[idx].getAttribute('data-key') !== 'contact') return;
       var btn = q('submit');
       if (btn.disabled) return;
+      var svc = q('service').value;
       var name = (q('name').value || '').trim();
       var phone = phoneEl.value || '';
-      var ok = true;
-      if (!name) { q('name').classList.add('kcf-err'); ok = false; }
-      if (phone.replace(/\D/g, '').length < 10) { phoneEl.classList.add('kcf-err'); ok = false; }
-      if (!ok) { (name ? phoneEl : q('name')).focus(); return; }
+      var email = (q('email').value || '').trim();
+      var address = (q('address').value || '').trim();
+      var note = (q('note').value || '').trim();
+
+      var bad = null;
+      if (!svc) { q('service').classList.add('kcf-err'); bad = bad || q('service'); }
+      if (!name) { q('name').classList.add('kcf-err'); bad = bad || q('name'); }
+      if (phone.replace(/\D/g, '').length < 10) { phoneEl.classList.add('kcf-err'); bad = bad || phoneEl; }
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { q('email').classList.add('kcf-err'); bad = bad || q('email'); }
+      if (!address) { q('address').classList.add('kcf-err'); bad = bad || q('address'); }
+      if (bad) { bad.focus(); return; }
 
       var parts = name.split(/\s+/);
-      var lines = [cfg.prefix];
-      if (ans.job) lines.push('- ' + jobKey + ': ' + ans.job);
-      if (ans.timing) lines.push('- Timing: ' + ans.timing);
-      if (ans.zip) lines.push('- Location: ' + (ans.town ? ans.town + ' (' + ans.zip + ')' : 'ZIP ' + ans.zip));
+      var lines = ['Quote page request:', '- Looking for: ' + svc, '- Address: ' + address];
+      if (note) lines.push('- Note: ' + note);
       if (offer) lines.push('- Offer: ' + offer);
+
+      var source = cfg.source + (srcPage ? ' (from ' + srcPage + ')' : '');
+      if (offer) source += ' | Offer: ' + offer;
 
       var payload = {
         first: parts.shift() || '',
         last: parts.join(' ') || '(not provided)',
-        phone: phone, email: '',
-        service: resolveService(),
+        phone: phone, email: email, address: address,
+        service: svc === 'Paver Sealing' ? 'Paver Sealing' : 'Pressure Washing',
         message: lines.join('\n'),
         contactPref: 'Phone Call',
-        source: offer ? (cfg.source + ' | Offer: ' + offer) : cfg.source,
+        source: source,
         kc_hpot_xyz: (new FormData(form).get('hf_hpot') || '').toString(),
         attachments: []
       };
@@ -263,7 +175,8 @@
           try {
             if (window.gtag) {
               var ph = (payload.phone || '').replace(/\D/g, '');
-              gtag('event', 'conversion', { send_to: 'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD', value: resolveValue(), currency: 'USD', user_data: { phone_number: ph.length >= 10 ? '+1' + ph.slice(-10) : undefined, address: { first_name: payload.first || undefined } } });
+              var val = payload.service === 'Paver Sealing' ? 400 : 150;
+              gtag('event', 'conversion', { send_to: 'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD', value: val, currency: 'USD', user_data: { email: payload.email || undefined, phone_number: ph.length >= 10 ? '+1' + ph.slice(-10) : undefined, address: { first_name: payload.first || undefined } } });
               gtag('event', 'generate_lead', { lead_source: payload.source || 'Website' });
             }
             if (window.fbq) fbq('track', 'Lead');
@@ -311,7 +224,7 @@
       btnEl.querySelector('.t').textContent = 'Booking...';
       fetch('/api/estimate-visit', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ first: lead.first, last: lead.last, phone: lead.phone, service: lead.service, date: day.date, time: day.time })
+        body: JSON.stringify({ first: lead.first, last: lead.last, phone: lead.phone, address: lead.address, service: lead.service, date: day.date, time: day.time })
       })
         .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
         .then(function (res) {
@@ -331,27 +244,25 @@
     }
 
     inst = {
-      armOffer: function (name, btnText) {
+      armOffer: function (name) {
         offer = name || null;
         var box = q('offer');
-        if (box) {
+        if (box && offer) {
           box.style.display = 'flex';
-          box.innerHTML = CHECK_SVG + '<span>You\'re claiming <b>' + esc(name) + '</b></span><button type="button" aria-label="Remove this offer">&times;</button>';
+          box.innerHTML = CHECK_SVG + '<span>You\'re claiming <b>' + esc(offer) + '</b></span><button type="button" aria-label="Remove this offer">&times;</button>';
           box.querySelector('button').addEventListener('click', function () { inst.clearOffer(); });
         }
-        var sb = q('submit'); if (sb && btnText) sb.textContent = btnText;
-        var nm = q('name'); if (nm) setTimeout(function () { nm.focus(); }, 650);
       },
       clearOffer: function () {
         offer = null;
         var box = q('offer'); if (box) { box.style.display = 'none'; box.innerHTML = ''; }
-        var sb = q('submit'); if (sb) sb.textContent = cfg.submitLabel;
       }
     };
+    if (urlOffer) inst.armOffer(urlOffer);
   }
 
   window.KCForm = {
-    armOffer: function (n, b) { if (inst) inst.armOffer(n, b); },
+    armOffer: function (n) { if (inst) inst.armOffer(n); },
     clearOffer: function () { if (inst) inst.clearOffer(); }
   };
 

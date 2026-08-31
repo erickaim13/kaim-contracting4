@@ -69,6 +69,7 @@ async function bookVisit(req, res) {
   const last = sanitize(body.last, 60);
   const phone = sanitize(body.phone, 30);
   const service = sanitize(body.service, 60);
+  const address = sanitize(body.address, 160);
   const date = sanitize(body.date, 10);
   const time = sanitize(body.time, 10);
 
@@ -106,7 +107,7 @@ async function bookVisit(req, res) {
     const now = new Date();
     if (!clientRec) {
       clientRec = {
-        id: db._nc++, first, last, phone, email: '', address: '',
+        id: db._nc++, first, last, phone, email: '', address: address || '',
         service, val: 0, source: 'Website Booking', status: 'new',
         prio: 'normal', notes: '', priv: '',
         added: now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
@@ -120,13 +121,14 @@ async function bookVisit(req, res) {
     const isActiveVisit = j => j && j.cid === clientRec.id && j.type === 'Estimate Visit'
       && !['completed', 'done', 'cancelled'].includes(j.status);
     jobRec = db.jobs.find(isActiveVisit) || { id: Date.now(), cid: clientRec.id, crew: '', set_by: 'web' };
+    if (address && !clientRec.address) clientRec.address = address;
     const existing = db.jobs.includes(jobRec);
     Object.assign(jobRec, {
       clientName: `${clientRec.first || first} ${clientRec.last || last}`.trim(),
       type: 'Estimate Visit',
       start: date, end: date,
       time, dur: '1 hour',
-      addr: clientRec.address || '',
+      addr: address || clientRec.address || '',
       notes: `Self-booked on the website. Service requested: ${service || clientRec.service || 'not specified'}`,
       status: 'confirmed',
       color: '#1a9b58',

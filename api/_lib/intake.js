@@ -76,6 +76,7 @@ async function loadTemplate(key, fallback) {
  * @param {string} opts.last             Last name
  * @param {string} opts.phone            Phone (any format; normalized internally)
  * @param {string} opts.email            Email (confirmation sent if present)
+ * @param {string} opts.address          Property address (goes on the client record)
  * @param {string} opts.service          Service label
  * @param {string} opts.message          Free-text notes
  * @param {string} opts.contactPref      Preferred contact method
@@ -92,7 +93,7 @@ async function loadTemplate(key, fallback) {
  */
 export async function intakeLead(opts) {
   const {
-    first = '', last = '', phone = '', email = '', service = '',
+    first = '', last = '', phone = '', email = '', address = '', service = '',
     message = '', contactPref = '', leadSource = '',
     attribution = null,
     attachments = [],
@@ -147,7 +148,7 @@ export async function intakeLead(opts) {
     now = new Date();
     client = {
       id: db._nc++,
-      first, last, phone, email, address: '',
+      first, last, phone, email, address: address || '',
       service,
       val: 0,
       source: leadSource,
