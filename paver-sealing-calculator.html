@@ -53,7 +53,7 @@
 }
 html{scroll-behavior:smooth}
 body{font-family:'Source Sans 3',sans-serif;color:var(--text);background-color:#0d1e35;font-size:16px;line-height:1.65;overflow-x:hidden;width:100%;position:relative}
-body::before{content:'';position:fixed;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:1500px;opacity:.05;pointer-events:none;z-index:0}
+body::before{content:'';position:fixed;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:1500px;opacity:.05;pointer-events:none;z-index:-1}
 
 
 /* NAV */
@@ -420,7 +420,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 
 
 /* CALCULATOR widgets */
-.calc-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px 24px;margin-bottom:24px}
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px 24px;margin:0 auto 24px;max-width:600px}
 .calc-card-title{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text);margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border)}
 .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .calc-field{display:flex;flex-direction:column;margin-bottom:0}
@@ -469,7 +469,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .cw-proof-grid img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
 .cw-proof-grid figcaption{position:absolute;top:9px;left:9px;font-family:'Oswald',sans-serif;font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(7,24,40,.72);padding:4px 9px;border-radius:4px}
 .cw-proof-grid figcaption.after{background:var(--gold);color:var(--teal);font-weight:700}
-.calc-results{background:var(--teal);border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:30px 24px;margin-top:24px;position:relative;overflow:hidden}
+.calc-results{background:var(--teal);border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:30px 24px;margin:24px auto 0;max-width:640px;position:relative;overflow:hidden}
 .calc-results::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%)}
 .calc-results-eyebrow{font-family:'Oswald',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.22em;color:var(--gold);margin-bottom:14px;font-weight:600}
 .calc-big{font-family:'Oswald',sans-serif;font-size:clamp(44px,8vw,64px);font-weight:700;line-height:1;color:var(--gold-l);letter-spacing:.01em;margin-bottom:4px}
@@ -488,7 +488,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .calc-cta{margin-top:38px;text-align:center;padding:0 8px}
 .calc-cta h3{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.04em;margin-bottom:8px}
 .calc-cta h3 span{color:var(--gold-l)}
-.calc-cta p{color:var(--muted);font-size:14.5px;margin-bottom:20px;line-height:1.6}
+.calc-cta p{color:var(--muted);font-size:14.5px;margin:0 auto 20px;line-height:1.6;max-width:470px}
 
 /* Full process section (matches paver-sealing.html) */
 .proc-section{margin-top:44px}
@@ -804,7 +804,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       <div class="calc-cta" id="exact-quote">
         <h3>Want an <span>exact</span> quote?</h3>
         <p>Send it over and pick a day for your free in person estimate, right here. No phone tag, no obligation.</p>
-        <div class="kc-form-slot" style="display:block;max-width:430px;margin:18px auto 0;text-align:left" data-kc='{"title":"Get My Exact Quote","kicker":"Your calculator answers come with it","service":"Paver Sealing","source":"Sand & Seal Calculator","prefix":"Sand & Seal Calculator quote request:","submitLabel":"Send Me My Quote"}'></div>
+        <div class="kc-form-slot" style="display:block;max-width:500px;margin:18px auto 0;text-align:left" data-kc='{"title":"Get My Exact Quote","kicker":"Your calculator answers come with it","service":"Paver Sealing","source":"Sand & Seal Calculator","prefix":"Sand & Seal Calculator quote request:","submitLabel":"Send Me My Quote"}'></div>
         <script src="js/kc-form.js?v=6" defer></script>
       </div>
     </div>
