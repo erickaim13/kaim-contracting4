@@ -974,7 +974,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
     var o=oc.getContext('2d');o.drawImage(cv,0,0,48,36);
     var d=o.getImageData(0,0,48,36).data,clear=0;
     for(var i=3;i<d.length;i+=4)if(d[i]<60)clear++;
-    if(clear/(d.length/4)>=0.62)finish();
+    if(clear/(d.length/4)>=0.85)finish();
   }
   function finish(){
     finished=true;cv.style.opacity='0';done.classList.add('on');gun.classList.remove('on');
