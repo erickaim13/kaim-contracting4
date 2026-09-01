@@ -905,7 +905,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
     <div class="section-header" style="margin-bottom:26px">
       <div class="section-label">See The Difference</div>
       <h2>Clean it <span style="color:var(--gold-l)">yourself</span></h2>
-      <p>Same patio, same camera spot. This is our real work: a full clean, re-sand, and seal. Drag across the photo to see what one visit does.</p>
+      <p>Same patio, same camera spot. This is our real work. Drag across the photo to restore the patio.</p>
     </div>
     <div class="ba-wash" id="baWash">
       <div class="ba-img-after" style="background-image:url('images/wash-after.webp')" role="img" aria-label="Paver patio with its color restored after the clean, sand and seal"></div>
@@ -913,7 +913,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
       <div class="ba-hint" id="baHint">Your cursor is the pressure washer</div>
       <div class="ba-done" id="baDone"><div class="ba-done-card">
         <b>Spotless</b>
-        <p>That took you a few seconds. The real job was a full clean, re-sand, and seal in one visit.</p>
+        <p>That took you a few seconds. We make it look this good in one visit.</p>
         <a class="ba-cta" href="quote.html">Get My Free Quote</a><button class="ba-again" onclick="baReset()">Wash it again</button>
       </div></div>
       <div class="ba-gun" id="baGun"><svg width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -935,7 +935,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 (function(){
   var box=document.getElementById('baWash');if(!box)return;
   var cv=document.getElementById('baCanvas'),gun=document.getElementById('baGun'),hint=document.getElementById('baHint'),done=document.getElementById('baDone');
-  var PAIRS=[['images/wash-before.webp','images/wash-after.webp'],['images/wash2-before.webp','images/wash2-after.webp']];
+  var PAIRS=[['images/wash-before.webp','images/wash-after.webp']];
   var pi=0,ctx=cv.getContext('2d'),img=new Image(),ready=false,finished=false,stamps=0,moved=false;
   var afterEl=box.querySelector('.ba-img-after');
   function loadPair(){
