@@ -2,7 +2,7 @@
 //
 // The website's quote forms offer three open days for a free in-person
 // estimate. A day's slots come from fixed windows (weekday evenings +
-// Saturday mornings); a slot is blocked when the CRM calendar already has an
+// Saturday afternoons); a slot is blocked when the CRM calendar already has an
 // Estimate Visit at that date+time, and a whole day is skipped when it
 // already carries 2+ estimate visits or is listed in
 // settings.webBooking.blockedDates. All date math is done in Eastern time —
@@ -72,12 +72,13 @@ function weekdayOf(dateStr) {
 
 // ---- Availability ---------------------------------------------------------
 
-// Estimate windows. Weekday evenings after job hours, Saturday mornings —
-// matches the availability Eric already quotes in the lead auto-reply.
+// Estimate windows. After business hours (Mon-Fri 8-6, Sat 8-12): weekday
+// evenings from 6, Saturday afternoons from 12:30. Matches the availability
+// quoted in the lead auto-reply and the AI scheduler prompt.
 // Overridable later via settings.webBooking.{weekdaySlots,satSlots,minLeadDays}.
 const DEFAULTS = {
-  weekdaySlots: ['16:30', '17:30'],
-  satSlots: ['09:00', '10:00', '11:00'],
+  weekdaySlots: ['18:00', '19:00'],
+  satSlots: ['12:30', '13:30', '14:30'],
   minLeadDays: 2,     // earliest offer = 2 days out, so Eric can always veto
   scanDays: 21,
   maxVisitsPerDay: 2  // stop offering a day once it has this many visits
