@@ -53,6 +53,7 @@
 }
 html{scroll-behavior:smooth}
 body{font-family:'Source Sans 3',sans-serif;color:var(--text);background-color:#0d1e35;font-size:16px;line-height:1.65;overflow-x:hidden;width:100%;position:relative}
+body::before{content:'';position:fixed;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:1500px;opacity:.05;pointer-events:none;z-index:0}
 
 
 /* NAV */
@@ -463,7 +464,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .cw-next:hover{background:var(--gold-l)}
 #cwSqft{width:100%;font-family:'Source Sans 3',sans-serif;font-size:17px;padding:13px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg3);color:var(--text);-webkit-appearance:none;appearance:none}
 #cwSqft:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12)}
-.cw-proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:640px;margin:12px auto 0}
+.cw-proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:840px;margin:14px auto 0}
 .cw-proof-grid figure{position:relative;margin:0;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
 .cw-proof-grid img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
 .cw-proof-grid figcaption{position:absolute;top:9px;left:9px;font-family:'Oswald',sans-serif;font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(7,24,40,.72);padding:4px 9px;border-radius:4px}
@@ -484,7 +485,7 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .calc-offer{margin-top:24px;padding:16px 20px;background:rgba(201,168,76,.1);border:1px dashed rgba(201,168,76,.5);border-radius:6px;text-align:center}
 .calc-offer-label{font-family:'Oswald',sans-serif;font-size:10.5px;text-transform:uppercase;letter-spacing:.22em;color:var(--gold);font-weight:600;margin-bottom:6px}
 .calc-offer-text{color:rgba(255,255,255,.85);font-size:14px;line-height:1.5}
-.calc-cta{margin-top:30px;text-align:center;padding:36px 24px;background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border-radius:10px;border:1px solid var(--border)}
+.calc-cta{margin-top:38px;text-align:center;padding:0 8px}
 .calc-cta h3{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.04em;margin-bottom:8px}
 .calc-cta h3 span{color:var(--gold-l)}
 .calc-cta p{color:var(--muted);font-size:14.5px;margin-bottom:20px;line-height:1.6}
@@ -689,8 +690,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
           <button type="button" class="cw-back">&larr; Back</button>
           <div class="cw-q">Which finish do you like?</div>
           <div class="cw-chips">
-            <button type="button" class="cw-chip" data-v="standard">Standard Satin<small>Clean natural look, most popular</small></button>
-            <button type="button" class="cw-chip" data-v="semi">Semi Gloss<small>Richer color, light sheen</small></button>
+            <button type="button" class="cw-chip" data-v="standard">Natural Look<small>Clean matte finish, most popular</small></button>
             <button type="button" class="cw-chip" data-v="wet">Wet Look<small>Maximum color, like right after rain</small></button>
           </div>
         </div>
@@ -828,7 +828,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   // Rates are calibrated against real job costs (materials per coverage,
   // multi-day labor with a helper, equipment rental). Condition multipliers
   // adjust for cleaning effort, joint volume, and sealer soak.
-  var SEAL_RATES={standard:{low:4.0,high:5.25,label:'Standard Satin'},semi:{low:4.5,high:6.0,label:'Semi Gloss'},wet:{low:5.0,high:6.75,label:'Wet Look'}};
+  var SEAL_RATES={standard:{low:4.0,high:5.25,label:'Natural Look'},wet:{low:5.0,high:6.75,label:'Wet Look'}};
   var DIRT={light:{m:1.0,label:'Lightly faded'},mod:{m:1.08,label:'Moderate grime or moss'},heavy:{m:1.18,label:'Heavy moss or staining'}};
   var JOINT={tight:{m:1.0,cov:85,label:'Standard brick pavers'},wide:{m:1.08,cov:55,label:'Tumbled or cobblestone'},stone:{m:1.18,cov:40,label:'Natural stone or irregular'}};
   var AGE={new:{m:1.0,label:'Under 5 years'},mid:{m:1.05,label:'5 to 15 years'},old:{m:1.12,label:'Over 15 years'}};
