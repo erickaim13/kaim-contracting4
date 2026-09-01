@@ -195,6 +195,11 @@ section{padding:80px 24px}
 .section-inner{max-width:1200px;margin:0 auto}
 .section-header{text-align:center;margin-bottom:52px;position:relative;z-index:1}
 .section-label{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+/* Custom question mark in "Got Questions?": the marble becomes its dot */
+.faq-qmark{display:inline-block;position:relative;width:.72em;height:1em;margin-left:1px;vertical-align:-.08em}
+.faq-qmark svg{position:absolute;top:0;left:0;width:100%;height:.72em;display:block}
+.faq-qdot{position:absolute;left:50%;bottom:.02em;width:.2em;height:.2em;margin-left:-.1em;border-radius:50%;background:currentColor;opacity:0;transform:scale(0);transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .2s}
+.faq-qdot.on{opacity:1;transform:scale(1)}
 .section-header h2{font-family:'Oswald',sans-serif;font-size:clamp(26px,4vw,42px);font-weight:700;text-transform:uppercase;color:var(--text);letter-spacing:.02em;line-height:1.1}
 .section-header p{margin-top:12px;color:var(--muted);font-size:15.5px;max-width:560px;margin-left:auto;margin-right:auto}
 .divider{width:40px;height:3px;background:var(--gold);margin:12px auto 0}
@@ -438,8 +443,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 .howit-run{position:relative;max-width:640px;margin:44px auto 0;z-index:1}
 .howit-track{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .howit-track path{fill:none;stroke:rgba(201,168,76,.25);stroke-width:.7;stroke-dasharray:2.2 1.7;vector-effect:non-scaling-stroke;stroke-width:2px}
-.howit-track .lit{stroke:var(--gold);stroke-width:2.5px;stroke-dasharray:100;stroke-dashoffset:100;opacity:.95}
-.howit-ball{position:absolute;top:0;left:0;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#f4dc93 0%,#c9a84c 55%,#8a6f2c 100%);box-shadow:0 10px 24px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.35);z-index:3;will-change:transform;transition:box-shadow .3s}
+.howit-ball{position:absolute;top:0;left:0;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#f4dc93 0%,#c9a84c 55%,#8a6f2c 100%);box-shadow:0 10px 24px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.35);z-index:3;will-change:transform;transition:box-shadow .3s,opacity .3s}
 .howit-ball::after{content:'';position:absolute;top:7px;left:9px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.5)}
 .howit-ball.rest{box-shadow:0 10px 24px rgba(0,0,0,.5),0 0 0 10px rgba(201,168,76,.16),inset 0 1px 0 rgba(255,255,255,.35)}
 .howit-ball span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:21px;font-weight:700;color:var(--teal);opacity:0;transition:opacity .25s}
@@ -1048,7 +1052,6 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
     <div class="howit-run" id="howitRun">
       <svg class="howit-track" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
         <path id="howitPath" d="M 70 0 C 45 4 20 8 18 16 C 16 24 40 30 60 36 C 78 41 84 44 82 50 C 80 57 55 62 38 68 C 24 73 16 77 18 84 C 19 90 28 93 40 96 C 48 98 50 100 50 107"/>
-        <path class="lit" id="howitLit" d="M 70 0 C 45 4 20 8 18 16 C 16 24 40 30 60 36 C 78 41 84 44 82 50 C 80 57 55 62 38 68 C 24 73 16 77 18 84 C 19 90 28 93 40 96 C 48 98 50 100 50 107" pathLength="100"/>
       </svg>
       <div class="howit-ball" id="howitBall" aria-hidden="true"><span id="howitBallNum"></span></div>
       <div class="howit-step hs-l" data-land="18,16">
@@ -1076,13 +1079,12 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
     <script>
     (function(){
       var run=document.getElementById('howitRun');if(!run)return;
-      var path=document.getElementById('howitPath'),lit=document.getElementById('howitLit'),ball=document.getElementById('howitBall'),num=document.getElementById('howitBallNum');
+      var path=document.getElementById('howitPath'),ball=document.getElementById('howitBall'),num=document.getElementById('howitBallNum');
       var steps=[].slice.call(run.querySelectorAll('.howit-step'));
       var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if(reduce||!path.getTotalLength){
         run.classList.add('static');
         steps.forEach(function(s){s.classList.add('on');});
-        if(lit)lit.style.strokeDashoffset=0;
         return;
       }
       var L=path.getTotalLength();
@@ -1100,6 +1102,8 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
       // then the tail rolls the ball off the ramp into the next section.
       var segs=[[0,.20,0,ts[0]],[.20,.34,ts[0],ts[0]],[.34,.55,ts[0],ts[1]],[.55,.69,ts[1],ts[1]],[.69,.88,ts[1],ts[2]],[.88,.96,ts[2],ts[2]],[.96,1,ts[2],1]];
       var cur=0,target=0,raf=null,lastPt=null,lastT=0,roll=0;
+      var mode='ramp',bStart=0,dot=document.getElementById('faqQDot');
+      if(dot)dot.classList.remove('on'); // the marble will deliver it
       function computeTarget(){
         var r=run.getBoundingClientRect(),vh=window.innerHeight||1;
         var p=(vh*0.75-r.top)/(r.height*0.98||1);p=Math.max(0,Math.min(1,p));
@@ -1121,7 +1125,6 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
         var deg=roll/(Math.PI*46)*360;
         ball.style.transform='translate('+x.toFixed(2)+'px,'+y.toFixed(2)+'px) rotate('+deg.toFixed(1)+'deg)';
         num.style.transform='rotate('+(-deg).toFixed(1)+'deg)';
-        lit.style.strokeDashoffset=Math.max(0,(100-t*100)).toFixed(2);
         var dwell=0;
         steps.forEach(function(s,i){
           s.classList.toggle('on',t>=ts[i]-0.02);
@@ -1130,13 +1133,41 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
         if(dwell){num.textContent=dwell;ball.classList.add('rest');}
         else{ball.classList.remove('rest');}
       }
+      // Finale: hop off the ramp with shrinking bounces and become the dot
+      // of the question mark in "Got Questions?"
+      function startBounce(){mode='bounce';bStart=performance.now();requestAnimationFrame(bounceFrame);}
+      function bounceFrame(now){
+        if(mode!=='bounce')return;
+        var r=run.getBoundingClientRect();
+        var u=Math.min(1,(now-bStart)/1500);
+        var p0=path.getPointAtLength(L);
+        var x0=p0.x/100*r.width,y0=p0.y/100*r.height;
+        var dR=dot?dot.getBoundingClientRect():null;
+        var dx=dR?(dR.left+dR.width/2-r.left):x0;
+        var dy=dR?(dR.top+dR.height/2-r.top):(y0+140);
+        var x=x0+(dx-x0)*u;
+        var base=y0+(dy-y0)*u;
+        var hop=Math.abs(Math.sin(u*Math.PI*3))*64*(1-u);
+        var endS=Math.max(dR?dR.width:3,3)/46;
+        var s=1+(endS-1)*u;
+        ball.style.transform='translate('+x.toFixed(1)+'px,'+(base-hop).toFixed(1)+'px) scale('+s.toFixed(3)+')';
+        if(u>=1){mode='settled';ball.style.opacity='0';if(dot)dot.classList.add('on');return;}
+        requestAnimationFrame(bounceFrame);
+      }
       function loop(){
-        cur+=(target-cur)*0.12;
+        cur+=(target-cur)*0.075;
         if(Math.abs(target-cur)<0.0006)cur=target;
-        render(cur);
+        if(mode==='ramp'){
+          render(cur);
+          if(cur>=0.999&&target>=0.999)startBounce();
+        }
         raf=(cur!==target)?requestAnimationFrame(loop):null;
       }
-      function onScroll(){computeTarget();if(!raf)raf=requestAnimationFrame(loop);}
+      function onScroll(){
+        computeTarget();
+        if(mode!=='ramp'&&target<0.96){mode='ramp';ball.style.opacity='1';if(dot)dot.classList.remove('on');}
+        if(!raf)raf=requestAnimationFrame(loop);
+      }
       window.addEventListener('scroll',onScroll,{passive:true});
       window.addEventListener('resize',onScroll);
       onScroll();
@@ -1154,7 +1185,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 <section class="home-faq" id="faq">
   <div class="section-inner">
     <div class="section-header">
-      <div class="section-label">Got Questions?</div>
+      <div class="section-label" aria-label="Got Questions?">Got Questions<span class="faq-qmark" aria-hidden="true"><svg viewBox="0 0 20 30"><path d="M3.5 8.5 C3.5 2.5 16.5 2.5 16.5 9 C16.5 14.5 10 13.5 10 20" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/></svg><span class="faq-qdot on" id="faqQDot"></span></span></div>
       <h2>Frequently Asked <span>Questions</span></h2>
       <div class="divider"></div>
     </div>
