@@ -218,25 +218,6 @@ section{padding:80px 24px}
 .strip-tip p{font-size:11.5px;color:var(--muted);line-height:1.5;text-transform:none;letter-spacing:0;font-family:'Source Sans 3',sans-serif}
 
 /* ABOUT */
-.about{background:var(--bg);position:relative;overflow:hidden;padding:0;z-index:2}
-.about-inner{display:grid;grid-template-columns:1fr 1fr}
-.about-img-col{position:relative;overflow:hidden}
-.about-img-col img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block}
-.about-text-col{padding:36px 44px;background:var(--bg);display:flex;flex-direction:column}
-.about-sub{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
-.about-h2{font-family:'Oswald',sans-serif;font-size:clamp(26px,3.2vw,38px);font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:14px;line-height:1.1}
-.about-h2 span{color:var(--gold-l)}
-.about-text-col p{color:var(--muted);margin-bottom:10px;font-size:14.5px;line-height:1.6;max-width:480px}
-.about-features{list-style:none;margin:14px 0 20px;display:flex;flex-direction:column;gap:9px}
-.about-features li{display:flex;align-items:flex-start;gap:10px;color:var(--text);font-size:14.5px;line-height:1.5}
-.af-check{color:var(--gold-l);font-weight:700;flex-shrink:0;font-size:15px}
-.about-cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:4px}
-@media(max-width:640px){.about-cta-row{flex-direction:column;align-items:center;gap:10px;text-align:center}.about-cta-row .btn-primary{width:auto}.about-or{font-size:11px}.about-phone-btn{align-self:center}}
-.about-cta-row .btn-primary{margin:0}
-.about-or{color:rgba(255,255,255,.4);font-size:12px;text-transform:uppercase;letter-spacing:.15em}
-.about-phone-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;text-decoration:none;padding:12px 22px;border:2px solid var(--gold);border-radius:3px;transition:all .2s;letter-spacing:.08em}
-.about-phone-btn:hover{background:var(--gold);color:var(--teal)}
-.about-phone-btn svg{flex-shrink:0}
 
 /* SERVICES - BENTO LAYOUT */
 .services{background:var(--bg2);position:relative;overflow:hidden}
@@ -493,7 +474,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   
 }
 @media(max-width:860px){
-  .about-inner{grid-template-columns:1fr;height:auto;overflow:visible}  .about-img-col{min-height:260px;max-height:260px}  .about-text-col{padding:32px 24px}
+
   .contact-grid{grid-template-columns:1fr;gap:28px}
   .contact-info{max-width:300px;margin:0 auto;text-align:center;padding-top:0;padding-left:0}
   .test-grid{grid-template-columns:1fr}
@@ -717,10 +698,6 @@ button.qq-back:hover{color:var(--gold-l)}
 /* Gold bar at the bottom of the hero so it shows without scrolling */
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:4}
 
-/* Gold accent bar between the three-card section and the About section */
-.about{position:relative}
-.about::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:3}
-.about::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:3}
 
 /* THREE-CARD "What We Do" preview right below hero */
 .three-card{padding:50px 24px 80px;background:var(--bg2);position:relative;z-index:5;overflow:hidden}
@@ -896,30 +873,6 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
   </div>
 </section>
 
-<section class="about" id="about">
-  <div class="topo-bg" aria-hidden="true"></div>
-  <div class="about-inner">
-    <div class="about-img-col">
-      <img src="images/about-landscape.jpg" alt="Kaim Contracting LLC professional hardscaping work in Methuen, MA and Merrimack Valley" loading="lazy">
-    </div>
-    <div class="about-text-col">
-      <div class="about-sub">About Kaim Contracting LLC</div>
-      <h2 class="about-h2">Built Right. <br><span>Restored Right.</span></h2>
-      <p>Kaim Contracting is a small Methuen based crew handling pressure washing and paver sealing across the Merrimack Valley and southern NH. We do the work ourselves, we show up when we say we will, and we stand behind everything we do. 100% satisfaction guaranteed.</p>
-      <ul class="about-features">
-        <li><span class="af-check">&#10003;</span>Paver sealing &amp; pressure washing</li>
-        <li><span class="af-check">&#10003;</span>Family run, based in Methuen, MA</li>
-        <li><span class="af-check">&#10003;</span>Licensed &amp; insured in MA and NH</li>
-        <li><span class="af-check">&#10003;</span>Complimentary on site estimates within 24 hours</li>
-      </ul>
-      <div class="about-cta-row">
-        <a href="#contact" class="btn-primary">Request an Estimate</a>
-        <span class="about-or">or</span>
-        <a href="tel:978-351-2195" class="about-phone-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Call 978-351-2195</a>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section class="howit" id="how-it-works">
   <div class="section-inner">
@@ -1119,7 +1072,7 @@ function referFriend(){
 (function(){var n=document.querySelector('nav');if(!n)return;function check(){if(window.scrollY>20)n.classList.add('scrolled');else n.classList.remove('scrolled');}check();window.addEventListener('scroll',check,{passive:true});})();
 (function(){
   if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  var revealMap=[{sel:'.about',cls:'reveal'},{sel:'.howit',cls:'reveal-scale'},{sel:'.home-faq',cls:'reveal'},{sel:'.serving',cls:'reveal'},{sel:'.contact',cls:'reveal'}];
+  var revealMap=[{sel:'.howit',cls:'reveal-scale'},{sel:'.home-faq',cls:'reveal'},{sel:'.serving',cls:'reveal'},{sel:'.contact',cls:'reveal'}];
   revealMap.forEach(function(m){var el=document.querySelector(m.sel);if(el)el.classList.add(m.cls);});
   document.querySelectorAll('.svc-tile').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*100)+'ms';});
   document.querySelectorAll('.why-card').forEach(function(el,i){el.classList.add('stagger-item');el.style.transitionDelay=(i*120)+'ms';});
