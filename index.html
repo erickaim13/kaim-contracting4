@@ -427,7 +427,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 
 
 /* HOW IT WORKS */
-.howit{padding:80px 24px;background:var(--bg);position:relative;overflow:hidden;z-index:2}
+.howit{padding:80px 24px;background:var(--bg);position:relative;overflow:visible;z-index:3}
 .howit::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:5}
 .howit::after{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:1500px;opacity:.04;pointer-events:none;z-index:0}
 .howit .section-inner{position:relative;z-index:1}
@@ -1038,8 +1038,8 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
     </div>
     <div class="howit-run" id="howitRun">
       <svg class="howit-track" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <path id="howitPath" d="M 70 0 C 45 4 20 8 18 16 C 16 24 40 30 60 36 C 78 41 84 44 82 50 C 80 57 55 62 38 68 C 24 73 16 77 18 84 C 19 90 30 94 44 98"/>
-        <path class="lit" id="howitLit" d="M 70 0 C 45 4 20 8 18 16 C 16 24 40 30 60 36 C 78 41 84 44 82 50 C 80 57 55 62 38 68 C 24 73 16 77 18 84 C 19 90 30 94 44 98" pathLength="100"/>
+        <path id="howitPath" d="M 70 0 C 45 4 20 8 18 16 C 16 24 40 30 60 36 C 78 41 84 44 82 50 C 80 57 55 62 38 68 C 24 73 16 77 18 84 C 19 90 28 93 40 96 C 48 98 50 100 50 107"/>
+        <path class="lit" id="howitLit" d="M 70 0 C 45 4 20 8 18 16 C 16 24 40 30 60 36 C 78 41 84 44 82 50 C 80 57 55 62 38 68 C 24 73 16 77 18 84 C 19 90 28 93 40 96 C 48 98 50 100 50 107" pathLength="100"/>
       </svg>
       <div class="howit-ball" id="howitBall" aria-hidden="true"><span id="howitBallNum"></span></div>
       <div class="howit-step hs-l" data-land="18,16">
@@ -1087,39 +1087,47 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
         }
         return best;
       });
-      // Scroll progress -> path progress with rest stops at each landing
-      var segs=[[0,.22,0,ts[0]],[.22,.36,ts[0],ts[0]],[.36,.58,ts[0],ts[1]],[.58,.72,ts[1],ts[1]],[.72,.94,ts[1],ts[2]],[.94,1,ts[2],ts[2]]];
-      var ticking=false;
-      function frame(){
-        ticking=false;
+      // Scroll progress -> path progress with rest stops at each landing,
+      // then the tail rolls the ball off the ramp into the next section.
+      var segs=[[0,.20,0,ts[0]],[.20,.34,ts[0],ts[0]],[.34,.55,ts[0],ts[1]],[.55,.69,ts[1],ts[1]],[.69,.88,ts[1],ts[2]],[.88,.96,ts[2],ts[2]],[.96,1,ts[2],1]];
+      var cur=0,target=0,raf=null;
+      function computeTarget(){
         var r=run.getBoundingClientRect(),vh=window.innerHeight||1;
-        var p=(vh*0.75-r.top)/(r.height*0.95||1);p=Math.max(0,Math.min(1,p));
-        var t=0;
+        var p=(vh*0.75-r.top)/(r.height*0.98||1);p=Math.max(0,Math.min(1,p));
         for(var i=0;i<segs.length;i++){
           var s=segs[i];
           if(p<=s[1]||i===segs.length-1){
             var f=(p-s[0])/((s[1]-s[0])||1);f=Math.max(0,Math.min(1,f));
-            t=s[2]+(s[3]-s[2])*f;break;
+            target=s[2]+(s[3]-s[2])*f;return;
           }
         }
+      }
+      function render(t){
+        var r=run.getBoundingClientRect();
         var q=path.getPointAtLength(L*t);
         var x=q.x/100*r.width,y=q.y/100*r.height;
         var deg=(t*L/100*r.width)/(Math.PI*46)*360;
-        ball.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) rotate('+deg.toFixed(1)+'deg)';
+        ball.style.transform='translate('+x.toFixed(2)+'px,'+y.toFixed(2)+'px) rotate('+deg.toFixed(1)+'deg)';
         num.style.transform='rotate('+(-deg).toFixed(1)+'deg)';
-        lit.style.strokeDashoffset=(100-t*100).toFixed(2);
+        lit.style.strokeDashoffset=Math.max(0,(100-t*100)).toFixed(2);
         var dwell=0;
         steps.forEach(function(s,i){
           s.classList.toggle('on',t>=ts[i]-0.02);
-          if(Math.abs(t-ts[i])<0.035)dwell=i+1;
+          if(Math.abs(t-ts[i])<0.03)dwell=i+1;
         });
         if(dwell){num.textContent=dwell;ball.classList.add('rest');}
         else{ball.classList.remove('rest');}
       }
-      function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(frame);}}
+      function loop(){
+        cur+=(target-cur)*0.12;
+        if(Math.abs(target-cur)<0.0006)cur=target;
+        render(cur);
+        raf=(cur!==target)?requestAnimationFrame(loop):null;
+      }
+      function onScroll(){computeTarget();if(!raf)raf=requestAnimationFrame(loop);}
       window.addEventListener('scroll',onScroll,{passive:true});
       window.addEventListener('resize',onScroll);
-      frame();
+      onScroll();
     })();
     </script>
     </div>
