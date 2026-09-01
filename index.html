@@ -212,7 +212,9 @@ section{padding:80px 24px}
 .ba-gun{position:absolute;left:0;top:0;z-index:4;pointer-events:none;opacity:0;transition:opacity .15s;filter:drop-shadow(0 3px 6px rgba(0,0,0,.5))}
 .ba-wash:hover .ba-gun,.ba-gun.on{opacity:1}
 .ba-hint{position:absolute;top:12px;left:50%;transform:translateX(-50%);background:rgba(7,24,40,.78);color:#fff;font-family:'Oswald',sans-serif;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px;border-radius:999px;z-index:3;pointer-events:none;white-space:nowrap;transition:opacity .4s}
-.ba-done{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(7,24,40,.35);z-index:2;opacity:0;pointer-events:none;transition:opacity .6s}
+.ba-done{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(7,24,40,.35);z-index:5;opacity:0;pointer-events:none;transition:opacity .6s;cursor:auto}
+.ba-wash.washdone{cursor:auto;touch-action:auto}
+.ba-wash.washdone .ba-gun{opacity:0!important}
 .ba-done.on{opacity:1;pointer-events:auto}
 .ba-done-card{background:rgba(7,24,40,.88);border:1px solid rgba(201,168,76,.45);border-radius:10px;padding:16px 22px;text-align:center;max-width:320px}
 .ba-done-card b{display:block;font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-l);margin-bottom:6px}
@@ -433,7 +435,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 .howit .section-inner{position:relative;z-index:1}
 /* Marble run: the ball rolls down the ramp as you scroll, resting at each
    step to show its number while the step text lights up. */
-.howit-run{position:relative;max-width:900px;margin:44px auto 0;z-index:1}
+.howit-run{position:relative;max-width:640px;margin:44px auto 0;z-index:1}
 .howit-track{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .howit-track path{fill:none;stroke:rgba(201,168,76,.25);stroke-width:.7;stroke-dasharray:2.2 1.7;vector-effect:non-scaling-stroke;stroke-width:2px}
 .howit-track .lit{stroke:var(--gold);stroke-width:2.5px;stroke-dasharray:100;stroke-dashoffset:100;opacity:.95}
@@ -999,15 +1001,21 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
     if(clear/(d.length/4)>=0.85)finish();
   }
   function finish(){
-    finished=true;cv.style.opacity='0';done.classList.add('on');gun.classList.remove('on');
+    finished=true;cv.style.opacity='0';done.classList.add('on');gun.classList.remove('on');box.classList.add('washdone');
     try{var nx=PAIRS[(pi+1)%PAIRS.length];(new Image()).src=nx[0];(new Image()).src=nx[1];}catch(e){}
     try{if(window.gtag)gtag('event','wash_demo_complete');}catch(e){}
   }
   window.baReset=function(){
     pi=(pi+1)%PAIRS.length; // next surface each time
-    finished=false;stamps=0;last=null;cv.style.opacity='1';done.classList.remove('on');
+    finished=false;stamps=0;last=null;cv.style.opacity='1';done.classList.remove('on');box.classList.remove('washdone');
     hint.style.opacity='1';moved=false;loadPair();
   };
+  // Fresh dirt for the next viewer: reset once the box scrolls out of view
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(en){if(!en.isIntersecting&&(moved||finished))window.baReset();});
+    },{threshold:0}).observe(box);
+  }
   box.addEventListener('pointermove',function(e){
     var r=box.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
     gun.style.transform='translate('+(x-8)+'px,'+(y-8)+'px)';
@@ -1015,6 +1023,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
     if(e.pointerType==='mouse'||e.buttons||e.pointerType==='touch')erase(x,y);
   });
   box.addEventListener('pointerdown',function(e){
+    if(e.target&&e.target.closest&&e.target.closest('.ba-done'))return; // let the finish card's buttons work
     if(e.cancelable)e.preventDefault();
     try{box.setPointerCapture(e.pointerId);}catch(_){}
     var r=box.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
@@ -1090,7 +1099,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
       // Scroll progress -> path progress with rest stops at each landing,
       // then the tail rolls the ball off the ramp into the next section.
       var segs=[[0,.20,0,ts[0]],[.20,.34,ts[0],ts[0]],[.34,.55,ts[0],ts[1]],[.55,.69,ts[1],ts[1]],[.69,.88,ts[1],ts[2]],[.88,.96,ts[2],ts[2]],[.96,1,ts[2],1]];
-      var cur=0,target=0,raf=null;
+      var cur=0,target=0,raf=null,lastPt=null,lastT=0,roll=0;
       function computeTarget(){
         var r=run.getBoundingClientRect(),vh=window.innerHeight||1;
         var p=(vh*0.75-r.top)/(r.height*0.98||1);p=Math.max(0,Math.min(1,p));
@@ -1106,7 +1115,10 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
         var r=run.getBoundingClientRect();
         var q=path.getPointAtLength(L*t);
         var x=q.x/100*r.width,y=q.y/100*r.height;
-        var deg=(t*L/100*r.width)/(Math.PI*46)*360;
+        // Real rolling: one rotation per circumference of actual travel
+        if(lastPt){var dd=Math.sqrt((x-lastPt.x)*(x-lastPt.x)+(y-lastPt.y)*(y-lastPt.y));roll+=(t>=lastT?dd:-dd);}
+        lastPt={x:x,y:y};lastT=t;
+        var deg=roll/(Math.PI*46)*360;
         ball.style.transform='translate('+x.toFixed(2)+'px,'+y.toFixed(2)+'px) rotate('+deg.toFixed(1)+'deg)';
         num.style.transform='rotate('+(-deg).toFixed(1)+'deg)';
         lit.style.strokeDashoffset=Math.max(0,(100-t*100)).toFixed(2);
