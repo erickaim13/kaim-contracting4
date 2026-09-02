@@ -475,10 +475,16 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   .howit-row{grid-template-columns:1fr;gap:14px;max-width:520px}
   .howit-run{margin-top:24px;max-width:520px}
   .howit-rail{position:sticky;top:70px;height:46px;margin-bottom:14px;background:var(--bg);border-radius:999px;box-shadow:0 8px 22px rgba(0,0,0,.35)}
-}
-@media(max-width:640px){
-  .howit-rail{top:104px} /* clear the fixed gold call bar */
   .howit-rail-line{left:18px;right:18px}
+  .howit-ball{width:38px;height:38px;margin:-19px 0 0 -19px}
+  .howit-ball span{font-size:17px}
+  .hw-step{padding:20px 18px 18px}
+  .hw-ghost{font-size:84px;top:-10px}
+  .hw-chip{margin-bottom:10px}
+  .hw-step h3{font-size:16px;margin-bottom:6px}
+  .hw-step p{font-size:13px;line-height:1.55}
+}
+@media(max-width:640px){.howit-rail{top:104px}} /* clear the fixed gold call bar */
   .howit-ball{width:38px;height:38px;margin:-19px 0 0 -19px}
   .howit-ball span{font-size:17px}
   .hw-step{padding:20px 18px 18px}
@@ -1087,64 +1093,60 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
       </div>
     </div>
     </div>
-    <script>
-    (function(){
-      var r=document.getElementById('howitRow');if(!r)return;
-      if(!('IntersectionObserver' in window)||(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)){r.classList.add('go');return;}
-      new IntersectionObserver(function(en,ob){
-        en.forEach(function(x){if(x.isIntersecting){r.classList.add('go');ob.disconnect();}});
-      },{threshold:0.35}).observe(r);
-    })();
-    (function(){
-      var run=document.getElementById('howitRun'),rail=document.getElementById('howitRail'),ball=document.getElementById('howitBall'),num=document.getElementById('howitBallNum');
-      if(!run||!rail||!ball)return;
-      var steps=[].slice.call(run.querySelectorAll('.hw-step')),dots=[].slice.call(rail.querySelectorAll('.howit-dot'));
-      if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){rail.classList.add('static');return;}
-      var ds=[1/6,1/2,5/6];
-      // The ball moves ONE stop at a time and pauses on each, so a fast
-      // scroll still lands on 1, then 2, then 3 instead of skipping.
-      var at=0,want=0,moving=false,pauseUntil=0,roll=0,lastX=null;
-      var ROLL_MS=650,PAUSE_MS=420;
-      function ease(u){return u<.5?2*u*u:-1+(4-2*u)*u;}
-      function place(t){
-        var w=rail.clientWidth||1,x=t*w,d=ball.offsetWidth||46;
-        if(lastX!==null)roll+=x-lastX;
-        lastX=x;
-        var deg=roll/(Math.PI*d)*360;
-        ball.style.transform='translate('+x.toFixed(2)+'px,0) rotate('+deg.toFixed(1)+'deg)';
-        num.style.transform='rotate('+(-deg).toFixed(1)+'deg)';
-      }
-      function light(i){
-        steps.forEach(function(st,k){st.classList.toggle('on',k<=i);if(dots[k])dots[k].classList.toggle('on',k<=i);});
-      }
-      function rest(i){num.textContent=i+1;ball.classList.add('rest');light(i);}
-      function step(){
-        if(moving||at===want)return;
-        if(performance.now()<pauseUntil){requestAnimationFrame(step);return;}
-        var from=at,to=at+(want>at?1:-1),t0=performance.now();
-        moving=true;ball.classList.remove('rest');
-        if(to<at)light(to);
-        (function frame(now){
-          var u=Math.min(1,(now-t0)/ROLL_MS);
-          place(ds[from]+(ds[to]-ds[from])*ease(u));
-          if(u<1){requestAnimationFrame(frame);return;}
-          at=to;moving=false;rest(at);
-          pauseUntil=performance.now()+PAUSE_MS;
-          if(at!==want)requestAnimationFrame(step);
-        })(t0);
-      }
-      function onScroll(){
-        var rr=run.getBoundingClientRect(),vh=window.innerHeight||1;
-        var p=(vh*0.78-rr.top)/((rr.height+vh*0.22)||1);
-        want=p<0.36?0:(p<0.66?1:2);
-        step();
-      }
-      place(ds[0]);rest(0);
-      window.addEventListener('scroll',onScroll,{passive:true});
-      window.addEventListener('resize',function(){lastX=null;place(ds[at]);});
-      onScroll();
-    })();
-    </script>
+<script>
+(function(){
+  var r=document.getElementById('howitRow');if(!r)return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!('IntersectionObserver' in window)||reduce){r.classList.add('go');}
+  else{new IntersectionObserver(function(en,ob){en.forEach(function(x){if(x.isIntersecting){r.classList.add('go');ob.disconnect();}});},{threshold:0.2}).observe(r);}
+  var run=document.getElementById('howitRun'),rail=document.getElementById('howitRail'),ball=document.getElementById('howitBall'),num=document.getElementById('howitBallNum');
+  if(!run||!rail||!ball)return;
+  var steps=[].slice.call(run.querySelectorAll('.hw-step')),dots=[].slice.call(rail.querySelectorAll('.howit-dot'));
+  if(reduce){rail.classList.add('static');return;}
+  var ds=[1/6,1/2,5/6];
+  // The ball moves ONE stop at a time and pauses on each, so it always
+  // lands on 1, then 2, then 3. When the whole block fits on screen it
+  // plays the full run as soon as it scrolls into view.
+  var at=0,want=0,moving=false,pauseUntil=0,roll=0,lastX=null;
+  var ROLL_MS=520,PAUSE_MS=380;
+  function ease(u){return u<.5?2*u*u:-1+(4-2*u)*u;}
+  function place(t){
+    var w=rail.clientWidth||1,x=t*w,d=ball.offsetWidth||46;
+    if(lastX!==null)roll+=x-lastX;
+    lastX=x;
+    var deg=roll/(Math.PI*d)*360;
+    ball.style.transform='translate('+x.toFixed(2)+'px,0) rotate('+deg.toFixed(1)+'deg)';
+    num.style.transform='rotate('+(-deg).toFixed(1)+'deg)';
+  }
+  function light(i){steps.forEach(function(st,k){st.classList.toggle('on',k<=i);if(dots[k])dots[k].classList.toggle('on',k<=i);});}
+  function rest(i){num.textContent=i+1;ball.classList.add('rest');light(i);}
+  function step(){
+    if(moving||at===want)return;
+    if(performance.now()<pauseUntil){requestAnimationFrame(step);return;}
+    var from=at,to=at+(want>at?1:-1),t0=performance.now();
+    moving=true;ball.classList.remove('rest');
+    if(to<at)light(to);
+    (function frame(now){
+      var u=Math.min(1,(now-t0)/ROLL_MS);
+      place(ds[from]+(ds[to]-ds[from])*ease(u));
+      if(u<1){requestAnimationFrame(frame);return;}
+      at=to;moving=false;rest(at);
+      pauseUntil=performance.now()+PAUSE_MS;
+      if(at!==want)requestAnimationFrame(step);
+    })(t0);
+  }
+  function onScroll(){
+    var rr=run.getBoundingClientRect(),vh=window.innerHeight||1;
+    if(rr.height<vh*0.85){want=rr.top>vh*0.95?0:(rr.top>vh*0.62?1:2);}
+    else{var p=(vh*0.78-rr.top)/((rr.height+vh*0.22)||1);want=p<0.28?0:(p<0.52?1:2);}
+    step();
+  }
+  place(ds[0]);rest(0);
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',function(){lastX=null;place(ds[at]);});
+  onScroll();
+})();
+</script>
   </div>
 </section>
 

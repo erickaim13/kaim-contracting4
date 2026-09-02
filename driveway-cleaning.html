@@ -639,6 +639,48 @@ input[name="hf-name"],input[name="hf-phone"]{text-align:center}
 .pkg-band-btn{flex-shrink:0;display:inline-block;background:var(--teal);color:#fff;font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:15px 22px;border-radius:12px;text-decoration:none;box-shadow:0 12px 30px rgba(7,24,40,.4);transition:transform .15s,background .2s;white-space:nowrap}
 .pkg-band-btn:hover{background:#0b2138;transform:translateY(-2px)}
 @media(max-width:760px){.pkg-band{padding:44px 16px}.pkg-band-inner{flex-direction:column;text-align:center;gap:18px;padding:34px 22px 26px}.pkg-band-burst{width:80px;height:80px}.pkg-band-burst .big{font-size:25px}.pkg-band-btn{display:block;width:100%;padding:15px 18px}}
+/* ===== HOW IT WORKS: cards + marble rail (shared with the homepage) ===== */
+.howit-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:1060px;margin:0 auto;position:relative;z-index:1}
+.howit-run{max-width:1060px;margin:44px auto 0;position:relative;z-index:1}
+.howit-rail{position:relative;height:56px;margin:0 0 22px;z-index:3}
+.howit-rail-line{position:absolute;left:0;right:0;top:50%;height:0;border-top:2px dashed rgba(201,168,76,.32)}
+.howit-dot{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--bg);border:2px solid rgba(201,168,76,.55);transition:background .3s,border-color .3s,box-shadow .3s}
+.howit-dot.on{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,168,76,.18)}
+.howit-ball{position:absolute;top:50%;left:0;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#f4dc93 0%,#c9a84c 55%,#8a6f2c 100%);box-shadow:0 10px 24px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.35);z-index:4;will-change:transform;transition:box-shadow .3s}
+.howit-ball::after{content:'';position:absolute;top:7px;left:9px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.5);transition:opacity .2s}
+.howit-ball.rest{box-shadow:0 10px 24px rgba(0,0,0,.5),0 0 0 10px rgba(201,168,76,.16),inset 0 1px 0 rgba(255,255,255,.35)}
+.howit-ball span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:21px;font-weight:700;color:var(--teal);opacity:0;transition:opacity .25s}
+.howit-ball.rest span{opacity:1}
+.howit-ball.rest::after{opacity:0}
+.howit-rail.static{display:none}
+.hw-step{transition:opacity .55s ease,transform .55s ease,border-color .3s,box-shadow .3s}
+.hw-step.on{border-color:rgba(201,168,76,.6);box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.hw-step.on .hw-chip{background:var(--gold);color:var(--teal);border-color:var(--gold)}
+.hw-step{position:relative;overflow:hidden;background:linear-gradient(160deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.015) 100%);border:1px solid var(--border);border-radius:14px;padding:26px 24px 24px;text-align:left;opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease,border-color .25s}
+.hw-step::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),transparent 70%);opacity:.75}
+.hw-step:hover{border-color:rgba(201,168,76,.45)}
+.howit-row.go .hw-step{opacity:1;transform:none}
+.howit-row.go .hw-step:nth-child(2){transition-delay:.25s}
+.howit-row.go .hw-step:nth-child(3){transition-delay:.5s}
+.hw-ghost{position:absolute;top:-14px;right:6px;font-family:'Oswald',sans-serif;font-size:104px;font-weight:700;line-height:1;color:rgba(201,168,76,.1);pointer-events:none}
+.hw-chip{display:inline-block;font-family:'Oswald',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-l);border:1px solid rgba(201,168,76,.4);border-radius:999px;padding:5px 12px;margin-bottom:16px}
+.hw-step h3{font-family:'Oswald',sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.05em;margin-bottom:9px;line-height:1.2;position:relative}
+.hw-step h3 span{color:var(--gold-l)}
+.hw-step p{color:var(--muted);font-size:14px;line-height:1.65;position:relative;margin:0}
+@media(max-width:860px){
+  .howit-row{grid-template-columns:1fr;gap:14px;max-width:520px}
+  .howit-run{margin-top:24px;max-width:520px}
+  .howit-rail{position:sticky;top:70px;height:46px;margin-bottom:14px;background:var(--bg);border-radius:999px;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+  .howit-rail-line{left:18px;right:18px}
+  .howit-ball{width:38px;height:38px;margin:-19px 0 0 -19px}
+  .howit-ball span{font-size:17px}
+  .hw-step{padding:20px 18px 18px}
+  .hw-ghost{font-size:84px;top:-10px}
+  .hw-chip{margin-bottom:10px}
+  .hw-step h3{font-size:16px;margin-bottom:6px}
+  .hw-step p{font-size:13px;line-height:1.55}
+}
+@media(max-width:640px){.howit-rail{top:104px}} /* clear the fixed gold call bar */
 /* ===== MOBILE MENU SLIDE-IN PANEL ===== */
 .mob-menu{display:flex!important;flex-direction:column;position:fixed;left:0;top:0;width:300px;max-width:85vw;height:100vh;height:100dvh;background:var(--bg);transform:translateX(-100%);transition:transform .35s cubic-bezier(.2,.65,.2,1);z-index:1600;overflow-y:auto;box-shadow:none;border-top:none!important;border-radius:0!important}
 .mob-menu.open{transform:translateX(0);box-shadow:8px 0 40px rgba(0,0,0,.6)}
@@ -914,25 +956,87 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
       <h2>From First Call to <span>Finished Project</span></h2>
       <p>No chasing, no guessing, no surprises. Here is exactly what happens after you reach out.</p>
     </div>
-    <div class="svc-process">
-      <div class="svc-process-node">
-        <div class="svc-process-circle"><div class="svc-process-num">1</div></div>
-        <h4><span>Free</span> Estimate</h4>
-        <p>Call or send the form. We walk the property with you, answer every question, and you have a clear written quote within 24 hours.</p>
+    <div class="howit-run" id="howitRun">
+    <div class="howit-rail" id="howitRail" aria-hidden="true">
+      <div class="howit-rail-line"></div>
+      <div class="howit-dot" style="left:16.667%"></div><div class="howit-dot" style="left:50%"></div><div class="howit-dot" style="left:83.333%"></div>
+      <div class="howit-ball" id="howitBall"><span id="howitBallNum"></span></div>
+    </div>
+    <div class="howit-row" id="howitRow">
+      <div class="hw-step">
+        <div class="hw-ghost" aria-hidden="true">1</div>
+        <div class="hw-chip">Step 1</div>
+        <h3><span>Free</span> Estimate</h3>
+        <p>Call or send the form. We walk the property with you, answer every question, and you have a clear written price before we leave.</p>
       </div>
-      <div class="svc-process-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      <div class="svc-process-node">
-        <div class="svc-process-circle"><div class="svc-process-num">2</div></div>
-        <h4>Plan &amp; <span>Schedule</span></h4>
+      <div class="hw-step">
+        <div class="hw-ghost" aria-hidden="true">2</div>
+        <div class="hw-chip">Step 2</div>
+        <h3>Plan &amp; <span>Schedule</span></h3>
         <p>You pick the date and we hold it. You know exactly when we are coming and exactly what it costs before we start.</p>
       </div>
-      <div class="svc-process-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      <div class="svc-process-node">
-        <div class="svc-process-circle"><div class="svc-process-num">3</div></div>
-        <h4>Sit Back &amp; <span>Enjoy</span></h4>
+      <div class="hw-step">
+        <div class="hw-ghost" aria-hidden="true">3</div>
+        <div class="hw-chip">Step 3</div>
+        <h3>Sit Back &amp; <span>Enjoy</span></h3>
         <p>We show up on time, protect your lawn and beds, and do not leave until it is done right. That evening you pull in to a driveway that looks new again.</p>
       </div>
     </div>
+    </div>
+<script>
+(function(){
+  var r=document.getElementById('howitRow');if(!r)return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!('IntersectionObserver' in window)||reduce){r.classList.add('go');}
+  else{new IntersectionObserver(function(en,ob){en.forEach(function(x){if(x.isIntersecting){r.classList.add('go');ob.disconnect();}});},{threshold:0.2}).observe(r);}
+  var run=document.getElementById('howitRun'),rail=document.getElementById('howitRail'),ball=document.getElementById('howitBall'),num=document.getElementById('howitBallNum');
+  if(!run||!rail||!ball)return;
+  var steps=[].slice.call(run.querySelectorAll('.hw-step')),dots=[].slice.call(rail.querySelectorAll('.howit-dot'));
+  if(reduce){rail.classList.add('static');return;}
+  var ds=[1/6,1/2,5/6];
+  // The ball moves ONE stop at a time and pauses on each, so it always
+  // lands on 1, then 2, then 3. When the whole block fits on screen it
+  // plays the full run as soon as it scrolls into view.
+  var at=0,want=0,moving=false,pauseUntil=0,roll=0,lastX=null;
+  var ROLL_MS=520,PAUSE_MS=380;
+  function ease(u){return u<.5?2*u*u:-1+(4-2*u)*u;}
+  function place(t){
+    var w=rail.clientWidth||1,x=t*w,d=ball.offsetWidth||46;
+    if(lastX!==null)roll+=x-lastX;
+    lastX=x;
+    var deg=roll/(Math.PI*d)*360;
+    ball.style.transform='translate('+x.toFixed(2)+'px,0) rotate('+deg.toFixed(1)+'deg)';
+    num.style.transform='rotate('+(-deg).toFixed(1)+'deg)';
+  }
+  function light(i){steps.forEach(function(st,k){st.classList.toggle('on',k<=i);if(dots[k])dots[k].classList.toggle('on',k<=i);});}
+  function rest(i){num.textContent=i+1;ball.classList.add('rest');light(i);}
+  function step(){
+    if(moving||at===want)return;
+    if(performance.now()<pauseUntil){requestAnimationFrame(step);return;}
+    var from=at,to=at+(want>at?1:-1),t0=performance.now();
+    moving=true;ball.classList.remove('rest');
+    if(to<at)light(to);
+    (function frame(now){
+      var u=Math.min(1,(now-t0)/ROLL_MS);
+      place(ds[from]+(ds[to]-ds[from])*ease(u));
+      if(u<1){requestAnimationFrame(frame);return;}
+      at=to;moving=false;rest(at);
+      pauseUntil=performance.now()+PAUSE_MS;
+      if(at!==want)requestAnimationFrame(step);
+    })(t0);
+  }
+  function onScroll(){
+    var rr=run.getBoundingClientRect(),vh=window.innerHeight||1;
+    if(rr.height<vh*0.85){want=rr.top>vh*0.95?0:(rr.top>vh*0.62?1:2);}
+    else{var p=(vh*0.78-rr.top)/((rr.height+vh*0.22)||1);want=p<0.28?0:(p<0.52?1:2);}
+    step();
+  }
+  place(ds[0]);rest(0);
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',function(){lastX=null;place(ds[at]);});
+  onScroll();
+})();
+</script>
   </div>
 </section>
 
