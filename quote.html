@@ -89,6 +89,7 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
 .qp-grid .qp-h1{text-align:left;margin-bottom:10px}
 .qp-grid .qp-sub{text-align:left;margin-bottom:0;max-width:480px;font-size:15px;line-height:1.6}
 .qp-checks{list-style:none;margin:24px 0 4px;padding:0;display:grid;gap:13px}
+@media(max-width:760px){.qp-checks{display:none}.qp-grid .qp-sub{font-size:14px}}
 .qp-checks li{display:flex;align-items:flex-start;gap:11px;font-size:15px;line-height:1.5;color:rgba(255,255,255,.87)}
 .qp-ck{flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;background:rgba(201,168,76,.16);border:1px solid rgba(201,168,76,.55);color:var(--gold-l);font-size:11px;font-weight:700;margin-top:1px}
 .qp-proof{margin-top:30px}
@@ -126,20 +127,18 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
     <div class="qp-intro">
       <div class="qp-eyebrow">Free In-Person Estimates &middot; Merrimack Valley &amp; Southern NH</div>
       <h1 class="qp-h1">Get Your <span>Free Quote</span></h1>
-      <div class="qp-sub">Takes about 20 seconds. Tell us what you need, and you can lock in a day for your free estimate before you even leave this page.</div>
+      <div class="qp-sub">Takes less than a minute, and you can pick a day for your free estimate at the end.</div>
       <ul class="qp-checks">
-        <li><span class="qp-ck">&#10003;</span><span>We typically respond <b>within the hour</b>, not in three business days</span></li>
-        <li><span class="qp-ck">&#10003;</span><span>Your estimate is done in person by Eric, the owner, not a call center</span></li>
-        <li><span class="qp-ck">&#10003;</span><span>Pick a day for your visit right here, zero phone tag</span></li>
-        <li><span class="qp-ck">&#10003;</span><span>You walk the finished job and approve it before the final payment</span></li>
+        <li><span class="qp-ck">&#10003;</span><span>You'll hear back <b>within the hour</b></span></li>
+        <li><span class="qp-ck">&#10003;</span><span>Eric comes out and quotes it himself</span></li>
+        <li><span class="qp-ck">&#10003;</span><span>Pick your visit day right here</span></li>
       </ul>
     </div>
     <div class="qp-formcol">
-      <div class="kc-form-slot" style="width:100%;max-width:430px" data-kc='{"title": "Get Your Free Estimate", "kicker": "Takes about 20 seconds", "serviceStep": true, "source": "Quote Page", "prefix": "Quote page request:", "jobQ": "What do you need done?", "submitLabel": "Get My Free Estimate", "photos": true}'></div>
+      <div class="kc-form-slot" style="width:100%;max-width:430px" data-kc='{"title": "Get Your Free Estimate", "kicker": "Takes less than a minute", "serviceStep": true, "source": "Quote Page", "prefix": "Quote page request:", "jobQ": "What do you need done?", "submitLabel": "Get My Free Estimate", "photos": true}'></div>
 <script src="js/kc-form.js?v=6" defer></script>
       <div class="qp-trust">
-    Licensed &amp; Insured &middot; Free In-Person Estimates<br>
-    Prefer to talk? <a href="tel:978-351-2195">Call 978-351-2195</a>
+    Licensed &amp; Insured &middot; Prefer to talk? <a href="tel:978-351-2195">Call 978-351-2195</a>
   </div>
     </div>
     <div class="qp-proof">
