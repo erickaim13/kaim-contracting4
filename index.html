@@ -170,7 +170,7 @@ nav{background:var(--bg2);position:sticky;top:0;z-index:150;box-shadow:0 2px 20p
 .dd-sub{position:absolute;top:-7px;left:calc(100% - 4px);background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:6px;width:250px;box-shadow:0 12px 36px rgba(0,0,0,.35);opacity:0;visibility:hidden;transform:translateX(6px);transition:all .2s;z-index:210;padding:6px 0}
 .dd-has-sub:hover .dd-sub{opacity:1;visibility:visible;transform:translateX(0)}
 .mob-sub{margin-left:22px;border-left:2px solid rgba(201,168,76,.35)}
-.mob-group-body .mob-sub a{font-size:13px;opacity:.9;padding:11px 22px 11px 30px}.mob-group-body .mob-sub{margin:0 0 6px 30px}.mob-group-body>a[href="pressure-washing.html"]{color:var(--gold-l)}
+.mob-subhead{display:flex;align-items:stretch}.mob-subhead>a{flex:1}.mob-subtoggle{background:none;border:none;border-top:1px solid rgba(255,255,255,.04);color:var(--gold);padding:0 22px 0 16px;display:flex;align-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent}.mob-subtoggle svg{width:17px;height:17px;transition:transform .25s}.mob-subwrap.open .mob-subtoggle svg{transform:rotate(180deg)}.mob-group-body .mob-sub{max-height:0;overflow:hidden;transition:max-height .3s ease;margin:0 0 0 30px;border-left:2px solid rgba(201,168,76,.35)}.mob-subwrap.open .mob-sub{max-height:600px;margin-bottom:8px}.mob-group-body .mob-sub a{font-size:13px;opacity:.9;padding:11px 22px 11px 16px}
 .btn-nav{background:var(--gold)!important;color:var(--teal)!important;font-family:'Oswald',sans-serif!important;font-size:12.5px!important;font-weight:600!important;letter-spacing:.1em!important;text-transform:uppercase!important;padding:9px 18px!important;border-radius:3px!important;margin-left:10px!important;text-decoration:none!important}
 .btn-nav:hover{background:var(--gold-l)!important}
 .nav-info{display:flex;align-items:center;gap:14px;margin-left:auto;margin-right:16px}
@@ -435,7 +435,25 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 .howit .section-inner{position:relative;z-index:1}
 /* How It Works: three cards in the same language as the service cards, with
    a big ghost number and a gold step chip. They rise in sequence on reveal. */
-.howit-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:1060px;margin:44px auto 0;position:relative;z-index:1}
+.howit-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:1060px;margin:0 auto;position:relative;z-index:1}
+/* Marble run, left to right: the gold ball rolls along a rail above the
+   three steps as you scroll, resting on each stop to show its number
+   while that step card lights up. */
+.howit-run{max-width:1060px;margin:44px auto 0;position:relative;z-index:1}
+.howit-rail{position:relative;height:56px;margin:0 0 22px;z-index:3}
+.howit-rail-line{position:absolute;left:0;right:0;top:50%;height:0;border-top:2px dashed rgba(201,168,76,.32)}
+.howit-dot{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--bg);border:2px solid rgba(201,168,76,.55);transition:background .3s,border-color .3s,box-shadow .3s}
+.howit-dot.on{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,168,76,.18)}
+.howit-ball{position:absolute;top:50%;left:0;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#f4dc93 0%,#c9a84c 55%,#8a6f2c 100%);box-shadow:0 10px 24px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.35);z-index:4;will-change:transform;transition:box-shadow .3s}
+.howit-ball::after{content:'';position:absolute;top:7px;left:9px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.5);transition:opacity .2s}
+.howit-ball.rest{box-shadow:0 10px 24px rgba(0,0,0,.5),0 0 0 10px rgba(201,168,76,.16),inset 0 1px 0 rgba(255,255,255,.35)}
+.howit-ball span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:21px;font-weight:700;color:var(--teal);opacity:0;transition:opacity .25s}
+.howit-ball.rest span{opacity:1}
+.howit-ball.rest::after{opacity:0}
+.howit-rail.static{display:none}
+.hw-step{transition:opacity .55s ease,transform .55s ease,border-color .3s,box-shadow .3s}
+.hw-step.on{border-color:rgba(201,168,76,.6);box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.hw-step.on .hw-chip{background:var(--gold);color:var(--teal);border-color:var(--gold)}
 .hw-step{position:relative;overflow:hidden;background:linear-gradient(160deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.015) 100%);border:1px solid var(--border);border-radius:14px;padding:26px 24px 24px;text-align:left;opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease,border-color .25s}
 .hw-step::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),transparent 70%);opacity:.75}
 .hw-step:hover{border-color:rgba(201,168,76,.45)}
@@ -448,7 +466,15 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 .hw-step h3 span{color:var(--gold-l)}
 .hw-step p{color:var(--muted);font-size:14px;line-height:1.65;position:relative;margin:0}
 @media(max-width:860px){
-  .howit-row{grid-template-columns:1fr;gap:14px;margin-top:28px;max-width:520px}
+  .howit-row{grid-template-columns:1fr;gap:14px;max-width:520px}
+  .howit-run{margin-top:24px;max-width:520px}
+  .howit-rail{position:sticky;top:70px;height:46px;margin-bottom:14px;background:var(--bg);border-radius:999px;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+}
+@media(max-width:640px){
+  .howit-rail{top:104px} /* clear the fixed gold call bar */
+  .howit-rail-line{left:18px;right:18px}
+  .howit-ball{width:38px;height:38px;margin:-19px 0 0 -19px}
+  .howit-ball span{font-size:17px}
   .hw-step{padding:20px 18px 18px}
   .hw-ghost{font-size:84px;top:-10px}
   .hw-chip{margin-bottom:10px}
@@ -831,8 +857,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
     <div class="mob-group">
       <button class="mob-group-head" onclick="this.parentElement.classList.toggle('open')" type="button">Services<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
       <div class="mob-group-body">
-        <a href="pressure-washing.html" onclick="closeMobMenu()">Pressure Washing</a>
-        <div class="mob-sub">
+        <div class="mob-subwrap"><div class="mob-subhead"><a href="pressure-washing.html" onclick="closeMobMenu()">Pressure Washing</a><button type="button" class="mob-subtoggle" onclick="this.closest('.mob-subwrap').classList.toggle('open')" aria-label="Show pressure washing services"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></div><div class="mob-sub">
         <a href="house-washing.html" onclick="closeMobMenu()">House Washing</a>
         <a href="roof-cleaning.html" onclick="closeMobMenu()">Roof Cleaning</a>
         <a href="driveway-cleaning.html" onclick="closeMobMenu()">Driveway &amp; Walkway</a>
@@ -840,7 +865,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
         <a href="deck-cleaning.html" onclick="closeMobMenu()">Deck &amp; Fence</a>
         <a href="oxidation-removal.html" onclick="closeMobMenu()">Oxidation Removal</a>
         <a href="gutter-brightening.html" onclick="closeMobMenu()">Gutter Brightening</a>
-        </div>
+        </div></div>
         <a href="paver-sealing.html" onclick="closeMobMenu()">Paver Sealing</a>
         </div>
     </div>
@@ -1029,6 +1054,12 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
       <div class="divider"></div>
       <p>Simple, transparent, and stress free. Here is what working with Kaim Contracting looks like.</p>
     </div>
+    <div class="howit-run" id="howitRun">
+    <div class="howit-rail" id="howitRail" aria-hidden="true">
+      <div class="howit-rail-line"></div>
+      <div class="howit-dot" style="left:16.667%"></div><div class="howit-dot" style="left:50%"></div><div class="howit-dot" style="left:83.333%"></div>
+      <div class="howit-ball" id="howitBall"><span id="howitBallNum"></span></div>
+    </div>
     <div class="howit-row" id="howitRow">
       <div class="hw-step">
         <div class="hw-ghost" aria-hidden="true">1</div>
@@ -1049,6 +1080,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
         <p>Our crew shows up on time, keeps the site clean, and works until it is done right. You get the outdoor space you wanted.</p>
       </div>
     </div>
+    </div>
     <script>
     (function(){
       var r=document.getElementById('howitRow');if(!r)return;
@@ -1056,6 +1088,54 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
       new IntersectionObserver(function(en,ob){
         en.forEach(function(x){if(x.isIntersecting){r.classList.add('go');ob.disconnect();}});
       },{threshold:0.35}).observe(r);
+    })();
+    (function(){
+      var run=document.getElementById('howitRun'),rail=document.getElementById('howitRail'),ball=document.getElementById('howitBall'),num=document.getElementById('howitBallNum');
+      if(!run||!rail||!ball)return;
+      var steps=[].slice.call(run.querySelectorAll('.hw-step')),dots=[].slice.call(rail.querySelectorAll('.howit-dot'));
+      if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){rail.classList.add('static');return;}
+      var ds=[1/6,1/2,5/6];
+      // scroll progress -> rail position, with a rest stop on each dot
+      var segs=[[0,.14,0,ds[0]],[.14,.30,ds[0],ds[0]],[.30,.50,ds[0],ds[1]],[.50,.66,ds[1],ds[1]],[.66,.86,ds[1],ds[2]],[.86,1,ds[2],ds[2]]];
+      var cur=0,target=0,raf=null,lastX=null,roll=0;
+      function computeTarget(){
+        var rr=run.getBoundingClientRect(),vh=window.innerHeight||1;
+        var p=(vh*0.78-rr.top)/((rr.height+vh*0.22)||1);p=Math.max(0,Math.min(1,p));
+        for(var i=0;i<segs.length;i++){
+          var sg=segs[i];
+          if(p<=sg[1]||i===segs.length-1){
+            var f=(p-sg[0])/((sg[1]-sg[0])||1);f=Math.max(0,Math.min(1,f));
+            target=sg[2]+(sg[3]-sg[2])*f;return;
+          }
+        }
+      }
+      function render(t){
+        var w=rail.clientWidth||1,x=t*w,d=ball.offsetWidth||46;
+        if(lastX!==null)roll+=x-lastX;
+        lastX=x;
+        var deg=roll/(Math.PI*d)*360;
+        ball.style.transform='translate('+x.toFixed(2)+'px,0) rotate('+deg.toFixed(1)+'deg)';
+        num.style.transform='rotate('+(-deg).toFixed(1)+'deg)';
+        var dwell=0;
+        steps.forEach(function(st,i){
+          var on=t>=ds[i]-0.012;
+          st.classList.toggle('on',on);
+          if(dots[i])dots[i].classList.toggle('on',on);
+          if(Math.abs(t-ds[i])<0.012)dwell=i+1;
+        });
+        if(dwell){num.textContent=dwell;ball.classList.add('rest');}
+        else{ball.classList.remove('rest');}
+      }
+      function loop(){
+        cur+=(target-cur)*0.085;
+        if(Math.abs(target-cur)<0.0005)cur=target;
+        render(cur);
+        raf=(cur!==target)?requestAnimationFrame(loop):null;
+      }
+      function onScroll(){computeTarget();if(!raf)raf=requestAnimationFrame(loop);}
+      window.addEventListener('scroll',onScroll,{passive:true});
+      window.addEventListener('resize',function(){lastX=null;onScroll();});
+      onScroll();
     })();
     </script>
   </div>
@@ -1123,45 +1203,32 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 </div>
 
 <style>
-.referral{background:linear-gradient(135deg,var(--teal) 0%,var(--bg2) 100%);position:relative;overflow:hidden;padding:80px 24px}
+.referral{background:linear-gradient(135deg,var(--teal) 0%,var(--bg2) 100%);position:relative;overflow:hidden;padding:40px 24px}
 .referral::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%)}
-.ref-card{display:grid;grid-template-columns:1.05fr 1fr;gap:50px;align-items:center;position:relative;z-index:1}
-.ref-eyebrow{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
-.referral h2{font-family:'Oswald',sans-serif;font-size:clamp(30px,5vw,52px);font-weight:700;text-transform:uppercase;color:#fff;line-height:1.04;letter-spacing:.01em;margin:0}
+.ref-band{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:28px;position:relative;z-index:1}
+.ref-band-badge{flex-shrink:0;width:74px;height:74px;border-radius:50%;background:rgba(201,168,76,.12);border:1px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:700;color:var(--gold-l);line-height:1}
+.ref-band-badge b{font-size:24px}
+.ref-band-badge small{font-size:9px;letter-spacing:.16em;text-transform:uppercase;margin-top:3px;opacity:.8}
+.ref-band-txt{flex:1;min-width:0}
+.ref-eyebrow{font-family:'Oswald',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.referral h2{font-family:'Oswald',sans-serif;font-size:clamp(20px,2.6vw,28px);font-weight:700;text-transform:uppercase;color:#fff;line-height:1.1;letter-spacing:.01em;margin:0}
 .referral h2 span{color:var(--gold-l)}
-.ref-lead{color:rgba(255,255,255,.78);font-size:16px;line-height:1.7;margin-top:16px;max-width:520px}
+.ref-lead{color:rgba(255,255,255,.72);font-size:14px;line-height:1.55;margin-top:7px;max-width:640px}
 .ref-lead strong{color:var(--gold-l)}
-.ref-cta-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:26px}
-.ref-note{font-size:13px;color:var(--muted);max-width:250px;line-height:1.5}
-.ref-fine{margin-top:20px;font-size:11.5px;color:var(--muted);line-height:1.5;max-width:500px;opacity:.85}
-.ref-steps{display:flex;flex-direction:column;gap:14px}
-.ref-step{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:18px 20px;transition:border-color .2s,transform .2s}
-.ref-step:hover{border-color:var(--gold);transform:translateX(3px)}
-.ref-step-num{width:42px;height:42px;border-radius:50%;background:rgba(201,168,76,.14);border:1px solid var(--gold);color:var(--gold-l);font-family:'Oswald',sans-serif;font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ref-step-num svg{width:20px;height:20px}
-.ref-step h4{font-family:'Oswald',sans-serif;font-size:15px;text-transform:uppercase;color:#fff;margin:0 0 3px;letter-spacing:.04em}
-.ref-step p{color:var(--muted);font-size:13.5px;line-height:1.5;margin:0}
-@media(max-width:860px){.referral{padding:54px 18px}.ref-card{grid-template-columns:1fr;gap:30px}.ref-note{max-width:none}}
+.ref-fine{margin-top:6px;font-size:11px;color:var(--muted);line-height:1.4;opacity:.8}
+.ref-band .btn-primary{flex-shrink:0;padding:14px 24px;white-space:nowrap}
+@media(max-width:760px){.referral{padding:34px 18px}.ref-band{flex-direction:column;text-align:center;gap:16px}.ref-band-badge{width:66px;height:66px}.ref-band-badge b{font-size:21px}.ref-lead{margin-left:auto;margin-right:auto}.ref-band .btn-primary{width:100%;text-align:center}}
 </style>
 <section class="referral" id="referral">
-  <div class="section-inner">
-    <div class="ref-card">
-      <div class="ref-intro">
-        <div class="ref-eyebrow">Refer &amp; Earn</div>
-        <h2>Give <span>$50</span>,<br>Get <span>$50</span></h2>
-        <p class="ref-lead">Know someone who needs work done? Send them our way. Your friend gets <strong>$50 off</strong> their first job, and you get a <strong>$50 reward</strong> the moment they book. Refer as many friends as you like, there is no limit.</p>
-        <div class="ref-cta-row">
-          <a href="#" class="btn-primary" onclick="referFriend();return false;">Share With a Friend</a>
-          <span class="ref-note">Opens your messages so you can send them our link. They mention you when they book, and you both get $50.</span>
-        </div>
-        <p class="ref-fine">Reward paid after your referral&#8217;s first job is completed and paid. New customers only. One reward per referred job.</p>
-      </div>
-      <div class="ref-steps">
-        <div class="ref-step"><div class="ref-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 11-5.8-1.6"/></svg></div><div><h4>Spread the word</h4><p>Tell a friend, neighbor, or family member about us.</p></div></div>
-        <div class="ref-step"><div class="ref-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg></div><div><h4>They book a job</h4><p>They mention your name and schedule any service with us.</p></div></div>
-        <div class="ref-step"><div class="ref-step-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg></div><div><h4>You both win</h4><p>They save $50 on their first job, and we send you $50.</p></div></div>
-      </div>
+  <div class="ref-band">
+    <div class="ref-band-badge"><b>$50</b><small>each</small></div>
+    <div class="ref-band-txt">
+      <div class="ref-eyebrow">Refer &amp; Earn</div>
+      <h2>Give <span>$50</span>, Get <span>$50</span></h2>
+      <p class="ref-lead">Send a friend our way. They get <strong>$50 off</strong> their first job and you get a <strong>$50 reward</strong> once it is done. No limit on how many friends you refer.</p>
+      <p class="ref-fine">Reward paid after your referral&#8217;s first job is completed and paid. New customers only. One reward per referred job.</p>
     </div>
+    <a href="#" class="btn-primary" onclick="referFriend();return false;">Share With a Friend</a>
   </div>
 </section>
 <script>
