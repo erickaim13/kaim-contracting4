@@ -433,29 +433,27 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 .howit::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:5}
 .howit::after{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:1500px;opacity:.04;pointer-events:none;z-index:0}
 .howit .section-inner{position:relative;z-index:1}
-/* How It Works: three steps on a gold connector line. The line draws in and
-   the steps pop in sequence once, the first time the row scrolls into view. */
-.howit-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:34px;max-width:1000px;margin:48px auto 0;position:relative;z-index:1}
-.howit-row::before{content:'';position:absolute;top:27px;left:9%;right:9%;height:2px;background:rgba(201,168,76,.16)}
-.howit-row::after{content:'';position:absolute;top:27px;left:9%;height:2px;width:0;background:var(--gold);transition:width 1.1s ease .15s}
-.howit-row.go::after{width:82%}
-.hw-step{text-align:center;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+/* How It Works: three cards in the same language as the service cards, with
+   a big ghost number and a gold step chip. They rise in sequence on reveal. */
+.howit-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:1060px;margin:44px auto 0;position:relative;z-index:1}
+.hw-step{position:relative;overflow:hidden;background:linear-gradient(160deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.015) 100%);border:1px solid var(--border);border-radius:14px;padding:26px 24px 24px;text-align:left;opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease,border-color .25s}
+.hw-step::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),transparent 70%);opacity:.75}
+.hw-step:hover{border-color:rgba(201,168,76,.45)}
 .howit-row.go .hw-step{opacity:1;transform:none}
-.howit-row.go .hw-step:nth-child(2){transition-delay:.35s}
-.howit-row.go .hw-step:nth-child(3){transition-delay:.7s}
-.hw-num{width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 32% 28%,var(--bg3) 0%,var(--teal) 78%);border:2.5px solid var(--gold);color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;position:relative;z-index:1;box-shadow:0 10px 26px rgba(0,0,0,.4)}
-.hw-step h3{font-family:'Oswald',sans-serif;font-size:17px;font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.06em;margin-bottom:9px;line-height:1.2}
+.howit-row.go .hw-step:nth-child(2){transition-delay:.25s}
+.howit-row.go .hw-step:nth-child(3){transition-delay:.5s}
+.hw-ghost{position:absolute;top:-14px;right:6px;font-family:'Oswald',sans-serif;font-size:104px;font-weight:700;line-height:1;color:rgba(201,168,76,.1);pointer-events:none}
+.hw-chip{display:inline-block;font-family:'Oswald',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-l);border:1px solid rgba(201,168,76,.4);border-radius:999px;padding:5px 12px;margin-bottom:16px}
+.hw-step h3{font-family:'Oswald',sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.05em;margin-bottom:9px;line-height:1.2;position:relative}
 .hw-step h3 span{color:var(--gold-l)}
-.hw-step p{color:var(--muted);font-size:14px;line-height:1.65;max-width:270px;margin:0 auto}
-@media(max-width:760px){
-  .howit-row{grid-template-columns:1fr;gap:24px;margin-top:30px}
-  .howit-row::before,.howit-row::after{display:none}
-  .hw-step{display:grid;grid-template-columns:46px 1fr;gap:14px;text-align:left;align-items:start}
-  .hw-num{width:46px;height:46px;font-size:20px;margin:0}
-  .hw-step h3{margin-bottom:5px;font-size:15px}
-  .hw-step p{margin:0;max-width:none;font-size:13px;line-height:1.55}
-  .hw-step h3,.hw-step p{grid-column:2}
-  .hw-step .hw-num{grid-row:1/span 2}
+.hw-step p{color:var(--muted);font-size:14px;line-height:1.65;position:relative;margin:0}
+@media(max-width:860px){
+  .howit-row{grid-template-columns:1fr;gap:14px;margin-top:28px;max-width:520px}
+  .hw-step{padding:20px 18px 18px}
+  .hw-ghost{font-size:84px;top:-10px}
+  .hw-chip{margin-bottom:10px}
+  .hw-step h3{font-size:16px;margin-bottom:6px}
+  .hw-step p{font-size:13px;line-height:1.55}
 }
 
 /* HOMEPAGE FAQ + accordion (reused from service-page pattern) */
@@ -1033,17 +1031,20 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
     </div>
     <div class="howit-row" id="howitRow">
       <div class="hw-step">
-        <div class="hw-num">1</div>
+        <div class="hw-ghost" aria-hidden="true">1</div>
+        <div class="hw-chip">Step 1</div>
         <h3><span>Free</span> Estimate</h3>
         <p>Call, text, or fill out the form. We come out, walk the property, and give you a clear written quote at no cost.</p>
       </div>
       <div class="hw-step">
-        <div class="hw-num">2</div>
+        <div class="hw-ghost" aria-hidden="true">2</div>
+        <div class="hw-chip">Step 2</div>
         <h3>Plan &amp; <span>Schedule</span></h3>
         <p>You approve the quote. We lock in materials, finalize the plan, and put your project on the schedule with a firm start date.</p>
       </div>
       <div class="hw-step">
-        <div class="hw-num">3</div>
+        <div class="hw-ghost" aria-hidden="true">3</div>
+        <div class="hw-chip">Step 3</div>
         <h3>Sit &amp; <span>Enjoy</span></h3>
         <p>Our crew shows up on time, keeps the site clean, and works until it is done right. You get the outdoor space you wanted.</p>
       </div>
