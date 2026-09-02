@@ -434,22 +434,28 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 
 
 /* HOW IT WORKS */
-.howit{padding:80px 24px;background:var(--bg);position:relative;overflow:visible;z-index:3}
+.howit{padding:0;background:var(--bg);position:relative;overflow:visible;z-index:3}
+/* Pinned scroll: the section holds on screen while ~1.8 screens of scrolling
+   play the droplet through the three steps, so nobody skims past it. */
+.howit-tall{height:280vh}
+.howit-stick{position:sticky;top:0;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:60px 24px 26px;box-sizing:border-box}
+.howit-stick .section-header{margin-bottom:16px}
+.howit.static-run .howit-tall{height:auto}
+.howit.static-run .howit-stick{position:static;min-height:0;padding:80px 24px}
 .howit::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);z-index:5}
 .howit::after{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:1500px;opacity:.04;pointer-events:none;z-index:0}
 .howit .section-inner{position:relative;z-index:1}
 /* Marble run: the ball rolls down the ramp as you scroll, resting at each
    step to show its number while the step text lights up. */
-.howit-run{position:relative;max-width:640px;margin:44px auto 0;z-index:1}
+.howit-run{position:relative;max-width:640px;margin:16px auto 0;z-index:1}
 .howit-track{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .howit-track path{fill:none;stroke:rgba(201,168,76,.25);stroke-width:.7;stroke-dasharray:2.2 1.7;vector-effect:non-scaling-stroke;stroke-width:2px}
-.howit-ball{position:absolute;top:0;left:0;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#f4dc93 0%,#c9a84c 55%,#8a6f2c 100%);box-shadow:0 10px 24px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.35);z-index:3;will-change:transform;transition:box-shadow .3s,opacity .3s}
-.howit-ball::after{content:'';position:absolute;top:7px;left:9px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.5)}
-.howit-ball.rest{box-shadow:0 10px 24px rgba(0,0,0,.5),0 0 0 10px rgba(201,168,76,.16),inset 0 1px 0 rgba(255,255,255,.35)}
-.howit-ball span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:21px;font-weight:700;color:var(--teal);opacity:0;transition:opacity .25s}
+.howit-ball{position:absolute;top:0;left:0;width:44px;height:56px;margin:-50px 0 0 -22px;z-index:3;will-change:transform;transition:opacity .3s,filter .3s;filter:drop-shadow(0 8px 14px rgba(0,0,0,.45));transform-origin:50% 90%}
+.howit-ball svg{display:block;width:100%;height:100%}
+.howit-ball.rest{filter:drop-shadow(0 8px 14px rgba(0,0,0,.45)) drop-shadow(0 0 12px rgba(201,168,76,.6))}
+.howit-ball span{position:absolute;left:0;right:0;top:20px;bottom:5px;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:19px;font-weight:700;color:var(--teal);opacity:0;transition:opacity .25s}
 .howit-ball.rest span{opacity:1}
-.howit-ball.rest::after{opacity:0}
-.howit-step{position:relative;min-height:250px;display:flex;align-items:center;z-index:2}
+.howit-step{position:relative;min-height:clamp(140px,24vh,240px);display:flex;align-items:center;z-index:2}
 .howit-step .howit-text{width:58%;opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
 .howit-step.on .howit-text{opacity:1;transform:none}
 .hs-l .howit-text{margin-left:auto;padding-left:20px}
@@ -464,11 +470,11 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 .howit-run.static .howit-stepnum{display:flex}
 .howit-run.static .howit-ball{display:none}
 @media(max-width:860px){
-  .howit-run{margin-top:28px}
-  .howit-step{min-height:210px}
+  .howit-run{margin-top:12px}
+  .howit-step{min-height:clamp(120px,22vh,200px)}
   .howit-step .howit-text{width:62%}
-  .howit-ball{width:38px;height:38px;margin:-19px 0 0 -19px}
-  .howit-ball span{font-size:17px}
+  .howit-ball{width:36px;height:46px;margin:-41px 0 0 -18px}
+  .howit-ball span{font-size:15px;top:16px}
   .howit-text h3{font-size:15px}
   .howit-text p{font-size:12.5px;line-height:1.55}
   .howit-stepnum{width:48px;height:48px;margin-top:-24px;font-size:21px}
@@ -1042,6 +1048,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 </script>
 
 <section class="howit" id="how-it-works">
+<div class="howit-tall"><div class="howit-stick">
   <div class="section-inner">
     <div class="section-header">
       <div class="section-label">How It Works</div>
@@ -1053,7 +1060,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
       <svg class="howit-track" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
         <path id="howitPath" d="M 70 0 C 45 4 20 8 18 16 C 16 24 40 30 60 36 C 78 41 84 44 82 50 C 80 57 55 62 38 68 C 24 73 16 77 18 84 C 19 90 28 93 40 96 C 48 98 50 100 50 107"/>
       </svg>
-      <div class="howit-ball" id="howitBall" aria-hidden="true"><span id="howitBallNum"></span></div>
+      <div class="howit-ball" id="howitBall" aria-hidden="true"><svg viewBox="0 0 40 52"><defs><radialGradient id="dropG" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#f4dc93"/><stop offset="55%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#8a6f2c"/></radialGradient></defs><path d="M20 2 C24 12 38 24 38 34 A18 16 0 1 1 2 34 C2 24 16 12 20 2 Z" fill="url(#dropG)"/><ellipse cx="13.5" cy="31" rx="4" ry="5.5" fill="rgba(255,255,255,.38)"/></svg><span id="howitBallNum"></span></div>
       <div class="howit-step hs-l" data-land="18,16">
         <div class="howit-stepnum" aria-hidden="true">1</div>
         <div class="howit-text">
@@ -1084,6 +1091,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
       var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if(reduce||!path.getTotalLength){
         run.classList.add('static');
+        document.querySelector('.howit')?.classList.add('static-run');
         steps.forEach(function(s){s.classList.add('on');});
         return;
       }
@@ -1104,9 +1112,10 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
       var cur=0,target=0,raf=null,lastPt=null,lastT=0,roll=0;
       var mode='ramp',bStart=0,dot=document.getElementById('faqQDot');
       if(dot)dot.classList.remove('on'); // the marble will deliver it
+      var tall=document.querySelector('.howit-tall');
       function computeTarget(){
-        var r=run.getBoundingClientRect(),vh=window.innerHeight||1;
-        var p=(vh*0.75-r.top)/(r.height*0.98||1);p=Math.max(0,Math.min(1,p));
+        var tr=(tall||run).getBoundingClientRect(),vh=window.innerHeight||1;
+        var p=(-tr.top)/((tr.height-vh)||1);p=Math.max(0,Math.min(1,p));
         for(var i=0;i<segs.length;i++){
           var s=segs[i];
           if(p<=s[1]||i===segs.length-1){
@@ -1119,12 +1128,10 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
         var r=run.getBoundingClientRect();
         var q=path.getPointAtLength(L*t);
         var x=q.x/100*r.width,y=q.y/100*r.height;
-        // Real rolling: one rotation per circumference of actual travel
-        if(lastPt){var dd=Math.sqrt((x-lastPt.x)*(x-lastPt.x)+(y-lastPt.y)*(y-lastPt.y));roll+=(t>=lastT?dd:-dd);}
+        // A droplet doesn't spin: give it a gentle lean into its direction
+        if(lastPt){var dx=x-lastPt.x;if(Math.abs(dx)>0.3)roll=Math.max(-13,Math.min(13,roll*0.8+dx*0.5));else roll*=0.85;}
         lastPt={x:x,y:y};lastT=t;
-        var deg=roll/(Math.PI*46)*360;
-        ball.style.transform='translate('+x.toFixed(2)+'px,'+y.toFixed(2)+'px) rotate('+deg.toFixed(1)+'deg)';
-        num.style.transform='rotate('+(-deg).toFixed(1)+'deg)';
+        ball.style.transform='translate('+x.toFixed(2)+'px,'+y.toFixed(2)+'px) rotate('+roll.toFixed(1)+'deg)';
         var dwell=0;
         steps.forEach(function(s,i){
           s.classList.toggle('on',t>=ts[i]-0.02);
@@ -1173,8 +1180,8 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
       onScroll();
     })();
     </script>
-    </div>
   </div>
+</div></div>
 </section>
 
 
