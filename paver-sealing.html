@@ -562,7 +562,7 @@ input[name="hf-name"],input[name="hf-phone"]{text-align:center}
 .pw-offers-head h2{font-family:'Oswald',sans-serif;font-size:clamp(28px,4.6vw,48px);font-weight:700;text-transform:uppercase;color:#fff;letter-spacing:.01em;line-height:1.04}
 .pw-offers-head h2 .hl{color:var(--gold-l)}
 .pw-offers-head p{margin-top:15px;color:var(--muted);font-size:16px;max-width:540px;margin-left:auto;margin-right:auto;line-height:1.6}
-.pw-offers-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:stretch}
+.pw-offers-grid{display:grid;grid-template-columns:minmax(0,600px);justify-content:center;gap:26px;align-items:stretch}
 .deal{position:relative;border-radius:22px;padding:34px 30px 30px;display:flex;flex-direction:column;transition:transform .25s ease,box-shadow .25s ease}
 .deal:hover{transform:translateY(-6px)}
 .deal--free{background:linear-gradient(165deg,#15294a,#0c1d36);border:1px solid var(--border2);box-shadow:0 18px 50px rgba(0,0,0,.42)}
@@ -829,7 +829,7 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   <div class="pw-offers-inner">
     <div class="pw-offers-head">
       <span class="pw-offers-pill">2026 Sealing Season</span>
-      <h2>Every Sand &amp; Seal <span class="hl">Comes With This</span></h2>
+      <h2>This Season's <span class="hl">Sealing Deal</span></h2>
       <p>The New England sealing window closes when temperatures drop in the fall, and we only take on a limited number of sand &amp; seal projects each week. Lock yours in early.</p>
     </div>
     <div class="pw-offers-grid">
@@ -852,22 +852,6 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
         <div class="deal-fine">10% off the total for any paver sealing job scheduled by September 15, 2026. Mention this offer when you book. Cannot be combined with other discounts.</div>
       </article>
 
-      <article class="deal deal--bundle">
-        <div class="deal-ribbon">Included On Every Job</div>
-        <div class="deal-burst"><span class="big">FREE</span><span>$150 value</span></div>
-        <div class="deal-kicker">Pool Decks &amp; Steps</div>
-        <h3 class="deal-title">Non-Slip Additive, On Us</h3>
-        <div class="deal-amount"><span class="from">included</span><span class="num">FREE</span><span class="per">on every pool deck and step we seal</span></div>
-        <ul class="deal-list">
-          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>Deep clean, fresh polymeric sand, and a professional sealer, done over multiple days</span></li>
-          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>Non-slip grit mixed right into the sealer, so wet feet stay planted</span></li>
-          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>Even coverage, full joints, clean edges, no haze</span></li>
-          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>Licensed and insured in MA and NH, and we clean up like we were never there</span></li>
-        </ul>
-        <a href="#top-form" class="deal-btn" onclick="psSelectOffer('bundle');return false;">Book My Sand &amp; Seal</a>
-        <a href="tel:978-351-2195" class="deal-call">or call <b>978-351-2195</b></a>
-        <div class="deal-fine">Non-slip additive included free on pool decks and steps with any sand and seal. No cash value.</div>
-      </article>
 
     </div>
     <div class="pw-offers-trust">
@@ -1030,13 +1014,6 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
 })();
 </script>
 
-<script>
-function psSelectOffer(kind){
-  var offers={bundle:{name:'Sand & Seal, Free Non-Slip Additive',btn:'Book My Sand & Seal'}};
-  var o=offers[kind]; if(!o)return;
-  location.href='quote.html?'+'service=Paver%20Sealing&'+'src=paver-sealing&offer='+encodeURIComponent(o.name);
-}
-</script>
 <script>
 function closeMobMenu(){document.getElementById('mobMenu').classList.remove('open');document.body.classList.remove('menu-open');}
 (function(){
