@@ -79,7 +79,7 @@
     try { cfg = JSON.parse(slot.getAttribute('data-kc') || '{}'); } catch (e) { cfg = {}; }
     cfg.title = cfg.title || 'Get Your Free Estimate';
     cfg.kicker = cfg.kicker || 'Takes about 20 seconds';
-    cfg.submitLabel = cfg.submitLabel || 'Get My Free Estimate';
+    cfg.submitLabel = cfg.submitLabel || 'Get Free Estimate';
     cfg.source = cfg.source || 'Quote Page';
 
     if (!document.getElementById('kcf-css')) {
