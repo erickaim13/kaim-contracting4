@@ -90,7 +90,7 @@
     var params = new URLSearchParams(location.search);
     var preService = params.get('service') || '';
     var srcPage = (params.get('src') || '').replace(/[^a-z0-9-]/gi, '').slice(0, 40);
-    var urlOffer = (params.get('offer') || '').slice(0, 120);
+    var urlOffer = (params.get('offer') || '').slice(0, 240);
 
     slot.innerHTML = '<form class="kcf" novalidate autocomplete="on">'
       + '<div class="kcf-title">' + esc(cfg.title) + '</div>'

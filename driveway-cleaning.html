@@ -118,7 +118,7 @@ nav{background:var(--bg2);position:sticky;top:0;z-index:150;box-shadow:0 2px 20p
 .dd-sub{position:absolute;top:-7px;left:calc(100% - 4px);background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:6px;width:250px;box-shadow:0 12px 36px rgba(0,0,0,.35);opacity:0;visibility:hidden;transform:translateX(6px);transition:all .2s;z-index:210;padding:6px 0}
 .dd-has-sub:hover .dd-sub{opacity:1;visibility:visible;transform:translateX(0)}
 .mob-sub{margin-left:22px;border-left:2px solid rgba(201,168,76,.35)}
-.mob-sub a{font-size:13px!important;opacity:.9}
+.mob-group-body .mob-sub a{font-size:13px;opacity:.9;padding:11px 22px 11px 30px}.mob-group-body .mob-sub{margin:0 0 6px 30px}.mob-group-body>a[href="pressure-washing.html"]{color:var(--gold-l)}
 .btn-nav{background:var(--gold)!important;color:var(--teal)!important;font-family:'Oswald',sans-serif!important;font-size:12.5px!important;font-weight:600!important;letter-spacing:.1em!important;text-transform:uppercase!important;padding:9px 18px!important;border-radius:3px!important;margin-left:10px!important;text-decoration:none!important}
 .btn-nav:hover{background:var(--gold-l)!important}
 .nav-info{display:flex;align-items:center;gap:14px;margin-left:auto;margin-right:16px}
@@ -625,6 +625,20 @@ input[name="hf-name"],input[name="hf-phone"]{text-align:center}
   nav{border-radius:0!important;background:var(--bg2)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border:none!important;border-bottom:1px solid var(--gold)!important;box-shadow:0 2px 16px rgba(0,0,0,.4)!important;top:0!important;left:0!important;right:0!important;transform:none!important;width:100%!important;max-width:100%!important}
   nav.scrolled{background:var(--bg2)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border-bottom:1px solid var(--gold)!important;box-shadow:0 4px 22px rgba(0,0,0,.5)!important}
 }
+/* ===== PACKAGE BAND: pick any 3, save 10% ===== */
+.pkg-band{background:radial-gradient(120% 90% at 50% 0%,#13294a 0%,var(--bg) 62%);padding:64px 24px;position:relative;overflow:hidden}
+.pkg-band::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 5%,var(--gold) 25%,var(--gold) 75%,transparent 95%);opacity:.6}
+.pkg-band-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:28px;padding:30px 34px;border-radius:22px;background:linear-gradient(155deg,#f4dc93 0%,#dcbb63 52%,#c9a84c 100%);box-shadow:0 22px 62px rgba(201,168,76,.35);color:var(--teal);position:relative}
+.pkg-band-burst{width:92px;height:92px;border-radius:50%;background:var(--teal);color:var(--gold-l);border:3px dashed rgba(255,255,255,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:700;line-height:1;transform:rotate(-9deg);box-shadow:0 9px 22px rgba(0,0,0,.3);flex-shrink:0}
+.pkg-band-burst .big{font-size:29px}
+.pkg-band-burst span:last-child{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;margin-top:4px;opacity:.85}
+.pkg-band-txt{flex:1;min-width:0}
+.pkg-band-kicker{font-family:'Oswald',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(7,24,40,.65);margin-bottom:7px}
+.pkg-band-txt h2{font-family:'Oswald',sans-serif;font-size:clamp(21px,2.6vw,29px);font-weight:700;text-transform:uppercase;line-height:1.08;letter-spacing:.01em;color:var(--teal);margin:0 0 9px}
+.pkg-band-txt p{font-size:14.5px;line-height:1.5;color:rgba(7,24,40,.82);margin:0}
+.pkg-band-btn{flex-shrink:0;display:inline-block;background:var(--teal);color:#fff;font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:15px 22px;border-radius:12px;text-decoration:none;box-shadow:0 12px 30px rgba(7,24,40,.4);transition:transform .15s,background .2s;white-space:nowrap}
+.pkg-band-btn:hover{background:#0b2138;transform:translateY(-2px)}
+@media(max-width:760px){.pkg-band{padding:44px 16px}.pkg-band-inner{flex-direction:column;text-align:center;gap:18px;padding:34px 22px 26px}.pkg-band-burst{width:80px;height:80px}.pkg-band-burst .big{font-size:25px}.pkg-band-btn{display:block;width:100%;padding:15px 18px}}
 /* ===== MOBILE MENU SLIDE-IN PANEL ===== */
 .mob-menu{display:flex!important;flex-direction:column;position:fixed;left:0;top:0;width:300px;max-width:85vw;height:100vh;height:100dvh;background:var(--bg);transform:translateX(-100%);transition:transform .35s cubic-bezier(.2,.65,.2,1);z-index:1600;overflow-y:auto;box-shadow:none;border-top:none!important;border-radius:0!important}
 .mob-menu.open{transform:translateX(0);box-shadow:8px 0 40px rgba(0,0,0,.6)}
@@ -643,7 +657,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.
 .mob-group.open .mob-group-head{color:var(--gold-l)}
 .mob-group.open .mob-group-head svg{transform:rotate(180deg)}
 .mob-group-body{max-height:0;overflow:hidden;transition:max-height .3s ease;background:rgba(0,0,0,.2)}
-.mob-group.open .mob-group-body{max-height:400px}
+.mob-group.open .mob-group-body{max-height:1200px}
 .mob-group-body a{display:block;padding:13px 22px 13px 38px;color:var(--muted);font-size:14px;text-decoration:none;border-top:1px solid rgba(255,255,255,.04);font-family:'Source Sans 3',sans-serif}
 .mob-group-body a:first-child{border-top:none}
 .mob-group-body a:hover{color:var(--gold-l);background:rgba(201,168,76,.06)}
@@ -923,6 +937,17 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
   </div>
 </section>
 
+<section class="pkg-band" id="package">
+  <div class="pkg-band-inner">
+    <div class="pkg-band-burst"><span class="big">10%</span><span>off</span></div>
+    <div class="pkg-band-txt">
+      <div class="pkg-band-kicker">Build Your Package</div>
+      <h2>Add two more services, take 10% off the whole job</h2>
+      <p>A clean driveway looks even better next to fresh siding and a spotless walkway. Pick any three washing services for one visit and 10% comes off everything.</p>
+    </div>
+    <a class="pkg-band-btn" href="pressure-washing.html?pkg=driveway-cleaning#package">Build My Package &rarr;</a>
+  </div>
+</section>
 <section class="svc-final" id="final-cta">
   <div class="svc-final-inner">
     <h2>Ready to Love <span>Pulling Into Your Driveway?</span></h2>
