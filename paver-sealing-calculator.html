@@ -431,18 +431,18 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .calc-field select option{background:var(--bg3);color:var(--text)}
 .calc-toggle{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
 .calc-toggle-btn{font-family:'Oswald',sans-serif;font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;background:var(--bg3);color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:11px 8px;cursor:pointer;transition:all .15s}
-.calc-toggle-btn:hover{color:var(--text);border-color:var(--gold)}
+@media(hover:hover){.calc-toggle-btn:hover{color:var(--text);border-color:var(--gold)}}
 .calc-toggle-btn.active{background:rgba(201,168,76,.12);color:var(--gold-l);border-color:var(--gold)}
 .calc-toggle-btn[data-shape]{display:none}
 .shape-rectangle.active,.shape-circle.active,.shape-area.active{display:flex}
 .calc-surface-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
 @media(max-width:640px){.calc-surface-grid{grid-template-columns:repeat(2,1fr)}.calc-grid{grid-template-columns:1fr}.calc-toggle{grid-template-columns:1fr 1fr 1fr}}
 .calc-surface-btn{font-family:'Oswald',sans-serif;font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;background:var(--bg3);color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:11px 8px;cursor:pointer;text-align:center;transition:all .15s;line-height:1.3}
-.calc-surface-btn:hover{color:var(--text);border-color:var(--gold)}
+@media(hover:hover){.calc-surface-btn:hover{color:var(--text);border-color:var(--gold)}}
 .calc-surface-btn.active{background:rgba(201,168,76,.12);color:var(--gold-l);border-color:var(--gold)}
 .calc-condition{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .calc-condition-btn{font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;background:var(--bg3);color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:11px 8px;cursor:pointer;transition:all .15s}
-.calc-condition-btn:hover{color:var(--text);border-color:var(--gold)}
+@media(hover:hover){.calc-condition-btn:hover{color:var(--text);border-color:var(--gold)}}
 .calc-condition-btn.active{background:rgba(201,168,76,.12);color:var(--gold-l);border-color:var(--gold)}
 .cw-dots{display:flex;gap:6px;justify-content:center;margin-bottom:18px}
 .cw-dots span{flex:1;max-width:44px;height:4px;border-radius:2px;background:var(--border);transition:background .25s}
@@ -455,10 +455,10 @@ nav.scrolled{width:100%!important;max-width:100vw!important;top:0!important;bord
 .cw-chips{display:grid;grid-template-columns:1fr;gap:8px;flex:1;grid-auto-rows:minmax(46px,1fr)}
 .cw-chip{font-family:'Oswald',sans-serif;font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;background:var(--bg3);color:var(--muted);border:1px solid var(--border);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .15s;text-align:left;display:flex;flex-direction:column;justify-content:center;gap:2px}
 .cw-chip small{font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);opacity:.85}
-.cw-chip:hover{color:var(--text);border-color:var(--gold)}
+@media(hover:hover){.cw-chip:hover{color:var(--text);border-color:var(--gold)}}
 .cw-chip.sel{background:rgba(201,168,76,.12);color:var(--gold-l);border-color:var(--gold)}
 .cw-back{position:absolute;top:0;left:0;background:none;border:none;color:var(--muted);font-size:12.5px;cursor:pointer;padding:2px 0;font-family:'Source Sans 3',sans-serif}
-.cw-back:hover{color:var(--gold-l)}
+@media(hover:hover){.cw-back:hover{color:var(--gold-l)}}
 .cw-hint{font-size:12.5px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.5}
 .cw-next{width:100%;background:var(--gold);color:var(--teal);border:none;border-radius:8px;padding:14px;font-family:'Oswald',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin-top:12px;transition:background .15s}
 .cw-next:hover{background:var(--gold-l)}
