@@ -19,6 +19,35 @@ const ALLOWED_ORIGINS = new Set([
   'https://www.kaimcontracting.com'
 ]);
 
+// Booking rate limit. STOPGAP: this Map lives in one serverless instance's
+// memory, so it is per-instance and resets on every cold start. It will not
+// stop a determined attacker spread across instances, it just keeps one
+// browser (or one dumb script) from stuffing the calendar with junk visits.
+// A durable limit belongs in Supabase if this ever needs to be airtight.
+const BOOK_WINDOW_MS = 60 * 60 * 1000;
+const BOOK_MAX = 5;
+const bookHits = new Map();
+
+function clientIp(req) {
+  const fwd = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
+  return fwd || req.socket?.remoteAddress || 'unknown';
+}
+
+function bookRateLimited(req) {
+  const ip = clientIp(req);
+  const now = Date.now();
+  // Opportunistic sweep so the Map can't grow without bound on a warm instance.
+  for (const [k, stamps] of bookHits) {
+    const live = stamps.filter(t => now - t < BOOK_WINDOW_MS);
+    if (live.length) bookHits.set(k, live); else bookHits.delete(k);
+  }
+  const hits = (bookHits.get(ip) || []).filter(t => now - t < BOOK_WINDOW_MS);
+  if (hits.length >= BOOK_MAX) return true;
+  hits.push(now);
+  bookHits.set(ip, hits);
+  return false;
+}
+
 async function readCrm() {
   const { data: row, error } = await sbAdmin
     .from('crm_data').select('data, updated_at').eq('id', 1).single();
@@ -62,6 +91,8 @@ async function getAvailability(res) {
 }
 
 async function bookVisit(req, res) {
+  if (bookRateLimited(req)) return res.status(429).json({ error: 'Too many requests' });
+
   const body = req.body || {};
   if (body.kc_hpot_xyz) return res.status(200).json({ ok: true }); // honeypot
 
@@ -73,8 +104,11 @@ async function bookVisit(req, res) {
   const date = sanitize(body.date, 10);
   const time = sanitize(body.time, 10);
 
+  // A real US number is 10 digits, or 11 with the country code. Anything else
+  // is a typo or a bot, and it would only queue texts that can never land.
   const phoneDigits = String(phone).replace(/\D/g, '');
   if (!first || phoneDigits.length < 10) return res.status(400).json({ error: 'Name and phone required' });
+  if (phoneDigits.length !== 10 && phoneDigits.length !== 11) return res.status(400).json({ error: 'Invalid phone' });
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{1,2}:\d{2} [AP]M$/i.test(time)) {
     return res.status(400).json({ error: 'Invalid slot' });
   }

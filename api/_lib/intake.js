@@ -68,6 +68,67 @@ async function loadTemplate(key, fallback) {
   } catch { return fallback; }
 }
 
+// Branded "we got your request" email to the lead. Shared by the normal path
+// and the degraded path below so both send exactly the same message.
+async function sendConfirmationEmail(first, email, service) {
+  try {
+    await transporter.sendMail({
+      from: 'Kaim Contracting <info@kaimcontracting.com>',
+      to: email,
+      subject: 'We Got Your Quote Request!',
+      replyTo: 'info@kaimcontracting.com',
+      html: brandedHtml(`
+        <h2 style="margin:0 0 8px;font-size:22px;color:#1a1a1a">Thanks for Reaching Out!</h2>
+        <p style="margin:0 0 20px;font-size:15px;color:#555;line-height:1.6">Hi ${first.replace(/[<>&"']/g, '')},</p>
+        <p style="margin:0 0 12px;font-size:15px;color:#555;line-height:1.6">We received your quote request${service ? ' for <strong>' + service.replace(/[<>&"']/g, '') + '</strong>' : ''}. You'll hear from us shortly, typically within the hour, to go over the details.</p>
+        <p style="margin:0 0 24px;font-size:15px;color:#555;line-height:1.6">In the meantime, feel free to give us a call or reply to this email with any questions.</p>
+        <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px"><tr><td style="background:#f8f8f8;border-radius:8px;padding:20px 24px;text-align:center">
+          <div style="font-size:13px;color:#999;margin-bottom:6px">Call or text us anytime</div>
+          <div style="font-size:20px;font-weight:700;color:#1a1a1a">(978) 351-2195</div>
+        </td></tr></table>
+        <p style="margin:0;font-size:13px;color:#999;line-height:1.5">We look forward to working with you!</p>
+      `)
+    });
+  } catch (e) {
+    console.error('confirmation email error', e?.message || e);
+    // Don't fail the whole request if the email part stumbles.
+  }
+}
+
+// Last line of defence when the CRM write fails (Supabase down, or the
+// compare-and-swap loop lost every race). The lead must never vanish: text
+// Eric everything he needs to add the client by hand, and still send the
+// visitor their confirmation so the form behaves normally. Nothing in here is
+// allowed to throw, otherwise we'd be right back to dropping the lead.
+async function degradedNotify(opts, db) {
+  const { first, last, phone, email, address, service, message, confirmationEmail } = opts;
+  try {
+    const ownerNotifyPhone = normalizePhone(db?.settings?.notifyPhone) || normalizePhone(db?.settings?.phone) || DEFAULT_OWNER_PHONE;
+    const name = (first + ' ' + last).trim() || 'Unknown';
+    const lines = ['NEW LEAD (not saved to CRM, add manually): ' + name];
+    lines.push('Phone: ' + (phone || 'none given'));
+    lines.push('Service: ' + (service || 'not specified'));
+    if (address) lines.push('Address: ' + address);
+    if (message) lines.push('Notes: ' + message);
+    const r = await sbAdmin.from('imessage_queue').insert({
+      phone: ownerNotifyPhone,
+      body: lines.join('\n'),
+      direction: 'outgoing',
+      status: 'pending',
+      client_name: name,
+      trigger_type: 'lead_notify'
+    });
+    if (r?.error) console.error('degraded owner notify error', r.error.message);
+  } catch (e) {
+    console.error('degraded owner notify error', e?.message || e);
+  }
+  try {
+    if (confirmationEmail && email) await sendConfirmationEmail(first, email, service);
+  } catch (e) {
+    console.error('degraded confirmation email error', e?.message || e);
+  }
+}
+
 /**
  * Create a new lead and fire the full new-lead automation.
  *
@@ -117,92 +178,107 @@ export async function intakeLead(opts) {
   let client = null;
   let now = null;
   let savedOk = false;
+  let crmError = null;
 
-  for (let attempt = 1; attempt <= MAX_ATTEMPTS && !savedOk; attempt++) {
-    const { data: row, error: readErr } = await sbAdmin
-      .from('crm_data').select('data, updated_at').eq('id', 1).single();
-    if (readErr) throw readErr;
+  try {
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS && !savedOk; attempt++) {
+      const { data: row, error: readErr } = await sbAdmin
+        .from('crm_data').select('data, updated_at').eq('id', 1).single();
+      if (readErr) throw readErr;
 
-    // Merge any missing top-level keys onto the EXISTING blob rather than
-    // replacing it. A partial/corrupted row (data present but missing `clients`)
-    // must never cause us to overwrite the whole CRM with a fresh skeleton.
-    db = row?.data || {};
-    db.clients = db.clients || [];
-    db.estimates = db.estimates || [];
-    db.invoices = db.invoices || [];
-    db.messages = db.messages || [];
-    db.activity = db.activity || [];
-    db.settings = db.settings || {};
-    db.jobs = db.jobs || [];
-    if (db._nc == null) db._nc = 1;
-    if (db._ne == null) db._ne = 1001;
-    if (db._ni == null) db._ni = 2001;
-    const prevUpdatedAt = row?.updated_at ?? null;
+      // Merge any missing top-level keys onto the EXISTING blob rather than
+      // replacing it. A partial/corrupted row (data present but missing `clients`)
+      // must never cause us to overwrite the whole CRM with a fresh skeleton.
+      db = row?.data || {};
+      db.clients = db.clients || [];
+      db.estimates = db.estimates || [];
+      db.invoices = db.invoices || [];
+      db.messages = db.messages || [];
+      db.activity = db.activity || [];
+      db.settings = db.settings || {};
+      db.jobs = db.jobs || [];
+      if (db._nc == null) db._nc = 1;
+      if (db._ne == null) db._ne = 1001;
+      if (db._ni == null) db._ni = 2001;
+      const prevUpdatedAt = row?.updated_at ?? null;
 
-    // Dedupe — same Meta leadgen_id must never create two leads.
-    if (dedupeKey) {
-      const exists = (db.clients || []).some(c => c && c.metaLeadgenId === dedupeKey);
-      if (exists) return { ok: true, duplicate: true };
+      // Dedupe — same Meta leadgen_id must never create two leads.
+      if (dedupeKey) {
+        const exists = (db.clients || []).some(c => c && c.metaLeadgenId === dedupeKey);
+        if (exists) return { ok: true, duplicate: true };
+      }
+
+      now = new Date();
+      client = {
+        id: db._nc++,
+        first, last, phone, email, address: address || '',
+        service,
+        val: 0,
+        source: leadSource,
+        status: 'new',
+        prio: 'normal',
+        notes: message,
+        priv: contactPref ? `Preferred contact: ${contactPref}` : '',
+        added: now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        addedRaw: now.toISOString(),
+        ...extraClientFields
+      };
+      if (attachments.length) client.attachments = attachments;
+
+      // Attribution: keep the raw object on the client (gclid is what makes Google
+      // Ads offline-conversion imports possible later) and add a human-readable
+      // line to private notes so it's visible in the CRM without new UI.
+      if (attribution) {
+        client.attribution = attribution;
+        const attrLine = (attribution.gclid || attribution.gbraid || attribution.wbraid)
+          ? 'Came from a Google Ads click'
+          : attribution.utm_source
+            ? 'Came from tagged link: ' + attribution.utm_source + (attribution.utm_campaign ? ' (' + attribution.utm_campaign + ')' : '')
+            : attribution.referrer ? 'Came from: ' + attribution.referrer : '';
+        if (attrLine) client.priv = (client.priv ? client.priv + ' · ' : '') + attrLine;
+      }
+
+      db.clients.unshift(client);
+      db.activity.unshift({
+        text: activityText || ('New website lead: ' + client.first + ' ' + client.last + (attachments.length ? ' (' + attachments.length + ' photo' + (attachments.length > 1 ? 's' : '') + ')' : '')),
+        ico: activityIco,
+        time: now.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
+      });
+
+      // Conditional write: only lands if nobody else wrote since our read.
+      let writeQuery = sbAdmin
+        .from('crm_data')
+        .update({ data: db, updated_at: now.toISOString() })
+        .eq('id', 1);
+      writeQuery = prevUpdatedAt === null
+        ? writeQuery.is('updated_at', null)
+        : writeQuery.eq('updated_at', prevUpdatedAt);
+      const { data: written, error: writeErr } = await writeQuery.select('id');
+      if (writeErr) throw writeErr;
+
+      if (written && written.length > 0) {
+        savedOk = true;
+      } else {
+        // Someone else wrote between our read and write. Back off briefly, retry.
+        console.warn('[intake] crm_data write conflict, attempt ' + attempt + ' of ' + MAX_ATTEMPTS);
+        await new Promise(r => setTimeout(r, 150 * attempt + Math.floor(Math.random() * 200)));
+      }
     }
 
-    now = new Date();
-    client = {
-      id: db._nc++,
-      first, last, phone, email, address: address || '',
-      service,
-      val: 0,
-      source: leadSource,
-      status: 'new',
-      prio: 'normal',
-      notes: message,
-      priv: contactPref ? `Preferred contact: ${contactPref}` : '',
-      added: now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-      addedRaw: now.toISOString(),
-      ...extraClientFields
-    };
-    if (attachments.length) client.attachments = attachments;
-
-    // Attribution: keep the raw object on the client (gclid is what makes Google
-    // Ads offline-conversion imports possible later) and add a human-readable
-    // line to private notes so it's visible in the CRM without new UI.
-    if (attribution) {
-      client.attribution = attribution;
-      const attrLine = (attribution.gclid || attribution.gbraid || attribution.wbraid)
-        ? 'Came from a Google Ads click'
-        : attribution.utm_source
-          ? 'Came from tagged link: ' + attribution.utm_source + (attribution.utm_campaign ? ' (' + attribution.utm_campaign + ')' : '')
-          : attribution.referrer ? 'Came from: ' + attribution.referrer : '';
-      if (attrLine) client.priv = (client.priv ? client.priv + ' · ' : '') + attrLine;
-    }
-
-    db.clients.unshift(client);
-    db.activity.unshift({
-      text: activityText || ('New website lead: ' + client.first + ' ' + client.last + (attachments.length ? ' (' + attachments.length + ' photo' + (attachments.length > 1 ? 's' : '') + ')' : '')),
-      ico: activityIco,
-      time: now.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
-    });
-
-    // Conditional write: only lands if nobody else wrote since our read.
-    let writeQuery = sbAdmin
-      .from('crm_data')
-      .update({ data: db, updated_at: now.toISOString() })
-      .eq('id', 1);
-    writeQuery = prevUpdatedAt === null
-      ? writeQuery.is('updated_at', null)
-      : writeQuery.eq('updated_at', prevUpdatedAt);
-    const { data: written, error: writeErr } = await writeQuery.select('id');
-    if (writeErr) throw writeErr;
-
-    if (written && written.length > 0) {
-      savedOk = true;
-    } else {
-      // Someone else wrote between our read and write. Back off briefly, retry.
-      console.warn('[intake] crm_data write conflict, attempt ' + attempt + ' of ' + MAX_ATTEMPTS);
-      await new Promise(r => setTimeout(r, 150 * attempt + Math.floor(Math.random() * 200)));
-    }
+    if (!savedOk) throw new Error('crm_data write conflict persisted after ' + MAX_ATTEMPTS + ' attempts');
+  } catch (e) {
+    crmError = e;
   }
 
-  if (!savedOk) throw new Error('crm_data write conflict persisted after ' + MAX_ATTEMPTS + ' attempts');
+  // CRM write failed. Do NOT throw: that would 500 the request and skip the
+  // owner notify + confirmation email below, losing the lead silently. Run the
+  // degraded path instead and report success so the visitor still sees the
+  // normal confirmation / booking step.
+  if (crmError) {
+    console.error('[intake] crm_data write failed, running degraded path:', crmError?.message || crmError);
+    await degradedNotify({ first, last, phone, email, address, service, message, confirmationEmail }, db);
+    return { ok: true, duplicate: false, degraded: true };
+  }
 
   // 3. Queue iMessages — owner notify (immediate) + auto-reply (2-6s delay)
   const phoneDigits = String(phone).replace(/\D/g, '');
@@ -260,29 +336,7 @@ export async function intakeLead(opts) {
   // the function and the email never actually sends. Only send when we have
   // an address (Meta lead forms may omit email).
   if (confirmationEmail && email) {
-    try {
-      await transporter.sendMail({
-        from: 'Kaim Contracting <info@kaimcontracting.com>',
-        to: email,
-        subject: 'We Got Your Quote Request!',
-        replyTo: 'info@kaimcontracting.com',
-        html: brandedHtml(`
-          <h2 style="margin:0 0 8px;font-size:22px;color:#1a1a1a">Thanks for Reaching Out!</h2>
-          <p style="margin:0 0 20px;font-size:15px;color:#555;line-height:1.6">Hi ${first.replace(/[<>&"']/g, '')},</p>
-          <p style="margin:0 0 12px;font-size:15px;color:#555;line-height:1.6">We received your quote request${service ? ' for <strong>' + service.replace(/[<>&"']/g, '') + '</strong>' : ''}. You'll hear from us shortly, typically within the hour, to go over the details.</p>
-          <p style="margin:0 0 24px;font-size:15px;color:#555;line-height:1.6">In the meantime, feel free to give us a call or reply to this email with any questions.</p>
-          <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px"><tr><td style="background:#f8f8f8;border-radius:8px;padding:20px 24px;text-align:center">
-            <div style="font-size:13px;color:#999;margin-bottom:6px">Call or text us anytime</div>
-            <div style="font-size:20px;font-weight:700;color:#1a1a1a">(978) 351-2195</div>
-          </td></tr></table>
-          <p style="margin:0;font-size:13px;color:#999;line-height:1.5">We look forward to working with you!</p>
-        `)
-      });
-    } catch (e) {
-      console.error('confirmation email error', e?.message || e);
-      // Don't fail the whole request if the email part stumbles — the lead
-      // is already in the CRM and iMessages were queued.
-    }
+    await sendConfirmationEmail(first, email, service);
   }
 
   return { ok: true, duplicate: false, clientId: client.id };
