@@ -32,6 +32,27 @@ export function normalizePhone(p) {
   return digits.length === 10 ? '+1' + digits : '+' + digits;
 }
 
+// Why a client-facing text must NOT be queued, or null when it is fine to send.
+// A client who texted STOP gets do_not_text / ai_optout set on their record by
+// the Mac's reply watcher; a dead or declined client should not hear from the
+// automation either. The Mac sender refuses these too, but the website should
+// never put the row in the queue in the first place. Matches every client
+// record on the last 10 digits of the phone so an older opted-out record for
+// the same number still counts. Owner-facing texts never go through this.
+export function textOptOutReason(db, phone) {
+  const last10 = String(phone || '').replace(/\D/g, '').slice(-10);
+  if (last10.length < 10) return null;
+  const digits = p => String(p || '').replace(/\D/g, '').slice(-10);
+  for (const c of (db?.clients || [])) {
+    if (!c || digits(c.phone) !== last10) continue;
+    if (c.do_not_text) return 'client ' + c.id + ' has do_not_text';
+    if (c.ai_optout) return 'client ' + c.id + ' has ai_optout';
+    const status = String(c.status || '').toLowerCase();
+    if (status === 'dead' || status === 'declined') return 'client ' + c.id + ' status is ' + status;
+  }
+  return null;
+}
+
 // First text a new lead gets. First person, as Eric himself (see
 // feedback_first_person_messaging). Editable in Supabase message_templates
 // under key 'lead_autoreply'; this is the fallback if that row is missing.
@@ -306,7 +327,9 @@ export async function intakeLead(opts) {
   // Auto-reply to the lead — single template, any time of day. Gated by the
   // master "Automated Lead Texting" switch (settings.aiScheduler); when off,
   // the owner notify above still fires but the lead gets no auto-text.
-  if (phoneDigits.length >= 10 && db.settings?.aiScheduler !== false) {
+  const optOut = phoneDigits.length >= 10 ? textOptOutReason(db, phone) : null;
+  if (optOut) console.log('[intake] skipped lead_autoreply: ' + optOut);
+  if (phoneDigits.length >= 10 && !optOut && db.settings?.aiScheduler !== false) {
     const template = await loadTemplate('lead_autoreply', FALLBACK_AUTOREPLY);
     const replyBody = template.replace(/\{name\}/g, client.first).replace(/\{service\}/g, service || 'your project');
     // Near-instant: 2-6s here + the Mac sender's 10s poll = lead hears back in

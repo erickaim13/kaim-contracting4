@@ -11,7 +11,7 @@
 // so the CRM calendar, reschedule flow, and reminder cancellation all treat
 // web bookings like any other estimate visit.
 
-import { sbAdmin, sanitize, normalizePhone } from './_lib/intake.js';
+import { sbAdmin, sanitize, normalizePhone, textOptOutReason } from './_lib/intake.js';
 import { computeOpenDays, slotIsOpen, dateLabel, nyToUtc, nyParts } from './_lib/booking.js';
 
 const ALLOWED_ORIGINS = new Set([
@@ -117,11 +117,11 @@ async function bookVisit(req, res) {
   // CAS write, same discipline as intake.js: re-read + retry on conflict, and
   // re-verify the slot inside the loop so two people can't grab the same one.
   const MAX_ATTEMPTS = 4;
-  let saved = false, clientRec = null, jobRec = null;
+  let saved = false, clientRec = null, jobRec = null, db = null;
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS && !saved; attempt++) {
     const row = await readCrm();
-    const db = row?.data || {};
+    db = row?.data || {};
     db.clients = db.clients || [];
     db.jobs = db.jobs || [];
     db.activity = db.activity || [];
@@ -194,6 +194,11 @@ async function bookVisit(req, res) {
   const clientName = `${first} ${last}`.trim();
   const tasks = [];
 
+  // Client-facing texts (confirmation + arrival reminders) are skipped for a
+  // client who opted out or is dead/declined. The owner notify still goes out.
+  const optOut = textOptOutReason(db, phone);
+  if (optOut) console.log('[estimate-visit] skipped client texts for job ' + jobRec.id + ': ' + optOut);
+
   // The pending "when are you available?" auto-reply is now obsolete.
   tasks.push(sbAdmin.from('imessage_queue')
     .update({ status: 'cancelled' })
@@ -209,7 +214,7 @@ async function bookVisit(req, res) {
   }).then(r => { if (r?.error) console.error('owner notify', r.error.message); }, e => console.error('owner notify', e?.message)));
 
   // Client confirmation — first person, same voice as the AI lock-in text.
-  tasks.push(sbAdmin.from('imessage_queue').insert({
+  if (!optOut) tasks.push(sbAdmin.from('imessage_queue').insert({
     phone: phoneE164,
     body: `Perfect, got you down for ${dayStr} at ${time} for your free estimate. If anything changes just call or text me. I'll text you when I'm on my way. Eric`,
     direction: 'outgoing', status: 'pending',
@@ -229,24 +234,26 @@ async function bookVisit(req, res) {
   let dayBeforeSend = dayBefore;
   if (dbParts.hour < 7 || (dbParts.hour === 7 && dbParts.minute < 30)) dayBeforeSend = nyToUtc(dbParts.date, '07:30');
   else if (dbParts.hour >= 21) dayBeforeSend = nyToUtc(dbParts.date, '20:00');
-  if (dayBeforeSend.getTime() > Date.now()) {
+  if (!optOut && dayBeforeSend.getTime() > Date.now()) {
     tasks.push(sbAdmin.from('imessage_queue').insert({
       phone: phoneE164,
       body: `Quick reminder that I'll be out tomorrow (${dayStr}) for your free estimate, arriving ${windowStr}. If anything comes up before then, just call or text me. See you then!`,
       direction: 'outgoing', status: 'pending',
       client_name: clientName, trigger_type: 'arrival_daybefore',
-      send_after: dayBeforeSend.toISOString()
+      send_after: dayBeforeSend.toISOString(),
+      job_id: jobRec.id
     }).then(r => { if (r?.error) console.error('daybefore', r.error.message); }, e => console.error('daybefore', e?.message)));
   }
 
   const morningOf = nyToUtc(date, '07:30');
-  if (morningOf.getTime() > Date.now() && morningOf.getTime() < startUtc.getTime()) {
+  if (!optOut && morningOf.getTime() > Date.now() && morningOf.getTime() < startUtc.getTime()) {
     tasks.push(sbAdmin.from('imessage_queue').insert({
       phone: phoneE164,
       body: `Just a reminder that I'll be out today for your free estimate, arriving ${windowStr}. If anything comes up, just call or text me. See you soon!`,
       direction: 'outgoing', status: 'pending',
       client_name: clientName, trigger_type: 'arrival_morningof',
-      send_after: morningOf.toISOString()
+      send_after: morningOf.toISOString(),
+      job_id: jobRec.id
     }).then(r => { if (r?.error) console.error('morningof', r.error.message); }, e => console.error('morningof', e?.message)));
   }
 
