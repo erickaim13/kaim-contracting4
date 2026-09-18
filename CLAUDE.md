@@ -19,7 +19,7 @@ Deliberately plain. No framework, no build step, no bundler.
 
 | Layer | What |
 |---|---|
-| Frontend | Flat static HTML at repo root, one file per page. Inline CSS/JS. |
+| Frontend | Flat static HTML at repo root, one file per page. Page styles inline; the shared header, mobile menu, sticky phone bar, footer and design tokens live in `css/site.css` + `js/site.js`, loaded last on every page. |
 | Hosting | Vercel. `cleanUrls: true`, `/index.html` → `/` permanent redirect. |
 | Backend | Two serverless functions: `api/lead.js`, `api/queue-health.js` |
 | Database | Supabase — project `dfquwxmoidhhcwezgnry` |
@@ -109,6 +109,15 @@ These come from actual past commits — do not undo them.
 - **Every lead form gets a Call/Text button pair** next to it.
 - Calculators are soft-gated behind an inline lead-capture form.
 - Every page carries the GA4 + Google Ads tags, 404 included.
+- **Nav and footer markup is identical on every page** (generated once, pasted
+  everywhere). Change it on one page and copy the `<nav class="site-nav">` and
+  `<footer class="site-footer">` blocks to all the others, or the site drifts.
+  Styling for both is in `css/site.css`, not in the pages.
+- **Two font families only: Oswald and Source Sans 3.** DM Serif Display was
+  dropped in the 2026-09 redesign. Fallback stacks are spelled out in the CSS.
+- **The quote form is two steps** (`js/kc-form.js` v3). Field names, the
+  honeypot and the POST payload are identical to the old single screen form,
+  so `api/lead.js` did not change. Bump the `?v=` on the script tag when you edit it.
 
 ## Working agreements
 
@@ -138,3 +147,15 @@ Append notable decisions here so the next session inherits them.
   Google Ads attribution — that rewrite was discarded in favor of fixing
   `intake.js` on top of the current code. Verified the retry path with a
   simulated collision (saves exactly one lead, no duplicate).
+
+- **2026-09-18** — Front-end redesign (branch `claude/zen-cerf-f4a595`). Shared
+  header, slide-in mobile menu, sticky bottom Call / Get Free Estimate bar and
+  footer now come from `css/site.css` + `js/site.js` on all 26 pages; the old
+  fixed floating nav and the top gold call bar (which covered page content on
+  phones) are gone. Fonts cut to Oswald + Source Sans 3. Muted text lightened
+  for AA contrast, gold is the only accent, gold section bars removed. Homepage
+  got a what-and-where subline, a photo services grid with price anchors, a
+  service-area line and three before/after pairs. Quote form is two steps with
+  labels and inline errors, same payload (verified with a stubbed fetch).
+  Nav label "Tools" became "Calculators", every CTA reads "Get Free
+  Estimate". Before/after screenshots in `docs/redesign-2026-09/`.
