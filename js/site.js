@@ -41,14 +41,16 @@
     if (a) setOpen(false);
   });
 
-  // Nav gets a shadow once the page has scrolled.
-  if (nav) {
-    var ticking = false;
-    function check() { nav.classList.toggle('scrolled', window.scrollY > 8); ticking = false; }
-    check();
-    window.addEventListener('scroll', function () {
-      if (!ticking) { ticking = true; requestAnimationFrame(check); }
-    }, { passive: true });
+  // Nav gets a shadow once the page has scrolled. A 1px sentinel above the nav
+  // and an IntersectionObserver do this without a scroll listener.
+  if (nav && 'IntersectionObserver' in window) {
+    var sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none';
+    nav.parentNode.insertBefore(sentinel, nav);
+    new IntersectionObserver(function (entries) {
+      nav.classList.toggle('scrolled', !entries[0].isIntersecting);
+    }, { threshold: 0 }).observe(sentinel);
   }
 
   // Email address assembled at runtime (keeps scrapers off it).
