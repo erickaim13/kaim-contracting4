@@ -25,21 +25,15 @@
 :root{--teal:#0d1e35;--gold:#c9a84c;--gold-l:#e2c47a;}
 *{margin:0;padding:0;box-sizing:border-box}
 html{background:#12253f}
-body{font-family:'Source Sans 3',sans-serif;background:linear-gradient(180deg,#0a1729 0%,#0d1e35 60%,#12253f 100%);color:#fff;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+body{font-family:'Source Sans 3','Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,#0a1729 0%,#0d1e35 60%,#12253f 100%);color:#fff;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
 body::before{content:'';position:fixed;inset:0;background:url('images/herringbone-pattern.png') repeat;background-size:1500px;opacity:.05;pointer-events:none;z-index:0}
-.qp-head,.qp-main{position:relative;z-index:1}
-.qp-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;max-width:640px;margin:0 auto;width:100%}
-.qp-brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none}
-.qp-brand img{height:40px;width:auto;border-radius:6px}
-.qp-brand span{font-family:'Oswald',sans-serif;font-size:16px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff}
-.qp-brand span b{color:var(--gold-l);font-weight:700}
-.qp-call{display:inline-flex;align-items:center;gap:6px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.45);color:var(--gold-l);font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:10px 14px;border-radius:6px;white-space:nowrap}
+.qp-main{position:relative;z-index:1}
 .qp-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 16px 40px;width:100%}
-.qp-h1{font-family:'Oswald',sans-serif;font-size:clamp(24px,5.5vw,32px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;text-align:center;margin-bottom:6px}
+.qp-h1{font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:clamp(24px,5.5vw,32px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;text-align:center;margin-bottom:6px}
 .qp-h1 span{color:var(--gold-l)}
 .qp-sub{font-size:14.5px;color:rgba(255,255,255,.6);text-align:center;margin-bottom:22px}
 .hero-form{background:rgba(13,30,53,.72);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:26px 22px 18px;box-shadow:0 28px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.09);width:100%;max-width:430px}
-.hero-form-title{font-family:'Oswald',sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-l);margin-bottom:4px;line-height:1.2;text-align:center}
+.hero-form-title{font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-l);margin-bottom:4px;line-height:1.2;text-align:center}
 .hero-form-kicker{font-size:12.5px;color:rgba(255,255,255,.55);text-align:center;margin-bottom:12px}
 .qf-dots{display:flex;gap:6px;margin-bottom:16px;justify-content:center}
 .qf-dots span{width:38px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);transition:background .25s}
@@ -47,9 +41,9 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
 .qf-step{display:none}
 .qf-step.on{display:flex;flex-direction:column;min-height:322px;position:relative;animation:qfIn .28s ease}
 @keyframes qfIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.qf-label{display:block;font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.65);margin:0 0 7px 2px;text-align:left}
+.qf-label{display:block;font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.65);margin:0 0 7px 2px;text-align:left}
 .qf-field{margin-bottom:14px}
-.hero-form input,.hero-form select,.hero-form textarea{width:100%;min-height:52px;padding:14px;border:1px solid rgba(255,255,255,.16);border-radius:10px;font-family:'Source Sans 3',sans-serif;font-size:16px;color:#fff;background:rgba(255,255,255,.07);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s,background .15s,box-shadow .15s}
+.hero-form input,.hero-form select,.hero-form textarea{width:100%;min-height:52px;padding:14px;border:1px solid rgba(255,255,255,.16);border-radius:10px;font-family:'Source Sans 3','Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;color:#fff;background:rgba(255,255,255,.07);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s,background .15s,box-shadow .15s}
 .hero-form textarea{min-height:58px;resize:none;line-height:1.45;display:block}
 .hero-form input::placeholder,.hero-form textarea::placeholder{color:rgba(255,255,255,.5)}
 .hero-form input:focus,.hero-form select:focus,.hero-form textarea:focus{border-color:var(--gold);background:rgba(255,255,255,.11);box-shadow:0 0 0 3px rgba(201,168,76,.22)}
@@ -59,13 +53,13 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
 .qf-selwrap{position:relative}
 .qf-selwrap svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--gold-l);pointer-events:none}
 .qf-err{border-color:#e05d5d!important;box-shadow:0 0 0 3px rgba(224,93,93,.22)!important}
-.hero-form button.qf-cta{width:100%;min-height:54px;background:linear-gradient(180deg,var(--gold-l,#e2c56f),var(--gold,#c9a84c));color:var(--teal);border:none;border-radius:10px;padding:15px;font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:filter .15s,transform .15s;box-shadow:0 10px 26px rgba(201,168,76,.25)}
+.hero-form button.qf-cta{width:100%;min-height:54px;background:linear-gradient(180deg,var(--gold-l,#e2c56f),var(--gold,#c9a84c));color:var(--teal);border:none;border-radius:10px;padding:15px;font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:filter .15s,transform .15s;box-shadow:0 10px 26px rgba(201,168,76,.25)}
 .hero-form button.qf-cta:hover{filter:brightness(1.06);transform:translateY(-1px)}
 .hero-form button.qf-cta:disabled{opacity:.7;cursor:default;transform:none;filter:none}
 .qf-step[data-step="1"] .qf-cta{margin-top:auto}
 .qf-hint{font-size:11.5px;color:rgba(255,255,255,.45);text-align:center;margin-top:11px}
 .qf-step[data-step="2"]{padding-top:22px}
-.hero-form button.qf-back{position:absolute;top:0;left:0;width:auto;min-height:0;background:none;border:none;color:rgba(255,255,255,.55);font-size:12.5px;cursor:pointer;padding:2px 0;margin:0;display:inline-flex;align-items:center;gap:4px;font-family:'Source Sans 3',sans-serif;font-weight:400;letter-spacing:0;text-transform:none;z-index:3}
+.hero-form button.qf-back{position:absolute;top:0;left:0;width:auto;min-height:0;background:none;border:none;color:rgba(255,255,255,.55);font-size:12.5px;cursor:pointer;padding:2px 0;margin:0;display:inline-flex;align-items:center;gap:4px;font-family:'Source Sans 3','Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-weight:400;letter-spacing:0;text-transform:none;z-index:3}
 .hero-form button.qf-back:hover{color:var(--gold-l)}
 .qf-q{font-size:15.5px;font-weight:600;color:#fff;margin-bottom:12px;text-align:center;line-height:1.4}
 .qf-step[data-step="2"] .qf-field{margin-bottom:10px}
@@ -74,10 +68,7 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
 .qp-trust{margin-top:20px;text-align:center;font-size:12.5px;color:rgba(255,255,255,.5);line-height:1.9}
 .qp-trust a{color:var(--gold-l);text-decoration:none;font-weight:700}
 @media(max-width:640px){
-  .qp-head{padding:13px 16px}
-  .qp-brand img{height:34px}
-  .qp-brand span{font-size:14px}
-  .hero-form{padding:18px 16px 14px;border-radius:14px}
+        .hero-form{padding:18px 16px 14px;border-radius:14px}
   .hero-form-title{font-size:15.5px}
   .qf-step.on{min-height:308px}
 }
@@ -86,7 +77,7 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
 .qp-main{max-width:1060px;margin:0 auto;padding:36px 20px 64px;width:100%;flex:1;display:block}
 .qp-grid{display:grid;grid-template-columns:1.02fr .98fr;grid-template-areas:'intro form' 'proof form';gap:8px 52px;align-items:start}
 .qp-intro{grid-area:intro}.qp-formcol{grid-area:form}.qp-proof{grid-area:proof}
-.qp-eyebrow{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-l);margin-bottom:12px}
+.qp-eyebrow{font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-l);margin-bottom:12px}
 .qp-grid .qp-h1{text-align:left;margin-bottom:10px}
 .qp-grid .qp-sub{text-align:left;margin-bottom:0;max-width:480px;font-size:15px;line-height:1.6}
 .qp-checks{list-style:none;margin:24px 0 4px;padding:0;display:grid;gap:13px}
@@ -94,15 +85,15 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
 .qp-checks li{display:flex;align-items:flex-start;gap:11px;font-size:15px;line-height:1.5;color:rgba(255,255,255,.87)}
 .qp-ck{flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;background:rgba(201,168,76,.16);border:1px solid rgba(201,168,76,.55);color:var(--gold-l);font-size:11px;font-weight:700;margin-top:1px}
 .qp-proof{margin-top:30px}
-.qp-proof-label{font-family:'Oswald',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-l);margin-bottom:10px}
+.qp-proof-label{font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-l);margin-bottom:10px}
 .qp-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}
-.qp-pair-title{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6);margin:0 0 6px}
+.qp-pair-title{font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6);margin:0 0 6px}
 .qp-pair figure{position:relative;margin:0;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 40px rgba(0,0,0,.4)}
 .qp-pair img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
-.qp-pair figcaption{position:absolute;top:10px;left:10px;font-family:'Oswald',sans-serif;font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(7,24,40,.72);padding:4px 9px;border-radius:4px;pointer-events:none}
+.qp-pair figcaption{position:absolute;top:10px;left:10px;font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(7,24,40,.72);padding:4px 9px;border-radius:4px;pointer-events:none}
 .qp-pair figcaption.after{background:var(--gold);color:var(--teal);font-weight:700}
 .qp-badges{display:flex;flex-wrap:wrap;gap:8px}
-.qp-badges span{font-family:'Oswald',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:7px 13px;display:inline-flex;align-items:center;gap:6px}
+.qp-badges span{font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:7px 13px;display:inline-flex;align-items:center;gap:6px}
 .qp-badges b{color:var(--gold-l);font-weight:700}
 .qp-formcol .kc-form-slot{margin:0 auto}
 .qp-formcol .qp-trust{margin-top:16px}
@@ -115,13 +106,56 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
   .qp-proof{max-width:430px;margin:28px auto 0}
 }
 </style>
+<link rel="stylesheet" href="/css/site.css">
+<script src="/js/site.js" defer></script>
 </head>
-<body>
+<body class="page-quote">
 
-<header class="qp-head">
-  <a href="/" class="qp-brand"><img src="images/logo.webp" alt="Kaim Contracting" onerror="this.style.display='none'"><span>Kaim <b>Contracting</b></span></a>
-  <a href="tel:978-351-2195" class="qp-call"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a>
-</header>
+<nav class="site-nav" aria-label="Main"><div class="nav-inner"><a href="/" class="nav-logo" aria-label="Kaim Contracting home"><img src="/images/logo.webp" alt="Kaim Contracting LLC" width="300" height="300"></a><ul class="nav-links"><li><a href="/about">About <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="/about"><b>About Us</b><p>Our story and what we stand for.</p></a><a class="dd-item" href="/service-areas"><b>Service Areas</b><p>Towns we proudly serve in MA &amp; NH.</p></a><a class="dd-item" href="/faq"><b>FAQ</b><p>Answers to common questions.</p></a><a class="dd-item" href="/blog"><b>Blog</b><p>Tips, project highlights, and updates.</p></a></div></li><li><a href="/#services">Services <span class="arr">&#9660;</span></a><div class="dropdown"><div class="dd-has-sub"><a class="dd-item" href="/pressure-washing"><b>Pressure Washing</b><p>Deep cleaning for all outdoor surfaces.</p></a><div class="dd-sub"><a class="dd-item" href="/house-washing"><b>House Washing</b><p>Soft wash siding, back to like new.</p></a><a class="dd-item" href="/roof-cleaning"><b>Roof Cleaning</b><p>Black streak removal, shingle safe.</p></a><a class="dd-item" href="/driveway-cleaning"><b>Driveway &amp; Walkway</b><p>Even clean, no stripe marks.</p></a><a class="dd-item" href="/patio-cleaning"><b>Patio &amp; Pool Deck</b><p>Slippery algae gone, color back.</p></a><a class="dd-item" href="/deck-cleaning"><b>Deck &amp; Fence</b><p>Wood safe wash, ready for stain.</p></a><a class="dd-item" href="/oxidation-removal"><b>Oxidation Removal</b><p>Chalky, faded siding brought back.</p></a><a class="dd-item" href="/gutter-brightening"><b>Gutter Brightening</b><p>Black streaks gone from gutter faces.</p></a></div></div><a class="dd-item" href="/paver-sealing"><b>Paver Sealing</b><p>Clean, re-sand &amp; seal to protect your pavers.</p></a></div></li><li><a href="/tools">Calculators <span class="arr">&#9660;</span></a><div class="dropdown"><a class="dd-item" href="/pressure-washing-calculator"><b>Pressure Wash Calculator</b><p>Square footage and ballpark price.</p></a><a class="dd-item" href="/paver-sealing-calculator"><b>Sand &amp; Seal Calculator</b><p>Polymeric sand + sealing price range.</p></a><a class="dd-item" href="/tools"><b>All Calculators</b><p>Every calculator in one place.</p></a></div></li></ul><div class="nav-actions"><a href="tel:978-351-2195" class="nav-phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg><span>978-351-2195</span></a><a href="/quote" class="nav-cta">Get Free Estimate</a><button class="hamburger" type="button" aria-label="Open menu" aria-controls="mobMenu" aria-expanded="false"><span></span><span></span><span></span></button></div></div>
+<div class="mob-menu" id="mobMenu">
+  <div class="mob-menu-head">
+    <span class="mob-menu-title">Menu</span>
+    <button class="mob-close" type="button" onclick="closeMobMenu()" aria-label="Close menu">&times;</button>
+  </div>
+  <div class="mob-menu-body">
+    <div class="mob-group">
+      <button class="mob-group-head" onclick="this.parentElement.classList.toggle('open')" type="button">About<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="mob-group-body">
+        <a href="/about">About Us</a>
+        <a href="/service-areas">Service Areas</a>
+        <a href="/faq">FAQ</a>
+        <a href="/blog">Blog</a>
+      </div>
+    </div>
+    <div class="mob-group open">
+      <button class="mob-group-head" onclick="this.parentElement.classList.toggle('open')" type="button">Services<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="mob-group-body">
+        <div class="mob-subwrap"><div class="mob-subhead"><a href="/pressure-washing">Pressure Washing</a><button type="button" class="mob-subtoggle" onclick="this.closest('.mob-subwrap').classList.toggle('open')" aria-label="Show pressure washing services"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button></div><div class="mob-sub">
+        <a href="/house-washing">House Washing</a>
+        <a href="/roof-cleaning">Roof Cleaning</a>
+        <a href="/driveway-cleaning">Driveway &amp; Walkway</a>
+        <a href="/patio-cleaning">Patio &amp; Pool Deck</a>
+        <a href="/deck-cleaning">Deck &amp; Fence</a>
+        <a href="/oxidation-removal">Oxidation Removal</a>
+        <a href="/gutter-brightening">Gutter Brightening</a>
+        </div></div>
+        <a href="/paver-sealing">Paver Sealing</a>
+      </div>
+    </div>
+    <div class="mob-group">
+      <button class="mob-group-head" onclick="this.parentElement.classList.toggle('open')" type="button">Calculators<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="mob-group-body">
+        <a href="/pressure-washing-calculator">Pressure Wash Calculator</a>
+        <a href="/paver-sealing-calculator">Sand &amp; Seal Calculator</a>
+        <a href="/tools">All Calculators</a>
+      </div>
+    </div>
+  </div>
+  <div class="mob-menu-foot">
+    <a href="tel:978-351-2195" class="mob-phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a>
+    <a href="/quote" class="mob-cta">Get Free Estimate</a>
+  </div>
+</div></nav>
 
 <main class="qp-main">
   <div class="qp-grid">
@@ -136,8 +170,8 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
       </ul>
     </div>
     <div class="qp-formcol">
-      <div class="kc-form-slot" style="width:100%;max-width:430px" data-kc='{"title": "Get Your Free Estimate", "kicker": "Takes less than a minute", "serviceStep": true, "source": "Quote Page", "prefix": "Quote page request:", "jobQ": "What do you need done?", "submitLabel": "Get My Free Estimate", "photos": true}'></div>
-<script src="js/kc-form.js?v=8" defer></script>
+      <div class="kc-form-slot" style="width:100%;max-width:430px" data-kc='{"title": "Get Your Free Estimate", "kicker": "Takes less than a minute", "serviceStep": true, "source": "Quote Page", "prefix": "Quote page request:", "jobQ": "What do you need done?", "submitLabel": "Get Free Estimate", "photos": true}'></div>
+<script src="js/kc-form.js?v=9" defer></script>
       <div class="qp-trust">
     Licensed &amp; Insured &middot; Prefer to talk? <a href="tel:978-351-2195">Call 978-351-2195</a>
   </div>
@@ -165,6 +199,12 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
 </main>
 
 
+<footer class="site-footer"><div class="ft-inner"><div class="ft-grid">
+<div class="ft-brand"><img src="/images/logo.webp" alt="Kaim Contracting LLC" width="300" height="300" loading="lazy"><p>Family run pressure washing and paver sealing, based in Methuen, MA. Licensed and insured in Massachusetts and New Hampshire.</p><a href="tel:978-351-2195" class="ft-phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a><br><a id="ft-email" class="ft-email" href="#"></a><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs></svg><div class="footer-social"><a href="https://instagram.com/kaimcontracting" target="_blank" rel="noopener" class="sf-ig" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a><a href="https://facebook.com/kaimcontracting" target="_blank" rel="noopener" class="sf-fb" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a><a href="https://tiktok.com/@kaimcontracting" target="_blank" rel="noopener" class="sf-tt" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77.39 2.89 2.89 0 012.88-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 105.55 6.27V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg></a></div></div>
+<div class="ft-col"><h4>Services</h4><ul><li><a href="/pressure-washing">Pressure Washing</a></li><li><a href="/house-washing">House Washing</a></li><li><a href="/roof-cleaning">Roof Cleaning</a></li><li><a href="/driveway-cleaning">Driveway &amp; Walkway</a></li><li><a href="/patio-cleaning">Patio &amp; Pool Deck</a></li><li><a href="/deck-cleaning">Deck &amp; Fence</a></li><li><a href="/oxidation-removal">Oxidation Removal</a></li><li><a href="/gutter-brightening">Gutter Brightening</a></li><li><a href="/paver-sealing">Paver Sealing</a></li></ul></div>
+<div class="ft-col"><h4>Company</h4><ul><li><a href="/about">About Us</a></li><li><a href="/service-areas">Service Areas</a></li><li><a href="/faq">FAQ</a></li><li><a href="/blog">Blog</a></li><li><a href="/tools">Calculators</a></li><li><a href="/quote">Get Free Estimate</a></li><li><a href="/#referral">Refer &amp; Earn $50</a></li></ul></div>
+<div class="ft-col"><h4>Hours</h4><p class="ft-hours">Mon to Fri, 8am to 6pm<br>Sat, 8am to 12pm<br>Sun, closed</p><h4>Payments</h4><div class="ft-pay"><svg width="38" height="24" viewBox="0 0 38 24" fill="none" aria-label="Visa"><rect width="38" height="24" rx="3" fill="#1a1f71"/><path d="M15.3 16.5l2-11.7h3.2l-2 11.7h-3.2z" fill="#fff"/><path d="M27.8 5.2c-.6-.3-1.6-.5-2.9-.5-3.2 0-5.4 1.6-5.4 3.9 0 1.7 1.6 2.6 2.8 3.2 1.2.6 1.7.9 1.7 1.5 0 .8-1 1.1-1.9 1.1-1.3 0-2-.2-3-.6l-.4-.2-.5 2.6c.8.3 2.1.6 3.6.6 3.4 0 5.5-1.6 5.6-4 0-1.3-.8-2.4-2.7-3.2-1.1-.5-1.8-.9-1.8-1.5 0-.5.6-1 1.8-1 1-.1 1.8.2 2.4.5l.3.1.4-2.5z" fill="#fff"/><path d="M32.4 4.8h-2.5c-.8 0-1.3.2-1.7 1L23.5 16.5h3.4s.5-1.4.7-1.8h4.1c.1.4.4 1.8.4 1.8h3l-2.7-11.7zm-4 7.5c.3-.7 1.3-3.3 1.3-3.3l.4-1.1.2 1 .8 3.4h-2.7z" fill="#fff"/><path d="M13.3 4.8L10.2 12.8l-.3-1.6c-.6-1.9-2.4-3.9-4.4-4.9l2.9 10.2h3.4l5-11.7h-3.5z" fill="#fff"/><path d="M7 4.8H1.8l-.1.2c4 1 6.7 3.3 7.8 6.1l-1.1-5.4c-.2-.7-.8-.9-1.4-.9z" fill="#f7a600"/></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none" aria-label="Mastercard"><rect width="38" height="24" rx="3" fill="#252525"/><circle cx="15" cy="12" r="7.5" fill="#eb001b"/><circle cx="23" cy="12" r="7.5" fill="#f79e1b"/><path d="M19 6.3a7.5 7.5 0 000 11.4 7.5 7.5 0 000-11.4z" fill="#ff5f00"/></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none" aria-label="American Express"><rect width="38" height="24" rx="3" fill="#016fd0"/><path d="M19 4l-9.5 7.5h5.3L19 7.8l4.2 3.7h5.3L19 4z" fill="#fff"/><path d="M9.5 12.5L19 20l9.5-7.5h-5.3L19 16.2l-4.2-3.7H9.5z" fill="#fff"/></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none" aria-label="Discover"><rect width="38" height="24" rx="3" fill="#f1f1f1" stroke="rgba(255,255,255,.15)"/><circle cx="22" cy="12" r="6.5" fill="#f47216"/><text x="19" y="21" font-family="Arial" font-weight="700" font-size="5" fill="#333" text-anchor="middle">DISCOVER</text></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none" aria-label="Apple Pay"><rect width="38" height="24" rx="3" fill="#000"/><text x="19" y="15" font-family="Arial" font-weight="600" font-size="8.5" fill="#fff" text-anchor="middle">Pay</text></svg><svg width="38" height="24" viewBox="0 0 38 24" fill="none" aria-label="Klarna"><rect width="38" height="24" rx="3" fill="#FFB3C7"/><text x="19" y="16" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="8.5" fill="#0a0a0a" text-anchor="middle">Klarna</text></svg></div></div>
+</div><div class="ft-area">Proudly serving the Merrimack Valley and Southern NH: Methuen, Andover, North Andover, Lawrence, Haverhill, Lowell, Salem NH and surrounding towns. <a href="/service-areas">See the full list &rarr;</a></div><div class="ft-bottom"><span>&copy; 2026 Kaim Contracting LLC. All rights reserved.</span><span><a href="/sitemap.xml">Sitemap</a></span></div></div></footer>
 <script>(function(){var _callSent=false;function _kcCallConv(){if(_callSent)return;_callSent=true;try{if(window.gtag)gtag('event','conversion',{send_to:'AW-18069179134/RzbeCLOWh7UcEP6Vh6hD',value:200.0,currency:'USD'});}catch(_){}}document.addEventListener('click',function(e){var el=e.target&&e.target.closest&&e.target.closest('a[href^="tel:"]');if(el)_kcCallConv();},true);})();</script><script>(function(){var _leadSent=false;document.addEventListener('click',function(e){var a=e.target.closest?e.target.closest('a[href^="tel:"]'):null;if(!a||_leadSent)return;_leadSent=true;if(window.fbq)fbq('track','Lead',{lead_source:'Call Button'});},true);})();</script>
 </body>
 </html>
