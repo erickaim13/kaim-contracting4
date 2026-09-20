@@ -159,3 +159,17 @@ Append notable decisions here so the next session inherits them.
   labels and inline errors, same payload (verified with a stubbed fetch).
   Nav label "Tools" became "Calculators", every CTA reads "Get Free
   Estimate". Before/after screenshots in `docs/redesign-2026-09/`.
+
+- **2026-09-19** — Eric's pass on the 09-18 redesign. (1) Header is a floating
+  pill again (`css/site.css` `nav.site-nav`): 12px inset, rounded, translucent
+  at rest, widens to a flush bar on scroll via the existing sentinel observer;
+  full-width on phones. (2) Homepage How It Works: the redesign's override that
+  stripped the step cards (loose text under a floating rail) is removed, the
+  09-02 cards are back. (3) `/pressure-washing` "What Do You Need Cleaned":
+  the featured-card + tiny-thumbnail grid is replaced by the homepage's
+  `.kc-svc` photo tiles (House Washing 8 wide, six more, bundle band). (4) Sand
+  & Seal calculator is one card with every choice visible and a live estimate,
+  same feel as the pressure washing calculator; the 5-step wizard, its CSS and
+  the expired September 15 offer block are gone. Pricing math unchanged.
+  Still open: the "10% off by September 15, 2026" offer copy is live on 13 other
+  pages (paver-sealing, every washing page, index seasonal line); Eric decides.

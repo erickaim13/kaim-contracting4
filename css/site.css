@@ -54,8 +54,13 @@ body{font-family:var(--font-body)}
 .section-header p,.svc-block-header p{color:var(--muted)}
 
 /* ---------- Header / nav ---------- */
-nav.site-nav{position:sticky;top:0;left:auto;right:auto;transform:none;width:100%;max-width:none;margin:0;background:rgba(13,30,53,.96);-webkit-backdrop-filter:saturate(160%) blur(12px);backdrop-filter:saturate(160%) blur(12px);border:0;border-bottom:1px solid rgba(255,255,255,.08);border-radius:0;box-shadow:none;z-index:1500;transition:box-shadow .3s}
-nav.site-nav.scrolled{width:100%;max-width:none;top:0;border-radius:0;background:rgba(13,30,53,.96);box-shadow:0 8px 28px rgba(2,10,22,.42);border-bottom:1px solid rgba(255,255,255,.08)}
+/* Floating pill at the top of the page (2026-09-19, Eric preferred the old
+   dynamic bar over the flat one): inset 12px a side with rounded corners at
+   rest, then widens into a flush full-width bar once the page scrolls.
+   site.js toggles .scrolled with a 1px sentinel + IntersectionObserver. */
+nav.site-nav{position:sticky;top:0;left:auto;right:auto;transform:none;width:calc(100% - 24px);max-width:1280px;margin:10px auto 0;background:rgba(13,30,53,.78);-webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px);border:1px solid rgba(255,255,255,.09);border-radius:18px;box-shadow:0 10px 40px rgba(0,0,0,.4),0 2px 10px rgba(0,0,0,.2);z-index:1500;transition:width .55s cubic-bezier(.6,0,.3,1),max-width .55s ease,border-radius .55s cubic-bezier(.6,0,.3,1),background .55s ease,box-shadow .55s ease,border-color .55s ease}
+nav.site-nav.scrolled{width:100%;max-width:none;border-radius:0;border-color:transparent;border-bottom-color:rgba(255,255,255,.08);background:rgba(13,30,53,.94);box-shadow:0 8px 28px rgba(2,10,22,.42)}
+@media(max-width:860px){nav.site-nav,nav.site-nav.scrolled{width:100%;max-width:none;margin:0;border-radius:0;border-left:0;border-right:0;border-top:0;background:rgba(13,30,53,.96)}}
 .site-nav .nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:var(--nav-h);display:flex;justify-content:flex-start;align-items:center;gap:6px}
 .site-nav .nav-logo{display:inline-flex;align-items:center;margin-right:10px;flex-shrink:0;border-radius:8px}
 .site-nav .nav-logo img{height:50px;width:auto;display:block}
@@ -246,15 +251,8 @@ footer.site-footer{background:#08141f;color:rgba(255,255,255,.62);border-top:1px
 .kc-ba-cap{margin-top:10px;font-size:14.5px;color:var(--muted);line-height:1.5}
 .kc-ba-cap b{color:var(--text);font-weight:600}
 @media(max-width:860px){.kc-ba-grid{grid-template-columns:1fr;gap:26px;max-width:520px;margin:0 auto}}
-.hw-step{background:transparent;border:0;padding:6px 4px 0;overflow:visible}
-.hw-step.on,.hw-step:hover{border-color:transparent;box-shadow:none}
-.hw-chip{display:none}
-.hw-ghost{position:static;width:46px;height:46px;border-radius:50%;border:2px solid rgba(201,168,76,.55);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600;color:var(--gold-l);margin-bottom:14px;pointer-events:none;transition:background .3s,color .3s,border-color .3s}
-.hw-step.on .hw-ghost{background:var(--gold);color:var(--teal);border-color:var(--gold)}
-.hw-step h3{letter-spacing:.03em}
 .three-card{padding:64px 24px 72px}
 .ba-demo{padding:72px 24px 24px}
-@media(max-width:860px){.hw-step{padding:0 0 0 0}.hw-ghost{width:40px;height:40px;font-size:17px;margin-bottom:8px}}
 @media(max-width:640px){.three-card{padding:44px 16px 48px}.ba-demo{padding:44px 16px 16px}}
 
 /* ---------- Service pages ---------- */
@@ -321,20 +319,3 @@ body.page-quote{display:block}
 .page-404 .btn{min-height:50px;display:inline-flex;align-items:center;border-radius:var(--r-btn)}
 @media(max-width:480px){.page-404 .svc-list{grid-template-columns:1fr}}
 
-/* ---------- Pressure washing hub: featured card, service grid, bundle band ---------- */
-.pw-hub-grid .pw-hub-card:first-child{grid-column:1/-1;padding:0;gap:0;align-items:stretch;overflow:hidden;background:var(--card)}
-.pw-hub-grid .pw-hub-card:first-child .pw-hub-img{width:44%;height:auto;min-height:250px;border-radius:0}
-.pw-hub-grid .pw-hub-card:first-child .pw-hub-txt{padding:30px 32px;gap:8px;justify-content:center}
-.pw-hub-grid .pw-hub-card:first-child .pw-hub-txt b{font-size:26px}
-.pw-hub-grid .pw-hub-card:first-child .pw-hub-txt small{font-size:16px;max-width:52ch}
-.pw-hub-grid .pw-hub-card:first-child .pw-hub-arr{align-self:center;margin-right:28px;width:40px;height:40px}
-.pw-hub-grid .pw-hub-card--all{grid-column:1/-1;justify-content:center;padding:18px 24px}
-.pw-hub-grid .pw-hub-card--all .pw-hub-txt{flex:0 1 auto}
-@media(max-width:640px){
-  .pw-hub-grid .pw-hub-card:first-child{flex-direction:column}
-  .pw-hub-grid .pw-hub-card:first-child .pw-hub-img{width:100%;height:190px;min-height:0}
-  .pw-hub-grid .pw-hub-card:first-child .pw-hub-txt{padding:18px 18px 6px}
-  .pw-hub-grid .pw-hub-card:first-child .pw-hub-txt b{font-size:22px}
-  .pw-hub-grid .pw-hub-card:first-child .pw-hub-arr{display:none}
-  .pw-hub-grid .pw-hub-card--all{justify-content:flex-start;padding:10px 12px}
-}

@@ -645,24 +645,26 @@ input[name="hf-name"],input[name="hf-phone"]{text-align:center}
 .pw-hub-head h2 span{color:var(--gold-l)}
 .pw-hub-head p{margin-top:14px;color:var(--muted);font-size:15.5px;line-height:1.6}
 .pw-hub-head p a{color:var(--gold-l);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(226,196,122,.5)}
-.pw-hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1080px;margin:0 auto}
-.pw-hub-card{display:flex;align-items:center;gap:18px;padding:16px 20px 16px 16px;border-radius:16px;background:var(--bg2);border:1px solid var(--border);text-decoration:none;color:var(--text);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;position:relative}
-.pw-hub-card:hover{transform:translateY(-3px);border-color:rgba(201,168,76,.6);box-shadow:0 16px 40px rgba(0,0,0,.35)}
-.pw-hub-img{width:150px;height:112px;border-radius:12px;overflow:hidden;flex-shrink:0;background:var(--bg3);display:flex;align-items:center;justify-content:center}
-.pw-hub-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
-.pw-hub-card:hover .pw-hub-img img{transform:scale(1.06)}
-.pw-hub-badge{background:var(--gold);color:var(--teal);flex-direction:column;font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-weight:700;line-height:1}
-.pw-hub-badge b{font-size:34px}
-.pw-hub-badge small{font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-top:3px;opacity:.8}
-.pw-hub-txt{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
-.pw-hub-txt b{font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:16.5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#fff;line-height:1.15}
-.pw-hub-txt small{font-size:13.5px;color:var(--muted);line-height:1.4}
-.pw-hub-arr{width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;color:var(--gold-l);flex-shrink:0;transition:background .2s,border-color .2s}
-.pw-hub-arr svg{width:14px;height:14px}
-.pw-hub-card:hover .pw-hub-arr{background:var(--gold);border-color:var(--gold);color:var(--teal)}
-.pw-hub-card--all{background:linear-gradient(155deg,#1a3157,#0f2240);border-color:rgba(201,168,76,.4)}
-@media(max-width:960px){.pw-hub-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:640px){.pw-hub{padding:44px 16px 48px}.pw-hub-head{margin-bottom:22px}.pw-hub-head p{font-size:14.5px}.pw-hub-grid{grid-template-columns:1fr;gap:10px}.pw-hub-card{padding:10px 12px 10px 10px;gap:13px;border-radius:14px}.pw-hub-arr{display:none}.pw-hub-img{width:118px;height:92px;border-radius:10px}.pw-hub-badge b{font-size:28px}.pw-hub-txt b{font-size:15px}.pw-hub-txt small{font-size:12.5px}}
+/* Photo tiles, same .kc-svc cards as the homepage What We Do grid (css/site.css). 12 columns:
+   House Washing 8 wide over two rows, Roof + Driveway stacked beside it, then four quarter tiles. */
+.pw-tiles .kc-svc{grid-column:span 4}
+.pw-tiles .kc-svc.feat{grid-column:span 8;grid-row:span 2}
+.pw-tiles .kc-svc.feat h3{font-size:28px}
+.pw-tiles .kc-svc.feat p{font-size:15.5px;max-width:52ch}
+.pw-tiles .kc-svc.q{grid-column:span 3}
+.pw-bundle{margin:14px auto 0;display:flex;align-items:center;gap:18px;padding:16px 22px;border-radius:var(--r-card,16px);background:linear-gradient(155deg,#1a3157,#0f2240);border:1px solid rgba(201,168,76,.4);text-decoration:none;color:var(--text);transition:transform .2s ease,border-color .2s ease}
+.pw-bundle:hover{transform:translateY(-2px);border-color:var(--gold)}
+.pw-bundle .pct{flex-shrink:0;width:74px;height:60px;border-radius:12px;background:var(--gold);color:var(--teal);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-weight:700;line-height:1}
+.pw-bundle .pct b{font-size:26px}
+.pw-bundle .pct small{font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-top:3px;opacity:.8}
+.pw-bundle .txt{display:flex;flex-direction:column;gap:3px;min-width:0}
+.pw-bundle .txt b{font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:17px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#fff;line-height:1.15}
+.pw-bundle .txt small{font-size:14px;color:var(--muted);line-height:1.4}
+.pw-bundle .go{margin-left:auto;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;color:var(--gold-l);flex-shrink:0;transition:background .2s,border-color .2s,color .2s}
+.pw-bundle .go svg{width:16px;height:16px}
+.pw-bundle:hover .go{background:var(--gold);border-color:var(--gold);color:var(--teal)}
+@media(max-width:1020px){.pw-tiles .kc-svc,.pw-tiles .kc-svc.q{grid-column:span 6}.pw-tiles .kc-svc.feat{grid-column:span 6;grid-row:span 2}}
+@media(max-width:640px){.pw-hub{padding:44px 16px 48px}.pw-hub-head{margin-bottom:22px}.pw-hub-head p{font-size:14.5px}.pw-tiles .kc-svc,.pw-tiles .kc-svc.q{grid-column:span 1;height:150px}.pw-tiles .kc-svc.feat{grid-column:span 2;grid-row:span 1;height:220px}.pw-tiles .kc-svc.feat h3{font-size:22px}.pw-tiles .kc-svc.feat p{display:block;font-size:13.5px}.pw-bundle{gap:12px;padding:12px 14px}.pw-bundle .pct{width:60px;height:52px}.pw-bundle .pct b{font-size:21px}.pw-bundle .go{display:none}}
 /* ===== HOW IT WORKS: cards + marble rail (shared with the homepage) ===== */
 .howit-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:1060px;margin:0 auto;position:relative;z-index:1}
 .howit-run{max-width:1060px;margin:44px auto 0;position:relative;z-index:1}
@@ -935,18 +937,18 @@ footer{background:#040e0f;color:rgba(255,255,255,.55);border-top:3px solid var(-
     <div class="pw-hub-head">
       <div class="section-label">Everything We Wash</div>
       <h2>What Do You Need <span>Cleaned?</span></h2>
-      <p>Pick a surface to see exactly how we clean it and what it runs. Doing a few at once? <a href="#package">Bundle three and save 10%</a>.</p>
+      <p>Tap a surface for pricing, real photos and what is included. Doing a few at once? <a href="#package">Bundle three and save 10%</a>.</p>
     </div>
-    <div class="pw-hub-grid">
-      <a class="pw-hub-card" href="/house-washing"><span class="pw-hub-img"><img src="images/hub-house-washing.webp" alt="" width="480" height="360" loading="lazy"></span><span class="pw-hub-txt"><b>House Washing</b><small>Soft wash for siding, trim, and eaves. The whole house, like new.</small></span><span class="pw-hub-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span></a>
-      <a class="pw-hub-card" href="/roof-cleaning"><span class="pw-hub-img"><img src="images/hub-roof-cleaning.webp" alt="" width="480" height="360" loading="lazy"></span><span class="pw-hub-txt"><b>Roof Cleaning</b><small>Black streaks and moss gone, shingle safe, no pressure.</small></span><span class="pw-hub-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span></a>
-      <a class="pw-hub-card" href="/driveway-cleaning"><span class="pw-hub-img"><img src="images/hub-driveway-cleaning.webp" alt="" width="480" height="360" loading="lazy"></span><span class="pw-hub-txt"><b>Driveway &amp; Walkway</b><small>Even, stripe-free clean from the street to the door.</small></span><span class="pw-hub-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span></a>
-      <a class="pw-hub-card" href="/patio-cleaning"><span class="pw-hub-img"><img src="images/hub-patio-cleaning.webp" alt="" width="480" height="360" loading="lazy"></span><span class="pw-hub-txt"><b>Patio &amp; Pool Deck</b><small>Slippery algae gone, color back, ready for company.</small></span><span class="pw-hub-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span></a>
-      <a class="pw-hub-card" href="/deck-cleaning"><span class="pw-hub-img"><img src="images/hub-deck-cleaning.webp" alt="" width="480" height="360" loading="lazy"></span><span class="pw-hub-txt"><b>Deck &amp; Fence</b><small>Wood-safe wash that brings the grain back, ready for stain.</small></span><span class="pw-hub-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span></a>
-      <a class="pw-hub-card" href="/oxidation-removal"><span class="pw-hub-img"><img src="images/hub-oxidation-removal.webp" alt="" width="480" height="360" loading="lazy"></span><span class="pw-hub-txt"><b>Oxidation Removal</b><small>Chalky, faded siding brought back to its real color.</small></span><span class="pw-hub-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span></a>
-      <a class="pw-hub-card" href="/gutter-brightening"><span class="pw-hub-img"><img src="images/hub-gutter-brightening.webp" alt="" width="480" height="360" loading="lazy"></span><span class="pw-hub-txt"><b>Gutter Brightening</b><small>Those black tiger stripes on the gutter faces, gone.</small></span><span class="pw-hub-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span></a>
-      <a class="pw-hub-card pw-hub-card--all" href="#package"><span class="pw-hub-img pw-hub-badge"><b>10%</b><small>off</small></span><span class="pw-hub-txt"><b>Need a few of these?</b><small>Pick any three for one visit and take 10% off the whole job.</small></span><span class="pw-hub-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span></a>
+    <div class="kc-svc-grid pw-tiles">
+      <a href="/house-washing" class="kc-svc feat"><img src="images/ba-siding-after-800.webp" alt="Vinyl siding clean and bright after a Kaim Contracting soft wash" width="800" height="800" loading="lazy"><div class="kc-svc-body"><h3>House Washing</h3><p>Low pressure soft wash that kills mold and algae at the root. Safe for siding, trim, plants and pets, and the front walkway is included.</p><span class="price">From $350</span></div></a>
+      <a href="/roof-cleaning" class="kc-svc"><img src="images/hub-roof-cleaning.webp" alt="Asphalt shingle roof covered in moss and algae before a soft wash roof cleaning" width="480" height="360" loading="lazy"><div class="kc-svc-body"><h3>Roof Cleaning</h3><p>Black streaks and moss gone, shingles untouched.</p><span class="price">From $450</span></div></a>
+      <a href="/driveway-cleaning" class="kc-svc"><img src="images/hub-driveway-cleaning.webp" alt="Paver driveway half cleaned, showing the gray buildup next to the restored color" width="480" height="360" loading="lazy"><div class="kc-svc-body"><h3>Driveway &amp; Walkway</h3><p>Even clean from the street to the door, no stripe marks.</p><span class="price">$200 to $550</span></div></a>
+      <a href="/patio-cleaning" class="kc-svc q"><img src="images/hub-patio-cleaning.webp" alt="Clean paver patio beside a stone retaining wall and garden bed" width="480" height="360" loading="lazy"><div class="kc-svc-body"><h3>Patio &amp; Pool Deck</h3><p>Slippery algae gone, color back.</p><span class="price">$200 to $550</span></div></a>
+      <a href="/deck-cleaning" class="kc-svc q"><img src="images/hub-deck-cleaning.webp" alt="Gray, weathered composite deck stairs before cleaning" width="480" height="360" loading="lazy"><div class="kc-svc-body"><h3>Deck &amp; Fence</h3><p>Wood safe wash, ready for stain.</p><span class="price">$250 to $700</span></div></a>
+      <a href="/oxidation-removal" class="kc-svc q"><img src="images/hub-oxidation-removal.webp" alt="Faded, chalky green vinyl siding with oxidation streaks" width="480" height="360" loading="lazy"><div class="kc-svc-body"><h3>Oxidation Removal</h3><p>Chalky, faded siding brought back.</p><span class="price">Free estimate</span></div></a>
+      <a href="/gutter-brightening" class="kc-svc q"><img src="images/hub-gutter-brightening.webp" alt="Gray shingled home with white gutters, porch and trim" width="480" height="360" loading="lazy"><div class="kc-svc-body"><h3>Gutter Brightening</h3><p>Black streaks off the gutter faces.</p><span class="price">Free estimate</span></div></a>
     </div>
+    <a class="pw-bundle" href="#package"><span class="pct"><b>10%</b><small>off</small></span><span class="txt"><b>Need a few of these?</b><small>Pick any three for one visit and take 10% off the whole job.</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
   </div>
 </section>
 <section class="svc-block svc-block-dark pw-lasts">
