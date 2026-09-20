@@ -320,3 +320,21 @@ body.page-quote{display:block}
 .page-404 .svc-list a{border-radius:var(--r-btn);min-height:48px;display:flex;align-items:center}
 .page-404 .btn{min-height:50px;display:inline-flex;align-items:center;border-radius:var(--r-btn)}
 @media(max-width:480px){.page-404 .svc-list{grid-template-columns:1fr}}
+
+/* ---------- Pressure washing hub: featured card, service grid, bundle band ---------- */
+.pw-hub-grid .pw-hub-card:first-child{grid-column:1/-1;padding:0;gap:0;align-items:stretch;overflow:hidden;background:var(--card)}
+.pw-hub-grid .pw-hub-card:first-child .pw-hub-img{width:44%;height:auto;min-height:250px;border-radius:0}
+.pw-hub-grid .pw-hub-card:first-child .pw-hub-txt{padding:30px 32px;gap:8px;justify-content:center}
+.pw-hub-grid .pw-hub-card:first-child .pw-hub-txt b{font-size:26px}
+.pw-hub-grid .pw-hub-card:first-child .pw-hub-txt small{font-size:16px;max-width:52ch}
+.pw-hub-grid .pw-hub-card:first-child .pw-hub-arr{align-self:center;margin-right:28px;width:40px;height:40px}
+.pw-hub-grid .pw-hub-card--all{grid-column:1/-1;justify-content:center;padding:18px 24px}
+.pw-hub-grid .pw-hub-card--all .pw-hub-txt{flex:0 1 auto}
+@media(max-width:640px){
+  .pw-hub-grid .pw-hub-card:first-child{flex-direction:column}
+  .pw-hub-grid .pw-hub-card:first-child .pw-hub-img{width:100%;height:190px;min-height:0}
+  .pw-hub-grid .pw-hub-card:first-child .pw-hub-txt{padding:18px 18px 6px}
+  .pw-hub-grid .pw-hub-card:first-child .pw-hub-txt b{font-size:22px}
+  .pw-hub-grid .pw-hub-card:first-child .pw-hub-arr{display:none}
+  .pw-hub-grid .pw-hub-card--all{justify-content:flex-start;padding:10px 12px}
+}
