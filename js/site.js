@@ -41,12 +41,13 @@
     if (a) setOpen(false);
   });
 
-  // Nav gets a shadow once the page has scrolled. A 1px sentinel above the nav
-  // and an IntersectionObserver do this without a scroll listener.
+  // Nav widens into a flush bar once the page has scrolled past 20px (the
+  // pre-redesign threshold). A 20px sentinel above the nav and an
+  // IntersectionObserver do this without a scroll listener.
   if (nav && 'IntersectionObserver' in window) {
     var sentinel = document.createElement('div');
     sentinel.setAttribute('aria-hidden', 'true');
-    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none';
+    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:20px;pointer-events:none';
     nav.parentNode.insertBefore(sentinel, nav);
     new IntersectionObserver(function (entries) {
       nav.classList.toggle('scrolled', !entries[0].isIntersecting);
