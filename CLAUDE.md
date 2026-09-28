@@ -173,3 +173,14 @@ Append notable decisions here so the next session inherits them.
   the expired September 15 offer block are gone. Pricing math unchanged.
   Still open: the "10% off by September 15, 2026" offer copy is live on 13 other
   pages (paver-sealing, every washing page, index seasonal line); Eric decides.
+
+- **2026-09-28** — Eric: "ever since the refresh it has 2 separate bars at the
+  top, just keep the old one I had before." The 09-19 pill was `position:sticky`
+  (in the page flow), so every page opened with a navy band across the top and
+  the pill sitting on it, and each page's leftover hero padding (`hero-content`
+  130/78px, `svc-hero-content` 120/96px) stacked more space under that. The
+  header is now `position:fixed` like the pre-redesign nav: hero photos run up
+  behind the pill again, the existing inline hero padding is what clears it,
+  and only `quote.html` (no photo hero) gets a clearance rule in `site.css`.
+  Rendered every page type at 1280 and 393 wide (headless Chrome over CDP with
+  real wheel scrolling) to confirm nothing sits under the nav.
