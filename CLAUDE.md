@@ -184,3 +184,14 @@ Append notable decisions here so the next session inherits them.
   and only `quote.html` (no photo hero) gets a clearance rule in `site.css`.
   Rendered every page type at 1280 and 393 wide (headless Chrome over CDP with
   real wheel scrolling) to confirm nothing sits under the nav.
+
+- **2026-09-28 (later)** — Eric compared the old site (git worktree of 8a7b278
+  served locally) with the current one. (1) Homepage "What We Do" is two doors
+  again, Pressure Washing and Paver Sealing, as `.kc-svc-grid.two` photo tiles
+  in the redesign style; the seven washing sub-services live only on the
+  /pressure-washing hub now. (2) `js/kc-form.js` is v4: one screen again
+  (older customers, no Continue hurdle), labels and inline errors kept, job
+  fields above a "How do I reach you?" block, payload unchanged. `?v=10` on
+  index, quote and the sand & seal calculator. (3) Header stays the fixed
+  floating pill from the morning commits.
+

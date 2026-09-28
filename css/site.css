@@ -248,6 +248,15 @@ footer.site-footer{background:#08141f;color:rgba(255,255,255,.62);border-top:1px
 .kc-svc .price{display:inline-block;margin-top:8px;font-family:var(--font-head);font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-l)}
 .kc-svc:focus-visible{outline:3px solid var(--gold-l);outline-offset:3px}
 @media(max-width:1020px){.kc-svc-grid{grid-auto-rows:180px}.kc-svc{grid-column:span 6}.kc-svc.big{grid-column:span 6;grid-row:span 2}}
+/* Homepage: two doors only (2026-09-28, Eric). Pressure Washing lists its
+   sub-services on its own hub; the homepage just points at the two hubs. */
+.kc-svc-grid.two{grid-template-columns:1fr 1fr;grid-auto-rows:400px;gap:18px;max-width:1100px;margin:0 auto}
+.kc-svc-grid.two .kc-svc.big{grid-column:span 1;grid-row:span 1}
+.kc-svc-grid.two .kc-svc.big h3{font-size:30px}
+.kc-svc-grid.two .kc-svc p{font-size:15.5px;max-width:420px}
+.kc-svc-grid.two .kc-svc-body{padding:24px 26px}
+@media(max-width:860px){.kc-svc-grid.two{grid-auto-rows:320px;gap:14px}.kc-svc-grid.two .kc-svc.big h3{font-size:26px}}
+@media(max-width:640px){.kc-svc-grid.two{grid-template-columns:1fr;grid-auto-rows:auto;gap:12px}.kc-svc-grid.two .kc-svc.big{grid-column:span 1;height:250px}.kc-svc-grid.two .kc-svc-body{padding:16px 18px}.kc-svc-grid.two .kc-svc.big h3{font-size:24px}.kc-svc-grid.two .kc-svc.big p{display:block;font-size:14px;max-width:none}}
 @media(max-width:640px){.kc-svc-grid{grid-template-columns:1fr 1fr;grid-auto-rows:auto;gap:10px}.kc-svc{grid-column:span 1;height:150px}.kc-svc.big{grid-column:span 2;grid-row:span 1;height:220px}.kc-svc-body{padding:12px 14px}.kc-svc h3{font-size:15px}.kc-svc.big h3{font-size:22px}.kc-svc p{display:none}.kc-svc.big p{display:block;font-size:13.5px}.kc-svc .price{font-size:11.5px;margin-top:4px}}
 .kc-ba-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start}
 .kc-ba-item:nth-child(2){margin-top:40px}

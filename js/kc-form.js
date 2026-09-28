@@ -1,16 +1,17 @@
-/* Kaim Contracting quote form (v3 - two short steps, same payload as v2).
+/* Kaim Contracting quote form (v4 - one screen again, labels kept).
  *
  * Lives on quote.html, the homepage contact section and the sand & seal
  * calculator. Renders into:
  *   <div class="kc-form-slot" data-kc='{ "source": "Quote Page" }'></div>
- *   <script src="js/kc-form.js?v=9" defer></script>
+ *   <script src="js/kc-form.js?v=10" defer></script>
  *
- * Step 1: service, property address, optional note and photos (the job).
- * Step 2: name, phone, optional email (how to reach you), then submit.
- * On submit -> POST /api/lead, then offers three open days to self-book the
- * free in-person estimate via /api/estimate-visit (address rides along onto
- * the calendar entry). Field names, the honeypot and the payload shape are
- * unchanged from v2; only the layout, labels and inline errors are new.
+ * 2026-09-28: back to a single screen (Eric: older customers, no "Continue"
+ * hurdle). The job fields (service, address, note, photos) sit above a
+ * "How do I reach you?" block (name, phone, optional email) with one submit.
+ * The labels and inline errors from v3 stay. On submit -> POST /api/lead,
+ * then offers three open days to self-book the free in-person estimate via
+ * /api/estimate-visit (address rides along onto the calendar entry). Field
+ * names, the honeypot and the payload shape are unchanged since v2.
  *
  * URL params: ?service=Paver%20Sealing preselects the dropdown,
  *             ?src=paver-sealing tags the lead source with the page it came from,
@@ -28,14 +29,8 @@
   var CSS = '.kcf{background:rgba(13,30,53,.78);-webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:24px 22px 18px;box-shadow:0 28px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.09);width:100%;color:#fff;font-family:' + BODY + ';text-align:left}'
     + '.kcf-title{font-family:' + HEAD + ';font-size:19px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#e2c47a;margin:0 0 4px;line-height:1.2;text-align:center}'
     + '.kcf-kicker{font-size:13px;color:rgba(255,255,255,.6);text-align:center;margin-bottom:14px}'
-    + '.kcf-progress{display:flex;align-items:center;gap:10px;margin-bottom:16px}'
-    + '.kcf-progress span{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.14);transition:background .25s}'
-    + '.kcf-progress span.on{background:#c9a84c}'
-    + '.kcf-progress b{font-family:' + HEAD + ';font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);white-space:nowrap}'
-    + '.kcf-step{display:none}.kcf-step.on{display:block;animation:kcfIn .25s ease}'
-    + '@keyframes kcfIn{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}'
-    + '@media(prefers-reduced-motion:reduce){.kcf-step.on,.kcf-ddpanel.open{animation:none}}'
-    + '.kcf-q{font-size:16px;font-weight:600;color:#fff;margin:0 0 12px;line-height:1.35}'
+    + '@media(prefers-reduced-motion:reduce){.kcf-ddpanel.open{animation:none}}'
+    + '.kcf-q{font-family:' + HEAD + ';font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#e2c47a;margin:18px 0 10px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);line-height:1.35}'
     + '.kcf-field{margin-bottom:12px}'
     + '.kcf-label{display:block;font-size:14px;font-weight:600;color:rgba(255,255,255,.88);margin:0 0 6px 2px}'
     + '.kcf-label small{font-weight:400;color:rgba(255,255,255,.5)}'
@@ -48,10 +43,9 @@
     + '.kcf-selwrap{position:relative}'
     + '.kcf-selwrap>svg{position:absolute;right:14px;top:46px;width:16px;height:16px;color:#e2c47a;pointer-events:none}'
     + '.kcf-selwrap.nolabel>svg{top:50%;transform:translateY(-50%)}'
-    + '.kcf-cta,.kcf-next{width:100%;min-height:54px;background:#c9a84c;color:#0d1e35;border:none;border-radius:10px;padding:14px;font-family:' + HEAD + ';font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;margin-top:6px;transition:background .15s,transform .15s cubic-bezier(.2,.65,.2,1);box-shadow:0 10px 26px rgba(201,168,76,.22)}'
-    + '.kcf-cta:hover,.kcf-next:hover{background:#e2c47a}.kcf-cta:active,.kcf-next:active{transform:scale(.98)}.kcf-cta:disabled{opacity:.7;cursor:default;transform:none}'
-    + '.kcf-cta:focus-visible,.kcf-next:focus-visible,.kcf-dd:focus-visible,.kcf-back:focus-visible{outline:3px solid #e2c47a;outline-offset:2px}'
-    + '.kcf-back{display:inline-flex;align-items:center;gap:6px;min-height:36px;background:none;border:none;color:rgba(255,255,255,.6);font-size:13.5px;cursor:pointer;padding:0 4px;margin:0 0 6px -4px;font-family:' + BODY + ';border-radius:6px}.kcf-back:hover{color:#e2c47a}'
+    + '.kcf-cta{width:100%;min-height:54px;background:#c9a84c;color:#0d1e35;border:none;border-radius:10px;padding:14px;font-family:' + HEAD + ';font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;margin-top:6px;transition:background .15s,transform .15s cubic-bezier(.2,.65,.2,1);box-shadow:0 10px 26px rgba(201,168,76,.22)}'
+    + '.kcf-cta:hover{background:#e2c47a}.kcf-cta:active{transform:scale(.98)}.kcf-cta:disabled{opacity:.7;cursor:default;transform:none}'
+    + '.kcf-cta:focus-visible,.kcf-dd:focus-visible{outline:3px solid #e2c47a;outline-offset:2px}'
     + '.kcf-foot{margin-top:10px;text-align:center;font-size:12.5px;color:rgba(255,255,255,.62);line-height:1.5}'
     + '.kcf-fail{display:none;margin-top:9px;text-align:center;font-size:13.5px;color:#ffb0a3}.kcf-fail a{color:#e2c47a;font-weight:700;text-decoration:none}'
     + '.kcf-callrow{display:flex;gap:8px;margin-top:11px}'
@@ -97,7 +91,7 @@
     var cfg;
     try { cfg = JSON.parse(slot.getAttribute('data-kc') || '{}'); } catch (e) { cfg = {}; }
     cfg.title = cfg.title || 'Get Your Free Estimate';
-    cfg.kicker = cfg.kicker || 'Two quick steps, about 30 seconds';
+    cfg.kicker = cfg.kicker || 'Takes less than a minute';
     cfg.submitLabel = cfg.submitLabel || 'Get Free Estimate';
     cfg.source = cfg.source || 'Quote Page';
 
@@ -114,7 +108,7 @@
     var uid = 'kcf' + (++seq) + '-';
     var msg = function (key, text) { return '<div class="kcf-msg" data-kcf="msg-' + key + '" role="alert">' + text + '</div>'; };
 
-    var step1 = ''
+    var jobFields = ''
       + (cfg.service ? '<input type="hidden" data-kcf="service" value="' + esc(cfg.service) + '">'
         : '<div class="kcf-field kcf-selwrap"><label class="kcf-label" id="' + uid + 'svclbl">What do you need done?</label><input type="hidden" data-kcf="service" value="' + esc(hasPre ? preService : '') + '">'
         + '<button type="button" class="kcf-dd' + (hasPre ? '' : ' kcf-empty') + '" data-kcf="ddbtn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="' + uid + 'svclbl"><span>' + esc(hasPre ? preService : 'Pick a service') + '</span></button>'
@@ -123,29 +117,24 @@
         + msg('service', 'Pick the service you need, or Something Else.') + '</div>')
       + '<div class="kcf-field" style="position:relative"><label class="kcf-label" for="' + uid + 'address">Property address</label><input type="text" id="' + uid + 'address" data-kcf="address" placeholder="Street, town" autocomplete="off" aria-label="Property address"><div class="kcf-sug" data-kcf="asug"></div>' + msg('address', 'The address of the property, so I can quote the right place.') + '</div>'
       + '<div class="kcf-field"><label class="kcf-label" for="' + uid + 'note">Anything I should know? <small>(optional)</small></label><textarea id="' + uid + 'note" data-kcf="note" rows="2" placeholder="Size, stains, gate code, best time to come by" aria-label="Optional message"></textarea></div>'
-      + (cfg.photos ? '<div class="kcf-field"><label class="kcf-file"><input type="file" data-kcf="files" accept="image/*" multiple style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Add photos of the project (optional)</label><div class="kcf-files" data-kcf="filelist"></div></div>' : '')
-      + '<button type="button" class="kcf-next" data-kcf="next">Continue &rarr;</button>'
-      + '<div class="kcf-foot">Free in-person estimate. No obligation, no sales calls.</div>';
+      + (cfg.photos ? '<div class="kcf-field"><label class="kcf-file"><input type="file" data-kcf="files" accept="image/*" multiple style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Add photos of the project (optional)</label><div class="kcf-files" data-kcf="filelist"></div></div>' : '');
 
-    var step2 = ''
-      + '<button type="button" class="kcf-back" data-kcf="back">&larr; Back</button>'
-      + '<div class="kcf-q">Where should I send the estimate?</div>'
+    var contactFields = ''
+      + '<div class="kcf-q">How do I reach you?</div>'
       + '<div class="kcf-field kcf-row2"><div><label class="kcf-label" for="' + uid + 'name">First name</label><input type="text" id="' + uid + 'name" data-kcf="name" placeholder="Jane" autocomplete="given-name" aria-label="First name"></div><div><label class="kcf-label" for="' + uid + 'lname">Last name</label><input type="text" id="' + uid + 'lname" data-kcf="lname" placeholder="Smith" autocomplete="family-name" aria-label="Last name"></div>' + msg('name', 'Your first name, so I know who to ask for.') + '</div>'
       + '<div class="kcf-field"><label class="kcf-label" for="' + uid + 'phone">Mobile number</label><input type="tel" id="' + uid + 'phone" data-kcf="phone" placeholder="978-555-0123" autocomplete="tel" inputmode="tel" aria-label="Phone number">' + msg('phone', 'A 10 digit phone number, so I can text you back.') + '</div>'
       + '<div class="kcf-field"><label class="kcf-label" for="' + uid + 'email">Email <small>(optional)</small></label><input type="email" id="' + uid + 'email" data-kcf="email" placeholder="you@example.com" autocomplete="email" aria-label="Email">' + msg('email', 'That email address does not look right.') + '</div>'
       + '<button type="submit" class="kcf-cta" data-kcf="submit">' + esc(cfg.submitLabel) + '</button>'
       + '<div class="kcf-fail" data-kcf="fail">Could not send. Please try again or <a href="tel:978-351-2195">call 978-351-2195</a>.</div>'
-      + '<div class="kcf-foot">I text back within the hour, usually faster. No spam, ever.</div>'
+      + '<div class="kcf-foot">Free in-person estimate. No obligation, no sales calls. I text back within the hour, usually faster.</div>'
       + '<div class="kcf-callrow"><a href="tel:978-351-2195">' + PHONE_SVG + 'Call 978-351-2195</a></div>';
 
     slot.innerHTML = '<form class="kcf" novalidate autocomplete="on">'
       + '<div class="kcf-title">' + esc(cfg.title) + '</div>'
       + '<div class="kcf-kicker">' + esc(cfg.kicker) + '</div>'
-      + '<div class="kcf-progress" aria-live="polite"><b data-kcf="steplabel">Step 1 of 2</b><span class="on"></span><span></span></div>'
       + '<div class="kcf-offer" data-kcf="offer"></div>'
       + '<div style="display:none" aria-hidden="true"><label>Leave empty<input type="text" name="hf_hpot" tabindex="-1" autocomplete="off" value=""></label></div>'
-      + '<div class="kcf-step on" data-step="1">' + step1 + '</div>'
-      + '<div class="kcf-step" data-step="2">' + step2 + '</div>'
+      + jobFields + contactFields
       + '</form>';
 
     var form = slot.querySelector('form');
@@ -154,16 +143,6 @@
 
     function showMsg(key, on) { var m = q('msg-' + key); if (m) m.classList.toggle('on', !!on); }
     function mark(el, key, bad) { if (el) el.classList.toggle('kcf-err', !!bad); showMsg(key, bad); }
-
-    function goStep(n) {
-      [].slice.call(form.querySelectorAll('.kcf-step')).forEach(function (s) { s.classList.toggle('on', s.getAttribute('data-step') === String(n)); });
-      var bars = form.querySelectorAll('.kcf-progress span');
-      for (var i = 0; i < bars.length; i++) bars[i].classList.toggle('on', i < n);
-      var lbl = q('steplabel'); if (lbl) lbl.textContent = 'Step ' + n + ' of 2';
-      var first = form.querySelector('.kcf-step.on input:not([type=hidden]):not([type=file]), .kcf-step.on .kcf-dd');
-      if (first && n === 2) { try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); } }
-      try { if (n === 2) form.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) { }
-    }
 
     var ddBtn = q('ddbtn'), ddPanel = q('ddpanel'), svcInp = q('service');
     if (ddBtn) ddBtn.addEventListener('click', function (e) {
@@ -266,25 +245,6 @@
       });
     }
 
-    function validStep1() {
-      var svc = q('service').value;
-      var address = (aEl.value || '').trim();
-      var bad = null;
-      if (!svc && ddBtn) { mark(ddBtn, 'service', true); bad = bad || ddBtn; }
-      if (!address) { mark(aEl, 'address', true); bad = bad || aEl; }
-      if (bad) { bad.focus(); return false; }
-      return true;
-    }
-
-    q('next').addEventListener('click', function () { if (validStep1()) goStep(2); });
-    q('back').addEventListener('click', function () { goStep(1); });
-    // Enter inside a step-1 field advances instead of submitting an empty step 2.
-    form.addEventListener('keydown', function (e) {
-      if (e.key !== 'Enter' || e.target.tagName === 'TEXTAREA') return;
-      var inStep1 = e.target.closest && e.target.closest('.kcf-step[data-step="1"]');
-      if (inStep1) { e.preventDefault(); if (validStep1()) goStep(2); }
-    });
-
     var lead = null;
     var extraLines = [];
 
@@ -292,7 +252,6 @@
       e.preventDefault();
       var btn = q('submit');
       if (btn.disabled) return;
-      if (!validStep1()) { goStep(1); return; }
       var svc = q('service').value;
       var first = (q('name').value || '').trim();
       var lastName = (q('lname').value || '').trim();
@@ -301,7 +260,11 @@
       var address = (aEl.value || '').trim();
       var note = (q('note').value || '').trim();
 
+      // One screen, so every check runs here, top to bottom, and the first
+      // problem gets focus.
       var bad = null;
+      if (!svc && ddBtn) { mark(ddBtn, 'service', true); bad = bad || ddBtn; }
+      if (!address) { mark(aEl, 'address', true); bad = bad || aEl; }
       if (!first) { mark(q('name'), 'name', true); bad = bad || q('name'); }
       if (phone.replace(/\D/g, '').length < 10) { mark(phoneEl, 'phone', true); bad = bad || phoneEl; }
       if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { mark(q('email'), 'email', true); bad = bad || q('email'); }
