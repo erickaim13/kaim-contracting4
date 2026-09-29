@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- deploy-bust:2026-09-29T1423 -->
+<!-- deploy-bust:2026-09-29T1814 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -525,6 +525,21 @@ a{color:inherit}
 /* the ringed circles keep their hover lift after reveal */
 .rv-on .rv-stagger.in>.circ .ring{transition:transform .35s cubic-bezier(.2,.65,.2,1),box-shadow .3s}
 @media(prefers-reduced-motion:reduce){.rv-on .rv,.rv-on .rv-stagger>*,.rv-on .rv-stagger-right>*{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* ---- phone hero: headline + estimate card only; doors sit below the wave as true circles ---- */
+@media(max-width:640px){
+  .pro-hero.orig .hero-kicker,.pro-hero.orig .lead{display:none}
+  .pro-hero.orig{padding:calc(var(--nav-h,80px) + 26px) 0 92px;min-height:auto}
+  .pro-hero.orig h1{font-size:clamp(34px,9.4vw,42px);margin-bottom:0}
+  .pro-hero.orig .wrap{gap:22px}
+  .pro-doors{padding:8px 0 20px}
+  .pro-doors .wrap{margin-top:18px}
+  .doors.two{gap:18px 14px}
+  .doors.two .ring{max-width:170px;padding:5px;border-width:3px;box-shadow:0 12px 28px rgba(7,24,40,.22)}
+  .doors.two h3{font-size:17px;margin-top:12px}
+  .doors.two small{font-size:13px;line-height:1.45}
+  .doors-hint{margin-top:22px;font-size:14px}
+}
 
 .howit,.home-faq,.serving,.referral,.contact{border-top:1px solid rgba(255,255,255,.055)}
 .ba-wash{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:4/3;touch-action:none;box-shadow:0 18px 50px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08);user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:none}

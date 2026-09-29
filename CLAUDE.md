@@ -387,4 +387,9 @@ Append notable decisions here so the next session inherits them.
   ai slop." Reverted on main (nav centring kept). The work continues on
   branch `claude/interior-refresh`, to be compared page by page against the
   homepage in a real browser before it goes anywhere near main.
+- **2026-09-29 (mobile pass on the live homepage)** — Eric: phone view was
+  "wonky". On phones the hero is just the headline and the estimate card
+  (kicker + lead hidden), the two service circles sit fully below the hero
+  wave (they overlapped it and read as ovals), and the mobile header is
+  taller with a bigger logo (`--nav-h` 84, logo 64, hamburger 50).
 

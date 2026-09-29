@@ -144,9 +144,10 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(2,10,22
 .site-nav .mob-menu a.mob-cta:hover{background:var(--gold-l)}
 @media(min-width:861px){.site-nav .mob-menu{display:none!important}body.menu-open{overflow:auto}body.menu-open::before{display:none}}
 @media(max-width:860px){
-  :root{--nav-h:64px}
-  .site-nav .nav-inner{padding:0 10px 0 14px;height:var(--nav-h)}
-  .site-nav .nav-logo img{height:44px}
+  :root{--nav-h:84px}
+  .site-nav .nav-inner{padding:0 12px 0 16px;height:var(--nav-h)}
+  .site-nav .nav-logo img{height:64px}
+  .site-nav .hamburger{width:50px;height:50px}.site-nav .hamburger span{width:26px;height:2.5px}
   .site-nav .nav-links,.site-nav .nav-cta{display:none}
   .site-nav .nav-phone{width:44px;padding:0;justify-content:center}
   .site-nav .nav-phone span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
