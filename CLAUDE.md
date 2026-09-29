@@ -208,3 +208,153 @@ Append notable decisions here so the next session inherits them.
   `css/site.css`. Paver Sealing door uses Eric's front walkway job photo,
   new square crop `images/ps-front-after-800.webp` (from ps-front-after.webp,
   which /paver-sealing already uses).
+
+- **2026-09-29 (branch `claude/pro-refresh`, NOT on main)** — Eric: "benjaminspowerwashing.com
+  is my biggest comp, make my website look more professional like his, do it
+  not on the main site." Studied his homepage headless at 1280 and 393 wide:
+  solid navy header with a red CTA, alternating white and navy blocks with
+  wave edges, ringed circle photos (some split before/after), big uppercase
+  headlines, checklist card, numbered cards, navy FAQ accordions, three
+  column footer. Rebuilt `index.html` on the branch in that structure with
+  Eric's navy and gold: split hero (headline + v2 form), four ringed doors
+  overlapping the hero, about panel + checklist, navy services band with 8
+  circles (real before/after splits where we have pairs), why-us with gold
+  offset photo, the wash-it-yourself demo, real results pairs, three step
+  cards, FAQ, town map, referral band, photo CTA band. Carried the map, demo,
+  seasonal and FAQ scripts verbatim from the old page (builder script in the
+  session scratchpad, old page saved there as index.old.html). `css/site.css`
+  on the branch: header is a solid full-width navy bar with a gold rule
+  (`--nav-h` 80, logo 60px), footer headings gold, page-hero pages get
+  `--nav-h` clearance. Service pages keep their existing layout under the new
+  header. No real review numbers or badges were invented (we have none yet).
+  If Eric likes it: merge to main, then carry the treatment to
+  /pressure-washing and /paver-sealing.
+
+- **2026-09-29 (later still)** — Eric on the dialed-back version: "no i kinda
+  liked the wavy transitions, and i liked how it brightened up the website, i
+  liked how it looked originally more." The dial-back commit is reverted; the
+  branch is the first pro version again (ringed circles, waves, uppercase
+  headlines, navy bands). Take-away: he wants the brighter, more structured
+  look; do not strip the visual devices, only polish.
+
+- **2026-09-29 (v4 on the branch)** — Eric: "start from the original, make
+  things look more professional sized, better wordage and more bright, and
+  change out the different sections on the home page but not the whole
+  website." So: `css/site.css` is main's again (floating pill header, same
+  footer, no site-wide change). Homepage keeps the live hero (fire pit photo,
+  "Make your house the envy of the neighborhood", the estimate card) with a
+  wave under it and two ringed circle doors, then the brighter block sections
+  from the pro pass: about + checklist, navy services band of 8 circles,
+  why-us, wash-it-yourself demo, real results, 3 step cards, FAQ, map,
+  referral, and a navy contact band with the v2 form (source "Homepage
+  Contact Form" as before). Copy tightened throughout.
+
+- **2026-09-29 (v5 on the branch)** — Eric: "the hero is way too small and
+  the pic needs to change, the plain white background is almost too plain,
+  add the herringbone pattern but white not navy." Hero is now min-height
+  max(680px, 88vh) with a 68px headline and the big house photo
+  (`faq-hero.webp`) instead of the fire pit. New `images/herringbone-light.svg`
+  (same tile, navy strokes at 10%) sits behind every white section. The doors
+  section had 1px top padding added so its negative margin no longer collapses
+  over the hero wave.
+
+- **2026-09-29 (v6 on the branch)** — Eric: the herringbone is his PNG
+  (`images/herringbone-pattern.png`, same file in Downloads and the stock
+  photos folder) and it "needs to go all the way behind the sections top and
+  bottom." So the pattern is now the `body` background (white-washed to about
+  half strength, 440px tile), every white section is transparent, and the
+  navy sections (hero bottom, services band, wash demo, service-area map top)
+  are cut with CSS `mask-image` waves instead of separate wave divs, so the
+  pattern shows through the curves with no seams. `herringbone-light.svg`
+  removed. Masks are inline data-URI SVGs in the page CSS.
+
+- **2026-09-29 (v7 on the branch)** — Eric: "a lot of the pavers dont line up
+  in different areas." The 1200px herringbone PNG does not repeat on a whole
+  pixel (period 145.5 x 60.75), so it seamed when tiled. New
+  `images/herringbone-tile.png` (438x244): the PNG resampled so the period is
+  exactly 146x61, then cropped to 3x4 periods, so it tiles with no seam. Body
+  uses it at 164px wide (120px on phones). Also per Eric: the three trust
+  points under the hero headline are gone, hero copy is pure white with a
+  stronger shadow, and body text on the pattern is darker (`--ink2`).
+
+- **2026-09-29 (v8 on the branch)** — Eric's batch: (1) whole page reads a
+  size larger (headings, lead copy, buttons, circles, cards all bumped); (2)
+  why-us photo is the fire pit patio (`hero-firepit.webp`); (3) Real Jobs is
+  three framed job cards (before/after pair on a navy frame, navy caption bar
+  with gold title); (4) From First Call is three white cards with gold number
+  badges on a dotted gold path and an icon each; (5) a gold wavy line
+  (`.gwave` SVG stroke) runs along every wave edge; (6) the topo map
+  (`.topo-bg`) sits behind the services band and the wash demo as well as the
+  service area map; (7) the referral band is OFF the homepage and now lives on
+  `about.html` above the footer, and every page's footer "Refer & Earn $50"
+  link points at `/about#referral`; (8) the bottom form is gone, replaced by a
+  navy call-to-action band with Get Free Estimate (to /quote) and Call. The
+  homepage no longer loads `kc-form.js`.
+
+- **2026-09-29 (v9 on the branch)** — Eric: wave between the map and the
+  bottom band (done: map section is masked top and bottom, the bottom band is
+  masked on top, gold lines on both, small pattern gap between); one more
+  notch of zoom across the page; the 1-2-3 section rebuilt as a navy band
+  with big gold numerals and hairline dividers (topo behind it, gold waves
+  either side); copy made brand-forward with "Kaim" in most headings and a
+  "#1 Pressure Washing Company in the Merrimack Valley" kicker over the hero
+  headline (Eric asked for it; it is a puffery-style claim, not a verified
+  ranking, and should stay off Google Ads copy where unverifiable
+  superlatives get disapproved).
+
+- **2026-09-29 (v10 on the branch)** — Eric's screenshots (which DO arrive
+  when he gives the file path on his Desktop): the map heading sat inside the
+  top wave (the padding rule targeted the old `.wavy-top` class after the
+  section became `.wavy`; fixed) and the bottom joint had two gold lines
+  crossing in a thin gap (the gap now lives on the gold line before the CTA
+  band, `.serving+.gwave.bot+.gwave.top`, so the line hugs the wave).
+  Headings are single color now, no gold word inside a white or navy heading
+  ("looks cheesy"). Verified at 1280, 2560 and 3800 wide.
+- **2026-09-29 (v11)** — Eric: the pattern strip between the map and the
+  bottom band "shouldnt be there." Map section is masked on top only; the
+  bottom band overlaps its last 70px with a top wave and one gold line, so the
+  two navy sections meet on a single wave.
+- **2026-09-29 (v12)** — Hero legibility: darker left-side gradient over the
+  photo, a radial dark scrim behind the text block, heavier text shadows,
+  sub-line at weight 600.
+- **2026-09-29 (v13)** — Hero scrim edge was visible (the radial gradient was
+  still ~30% dark where its box ended). Now `closest-side` with a stop at 0
+  at 100%, box enlarged, so it fades to nothing before every edge.
+- **2026-09-29 (v14)** — Eric wanted a badge row like the competitor's
+  (Inc 5000, OSHA, PWNA, HomeAdvisor). Told him those are other people's
+  marks and cannot be shown without being a member. Built our OWN seal row
+  (`.pro-trust` / `.seal`) under the two doors with only true claims:
+  Licensed & Insured MA and NH, Family Owned Methuen, Free Estimates,
+  Satisfaction Guaranteed (already on about.html), Fast Reply within the
+  hour (site copy). No third-party logos. Real badges he could earn: Google
+  reviews (free), Angi/HomeAdvisor screened, BBB, PWNA/UAMCC membership,
+  OSHA 10 card.
+- **2026-09-29 (v15)** — Seal row removed, Eric: "looks ai." He will earn real
+  badges (Google reviews, Angi/HomeAdvisor, OSHA 10, PWNA, BBB) and we add
+  those when he has them. Do not add home-made badge rows again.
+- **2026-09-29 (v16)** — Header pill is 88px tall with a 60px logo while the
+  page is unscrolled (desktop only); it eases back to the 72px flush bar on
+  scroll. Rule lives in `css/site.css` under the nav-logo rule.
+- **2026-09-29 (v18)** — Nav is now Home / Pressure Washing (dropdown: all
+  washing + 7 services + PW calculator) / Paver Sealing (plain link) / About
+  Us (dropdown: About, Service Areas, FAQ, Blog, Calculators). Mobile menu
+  mirrors it. Replaced on all 26 pages by the scratchpad `nav2.py` (the nav
+  block must stay byte-identical across pages).
+- **2026-09-29 (v19)** — Heading font is **Montserrat** (500/600/700/800)
+  site-wide; Source Sans 3 stays for body. Every page, `css/site.css`,
+  `js/kc-form.js` and the homepage builder source updated; Oswald preloads
+  removed. Montserrat is wider than Oswald, so display sizes came down a step
+  and tracking tightened (rules at the end of `site.css` and in the homepage
+  CSS). The homepage builder now copies the shared nav from `about.html` on
+  every build so the homepage cannot lag the other pages. Phone check done on
+  home, pressure washing, paver sealing, house washing, quote, about,
+  calculator: all clean.
+- **2026-09-29 (v20)** — Call buttons removed everywhere except quote.html:
+  header phone pill, mobile-menu phone, sticky-bar call (bar is now one full
+  width Get Free Estimate), hero-card Call buttons, deal-card call links,
+  about page call CTA, homepage bottom band call. Footer keeps the phone
+  number as contact info; inline "or call 978..." text mentions stay. Script:
+  scratchpad `nocall.py`. The expired "10% off by September 15" offer section
+  is deleted from paver-sealing.html (the whole `.pw-offers` block, it held
+  nothing else). GBP: no connector, Eric checks the Offers/Updates tab himself.
+

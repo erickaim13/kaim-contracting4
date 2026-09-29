@@ -8,7 +8,7 @@
   --bg:#0d1e35;--bg2:#102240;--bg3:#162c4e;--card:#102545;
   --text:#f4f8f7;--muted:#a9b7c9;
   --border:#1e3653;--border2:#2b4a6c;--sh:rgba(2,10,22,.45);
-  --font-head:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;
+  --font-head:'Montserrat','Segoe UI',Helvetica,Arial,sans-serif;
   --font-body:'Source Sans 3','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   --r-btn:10px;--r-card:16px;
   --nav-h:72px;--bar-h:72px;
@@ -40,7 +40,7 @@ body{font-family:var(--font-body)}
 .kc-cta-card a[href^="/quote"]:hover{background:var(--gold-l)!important}
 .kc-cta-card a[href^="tel:"]{min-height:44px}
 
-/* ---------- Headlines: Oswald 600 sentence case, gold emphasis, no synthetic italic ---------- */
+/* ---------- Headlines: Montserrat 600 sentence case, gold emphasis, no synthetic italic ---------- */
 .hero h1,.svc-hero-text h1,.pw-lasts .svc-split-text h2,.page-hero-content h1,.qp-h1,.svc-final h2,.pw-offers-head h2,.calc-cta h3{font-family:var(--font-head);font-weight:600;font-style:normal;text-transform:none;letter-spacing:0;text-wrap:balance}
 .hero h1{font-size:clamp(34px,4.6vw,56px);line-height:1.06;text-shadow:0 2px 20px rgba(0,0,0,.55)}
 .hero h1 span,.svc-hero-text h1 em,.pw-lasts .svc-split-text h2 em,.svc-final h2 span,.page-hero-content h1 span,.qp-h1 span{color:var(--gold-l);font-style:normal;font-weight:600}
@@ -72,6 +72,8 @@ nav.site-nav.scrolled{top:0;left:0;right:0;max-width:100vw;border-radius:0;borde
 .site-nav .nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:var(--nav-h);display:flex;justify-content:flex-start;align-items:center;gap:6px}
 .site-nav .nav-logo{display:inline-flex;align-items:center;margin-right:10px;flex-shrink:0;border-radius:8px}
 .site-nav .nav-logo img{height:50px;width:auto;display:block}
+/* Pill at rest (page not scrolled) is a touch taller than the flush scrolled bar (2026-09-29, Eric). */
+@media(min-width:861px){nav.site-nav:not(.scrolled) .nav-inner{height:88px}nav.site-nav:not(.scrolled) .nav-logo img{height:60px}nav.site-nav .nav-inner,nav.site-nav .nav-logo img{transition:height .35s var(--ease)}}
 .site-nav .nav-links{display:flex;list-style:none;margin:0;padding:0;gap:2px;align-items:center}
 .site-nav .nav-links>li{position:relative}
 .site-nav .nav-links>li>a{font-family:var(--font-head);font-weight:500;font-size:14px;letter-spacing:.07em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:0 14px;height:44px;border-radius:8px;display:inline-flex;align-items:center;gap:6px;transition:color .2s,background .2s}
@@ -155,7 +157,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(2,10,22
 /* ---------- Sticky Call / Get Free Estimate bar (phones only) ---------- */
 .kc-bar{display:none}
 @media(max-width:860px){
-  .kc-bar{display:grid;grid-template-columns:1fr 1.3fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:1400;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(9,22,40,.94);-webkit-backdrop-filter:saturate(160%) blur(14px);backdrop-filter:saturate(160%) blur(14px);border-top:1px solid rgba(255,255,255,.08);box-shadow:0 -10px 30px rgba(2,10,22,.45)}
+  .kc-bar{display:grid;grid-template-columns:1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:1400;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(9,22,40,.94);-webkit-backdrop-filter:saturate(160%) blur(14px);backdrop-filter:saturate(160%) blur(14px);border-top:1px solid rgba(255,255,255,.08);box-shadow:0 -10px 30px rgba(2,10,22,.45)}
   .kc-bar a{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 10px;border-radius:var(--r-btn);font-family:var(--font-head);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;white-space:nowrap;transition:transform .15s var(--ease),background .2s;-webkit-tap-highlight-color:transparent}
   .kc-bar a:active{transform:scale(.98)}
   .kc-bar a svg{width:16px;height:16px;flex-shrink:0}
@@ -172,7 +174,7 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(2,10,22
 footer.site-footer{background:#08141f;color:rgba(255,255,255,.62);border-top:1px solid rgba(255,255,255,.08);padding:0;font-family:var(--font-body)}
 .site-footer .ft-inner{max-width:1200px;margin:0 auto;padding:56px 24px 28px}
 .site-footer .ft-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px 32px}
-.site-footer .ft-brand img{height:56px;width:auto;display:block;margin-bottom:14px}
+.site-footer .ft-brand img{height:96px;width:auto;display:block;margin-bottom:18px}
 .site-footer .ft-brand p{font-size:14.5px;line-height:1.65;max-width:300px;margin:0 0 16px;color:rgba(255,255,255,.62)}
 .site-footer .ft-phone{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-head);font-size:22px;font-weight:600;color:#fff;text-decoration:none;letter-spacing:.03em;min-height:44px;transition:color .2s}
 .site-footer .ft-phone svg{width:18px;height:18px;color:var(--gold-l)}
@@ -343,3 +345,14 @@ body.page-quote{display:block}
 .page-404 .btn{min-height:50px;display:inline-flex;align-items:center;border-radius:var(--r-btn)}
 @media(max-width:480px){.page-404 .svc-list{grid-template-columns:1fr}}
 
+
+/* ---------- Montserrat headings (2026-09-29): tighter tracking than the old condensed face ---------- */
+.site-nav .nav-links>li>a{font-size:13px;letter-spacing:.04em;padding:0 11px}
+.site-nav .nav-cta{font-size:12.5px;letter-spacing:.05em;padding:0 16px}
+.site-nav .dd-item b{letter-spacing:.02em}
+.site-footer .ft-col h4{letter-spacing:.1em;font-size:13.5px}
+.site-footer .ft-phone{font-size:20px;letter-spacing:0}
+.kc-bar a{letter-spacing:.03em;font-size:13px}
+
+/* Call buttons removed site-wide except the quote page (2026-09-29, Eric); the footer keeps the phone number as contact info. */
+.site-nav .nav-actions .nav-cta{margin-left:0}
