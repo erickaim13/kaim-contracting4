@@ -8,7 +8,7 @@
   --bg:#0d1e35;--bg2:#102240;--bg3:#162c4e;--card:#102545;
   --text:#f4f8f7;--muted:#a9b7c9;
   --border:#1e3653;--border2:#2b4a6c;--sh:rgba(2,10,22,.45);
-  --font-head:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;
+  --font-head:'Montserrat','Segoe UI',Helvetica,Arial,sans-serif;
   --font-body:'Source Sans 3','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   --r-btn:10px;--r-card:16px;
   --nav-h:72px;--bar-h:72px;
@@ -40,7 +40,7 @@ body{font-family:var(--font-body)}
 .kc-cta-card a[href^="/quote"]:hover{background:var(--gold-l)!important}
 .kc-cta-card a[href^="tel:"]{min-height:44px}
 
-/* ---------- Headlines: Oswald 600 sentence case, gold emphasis, no synthetic italic ---------- */
+/* ---------- Headlines: Montserrat 600 sentence case, gold emphasis, no synthetic italic ---------- */
 .hero h1,.svc-hero-text h1,.pw-lasts .svc-split-text h2,.page-hero-content h1,.qp-h1,.svc-final h2,.pw-offers-head h2,.calc-cta h3{font-family:var(--font-head);font-weight:600;font-style:normal;text-transform:none;letter-spacing:0;text-wrap:balance}
 .hero h1{font-size:clamp(34px,4.6vw,56px);line-height:1.06;text-shadow:0 2px 20px rgba(0,0,0,.55)}
 .hero h1 span,.svc-hero-text h1 em,.pw-lasts .svc-split-text h2 em,.svc-final h2 span,.page-hero-content h1 span,.qp-h1 span{color:var(--gold-l);font-style:normal;font-weight:600}
@@ -345,3 +345,11 @@ body.page-quote{display:block}
 .page-404 .btn{min-height:50px;display:inline-flex;align-items:center;border-radius:var(--r-btn)}
 @media(max-width:480px){.page-404 .svc-list{grid-template-columns:1fr}}
 
+
+/* ---------- Montserrat headings (2026-09-29): tighter tracking than the old condensed face ---------- */
+.site-nav .nav-links>li>a{font-size:13px;letter-spacing:.04em;padding:0 11px}
+.site-nav .nav-cta{font-size:12.5px;letter-spacing:.05em;padding:0 16px}
+.site-nav .dd-item b{letter-spacing:.02em}
+.site-footer .ft-col h4{letter-spacing:.1em;font-size:13.5px}
+.site-footer .ft-phone{font-size:20px;letter-spacing:0}
+.kc-bar a{letter-spacing:.03em;font-size:13px}

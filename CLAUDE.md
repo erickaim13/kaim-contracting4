@@ -340,4 +340,13 @@ Append notable decisions here so the next session inherits them.
   Us (dropdown: About, Service Areas, FAQ, Blog, Calculators). Mobile menu
   mirrors it. Replaced on all 26 pages by the scratchpad `nav2.py` (the nav
   block must stay byte-identical across pages).
+- **2026-09-29 (v19)** — Heading font is **Montserrat** (500/600/700/800)
+  site-wide; Source Sans 3 stays for body. Every page, `css/site.css`,
+  `js/kc-form.js` and the homepage builder source updated; Oswald preloads
+  removed. Montserrat is wider than Oswald, so display sizes came down a step
+  and tracking tightened (rules at the end of `site.css` and in the homepage
+  CSS). The homepage builder now copies the shared nav from `about.html` on
+  every build so the homepage cannot lag the other pages. Phone check done on
+  home, pressure washing, paver sealing, house washing, quote, about,
+  calculator: all clean.
 
