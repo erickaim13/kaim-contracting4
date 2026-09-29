@@ -237,3 +237,15 @@ Append notable decisions here so the next session inherits them.
   headlines, navy bands). Take-away: he wants the brighter, more structured
   look; do not strip the visual devices, only polish.
 
+- **2026-09-29 (v4 on the branch)** — Eric: "start from the original, make
+  things look more professional sized, better wordage and more bright, and
+  change out the different sections on the home page but not the whole
+  website." So: `css/site.css` is main's again (floating pill header, same
+  footer, no site-wide change). Homepage keeps the live hero (fire pit photo,
+  "Make your house the envy of the neighborhood", the estimate card) with a
+  wave under it and two ringed circle doors, then the brighter block sections
+  from the pro pass: about + checklist, navy services band of 8 circles,
+  why-us, wash-it-yourself demo, real results, 3 step cards, FAQ, map,
+  referral, and a navy contact band with the v2 form (source "Homepage
+  Contact Form" as before). Copy tightened throughout.
+
