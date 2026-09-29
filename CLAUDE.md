@@ -382,4 +382,9 @@ Append notable decisions here so the next session inherits them.
   `<html class="rv-on">` is set by JS; reduced-motion users get no motion.
   Nav links now sit beside the Get Free Estimate button on desktop
   (`css/site.css`, last rule).
+- **2026-09-29 (REVERTED)** — The interior-page pass above went live for a
+  few minutes and Eric pulled it: "the pages all look messed up... looks like
+  ai slop." Reverted on main (nav centring kept). The work continues on
+  branch `claude/interior-refresh`, to be compared page by page against the
+  homepage in a real browser before it goes anywhere near main.
 
