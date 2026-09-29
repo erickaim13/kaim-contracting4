@@ -358,3 +358,19 @@ Append notable decisions here so the next session inherits them.
   is deleted from paver-sealing.html (the whole `.pw-offers` block, it held
   nothing else). GBP: no connector, Eric checks the Offers/Updates tab himself.
 
+- **2026-09-29 LIVE** — `claude/pro-refresh` merged to main and deployed
+  (merge commit + stamp bump `0be2802`). Pool deck before/after
+  (`images/ba-pool-*.webp`, from Eric's phone) added to patio-cleaning.html,
+  the homepage Patio & Pool Deck circle and a fourth Real Jobs card. Post
+  deploy check: all 23 live pages 200 (drainage/landscaping/mulch/pavers/
+  paver-calculator 308 to their redirects, as configured), GA4 + Ads + Meta
+  pixel on every page, new nav on every page, Montserrat everywhere, every
+  nav/footer link 200, kc-form.js v11 + all new images 200, quote form
+  renders on phone with 9 fields + honeypot, /api/lead answers 405 GET and
+  403 for a foreign origin (allowlist working), queue-health OK. Only
+  index/quote/paver-sealing-calculator carry a `deploy-bust` comment; the
+  other pages never had one, so a stamp check on them reads empty, not stale.
+  Headless mobile emulation reports a 452px layout viewport on
+  paver-sealing-calculator even with every section hidden: emulator artifact,
+  not real overflow.
+
