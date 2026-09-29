@@ -392,4 +392,9 @@ Append notable decisions here so the next session inherits them.
   (kicker + lead hidden), the two service circles sit fully below the hero
   wave (they overlapped it and read as ovals), and the mobile header is
   taller with a bigger logo (`--nav-h` 84, logo 64, hamburger 50).
+- **2026-09-29 (mobile pass 2, homepage)** — Eric: on phones show the "#1"
+  kicker centred, the hero shows only the Get Free Estimate button (the glass
+  card, its title, sub-line and fine print are hidden), and the sticky bottom
+  bar is hidden on the homepage only (`body.pro .kc-bar`). Hero text is
+  centred on phones.
 
