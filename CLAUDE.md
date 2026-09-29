@@ -230,12 +230,3 @@ Append notable decisions here so the next session inherits them.
   If Eric likes it: merge to main, then carry the treatment to
   /pressure-washing and /paver-sealing.
 
-- **2026-09-29 (later, same branch)** — Eric: "looks good but almost a little
-  too much like his website, dial it back a little." Kept the solid header,
-  the white/navy alternation, checklist, steps, FAQ and footer. Removed the
-  Benjamin's signatures: ringed circle photos overlapping the hero, split
-  before/after circles, wave dividers, all-caps headlines, pill buttons, the
-  navy about panel, the gold offset frame and stamp. Doors and services are
-  now rounded 4:3 photo tiles with sentence-case titles, buttons are 10px
-  radius, steps and FAQ are light cards, services band is light gray.
-

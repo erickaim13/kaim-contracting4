@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- deploy-bust:2026-09-29T1 -->
+<!-- deploy-bust:2026-09-29T2 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -145,25 +145,25 @@ img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
 .h-eyebrow{font-family:var(--head);font-size:12px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
-.h2{font-family:var(--head);font-weight:600;text-transform:none;letter-spacing:0;line-height:1.12;font-size:clamp(28px,3.4vw,40px);color:var(--ink);text-wrap:balance}
+.h2{font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.06em;line-height:1.12;font-size:clamp(26px,3.4vw,40px);color:var(--ink);text-wrap:balance}
 .h2 span{color:var(--gold)}
 .on-navy .h2{color:#fff}.on-navy .h2 span{color:var(--gold-l)}
 .lead{font-size:17px;color:var(--ink2);max-width:62ch;line-height:1.65}
 .on-navy .lead{color:rgba(255,255,255,.78)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 28px;border-radius:10px;font-family:var(--head);font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:0;transition:background .2s,transform .15s,box-shadow .2s;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 30px;border-radius:999px;font-family:var(--head);font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:0;transition:background .2s,transform .15s,box-shadow .2s;white-space:nowrap}
 .btn svg{width:18px;height:18px;flex-shrink:0}
-.btn-gold{background:var(--gold);color:var(--navy);box-shadow:0 8px 22px rgba(201,168,76,.22)}
+.btn-gold{background:var(--gold);color:var(--navy);box-shadow:0 12px 30px rgba(201,168,76,.28)}
 .btn-gold:hover{background:var(--gold-l)}.btn-gold:active{transform:scale(.98)}
 .btn-navy{background:var(--navy);color:#fff}.btn-navy:hover{background:var(--navy3)}
 .btn-line{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.7)}.btn-line:hover{background:rgba(255,255,255,.1)}
 .btn-line-navy{background:transparent;color:var(--navy);border:2px solid var(--navy)}.btn-line-navy:hover{background:var(--navy);color:#fff}
 
 /* HERO */
-.pro-hero{position:relative;background:var(--navy);color:#fff;overflow:hidden;padding:calc(var(--nav-h,80px) + 56px) 0 72px}
+.pro-hero{position:relative;background:var(--navy);color:#fff;overflow:hidden;padding:calc(var(--nav-h,80px) + 56px) 0 120px}
 .pro-hero .bg{position:absolute;inset:0;background:url('images/faq-hero.webp') center 35%/cover no-repeat;opacity:.34;filter:saturate(.7)}
 .pro-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(100deg,rgba(7,24,40,.96) 0%,rgba(13,30,53,.86) 50%,rgba(13,30,53,.62) 100%)}
 .pro-hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
-.pro-hero h1{font-family:var(--head);font-weight:600;text-transform:none;letter-spacing:0;line-height:1.08;font-size:clamp(34px,4.4vw,54px);text-wrap:balance;text-shadow:0 2px 18px rgba(0,0,0,.35)}
+.pro-hero h1{font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.03em;line-height:1.06;font-size:clamp(36px,4.8vw,62px);text-wrap:balance;text-shadow:0 2px 18px rgba(0,0,0,.35)}
 .pro-hero h1 span{color:var(--gold-l)}
 .pro-hero .lead{margin:18px 0 28px;font-size:18px;color:rgba(255,255,255,.82);max-width:54ch}
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
@@ -178,23 +178,20 @@ a{color:inherit}
 .wave-in{position:absolute;left:0;right:0;bottom:0;background:transparent;z-index:1}
 
 /* DOORS */
-.pro-doors{position:relative;background:var(--paper);padding:64px 0 24px}
-.pro-doors .wrap{position:relative}
-.doors{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
-.door{display:flex;flex-direction:column;align-items:flex-start;text-align:left;text-decoration:none;color:var(--ink)}
+.pro-doors{position:relative;background:var(--paper);padding:0 0 64px;z-index:2}
+.pro-doors .wrap{margin-top:-96px;position:relative}
+.doors{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.door{display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:var(--ink)}
 .ring{display:block;width:100%;max-width:230px;aspect-ratio:1/1;border-radius:50%;padding:7px;border:3px solid var(--gold);background:var(--paper);box-shadow:0 18px 40px rgba(7,24,40,.28);transition:transform .35s cubic-bezier(.2,.65,.2,1),box-shadow .3s}
 .ring img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .door:hover .ring{transform:translateY(-6px);box-shadow:0 26px 50px rgba(7,24,40,.32)}
-.door h3{font-family:var(--head);font-size:20px;font-weight:600;letter-spacing:.01em;text-transform:none;margin-top:14px;line-height:1.2}
-.tile{display:block;width:100%;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:var(--paper2);box-shadow:0 10px 26px rgba(7,24,40,.12);transition:transform .35s cubic-bezier(.2,.65,.2,1),box-shadow .3s}
-.tile img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.65,.2,1)}
-.door:hover .tile,.circ:hover .tile{transform:translateY(-4px);box-shadow:0 18px 36px rgba(7,24,40,.18)}.door:hover .tile img,.circ:hover .tile img{transform:scale(1.04)}
-.door small{font-size:14.5px;color:var(--ink2);margin-top:3px}
-.doors-hint{text-align:left;margin-top:30px;font-size:15.5px;color:var(--ink2)}
+.door h3{font-family:var(--head);font-size:19px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:18px;line-height:1.2}
+.door small{font-size:13.5px;color:var(--ink2);margin-top:4px}
+.doors-hint{text-align:center;margin-top:36px;font-size:15px;color:var(--ink2)}
 .doors-hint a{color:var(--navy);font-weight:700}
 
 /* ABOUT */
-.pro-about{background:var(--paper);padding:56px 0 88px}
+.pro-about{background:var(--paper);padding:24px 0 88px}
 .about-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:34px;align-items:start}
 .about-panel{background:var(--navy);color:#fff;border-radius:26px;padding:44px 46px 40px;position:relative;overflow:hidden}
 .about-panel::after{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.svg') center/260px repeat;opacity:.06;pointer-events:none}
@@ -203,38 +200,50 @@ a{color:inherit}
 .about-panel .h2 span{color:var(--gold-l)}
 .about-panel .h-eyebrow{color:var(--gold-l)}
 .about-row{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:26px;align-items:stretch}
-.about-row img{width:100%;height:100%;min-height:300px;object-fit:cover;border-radius:14px}
+.about-row img{width:100%;height:100%;min-height:300px;object-fit:cover;border-radius:22px}
 .about-copy{display:flex;flex-direction:column;justify-content:center;gap:18px}
 .about-copy p{font-size:16.5px;color:var(--ink2);line-height:1.65}
 .about-copy p b{color:var(--ink)}
-.checks{list-style:none;border:1px solid var(--line);background:var(--paper2);border-radius:14px;padding:18px 22px;display:grid;gap:10px}
+.checks{list-style:none;border:2px solid var(--navy);border-radius:16px;padding:18px 22px;display:grid;gap:10px}
 .checks li{display:flex;align-items:center;gap:12px;font-weight:700;font-size:16px;color:var(--ink)}
 .checks li i{width:24px;height:24px;border-radius:50%;background:var(--gold);color:var(--navy);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
 .checks li i svg{width:14px;height:14px}
-.about-side img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px}
+.about-side img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:26px}
 .about-side p{margin-top:18px;font-size:16.5px;color:var(--ink2);line-height:1.65}
 
 /* SERVICES BAND */
-.pro-services{background:var(--paper2);color:var(--ink);position:relative;padding:80px 0 84px;border-top:1px solid var(--line)}
-.pro-services .wrap{position:relative;text-align:left}
-.pro-services .lead{margin:12px 0 0}
-.svc-circles{display:grid;grid-template-columns:repeat(4,1fr);gap:30px 22px;margin-top:40px}
-.circ{display:flex;flex-direction:column;align-items:flex-start;text-decoration:none;color:var(--ink)}
-.circ h3{font-family:var(--head);font-size:18px;font-weight:600;letter-spacing:.01em;text-transform:none;margin-top:12px;text-align:left;line-height:1.25}
-.circ small{font-size:14px;color:var(--ink2);margin-top:2px}
+.pro-services{background:var(--navy);color:#fff;position:relative;padding:36px 0 40px}
+.pro-services::before{content:'';position:absolute;inset:0;background:radial-gradient(1200px 500px at 80% 0%,rgba(201,168,76,.10),transparent 60%),radial-gradient(900px 500px at 0% 100%,rgba(226,196,122,.08),transparent 60%);pointer-events:none}
+.pro-services .wrap{position:relative;text-align:center}
+.pro-services .lead{margin:12px auto 0}
+.svc-circles{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 28px;margin-top:52px}
+.circ{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:#fff}
+.circ .ring{border-color:rgba(226,196,122,.9);background:var(--navy);box-shadow:0 18px 40px rgba(0,0,0,.4);position:relative;max-width:220px}
+.circ .ring img{position:absolute;inset:7px;width:calc(100% - 14px);height:calc(100% - 14px)}
+.circ .ring.split img.b{clip-path:inset(0 50% 0 0)}
+.circ .ring.split img.a{clip-path:inset(0 0 0 50%)}
+.circ .ring.split::after{content:'';position:absolute;top:7px;bottom:7px;left:50%;width:2px;background:#fff;transform:translateX(-1px);z-index:2}
+.circ .ring.split i{position:absolute;bottom:20px;z-index:3;font-style:normal;font-family:var(--head);font-size:10px;letter-spacing:.14em;text-transform:uppercase;background:rgba(7,24,40,.78);padding:3px 8px;border-radius:4px;color:#fff}
+.circ .ring.split i.l{left:22px}.circ .ring.split i.r{right:22px;color:var(--gold-l)}
+.circ:hover .ring{transform:translateY(-6px)}
+.circ h3{font-family:var(--head);font-size:17px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-top:18px;text-align:center;line-height:1.25}
+.circ small{font-size:13px;color:rgba(255,255,255,.6);margin-top:4px}
 .svc-more{margin-top:44px}
 
 /* WHY */
 .pro-why{background:var(--paper);padding:88px 0 80px}
 .why-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:center}
 .why-photo{position:relative}
-.why-photo img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px;position:relative;z-index:1}
+.why-photo img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:26px;position:relative;z-index:1}
+.why-photo::before{content:'';position:absolute;inset:26px -22px -22px 26px;border-radius:26px;background:var(--gold);opacity:.9}
+.why-photo .stamp{position:absolute;right:-8px;top:-8px;z-index:2;width:128px;height:128px;border-radius:50%;background:var(--navy);color:#fff;border:3px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:12px;line-height:1.2;box-shadow:0 16px 36px rgba(7,24,40,.3)}
+.why-photo .stamp b{font-size:22px;color:var(--gold-l);display:block;margin-bottom:2px}
 .why-list{list-style:none;margin-top:30px;display:grid;gap:22px}
-.why-list li{display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:start;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.why-list li{display:grid;grid-template-columns:60px 1fr;gap:18px;align-items:start;padding-bottom:22px;border-bottom:1px solid var(--line)}
 .why-list li:last-child{border-bottom:0;padding-bottom:0}
-.why-ico{width:56px;height:56px;border-radius:14px;background:var(--navy);display:flex;align-items:center;justify-content:center;color:var(--gold-l)}
+.why-ico{width:60px;height:60px;border-radius:50%;background:var(--navy);border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold-l)}
 .why-ico svg{width:26px;height:26px}
-.why-list h3{font-family:var(--head);font-size:21px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink);margin-bottom:4px}
+.why-list h3{font-family:var(--head);font-size:20px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);margin-bottom:4px}
 .why-list p{font-size:16px;color:var(--ink2);line-height:1.6}
 
 /* SEE THE DIFFERENCE (carried demo, navy band) */
@@ -243,24 +252,24 @@ a{color:inherit}
 .ba-demo .section-header p{color:rgba(255,255,255,.72)}
 .section-inner{max-width:1200px;margin:0 auto}
 .section-header{text-align:center;margin-bottom:40px}
-.section-header h2{font-family:var(--head);font-weight:600;text-transform:none;letter-spacing:0;line-height:1.12;font-size:clamp(28px,3.4vw,40px)}
+.section-header h2{font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.06em;line-height:1.12;font-size:clamp(26px,3.4vw,40px)}
 .section-header p{margin-top:12px;font-size:16.5px;max-width:60ch;margin-left:auto;margin-right:auto}
 .section-label{display:none}
 
 /* RESULTS */
 .pro-results{background:var(--paper);padding:88px 0 80px;text-align:center}
 .pro-results .kc-ba-grid{margin-top:44px;text-align:left}
-.pro-results .kc-ba figure{border-radius:12px;overflow:hidden}
+.pro-results .kc-ba figure{border-radius:16px;overflow:hidden}
 .pro-results .kc-ba-item:nth-child(2){margin-top:0}
 .pro-results .kc-ba-cap{color:var(--ink2);font-size:15px}.pro-results .kc-ba-cap b{color:var(--ink);font-weight:700}
 
 /* HOW IT WORKS */
 .pro-steps{background:var(--paper2);padding:80px 0 88px;text-align:center}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px;text-align:left}
-.step{background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:30px 28px 28px;position:relative;display:flex;flex-direction:column;box-shadow:0 10px 26px rgba(7,24,40,.06)}
-.step .n{width:48px;height:48px;border-radius:12px;background:var(--navy);color:var(--gold-l);font-family:var(--head);font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-.step h3{font-family:var(--head);font-size:22px;font-weight:600;letter-spacing:0;text-transform:none;margin-bottom:8px}
-.step p{font-size:16px;color:var(--ink2);line-height:1.6}
+.step{background:var(--navy);color:#fff;border-radius:22px;padding:34px 30px 30px;position:relative;display:flex;flex-direction:column;box-shadow:0 20px 44px rgba(7,24,40,.16)}
+.step .n{width:54px;height:54px;border-radius:50%;background:var(--gold);color:var(--navy);font-family:var(--head);font-size:24px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.step h3{font-family:var(--head);font-size:21px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.step p{font-size:16px;color:rgba(255,255,255,.8);line-height:1.6}
 .steps-cta{margin-top:40px}
 
 /* FAQ */
@@ -269,13 +278,13 @@ a{color:inherit}
 .faq-side p{margin-top:16px;font-size:16.5px;color:var(--ink2);line-height:1.65}
 .faq-side .btn{margin-top:26px}
 .acc-list{display:grid;gap:12px}
-.acc-item{background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:border-color .2s}.acc-item.open{border-color:var(--gold)}
-.acc-head{width:100%;display:flex;align-items:center;gap:14px;padding:18px 20px;background:none;border:0;color:var(--ink);font-family:var(--head);font-size:17.5px;font-weight:600;letter-spacing:0;text-transform:none;text-align:left;cursor:pointer;line-height:1.3}
+.acc-item{background:var(--navy);color:#fff;border-radius:16px;overflow:hidden;box-shadow:0 14px 30px rgba(7,24,40,.14)}
+.acc-head{width:100%;display:flex;align-items:center;gap:14px;padding:20px 22px;background:none;border:0;color:#fff;font-family:var(--head);font-size:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-align:left;cursor:pointer;line-height:1.3}
 .acc-head span{flex:1}
-.acc-arrow{width:28px;height:28px;padding:7px;border-radius:50%;background:var(--navy);color:var(--gold-l);flex-shrink:0;transition:transform .3s}
+.acc-arrow{width:30px;height:30px;padding:7px;border-radius:50%;background:var(--gold);color:var(--navy);flex-shrink:0;transition:transform .3s}
 .acc-item.open .acc-arrow{transform:rotate(180deg)}
 .acc-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
-.acc-body p{padding:0 20px 20px;font-size:16px;color:var(--ink2);line-height:1.65}
+.acc-body p{padding:0 22px 22px;font-size:16px;color:rgba(255,255,255,.82);line-height:1.65}
 .acc-item.open .acc-body{max-height:600px}
 
 /* SERVING (carried) */
@@ -286,14 +295,14 @@ a{color:inherit}
 .pro-cta .bg{position:absolute;inset:0;background:url('images/ba-siding-after.webp') center/cover no-repeat;opacity:.28}
 .pro-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,24,40,.7),rgba(13,30,53,.86))}
 .pro-cta .wrap{position:relative}
-.pro-cta .h2{color:#fff;font-size:clamp(30px,4vw,46px);max-width:20ch;margin:0 auto}
+.pro-cta .h2{color:#fff;font-size:clamp(30px,4.4vw,52px);max-width:18ch;margin:0 auto}
 .pro-cta .lead{color:rgba(255,255,255,.8);margin:18px auto 30px;text-align:center}
 .pro-cta .hero-ctas{justify-content:center}
 
 /* MOBILE */
 @media(max-width:1020px){
-  .doors{gap:18px}.door h3{font-size:17px}
-  .svc-circles{gap:24px 16px}.circ h3{font-size:16px}
+  .doors{gap:20px}.door h3{font-size:16px}
+  .svc-circles{gap:28px 16px}.circ h3{font-size:14px;letter-spacing:.08em}
   .about-grid{grid-template-columns:1fr}.about-side img{aspect-ratio:16/9}
   .why-grid{gap:40px}
 }
@@ -301,8 +310,9 @@ a{color:inherit}
   .pro-hero{padding:calc(var(--nav-h,72px) + 32px) 0 96px}
   .pro-hero .wrap{grid-template-columns:1fr;gap:34px}
   .hero-form{max-width:none;justify-self:stretch}
-  .doors{grid-template-columns:repeat(2,1fr);gap:22px 16px}
-  .svc-circles{grid-template-columns:repeat(2,1fr);gap:22px 16px}
+  .doors{grid-template-columns:repeat(2,1fr);gap:26px 18px}
+  .pro-doors .wrap{margin-top:-80px}
+  .svc-circles{grid-template-columns:repeat(2,1fr);gap:30px 18px}
   .about-row{grid-template-columns:1fr}.about-row img{min-height:220px}
   .about-panel{padding:32px 26px 30px;border-radius:22px}
   .why-grid{grid-template-columns:1fr}.why-photo{max-width:420px;margin:0 auto 30px}
@@ -314,10 +324,14 @@ a{color:inherit}
   .pro-hero h1{font-size:clamp(30px,8.6vw,38px)}
   .pro-hero .lead{font-size:16px}
   .hero-ctas .btn{flex:1 1 100%}
-  .door h3{font-size:16px;margin-top:10px}.door small{font-size:13px}
+  .wave{height:44px}
+  .ring{padding:5px;border-width:3px}
+  .door h3{font-size:14px;letter-spacing:.08em;margin-top:12px}.door small{display:none}
   .doors-hint{margin-top:26px;font-size:14px}
-  .circ h3{font-size:15px;margin-top:10px}.circ small{font-size:12.5px}
-    .why-photo .stamp{width:104px;height:104px;font-size:10.5px}.why-photo .stamp b{font-size:18px}
+  .circ h3{font-size:12.5px;letter-spacing:.06em;margin-top:12px}.circ small{display:none}
+  .circ .ring.split i{font-size:8px;bottom:12px}.circ .ring.split i.l{left:12px}.circ .ring.split i.r{right:12px}
+  .why-photo::before{inset:18px -12px -12px 18px}
+  .why-photo .stamp{width:104px;height:104px;font-size:10.5px}.why-photo .stamp b{font-size:18px}
   .why-list li{grid-template-columns:50px 1fr;gap:14px}.why-ico{width:50px;height:50px}
   .pro-about,.pro-why,.pro-results,.pro-steps,.pro-faq{padding:60px 0 56px}
   .pro-cta{padding:72px 16px}
@@ -468,8 +482,9 @@ a{color:inherit}
   <div class="bg" aria-hidden="true"></div>
   <div class="wrap">
     <div class="hero-text">
-      <h1>Professional pressure washing and <span>paver sealing</span></h1>
-      <p class="lead">Soft wash house washing, roof cleaning, driveways, patios, decks and paver sand and seal for homeowners across the Merrimack Valley and Southern NH. Family run out of Methuen, licensed and insured in MA and NH.</p>
+      <div class="h-eyebrow">Family run in Methuen, MA</div>
+      <h1>Professional pressure washing <span>and paver sealing</span></h1>
+      <p class="lead">Soft wash house washing, roof cleaning, driveways, patios, decks and paver sand and seal for homeowners across the Merrimack Valley and Southern NH. Licensed and insured in MA and NH.</p>
       <div class="hero-ctas">
         <a href="/quote" class="btn btn-gold">Get Free Estimate <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a href="tel:978-351-2195" class="btn btn-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg> 978-351-2195</a>
@@ -480,24 +495,28 @@ a{color:inherit}
       <script src="js/kc-form.js?v=11" defer></script>
     </div>
   </div>
+  <div class="wave wave-in" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,80 L1440,80 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z" fill="#ffffff"/></svg></div>
 </section>
 
 <section class="pro-doors" id="services">
   <div class="wrap">
     <div class="doors">
-      <a href="/house-washing" class="door"><span class="tile"><img src="images/hub-house-washing.webp" alt="Vinyl siding being soft washed" width="480" height="360"></span><h3>House Washing</h3><small>Soft wash siding, from $350</small></a>
-      <a href="/roof-cleaning" class="door"><span class="tile"><img src="images/hub-roof-cleaning.webp" alt="Moss and black streaks on an asphalt roof" width="480" height="360"></span><h3>Roof Cleaning</h3><small>Shingle safe soft wash</small></a>
-      <a href="/driveway-cleaning" class="door"><span class="tile"><img src="images/hub-driveway-cleaning.webp" alt="Clean paver driveway" width="480" height="360"></span><h3>Driveway &amp; Patio</h3><small>Pavers, concrete, pool decks</small></a>
-      <a href="/paver-sealing" class="door"><span class="tile"><img src="images/ps-front-after-800.webp" alt="Front walkway pavers with color restored after sealing" width="800" height="800"></span><h3>Paver Sealing</h3><small>Clean, re-sand and seal</small></a>
+      <a href="/house-washing" class="door"><span class="ring"><img src="images/hub-house-washing.webp" alt="Vinyl siding being soft washed" width="480" height="360"></span><h3>House Washing</h3><small>Soft wash siding, from $350</small></a>
+      <a href="/roof-cleaning" class="door"><span class="ring"><img src="images/hub-roof-cleaning.webp" alt="Moss and black streaks on an asphalt roof" width="480" height="360"></span><h3>Roof Cleaning</h3><small>Shingle safe soft wash</small></a>
+      <a href="/driveway-cleaning" class="door"><span class="ring"><img src="images/hub-driveway-cleaning.webp" alt="Clean paver driveway" width="480" height="360"></span><h3>Driveway &amp; Patio</h3><small>Pavers, concrete, pool decks</small></a>
+      <a href="/paver-sealing" class="door"><span class="ring"><img src="images/ps-front-after-800.webp" alt="Front walkway pavers with color restored after sealing" width="800" height="800"></span><h3>Paver Sealing</h3><small>Clean, re-sand and seal</small></a>
     </div>
-    <p class="doors-hint">Not sure what you need? <a href="/pressure-washing">See every washing service</a>, or call and describe it and we will tell you straight.</p>
+    <p class="doors-hint">Not sure what you need? <a href="/pressure-washing">See every washing service</a> or call and describe it. We will tell you straight.</p>
   </div>
 </section>
 
 <section class="pro-about" id="about">
   <div class="wrap about-grid">
     <div>
-      <h2 class="h2">Your house, patio and driveway, <span>looking new again</span></h2>
+      <div class="about-panel">
+        <div class="h-eyebrow">About Kaim Contracting</div>
+        <h2 class="h2">Your house, patio and driveway, <span>looking new again</span></h2>
+      </div>
       <div class="about-row">
         <img src="images/sealer-spray.webp" alt="Sealer being sprayed onto a freshly cleaned paver patio" width="800" height="600" loading="lazy">
         <div class="about-copy">
@@ -517,21 +536,25 @@ a{color:inherit}
   </div>
 </section>
 
-<section class="pro-services" id="all-services">
+<div class="wave wave-top" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,0 L1440,0 L1440,20 C1180,80 940,80 720,40 C500,0 260,0 0,48 Z" fill="#ffffff"/></svg></div>
+<section class="pro-services on-navy" id="all-services">
   <div class="wrap">
-    <h2 class="h2">Every surface, <span>one call</span></h2>
+    <div class="h-eyebrow" style="color:var(--gold-l)">Services</div>
+    <h2 class="h2">Pressure washing and paver sealing <span>for every surface</span></h2>
     <p class="lead">Tap a service for pricing, real photos and what is included.</p>
     <div class="svc-circles">
-      <a href="/house-washing" class="circ"><span class="tile"><img src="images/ba-siding-after-800.webp" alt="Vinyl siding before and after a soft wash" loading="lazy"></span><h3>House Washing</h3><small>Soft wash siding</small></a><a href="/roof-cleaning" class="circ"><span class="tile"><img src="images/hub-roof-cleaning.webp" alt="Moss covered shingle roof before cleaning" loading="lazy"></span><h3>Roof Cleaning</h3><small>Black streaks and moss</small></a><a href="/driveway-cleaning" class="circ"><span class="tile"><img src="images/hub-driveway-cleaning.webp" alt="Paver driveway after cleaning" loading="lazy"></span><h3>Driveway &amp; Walkway</h3><small>Even clean, no stripes</small></a><a href="/patio-cleaning" class="circ"><span class="tile"><img src="images/ba-patio-after.webp" alt="Paver patio before and after cleaning" loading="lazy"></span><h3>Patio &amp; Pool Deck</h3><small>Algae gone, color back</small></a><a href="/deck-cleaning" class="circ"><span class="tile"><img src="images/ba-deck-after.webp" alt="Deck stairs before and after cleaning" loading="lazy"></span><h3>Deck &amp; Fence</h3><small>Wood safe wash</small></a><a href="/oxidation-removal" class="circ"><span class="tile"><img src="images/hub-oxidation-removal.webp" alt="Faded oxidized siding" loading="lazy"></span><h3>Oxidation Removal</h3><small>Chalky siding restored</small></a><a href="/gutter-brightening" class="circ"><span class="tile"><img src="images/hub-gutter-brightening.webp" alt="Clean white gutters on a colonial house" loading="lazy"></span><h3>Gutter Brightening</h3><small>Tiger stripes gone</small></a><a href="/paver-sealing" class="circ"><span class="tile"><img src="images/ps-front-after.webp" alt="Front walkway pavers before and after sand and seal" loading="lazy"></span><h3>Paver Sealing</h3><small>Clean, re-sand and seal</small></a>
+      <a href="/house-washing" class="circ"><span class="ring split"><img class="b" src="images/ba-siding-before-800.webp" alt="" loading="lazy"><img class="a" src="images/ba-siding-after-800.webp" alt="Vinyl siding before and after a soft wash" loading="lazy"><i class="l">Before</i><i class="r">After</i></span><h3>House Washing</h3><small>Soft wash siding</small></a><a href="/roof-cleaning" class="circ"><span class="ring"><img src="images/hub-roof-cleaning.webp" alt="Moss covered shingle roof before cleaning" loading="lazy"></span><h3>Roof Cleaning</h3><small>Black streaks and moss</small></a><a href="/driveway-cleaning" class="circ"><span class="ring"><img src="images/hub-driveway-cleaning.webp" alt="Paver driveway after cleaning" loading="lazy"></span><h3>Driveway &amp; Walkway</h3><small>Even clean, no stripes</small></a><a href="/patio-cleaning" class="circ"><span class="ring split"><img class="b" src="images/ba-patio-before.webp" alt="" loading="lazy"><img class="a" src="images/ba-patio-after.webp" alt="Paver patio before and after cleaning" loading="lazy"><i class="l">Before</i><i class="r">After</i></span><h3>Patio &amp; Pool Deck</h3><small>Algae gone, color back</small></a><a href="/deck-cleaning" class="circ"><span class="ring split"><img class="b" src="images/ba-deck-before.webp" alt="" loading="lazy"><img class="a" src="images/ba-deck-after.webp" alt="Deck stairs before and after cleaning" loading="lazy"><i class="l">Before</i><i class="r">After</i></span><h3>Deck &amp; Fence</h3><small>Wood safe wash</small></a><a href="/oxidation-removal" class="circ"><span class="ring"><img src="images/hub-oxidation-removal.webp" alt="Faded oxidized siding" loading="lazy"></span><h3>Oxidation Removal</h3><small>Chalky siding restored</small></a><a href="/gutter-brightening" class="circ"><span class="ring"><img src="images/hub-gutter-brightening.webp" alt="Clean white gutters on a colonial house" loading="lazy"></span><h3>Gutter Brightening</h3><small>Tiger stripes gone</small></a><a href="/paver-sealing" class="circ"><span class="ring split"><img class="b" src="images/ps-front-before.webp" alt="" loading="lazy"><img class="a" src="images/ps-front-after.webp" alt="Front walkway pavers before and after sand and seal" loading="lazy"><i class="l">Before</i><i class="r">After</i></span><h3>Paver Sealing</h3><small>Clean, re-sand and seal</small></a>
     </div>
     <div class="svc-more"><a href="/quote" class="btn btn-gold">Get Free Estimate <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
   </div>
 </section>
+<div class="wave wave-bot" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,80 L1440,80 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z" fill="#ffffff"/></svg></div>
 
 <section class="pro-why" id="why">
   <div class="wrap why-grid">
     <div class="why-photo">
       <img src="images/ba-siding-after.webp" alt="Bright clean vinyl siding after a soft wash" width="1100" height="1100" loading="lazy">
+      <div class="stamp"><b>MA + NH</b>Licensed &amp; Insured</div>
     </div>
     <div>
       <h2 class="h2">Why homeowners <span>call us back</span></h2>
@@ -542,6 +565,7 @@ a{color:inherit}
   </div>
 </section>
 
+<div class="wave wave-top" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,0 L1440,0 L1440,20 C1180,80 940,80 720,40 C500,0 260,0 0,48 Z" fill="#ffffff"/></svg></div>
 <section class="ba-demo" id="see-the-difference">
   <div class="section-inner sec-rise" style="max-width:780px">
     <div class="section-header" style="margin-bottom:26px">
@@ -661,6 +685,7 @@ a{color:inherit}
   window.addEventListener('resize',function(){clearTimeout(rw);rw=setTimeout(function(){if(!finished){drawDirty();}},200);});
 })();
 </script>
+<div class="wave wave-bot" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,80 L1440,80 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z" fill="#ffffff"/></svg></div>
 
 <section class="pro-results" id="results">
   <div class="wrap">
@@ -706,6 +731,7 @@ a{color:inherit}
   </div>
 </section>
 
+<div class="wave wave-top" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,0 L1440,0 L1440,20 C1180,80 940,80 720,40 C500,0 260,0 0,48 Z" fill="#ffffff"/></svg></div>
 <section class="serving" id="serving">
   <div class="topo-bg" aria-hidden="true"></div>
   <div class="serving-inner sec-rise" style="display:block;padding:60px 24px;max-width:1280px">
