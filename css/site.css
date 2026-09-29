@@ -72,6 +72,8 @@ nav.site-nav.scrolled{top:0;left:0;right:0;max-width:100vw;border-radius:0;borde
 .site-nav .nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:var(--nav-h);display:flex;justify-content:flex-start;align-items:center;gap:6px}
 .site-nav .nav-logo{display:inline-flex;align-items:center;margin-right:10px;flex-shrink:0;border-radius:8px}
 .site-nav .nav-logo img{height:50px;width:auto;display:block}
+/* Pill at rest (page not scrolled) is a touch taller than the flush scrolled bar (2026-09-29, Eric). */
+@media(min-width:861px){nav.site-nav:not(.scrolled) .nav-inner{height:88px}nav.site-nav:not(.scrolled) .nav-logo img{height:60px}nav.site-nav .nav-inner,nav.site-nav .nav-logo img{transition:height .35s var(--ease)}}
 .site-nav .nav-links{display:flex;list-style:none;margin:0;padding:0;gap:2px;align-items:center}
 .site-nav .nav-links>li{position:relative}
 .site-nav .nav-links>li>a{font-family:var(--font-head);font-weight:500;font-size:14px;letter-spacing:.07em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:0 14px;height:44px;border-radius:8px;display:inline-flex;align-items:center;gap:6px;transition:color .2s,background .2s}

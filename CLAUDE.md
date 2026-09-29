@@ -332,4 +332,7 @@ Append notable decisions here so the next session inherits them.
 - **2026-09-29 (v15)** — Seal row removed, Eric: "looks ai." He will earn real
   badges (Google reviews, Angi/HomeAdvisor, OSHA 10, PWNA, BBB) and we add
   those when he has them. Do not add home-made badge rows again.
+- **2026-09-29 (v16)** — Header pill is 88px tall with a 60px logo while the
+  page is unscrolled (desktop only); it eases back to the 72px flush bar on
+  scroll. Rule lives in `css/site.css` under the nav-logo rule.
 
