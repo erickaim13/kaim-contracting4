@@ -230,3 +230,10 @@ Append notable decisions here so the next session inherits them.
   If Eric likes it: merge to main, then carry the treatment to
   /pressure-washing and /paver-sealing.
 
+- **2026-09-29 (later still)** — Eric on the dialed-back version: "no i kinda
+  liked the wavy transitions, and i liked how it brightened up the website, i
+  liked how it looked originally more." The dial-back commit is reverted; the
+  branch is the first pro version again (ringed circles, waves, uppercase
+  headlines, navy bands). Take-away: he wants the brighter, more structured
+  look; do not strip the visual devices, only polish.
+
