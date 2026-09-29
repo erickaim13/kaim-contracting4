@@ -208,3 +208,25 @@ Append notable decisions here so the next session inherits them.
   `css/site.css`. Paver Sealing door uses Eric's front walkway job photo,
   new square crop `images/ps-front-after-800.webp` (from ps-front-after.webp,
   which /paver-sealing already uses).
+
+- **2026-09-29 (branch `claude/pro-refresh`, NOT on main)** — Eric: "benjaminspowerwashing.com
+  is my biggest comp, make my website look more professional like his, do it
+  not on the main site." Studied his homepage headless at 1280 and 393 wide:
+  solid navy header with a red CTA, alternating white and navy blocks with
+  wave edges, ringed circle photos (some split before/after), big uppercase
+  headlines, checklist card, numbered cards, navy FAQ accordions, three
+  column footer. Rebuilt `index.html` on the branch in that structure with
+  Eric's navy and gold: split hero (headline + v2 form), four ringed doors
+  overlapping the hero, about panel + checklist, navy services band with 8
+  circles (real before/after splits where we have pairs), why-us with gold
+  offset photo, the wash-it-yourself demo, real results pairs, three step
+  cards, FAQ, town map, referral band, photo CTA band. Carried the map, demo,
+  seasonal and FAQ scripts verbatim from the old page (builder script in the
+  session scratchpad, old page saved there as index.old.html). `css/site.css`
+  on the branch: header is a solid full-width navy bar with a gold rule
+  (`--nav-h` 80, logo 60px), footer headings gold, page-hero pages get
+  `--nav-h` clearance. Service pages keep their existing layout under the new
+  header. No real review numbers or badges were invented (we have none yet).
+  If Eric likes it: merge to main, then carry the treatment to
+  /pressure-washing and /paver-sealing.
+
