@@ -291,3 +291,14 @@ Append notable decisions here so the next session inherits them.
   navy call-to-action band with Get Free Estimate (to /quote) and Call. The
   homepage no longer loads `kc-form.js`.
 
+- **2026-09-29 (v9 on the branch)** — Eric: wave between the map and the
+  bottom band (done: map section is masked top and bottom, the bottom band is
+  masked on top, gold lines on both, small pattern gap between); one more
+  notch of zoom across the page; the 1-2-3 section rebuilt as a navy band
+  with big gold numerals and hairline dividers (topo behind it, gold waves
+  either side); copy made brand-forward with "Kaim" in most headings and a
+  "#1 Pressure Washing Company in the Merrimack Valley" kicker over the hero
+  headline (Eric asked for it; it is a puffery-style claim, not a verified
+  ranking, and should stay off Google Ads copy where unverifiable
+  superlatives get disapproved).
+
