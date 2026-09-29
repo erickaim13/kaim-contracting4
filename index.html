@@ -450,8 +450,9 @@ a{color:inherit}
 .s3 p{font-size:18.5px;color:rgba(255,255,255,.82);line-height:1.6;max-width:36ch}
 .pro-steps .steps-cta{margin-top:56px}
 .pro-cta.wavy-top{padding-top:150px}
-.serving.wavy{padding-bottom:70px}
+.serving.wavy{padding-top:70px;padding-bottom:90px}
 @media(max-width:860px){
+  .serving+.gwave.bot+.gwave.top{margin-top:70px}
   .steps3{grid-template-columns:1fr;margin-top:36px}
   .s3{padding:28px 0 0;border-left:0;border-top:1px solid rgba(226,196,122,.4);margin-top:28px}
   .s3:first-child{padding-top:0;border-top:0;margin-top:0}
@@ -462,13 +463,19 @@ a{color:inherit}
 @media(max-width:640px){
   .pro-steps.wavy{padding:84px 0 92px}
   .pro-cta.wavy-top{padding-top:110px}
-  .serving.wavy{padding-bottom:44px}
+  .serving.wavy{padding-top:40px;padding-bottom:50px}
 }
 
 /* ---- #1 kicker above the headline; a little air between the map and the bottom band ---- */
 .hero-kicker{font-size:14.5px;letter-spacing:.28em;color:var(--gold-l);margin-bottom:18px;text-shadow:0 1px 10px rgba(0,0,0,.5)}
-.pro-cta.wavy-top{margin-top:44px}
-@media(max-width:640px){.hero-kicker{font-size:12px;letter-spacing:.2em;margin-bottom:14px}.pro-cta.wavy-top{margin-top:24px}}
+.pro-cta.wavy-top{margin-top:0}
+.serving+.gwave.bot+.gwave.top{margin-top:120px}
+@media(max-width:640px){.hero-kicker{font-size:12px;letter-spacing:.2em;margin-bottom:14px}.serving+.gwave.bot+.gwave.top{margin-top:40px}}
+
+/* ---- one color per heading, no two-tone words ---- */
+.h2 span,.section-header h2 span,.about-panel .h2 span,.pro-cta .h2 span,.contact-text .h2 span,.on-navy .h2 span{color:inherit}
+.ba-demo h2 span,.serving h2 span{color:inherit!important}
+.pro-hero.orig h1 span{color:#fff}
 
 .howit,.home-faq,.serving,.referral,.contact{border-top:1px solid rgba(255,255,255,.055)}
 .ba-wash{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:4/3;touch-action:none;box-shadow:0 18px 50px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08);user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:none}

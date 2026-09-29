@@ -302,3 +302,12 @@ Append notable decisions here so the next session inherits them.
   ranking, and should stay off Google Ads copy where unverifiable
   superlatives get disapproved).
 
+- **2026-09-29 (v10 on the branch)** — Eric's screenshots (which DO arrive
+  when he gives the file path on his Desktop): the map heading sat inside the
+  top wave (the padding rule targeted the old `.wavy-top` class after the
+  section became `.wavy`; fixed) and the bottom joint had two gold lines
+  crossing in a thin gap (the gap now lives on the gold line before the CTA
+  band, `.serving+.gwave.bot+.gwave.top`, so the line hugs the wave).
+  Headings are single color now, no gold word inside a white or navy heading
+  ("looks cheesy"). Verified at 1280, 2560 and 3800 wide.
+
