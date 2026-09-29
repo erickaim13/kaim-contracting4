@@ -268,3 +268,12 @@ Append notable decisions here so the next session inherits them.
   pattern shows through the curves with no seams. `herringbone-light.svg`
   removed. Masks are inline data-URI SVGs in the page CSS.
 
+- **2026-09-29 (v7 on the branch)** — Eric: "a lot of the pavers dont line up
+  in different areas." The 1200px herringbone PNG does not repeat on a whole
+  pixel (period 145.5 x 60.75), so it seamed when tiled. New
+  `images/herringbone-tile.png` (438x244): the PNG resampled so the period is
+  exactly 146x61, then cropped to 3x4 periods, so it tiles with no seam. Body
+  uses it at 164px wide (120px on phones). Also per Eric: the three trust
+  points under the hero headline are gone, hero copy is pure white with a
+  stronger shadow, and body text on the pattern is darker (`--ink2`).
+
