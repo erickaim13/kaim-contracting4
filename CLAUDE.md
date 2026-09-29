@@ -335,4 +335,9 @@ Append notable decisions here so the next session inherits them.
 - **2026-09-29 (v16)** — Header pill is 88px tall with a 60px logo while the
   page is unscrolled (desktop only); it eases back to the 72px flush bar on
   scroll. Rule lives in `css/site.css` under the nav-logo rule.
+- **2026-09-29 (v18)** — Nav is now Home / Pressure Washing (dropdown: all
+  washing + 7 services + PW calculator) / Paver Sealing (plain link) / About
+  Us (dropdown: About, Service Areas, FAQ, Blog, Calculators). Mobile menu
+  mirrors it. Replaced on all 26 pages by the scratchpad `nav2.py` (the nav
+  block must stay byte-identical across pages).
 
