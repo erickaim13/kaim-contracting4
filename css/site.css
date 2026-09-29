@@ -356,3 +356,6 @@ body.page-quote{display:block}
 
 /* Call buttons removed site-wide except the quote page (2026-09-29, Eric); the footer keeps the phone number as contact info. */
 .site-nav .nav-actions .nav-cta{margin-left:0}
+
+/* nav links sit next to the CTA (2026-09-29, Eric) */
+@media(min-width:861px){.site-nav .nav-links{margin-left:auto;margin-right:14px}.site-nav .nav-actions{margin-left:0}.site-nav .nav-logo{margin-right:0}}

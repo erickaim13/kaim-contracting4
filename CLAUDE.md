@@ -373,4 +373,13 @@ Append notable decisions here so the next session inherits them.
   Headless mobile emulation reports a 452px layout viewport on
   paver-sealing-calculator even with every section hidden: emulator artifact,
   not real overflow.
+- **2026-09-29 (post launch)** — Homepage scroll reveals: `.rv` classes
+  (`rv-up`, `rv-left`, `rv-right`, `rv-pop`, `rv-zoom`, delays `rv-d2/3`)
+  plus `.rv-stagger` / `.rv-stagger-right` for child lists, driven by an
+  inline `kcReveal` script (IntersectionObserver + a scroll sweep that also
+  reveals anything the viewport already passed, so anchor jumps and fast
+  flicks never leave a section invisible). Hidden state only applies once
+  `<html class="rv-on">` is set by JS; reduced-motion users get no motion.
+  Nav links now sit beside the Get Free Estimate button on desktop
+  (`css/site.css`, last rule).
 
