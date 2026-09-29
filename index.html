@@ -450,9 +450,9 @@ a{color:inherit}
 .s3 p{font-size:18.5px;color:rgba(255,255,255,.82);line-height:1.6;max-width:36ch}
 .pro-steps .steps-cta{margin-top:56px}
 .pro-cta.wavy-top{padding-top:150px}
-.serving.wavy{padding-top:70px;padding-bottom:90px}
+.serving.wavy-top{padding-top:70px;padding-bottom:110px}
+.serving+.gwave.top{margin-top:-70px}
 @media(max-width:860px){
-  .serving+.gwave.bot+.gwave.top{margin-top:70px}
   .steps3{grid-template-columns:1fr;margin-top:36px}
   .s3{padding:28px 0 0;border-left:0;border-top:1px solid rgba(226,196,122,.4);margin-top:28px}
   .s3:first-child{padding-top:0;border-top:0;margin-top:0}
@@ -463,14 +463,14 @@ a{color:inherit}
 @media(max-width:640px){
   .pro-steps.wavy{padding:84px 0 92px}
   .pro-cta.wavy-top{padding-top:110px}
-  .serving.wavy{padding-top:40px;padding-bottom:50px}
+  .serving.wavy-top{padding-top:40px;padding-bottom:70px}
+  .serving+.gwave.top{margin-top:-44px}
 }
 
 /* ---- #1 kicker above the headline; a little air between the map and the bottom band ---- */
 .hero-kicker{font-size:14.5px;letter-spacing:.28em;color:var(--gold-l);margin-bottom:18px;text-shadow:0 1px 10px rgba(0,0,0,.5)}
 .pro-cta.wavy-top{margin-top:0}
-.serving+.gwave.bot+.gwave.top{margin-top:120px}
-@media(max-width:640px){.hero-kicker{font-size:12px;letter-spacing:.2em;margin-bottom:14px}.serving+.gwave.bot+.gwave.top{margin-top:40px}}
+@media(max-width:640px){.hero-kicker{font-size:12px;letter-spacing:.2em;margin-bottom:14px}}
 
 /* ---- one color per heading, no two-tone words ---- */
 .h2 span,.section-header h2 span,.about-panel .h2 span,.pro-cta .h2 span,.contact-text .h2 span,.on-navy .h2 span{color:inherit}
@@ -871,7 +871,7 @@ a{color:inherit}
 </section>
 
 <div class="gwave top" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,48 C260,0 500,0 720,40 C940,80 1180,80 1440,20" fill="none" stroke="#c9a84c" stroke-width="4" vector-effect="non-scaling-stroke"/></svg></div>
-<section class="serving wavy" id="serving">
+<section class="serving wavy-top" id="serving">
   <div class="topo-bg" aria-hidden="true"></div>
   <div class="serving-inner sec-rise" style="display:block;padding:60px 24px;max-width:1280px">
     <div class="section-header" style="text-align:center;margin-bottom:32px">
@@ -906,7 +906,6 @@ a{color:inherit}
 </div>
   </div>
 </section>
-<div class="gwave bot" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,28 C260,76 500,76 720,36 C940,-4 1180,-4 1440,52" fill="none" stroke="#c9a84c" stroke-width="4" vector-effect="non-scaling-stroke"/></svg></div>
 <div class="gwave top" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,48 C260,0 500,0 720,40 C940,80 1180,80 1440,20" fill="none" stroke="#c9a84c" stroke-width="4" vector-effect="non-scaling-stroke"/></svg></div>
 
 <section class="pro-cta wavy-top" id="contact">

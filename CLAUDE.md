@@ -310,4 +310,8 @@ Append notable decisions here so the next session inherits them.
   band, `.serving+.gwave.bot+.gwave.top`, so the line hugs the wave).
   Headings are single color now, no gold word inside a white or navy heading
   ("looks cheesy"). Verified at 1280, 2560 and 3800 wide.
+- **2026-09-29 (v11)** — Eric: the pattern strip between the map and the
+  bottom band "shouldnt be there." Map section is masked on top only; the
+  bottom band overlaps its last 70px with a top wave and one gold line, so the
+  two navy sections meet on a single wave.
 
