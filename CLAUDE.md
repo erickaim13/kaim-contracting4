@@ -329,4 +329,7 @@ Append notable decisions here so the next session inherits them.
   hour (site copy). No third-party logos. Real badges he could earn: Google
   reviews (free), Angi/HomeAdvisor screened, BBB, PWNA/UAMCC membership,
   OSHA 10 card.
+- **2026-09-29 (v15)** — Seal row removed, Eric: "looks ai." He will earn real
+  badges (Google reviews, Angi/HomeAdvisor, OSHA 10, PWNA, BBB) and we add
+  those when he has them. Do not add home-made badge rows again.
 
