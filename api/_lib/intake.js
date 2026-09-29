@@ -357,6 +357,30 @@ export async function intakeLead(opts) {
     );
   }
 
+  // Roof-cleaning leads with an address also kick off the CRM's internal
+  // roof estimate (measure from public map data, price with the cheat sheet,
+  // PDF into Eric's inbox). Only the enqueue ack is awaited; the CRM does the
+  // measuring when Eric opens it or on its own sweep. Needs ROOF_PIPELINE_SECRET
+  // set on BOTH the website and the CRM in Vercel; silently skipped otherwise.
+  // Never sends the client anything.
+  const roofSecret = (process.env.ROOF_PIPELINE_SECRET || '').trim();
+  if (roofSecret && address && /^roof/i.test(String(service || '').trim())) {
+    const crmBase = (process.env.CRM_API_BASE || 'https://kaimcontractingapp.com').replace(/\/$/, '');
+    queueInserts.push((async () => {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 6000);
+      try {
+        const r = await fetch(crmBase + '/api/roof-estimate', {
+          method: 'POST', signal: ctrl.signal,
+          headers: { 'Content-Type': 'application/json', 'x-roof-secret': roofSecret },
+          body: JSON.stringify({ action: 'enqueue', clientId: client.id, address, name: (first + ' ' + last).trim(), phone, service, source: leadSource })
+        });
+        if (!r.ok) console.error('[intake] roof enqueue HTTP ' + r.status);
+      } catch (e) { console.error('[intake] roof enqueue failed', e?.message || e); }
+      finally { clearTimeout(t); }
+    })());
+  }
+
   await Promise.allSettled(queueInserts);
 
   // 4. Confirmation email to client — AWAITED so the Vercel function doesn't
