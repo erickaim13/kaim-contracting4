@@ -317,4 +317,7 @@ Append notable decisions here so the next session inherits them.
 - **2026-09-29 (v12)** — Hero legibility: darker left-side gradient over the
   photo, a radial dark scrim behind the text block, heavier text shadows,
   sub-line at weight 600.
+- **2026-09-29 (v13)** — Hero scrim edge was visible (the radial gradient was
+  still ~30% dark where its box ended). Now `closest-side` with a stop at 0
+  at 100%, box enlarged, so it fades to nothing before every edge.
 
