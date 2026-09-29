@@ -277,3 +277,17 @@ Append notable decisions here so the next session inherits them.
   points under the hero headline are gone, hero copy is pure white with a
   stronger shadow, and body text on the pattern is darker (`--ink2`).
 
+- **2026-09-29 (v8 on the branch)** — Eric's batch: (1) whole page reads a
+  size larger (headings, lead copy, buttons, circles, cards all bumped); (2)
+  why-us photo is the fire pit patio (`hero-firepit.webp`); (3) Real Jobs is
+  three framed job cards (before/after pair on a navy frame, navy caption bar
+  with gold title); (4) From First Call is three white cards with gold number
+  badges on a dotted gold path and an icon each; (5) a gold wavy line
+  (`.gwave` SVG stroke) runs along every wave edge; (6) the topo map
+  (`.topo-bg`) sits behind the services band and the wash demo as well as the
+  service area map; (7) the referral band is OFF the homepage and now lives on
+  `about.html` above the footer, and every page's footer "Refer & Earn $50"
+  link points at `/about#referral`; (8) the bottom form is gone, replaced by a
+  navy call-to-action band with Get Free Estimate (to /quote) and Call. The
+  homepage no longer loads `kc-form.js`.
+
