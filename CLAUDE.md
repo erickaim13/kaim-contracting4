@@ -115,9 +115,10 @@ These come from actual past commits — do not undo them.
   Styling for both is in `css/site.css`, not in the pages.
 - **Two font families only: Oswald and Source Sans 3.** DM Serif Display was
   dropped in the 2026-09 redesign. Fallback stacks are spelled out in the CSS.
-- **The quote form is two steps** (`js/kc-form.js` v3). Field names, the
-  honeypot and the POST payload are identical to the old single screen form,
-  so `api/lead.js` did not change. Bump the `?v=` on the script tag when you edit it.
+- **The quote form is the classic single screen** (`js/kc-form.js` v2, the
+  pre-redesign file restored 2026-09-29). Field names, the honeypot and the
+  POST payload have not changed since v2, so `api/lead.js` never needs to.
+  Bump the `?v=` on the script tag when you edit it.
 
 ## Working agreements
 
@@ -195,3 +196,15 @@ Append notable decisions here so the next session inherits them.
   index, quote and the sand & seal calculator. (3) Header stays the fixed
   floating pill from the morning commits.
 
+- **2026-09-29** — Eric: "u changed the form fills yesterday, turn them back to
+  how i had them a week ago before the ui and ux changes." `js/kc-form.js` is
+  the exact pre-redesign v2 file again (`git show e3acdbb:js/kc-form.js`):
+  one screen, placeholders instead of labels, no inline error text; the v3
+  two-step and v4 labeled versions are gone. `?v=11` on index, quote and the
+  sand & seal calculator, and the old button labels are back ("Get My Free
+  Estimate" on /quote, "Send Me My Quote" on the calculator). Homepage
+  What We Do doors are circles now: 340px photo in a gold ring (260px on
+  phones) with the title and blurb under it, `.kc-svc-grid.two` in
+  `css/site.css`. Paver Sealing door uses Eric's front walkway job photo,
+  new square crop `images/ps-front-after-800.webp` (from ps-front-after.webp,
+  which /paver-sealing already uses).
