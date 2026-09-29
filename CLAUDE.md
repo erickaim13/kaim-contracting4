@@ -249,3 +249,12 @@ Append notable decisions here so the next session inherits them.
   referral, and a navy contact band with the v2 form (source "Homepage
   Contact Form" as before). Copy tightened throughout.
 
+- **2026-09-29 (v5 on the branch)** — Eric: "the hero is way too small and
+  the pic needs to change, the plain white background is almost too plain,
+  add the herringbone pattern but white not navy." Hero is now min-height
+  max(680px, 88vh) with a 68px headline and the big house photo
+  (`faq-hero.webp`) instead of the fire pit. New `images/herringbone-light.svg`
+  (same tile, navy strokes at 10%) sits behind every white section. The doors
+  section had 1px top padding added so its negative margin no longer collapses
+  over the hero wave.
+

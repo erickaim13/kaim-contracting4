@@ -130,7 +130,7 @@
 .leaflet-control-zoom a:hover{background:rgba(201,168,76,.2)!important}
 </style>
 <meta name="msapplication-TileColor" content="#0d1e35">
-<link rel="preload" as="image" href="images/hero-firepit-1600.webp" media="(min-width:641px)" fetchpriority="high"><link rel="preload" as="image" href="images/hero-firepit-800.webp" media="(max-width:640px)" fetchpriority="high">
+<link rel="preload" as="image" href="images/faq-hero.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/oswald/v57/TK3IWkUHHAIjg75cFRf3bXL8LICs1_Fv40pKlN4NNSeSASz7FmlWHYg.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/sourcesans3/v19/nwpStKy2OAdR1K-IwhWudF-R3w8aZQ.woff2">
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap"></noscript>
@@ -178,7 +178,7 @@ a{color:inherit}
 .wave-in{position:absolute;left:0;right:0;bottom:0;background:transparent;z-index:1}
 
 /* DOORS */
-.pro-doors{position:relative;background:var(--paper);padding:0 0 64px;z-index:2}
+.pro-doors{position:relative;background:var(--paper) url('images/herringbone-light.svg') center/60px repeat;padding:1px 0 64px;z-index:2}
 .pro-doors .wrap{margin-top:-96px;position:relative}
 .doors{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
 .door{display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:var(--ink)}
@@ -191,10 +191,10 @@ a{color:inherit}
 .doors-hint a{color:var(--navy);font-weight:700}
 
 /* ABOUT */
-.pro-about{background:var(--paper);padding:24px 0 88px}
+.pro-about{background:var(--paper) url('images/herringbone-light.svg') center/60px repeat;padding:24px 0 88px}
 .about-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:34px;align-items:start}
 .about-panel{background:var(--navy);color:#fff;border-radius:26px;padding:44px 46px 40px;position:relative;overflow:hidden}
-.about-panel::after{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.svg') center/260px repeat;opacity:.06;pointer-events:none}
+.about-panel::after{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.svg') center/60px repeat;opacity:.9;pointer-events:none}
 .about-panel>*{position:relative;z-index:1}
 .about-panel .h2{color:#fff;font-size:clamp(24px,2.8vw,32px)}
 .about-panel .h2 span{color:var(--gold-l)}
@@ -231,7 +231,7 @@ a{color:inherit}
 .svc-more{margin-top:44px}
 
 /* WHY */
-.pro-why{background:var(--paper);padding:88px 0 80px}
+.pro-why{background:var(--paper) url('images/herringbone-light.svg') center/60px repeat;padding:88px 0 80px}
 .why-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:center}
 .why-photo{position:relative}
 .why-photo img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:26px;position:relative;z-index:1}
@@ -257,14 +257,14 @@ a{color:inherit}
 .section-label{display:none}
 
 /* RESULTS */
-.pro-results{background:var(--paper);padding:88px 0 80px;text-align:center}
+.pro-results{background:var(--paper) url('images/herringbone-light.svg') center/60px repeat;padding:88px 0 80px;text-align:center}
 .pro-results .kc-ba-grid{margin-top:44px;text-align:left}
 .pro-results .kc-ba figure{border-radius:16px;overflow:hidden}
 .pro-results .kc-ba-item:nth-child(2){margin-top:0}
 .pro-results .kc-ba-cap{color:var(--ink2);font-size:15px}.pro-results .kc-ba-cap b{color:var(--ink);font-weight:700}
 
 /* HOW IT WORKS */
-.pro-steps{background:var(--paper2);padding:80px 0 88px;text-align:center}
+.pro-steps{background:var(--paper2) url('images/herringbone-light.svg') center/60px repeat;padding:80px 0 88px;text-align:center}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px;text-align:left}
 .step{background:var(--navy);color:#fff;border-radius:22px;padding:34px 30px 30px;position:relative;display:flex;flex-direction:column;box-shadow:0 20px 44px rgba(7,24,40,.16)}
 .step .n{width:54px;height:54px;border-radius:50%;background:var(--gold);color:var(--navy);font-family:var(--head);font-size:24px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
@@ -273,7 +273,7 @@ a{color:inherit}
 .steps-cta{margin-top:40px}
 
 /* FAQ */
-.pro-faq{background:var(--paper);padding:88px 0 80px}
+.pro-faq{background:var(--paper) url('images/herringbone-light.svg') center/60px repeat;padding:88px 0 80px}
 .faq-grid{display:grid;grid-template-columns:.8fr 1.3fr;gap:56px;align-items:start}
 .faq-side p{margin-top:16px;font-size:16.5px;color:var(--ink2);line-height:1.65}
 .faq-side .btn{margin-top:26px}
@@ -341,17 +341,17 @@ a{color:inherit}
 .howit,.home-faq,.serving,.referral,.contact{border-top:1px solid rgba(255,255,255,.055)}
 
 /* ---- v4: original hero, two doors, contact band ---- */
-.pro-hero.orig{padding:calc(var(--nav-h,72px) + 64px) 0 150px}
-.pro-hero.orig .bg{background:url('images/hero-firepit-1600.webp') center bottom/cover no-repeat;opacity:.5;filter:none}
-.pro-hero.orig::before{background:linear-gradient(100deg,rgba(7,24,40,.92) 0%,rgba(13,30,53,.78) 55%,rgba(13,30,53,.55) 100%)}
-.pro-hero.orig h1{text-transform:none;letter-spacing:0;font-weight:600;font-size:clamp(34px,4.6vw,56px);line-height:1.08}
-.pro-hero.orig .lead{margin:16px 0 22px;font-size:18px}
+.pro-hero.orig{padding:calc(var(--nav-h,72px) + 84px) 0 190px;min-height:max(680px,88vh);display:flex;flex-direction:column;justify-content:center}
+.pro-hero.orig .bg{background:url('images/faq-hero.webp') center 40%/cover no-repeat;opacity:.55;filter:none}
+.pro-hero.orig::before{background:linear-gradient(100deg,rgba(7,24,40,.9) 0%,rgba(13,30,53,.7) 55%,rgba(13,30,53,.45) 100%)}
+.pro-hero.orig h1{text-transform:none;letter-spacing:0;font-weight:600;font-size:clamp(38px,5.4vw,68px);line-height:1.06}
+.pro-hero.orig .lead{margin:20px 0 26px;font-size:19.5px;max-width:52ch}
 .hero-points{list-style:none;display:flex;flex-wrap:wrap;gap:8px 22px;margin:0;padding:0}
 .hero-points li{position:relative;padding-left:22px;font-size:14.5px;font-weight:600;color:rgba(255,255,255,.9)}
 .hero-points li::before{content:'';position:absolute;left:0;top:5px;width:13px;height:8px;border-left:2.5px solid var(--gold-l);border-bottom:2.5px solid var(--gold-l);transform:rotate(-45deg)}
 .hero-card{width:100%;max-width:430px;justify-self:end}
 .hero-card .kc-cta-card{text-align:center}
-@media(max-width:640px){.pro-hero.orig .bg{background-image:url('images/hero-firepit-800.webp')}}
+
 .doors.two{grid-template-columns:repeat(2,1fr);gap:48px;max-width:880px;margin:0 auto}
 .doors.two .ring{max-width:320px}
 .doors.two h3{font-size:24px;margin-top:22px}
@@ -371,7 +371,7 @@ a{color:inherit}
 .contact-form{max-width:480px;justify-self:end;width:100%;min-width:0}
 .contact-form .kcf input,.contact-form .kcf textarea,.contact-form .kcf .kcf-field,.contact-form .kcf-selwrap{min-width:0}
 @media(max-width:860px){
-  .pro-hero.orig{padding:calc(var(--nav-h,72px) + 28px) 0 110px}
+  .pro-hero.orig{padding:calc(var(--nav-h,72px) + 36px) 0 120px;min-height:auto;display:block}
   .hero-card{max-width:none;justify-self:stretch}
   .doors.two{grid-template-columns:1fr 1fr;gap:20px}.doors.two .ring{max-width:260px}.doors.two h3{font-size:18px}.doors.two small{font-size:13.5px}
   .contact-grid{grid-template-columns:1fr;gap:30px}.contact-form{max-width:none;justify-self:stretch}
