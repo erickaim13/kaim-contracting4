@@ -394,7 +394,7 @@ a{color:inherit}
 }
 
 /* ---- Real jobs: framed job cards ---- */
-.jobs{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:48px;text-align:left}
+.jobs{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:48px;text-align:left}
 .job{background:#fff;border-radius:22px;overflow:hidden;border:1px solid var(--line);box-shadow:0 22px 48px rgba(7,24,40,.14);display:flex;flex-direction:column}
 .job-pair{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--navy);padding:4px}
 .job-pair figure{position:relative;margin:0;overflow:hidden;border-radius:14px}
@@ -415,10 +415,11 @@ a{color:inherit}
 .step2 h3{font-family:var(--head);font-size:24px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);margin-bottom:10px}
 .step2 p{font-size:17.5px;color:var(--ink2);line-height:1.6}
 @media(max-width:860px){
-  .jobs{grid-template-columns:1fr;max-width:540px;margin:40px auto 0}
+  .jobs{grid-template-columns:1fr 1fr;gap:18px;margin:40px auto 0}
   .steps2{grid-template-columns:1fr;gap:52px;margin-top:60px}.steps2::before{display:none}
 }
 @media(max-width:640px){
+  .jobs{grid-template-columns:1fr;max-width:540px}
   .job-cap{padding:16px 18px 18px}.job-cap h3{font-size:19px}.job-cap p{font-size:15.5px}
   .step2{padding:48px 20px 28px}.step2 h3{font-size:21px}.step2 p{font-size:16px}
 }
@@ -676,7 +677,7 @@ a{color:inherit}
     <h2 class="h2">Every surface. <span>One call to Kaim.</span></h2>
     <p class="lead">Tap a service for pricing, real photos and what is included.</p>
     <div class="svc-circles">
-      <a href="/house-washing" class="circ"><span class="ring split"><img class="b" src="images/ba-siding-before-800.webp" alt="" loading="lazy"><img class="a" src="images/ba-siding-after-800.webp" alt="Vinyl siding before and after a soft wash" loading="lazy"><i class="l">Before</i><i class="r">After</i></span><h3>House Washing</h3><small>Soft wash siding</small></a><a href="/roof-cleaning" class="circ"><span class="ring"><img src="images/hub-roof-cleaning.webp" alt="Moss covered shingle roof before cleaning" loading="lazy"></span><h3>Roof Cleaning</h3><small>Black streaks and moss</small></a><a href="/driveway-cleaning" class="circ"><span class="ring"><img src="images/hub-driveway-cleaning.webp" alt="Paver driveway after cleaning" loading="lazy"></span><h3>Driveway &amp; Walkway</h3><small>Even clean, no stripes</small></a><a href="/patio-cleaning" class="circ"><span class="ring split"><img class="b" src="images/ba-patio-before.webp" alt="" loading="lazy"><img class="a" src="images/ba-patio-after.webp" alt="Paver patio before and after cleaning" loading="lazy"><i class="l">Before</i><i class="r">After</i></span><h3>Patio &amp; Pool Deck</h3><small>Algae gone, color back</small></a><a href="/deck-cleaning" class="circ"><span class="ring split"><img class="b" src="images/ba-deck-before.webp" alt="" loading="lazy"><img class="a" src="images/ba-deck-after.webp" alt="Deck stairs before and after cleaning" loading="lazy"><i class="l">Before</i><i class="r">After</i></span><h3>Deck &amp; Fence</h3><small>Wood safe wash</small></a><a href="/oxidation-removal" class="circ"><span class="ring"><img src="images/hub-oxidation-removal.webp" alt="Faded oxidized siding" loading="lazy"></span><h3>Oxidation Removal</h3><small>Chalky siding restored</small></a><a href="/gutter-brightening" class="circ"><span class="ring"><img src="images/hub-gutter-brightening.webp" alt="Clean white gutters on a colonial house" loading="lazy"></span><h3>Gutter Brightening</h3><small>Tiger stripes gone</small></a><a href="/paver-sealing" class="circ"><span class="ring split"><img class="b" src="images/ps-front-before.webp" alt="" loading="lazy"><img class="a" src="images/ps-front-after.webp" alt="Front walkway pavers before and after sand and seal" loading="lazy"><i class="l">Before</i><i class="r">After</i></span><h3>Paver Sealing</h3><small>Clean, re-sand and seal</small></a>
+      <a href="/house-washing" class="circ"><span class="ring split"><img class="b" src="images/ba-siding-before-800.webp" alt="" loading="lazy"><img class="a" src="images/ba-siding-after-800.webp" alt="Vinyl siding before and after a soft wash" loading="lazy"><i class="l">Before</i><i class="r">After</i></span><h3>House Washing</h3><small>Soft wash siding</small></a><a href="/roof-cleaning" class="circ"><span class="ring"><img src="images/hub-roof-cleaning.webp" alt="Moss covered shingle roof before cleaning" loading="lazy"></span><h3>Roof Cleaning</h3><small>Black streaks and moss</small></a><a href="/driveway-cleaning" class="circ"><span class="ring"><img src="images/hub-driveway-cleaning.webp" alt="Paver driveway after cleaning" loading="lazy"></span><h3>Driveway &amp; Walkway</h3><small>Even clean, no stripes</small></a><a href="/patio-cleaning" class="circ"><span class="ring split"><img class="b" src="images/ba-pool-before-800.webp" alt="" loading="lazy"><img class="a" src="images/ba-pool-after-800.webp" alt="Concrete pool deck before and after cleaning" loading="lazy"><i class="l">Before</i><i class="r">After</i></span><h3>Patio &amp; Pool Deck</h3><small>Algae gone, color back</small></a><a href="/deck-cleaning" class="circ"><span class="ring split"><img class="b" src="images/ba-deck-before.webp" alt="" loading="lazy"><img class="a" src="images/ba-deck-after.webp" alt="Deck stairs before and after cleaning" loading="lazy"><i class="l">Before</i><i class="r">After</i></span><h3>Deck &amp; Fence</h3><small>Wood safe wash</small></a><a href="/oxidation-removal" class="circ"><span class="ring"><img src="images/hub-oxidation-removal.webp" alt="Faded oxidized siding" loading="lazy"></span><h3>Oxidation Removal</h3><small>Chalky siding restored</small></a><a href="/gutter-brightening" class="circ"><span class="ring"><img src="images/hub-gutter-brightening.webp" alt="Clean white gutters on a colonial house" loading="lazy"></span><h3>Gutter Brightening</h3><small>Tiger stripes gone</small></a><a href="/paver-sealing" class="circ"><span class="ring split"><img class="b" src="images/ps-front-before.webp" alt="" loading="lazy"><img class="a" src="images/ps-front-after.webp" alt="Front walkway pavers before and after sand and seal" loading="lazy"><i class="l">Before</i><i class="r">After</i></span><h3>Paver Sealing</h3><small>Clean, re-sand and seal</small></a>
     </div>
     <div class="svc-more"><a href="/quote" class="btn btn-gold">Get Free Estimate <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
   </div>
@@ -838,6 +839,13 @@ a{color:inherit}
           <figure><img src="images/ba-patio-after.webp" alt="The same patio with its color back after cleaning" width="543" height="679" loading="lazy"><figcaption class="after">After</figcaption></figure>
         </div>
         <div class="job-cap"><h3>Patio cleaning</h3><p>Same camera spot. The color that was hiding under the gray.</p></div>
+      </article>
+      <article class="job">
+        <div class="job-pair">
+          <figure><img src="images/ba-pool-before.webp" alt="Concrete pool deck green with algae before cleaning" width="1200" height="900" loading="lazy"><figcaption>Before</figcaption></figure>
+          <figure><img src="images/ba-pool-after.webp" alt="The same pool deck bright and clean after pressure washing" width="1200" height="900" loading="lazy"><figcaption class="after">After</figcaption></figure>
+        </div>
+        <div class="job-cap"><h3>Pool deck</h3><p>Slick green film gone, bright concrete back, pool water untouched.</p></div>
       </article>
       <article class="job">
         <div class="job-pair">
