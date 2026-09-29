@@ -349,4 +349,12 @@ Append notable decisions here so the next session inherits them.
   every build so the homepage cannot lag the other pages. Phone check done on
   home, pressure washing, paver sealing, house washing, quote, about,
   calculator: all clean.
+- **2026-09-29 (v20)** — Call buttons removed everywhere except quote.html:
+  header phone pill, mobile-menu phone, sticky-bar call (bar is now one full
+  width Get Free Estimate), hero-card Call buttons, deal-card call links,
+  about page call CTA, homepage bottom band call. Footer keeps the phone
+  number as contact info; inline "or call 978..." text mentions stay. Script:
+  scratchpad `nocall.py`. The expired "10% off by September 15" offer section
+  is deleted from paver-sealing.html (the whole `.pw-offers` block, it held
+  nothing else). GBP: no connector, Eric checks the Offers/Updates tab himself.
 
