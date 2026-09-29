@@ -382,4 +382,18 @@ Append notable decisions here so the next session inherits them.
   `<html class="rv-on">` is set by JS; reduced-motion users get no motion.
   Nav links now sit beside the Get Free Estimate button on desktop
   (`css/site.css`, last rule).
+- **2026-09-29 (interior pages match the homepage)** — Eric: "the other
+  pages don't match the home page's new aesthetics." Every interior page now
+  has `body.pro-int` (white herringbone body), its light sections tagged
+  `.sec-light` (transparent, dark ink) and navy sections `.sec-navy` (topo
+  behind, gold `.gwave` lines and `mask-image` waves where they meet a light
+  section). Done by the scratchpad `interior.py` classifier over the existing
+  section classes (`svc-block-mid/darker`, `page-body`, `ab-story` = light;
+  `svc-block-dark`, `pw-offers`, `pkg-band`, `svc-final`, `ab-serving-strip`,
+  `referral` = navy). The shared rules live at the end of `css/site.css`
+  under "Interior pages: homepage aesthetic". Gotcha found on the way: one
+  extra `)` in the big `:not(:where(...) *)` selector made Chrome drop the
+  whole rule silently; `el.matches(sel)` in the console is the fast way to
+  spot that. Nav links are now centred between the logo and the CTA.
+  Orphan "or" after the removed call buttons cleaned from 12 pages.
 
