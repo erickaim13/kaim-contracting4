@@ -397,4 +397,9 @@ Append notable decisions here so the next session inherits them.
   card, its title, sub-line and fine print are hidden), and the sticky bottom
   bar is hidden on the homepage only (`body.pro .kc-bar`). Hero text is
   centred on phones.
+- **2026-09-29** — Lead auto-text now waits 120s (`LEAD_AUTOREPLY_HOLD_MS` in
+  `api/_lib/intake.js`, was 2-6s). Reason: the quote page's booking step comes
+  right after the form, and `api/estimate-visit.js` cancels the pending
+  auto-reply when the lead books, so a lead who books gets ONE confirmation
+  text instead of two texts back to back. Owner notify is still immediate.
 

@@ -56,6 +56,9 @@ export function textOptOutReason(db, phone) {
 // First text a new lead gets. First person, as Eric himself (see
 // feedback_first_person_messaging). Editable in Supabase message_templates
 // under key 'lead_autoreply'; this is the fallback if that row is missing.
+// How long the lead auto-text waits so an online booking can replace it.
+const LEAD_AUTOREPLY_HOLD_MS = 120 * 1000;
+
 const FALLBACK_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about {service}! When are you available for me to come by for a free in person estimate? I'm free for estimates weekday evenings after 6 and Saturday afternoons.";
 
 export const sanitize = (s, max = 200) =>
@@ -332,9 +335,12 @@ export async function intakeLead(opts) {
   if (phoneDigits.length >= 10 && !optOut && db.settings?.aiScheduler !== false) {
     const template = await loadTemplate('lead_autoreply', FALLBACK_AUTOREPLY);
     const replyBody = template.replace(/\{name\}/g, client.first).replace(/\{service\}/g, service || 'your project');
-    // Near-instant: 2-6s here + the Mac sender's 10s poll = lead hears back in
-    // well under 30 seconds. Speed-to-lead beats looking casual.
-    const delayMs = Math.floor(Math.random() * (6000 - 2000 + 1)) + 2000;
+    // Short hold (2026-09-29, Eric): the quote page offers a self-serve
+    // booking step right after the form. If the lead books within this window,
+    // api/estimate-visit cancels this pending row and sends one confirmation
+    // instead, so they never get two texts back to back. If they do not book,
+    // this goes out on its own after the hold.
+    const delayMs = LEAD_AUTOREPLY_HOLD_MS;
     const sendAfter = new Date(Date.now() + delayMs).toISOString();
 
     queueInserts.push(
