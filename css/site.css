@@ -363,3 +363,213 @@ body.page-quote{display:block}
 
 /* nav links centred between the logo and the button (2026-09-29, Eric: gap after the logo too big) */
 @media(min-width:861px){.site-nav .nav-links{margin:0 auto}.site-nav .nav-logo{margin-right:0}}
+
+/* ---------- Interior pages: homepage aesthetic (2026-09-29, Eric: "the other pages don't match") ----------
+   body.pro-int carries the white herringbone; .sec-light sections go transparent with dark text;
+   .sec-navy sections keep navy with the topo map behind and gold wavy edges where they meet a light section. */
+body.pro-int{background:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5)),url('/images/herringbone-tile.png') left top/164px auto repeat #fff}
+@media(max-width:640px){body.pro-int{background-size:auto,120px auto}}
+.pro-int .sec-light{background:transparent!important;color:#0f1c2e}
+.pro-int .sec-light::before,.pro-int .sec-light::after{display:none!important}
+.pro-int .sec-light .svc-block-header h2,.pro-int .sec-light .svc-split-text h2,.pro-int .sec-light .page-content>h2,.pro-int .sec-light .page-content>h3,.pro-int .sec-light .page-content h2,.pro-int .sec-light .ab-story h2,.pro-int .sec-light .ab-h2,.pro-int .sec-light h2.section-h2{color:#0f1c2e!important}
+.pro-int .sec-light .svc-block-header h2 span,.pro-int .sec-light .svc-split-text h2 span,.pro-int .sec-light .page-content h2 span,.pro-int .sec-light .ab-story h2 span,.pro-int .sec-light h2 em{color:#b8933a!important}
+.pro-int .sec-light .svc-block-header p,.pro-int .sec-light .svc-split-text p,.pro-int .sec-light .svc-split-text li,.pro-int .sec-light .svc-checklist li,.pro-int .sec-light .page-content>p,.pro-int .sec-light .page-content>ul>li,.pro-int .sec-light .page-content>ol>li,.pro-int .sec-light .ab-story p,.pro-int .sec-light .ab-text p,.pro-int .sec-light .page-intro,.pro-int .sec-light .calc-intro,.pro-int .sec-light .blog-intro{color:#2b3a4e!important}
+.pro-int .sec-light .section-label,.pro-int .sec-light .svc-label,.pro-int .sec-light .ab-label{color:#b8933a!important}
+.pro-int .sec-light .svc-split-text h2,.pro-int .sec-light .svc-block-header h2{text-shadow:none}
+.pro-int .sec-light .svc-checklist li{color:#0f1c2e!important;font-weight:600}
+.pro-int .sec-light .svc-check{background:var(--gold)!important;border-color:var(--gold)!important;color:var(--teal)!important}
+.pro-int .sec-navy{position:relative;background:var(--bg)!important;overflow:hidden}
+.pro-int .sec-navy::before{display:none!important}
+.pro-int .sec-navy::after{content:'';position:absolute;inset:0;background:url('/images/topo-lite.webp') no-repeat center/cover!important;opacity:.09!important;mix-blend-mode:normal!important;filter:none!important;pointer-events:none;z-index:0;display:block!important}
+.pro-int .sec-navy>*{position:relative;z-index:1}
+.pro-int .svc-hero.wavy-bot,.pro-int .page-hero.wavy-bot{padding-bottom:70px}
+.pro-int .sec-navy.wavy,.pro-int .sec-navy.wavy-top{padding-top:120px}
+.pro-int .sec-navy.wavy,.pro-int .sec-navy.wavy-bot{padding-bottom:120px}
+.pro-int .page-body.sec-light{padding-top:48px;padding-bottom:64px}
+.pro-int .page-body.sec-navy{max-width:none;padding-left:0;padding-right:0}
+.pro-int .page-body.sec-navy .page-grid{padding:0 24px}
+.pro-int .page-body.sec-light+.page-body.sec-light{padding-top:0}
+.gwave{position:relative;height:70px;z-index:2;pointer-events:none}
+.gwave svg{display:block;width:100%;height:100%;overflow:visible}
+.gwave.bot{margin-top:-70px}
+.gwave.top{margin-bottom:-70px}
+.wavy,.wavy-top,.wavy-bot{position:relative}
+.wavy{-webkit-mask:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,48 C260,0 500,0 720,40 C940,80 1180,80 1440,20 L1440,80 L0,80 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") top/100% 70px no-repeat,url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,0 L1440,0 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") bottom/100% 70px no-repeat,linear-gradient(#000,#000) center/100% calc(100% - 138px) no-repeat;mask:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,48 C260,0 500,0 720,40 C940,80 1180,80 1440,20 L1440,80 L0,80 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") top/100% 70px no-repeat,url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,0 L1440,0 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") bottom/100% 70px no-repeat,linear-gradient(#000,#000) center/100% calc(100% - 138px) no-repeat}
+.wavy-top{-webkit-mask:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,48 C260,0 500,0 720,40 C940,80 1180,80 1440,20 L1440,80 L0,80 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") top/100% 70px no-repeat,linear-gradient(#000,#000) bottom/100% calc(100% - 69px) no-repeat;mask:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,48 C260,0 500,0 720,40 C940,80 1180,80 1440,20 L1440,80 L0,80 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") top/100% 70px no-repeat,linear-gradient(#000,#000) bottom/100% calc(100% - 69px) no-repeat}
+.wavy-bot{-webkit-mask:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,0 L1440,0 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") bottom/100% 70px no-repeat,linear-gradient(#000,#000) top/100% calc(100% - 69px) no-repeat;mask:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,0 L1440,0 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") bottom/100% 70px no-repeat,linear-gradient(#000,#000) top/100% calc(100% - 69px) no-repeat}
+@media(max-width:640px){
+  .gwave{height:44px}.gwave.bot{margin-top:-44px}.gwave.top{margin-bottom:-44px}
+  .wavy{-webkit-mask-size:100% 44px,100% 44px,100% calc(100% - 86px);mask-size:100% 44px,100% 44px,100% calc(100% - 86px)}
+  .wavy-top{-webkit-mask-size:100% 44px,100% calc(100% - 43px);mask-size:100% 44px,100% calc(100% - 43px)}
+  .wavy-bot{-webkit-mask-size:100% 44px,100% calc(100% - 43px);mask-size:100% 44px,100% calc(100% - 43px)}
+  .pro-int .sec-navy.wavy,.pro-int .sec-navy.wavy-top{padding-top:84px}
+  .pro-int .sec-navy.wavy,.pro-int .sec-navy.wavy-bot{padding-bottom:84px}
+  .pro-int .svc-hero.wavy-bot,.pro-int .page-hero.wavy-bot{padding-bottom:44px}
+}
+.pro-int .sec-light :where(h1,h2,h3,h4,p,li,span,small,b,strong,em,i,dt,dd,label,figcaption,summary,th,td,a,div):not(:where(.pi-card,.pi-acc,.pi-ico,.pi-tick,.pi-btn,.acc-item,.acc-head,.acc-body,.kc-svc,.kc-svc-body,.svc-tile,.svc-tile-body,.calc-card,.calc-results,.calc-cta,.deal,.pkg-band-inner,.hw-step,.step-card,.kc-cta-card,.btn,.btn-primary,.btn-gold,.deal-btn,.pkg-band-btn,.calc-surface-btn,.calc-condition-btn,.calc-toggle-btn,.cw-chip,.pkg-chip,.ba-pair figure,.kc-ba,.job,.tool-card,.post-card,.blog-card,.blog-hero,.ab-photo,.svc-final-cta,.hf-card,.other-svcs,.leaflet-container,.loc-explorer,.loc-sidebar,figure,[class*="badge"],[class*="pill"],[class*="ribbon"],[class*="burst"]) *){color:#0f1c2e!important;text-shadow:none!important}
+.pro-int .sec-light :where(p,li,dd,small,figcaption,.sub,.svc-block-header p,.page-intro):not(:where(.pi-card,.pi-acc,.pi-why,.acc-item,.deal,.pkg-band-inner,.kc-cta-card,.calc-card,.calc-results,.kc-svc,.svc-tile,.job,.tool-card,.post-card,.blog-card,.hw-step,.step-card,.ba-pair figure,figure,.loc-sidebar,.leaflet-container) *){color:#2b3a4e!important}
+.pro-int .sec-light :where(a):not(:where(.pi-card,.pi-acc,.acc-item,.deal,.pkg-band-inner,.kc-cta-card,.calc-card,.kc-svc,.svc-tile,.job,.tool-card,.post-card,.blog-card,.hw-step,.step-card,figure,.loc-sidebar,.loc-explorer,.leaflet-container,.other-svcs,.hf-card) *):not([class*="btn"]){color:#0d1e35!important;text-decoration-color:rgba(201,168,76,.6)}
+
+/* ---------- Interior service pages: homepage components (2026-09-29) ---------- */
+.pro-int .pi-wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.pro-int .pi-sec{padding:84px 0 88px}
+.pro-int .pi-sec+.pi-sec{padding-top:0}
+.pro-int .pi-h2{font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.06em;line-height:1.12;font-size:clamp(30px,3.9vw,46px);color:#0f1c2e;text-wrap:balance;margin:0}
+.pro-int .pi-h2 span{color:#b8933a}
+.pro-int .sec-navy .pi-h2{color:#fff}.pro-int .sec-navy .pi-h2 span{color:var(--gold-l)}
+.pro-int .pi-lead{font-size:19px;line-height:1.65;color:#2b3a4e;margin:14px 0 0;max-width:58ch}
+.pro-int .sec-navy .pi-lead{color:rgba(255,255,255,.8)}
+.pro-int .pi-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 32px;border-radius:999px;font-family:var(--font-head);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .15s}
+.pro-int .pi-btn svg{width:18px;height:18px}
+.pro-int .pi-btn-gold{background:var(--gold);color:var(--teal);box-shadow:0 12px 30px rgba(201,168,76,.28)}.pro-int .pi-btn-gold:hover{background:var(--gold-l)}
+.pro-int .pi-btn-line{background:transparent;color:#0d1e35;border:2px solid #0d1e35;margin-top:26px}.pro-int .pi-btn-line:hover{background:#0d1e35;color:#fff}
+/* why grid */
+.pro-int .pi-why-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.pro-int .pi-why-grid.one{grid-template-columns:1fr;max-width:860px}
+.pro-int .pi-why{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:22px}
+.pro-int .pi-why li{display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:center;padding-bottom:22px;border-bottom:1px solid rgba(13,30,53,.12)}
+.pro-int .pi-why li:last-child{border-bottom:0;padding-bottom:0}
+.pro-int .pi-ico{width:56px;height:56px;border-radius:50%;background:var(--bg);border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold-l)}
+.pro-int .pi-ico svg{width:24px;height:24px}
+.pro-int .pi-why p{margin:0;font-size:18.5px;line-height:1.55;color:#0f1c2e;font-weight:600}
+.pro-int .pi-card{background:var(--bg);color:#fff;border-radius:26px;padding:34px 36px;box-shadow:0 22px 48px rgba(7,24,40,.2);position:relative;overflow:hidden}
+.pro-int .pi-card::after{content:'';position:absolute;inset:0;background:url('/images/herringbone-pattern.svg') center/60px repeat;opacity:.9;pointer-events:none}
+.pro-int .pi-card>*{position:relative;z-index:1}
+.pro-int .pi-card h3{font-family:var(--font-head);font-size:14px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-l);margin:0 0 18px}
+.pro-int .pi-card ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.pro-int .pi-card li{display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.55;color:rgba(255,255,255,.88)}
+.pro-int .pi-card li b{color:#fff}
+.pro-int .pi-tick{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--gold);color:var(--teal);display:inline-flex;align-items:center;justify-content:center;margin-top:2px}
+.pro-int .pi-tick svg{width:13px;height:13px}
+/* faq */
+.pro-int .pi-faq{display:grid;grid-template-columns:.8fr 1.3fr;gap:56px;align-items:start}
+.pro-int .pi-acc{display:grid;gap:12px}
+.pro-int .pi-acc .acc-item{background:var(--bg)!important;border:1px solid var(--border)!important;border-radius:16px!important;overflow:hidden;padding:0!important;margin:0!important;box-shadow:0 14px 30px rgba(7,24,40,.14)}
+.pro-int .pi-acc .acc-head{width:100%;display:flex;align-items:center;gap:14px;padding:20px 22px!important;background:none!important;border:0;color:#fff!important;font-family:var(--font-head)!important;font-size:16px!important;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-align:left;cursor:pointer;line-height:1.3}
+.pro-int .pi-acc .acc-head span{flex:1;color:#fff!important}
+.pro-int .pi-acc .acc-arrow{width:30px!important;height:30px!important;padding:7px;border-radius:50%;background:var(--gold)!important;color:var(--teal)!important;border:0!important;flex-shrink:0;transition:transform .3s}
+.pro-int .pi-acc .acc-item.open .acc-arrow{transform:rotate(180deg)}
+.pro-int .pi-acc .acc-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.pro-int .pi-acc .acc-body p{padding:0 22px 22px!important;margin:0;font-size:16.5px;color:rgba(255,255,255,.84)!important;line-height:1.65}
+.pro-int .pi-acc .acc-body a{color:var(--gold-l)!important}
+.pro-int .pi-acc .acc-item.open .acc-body{max-height:900px!important}
+/* steps band */
+.pro-int .pi-steps{position:relative;padding:126px 0 110px;overflow:hidden}
+.pro-int .pi-steps .pi-wrap{position:relative;z-index:2}
+.pro-int .pi-steps-head{max-width:720px}
+.pro-int .pi-steps3{display:grid;grid-template-columns:repeat(3,1fr);margin-top:56px}
+.pro-int .pi-s3{padding:6px 36px 6px 30px;border-left:1px solid rgba(226,196,122,.4)}
+.pro-int .pi-s3:first-child{padding-left:0;border-left:0}.pro-int .pi-s3:last-child{padding-right:0}
+.pro-int .pi-num{font-family:var(--font-head);font-size:88px;font-weight:800;line-height:.85;color:var(--gold-l);margin-bottom:18px;letter-spacing:-.02em}
+.pro-int .pi-s3 h3{font-family:var(--font-head);font-size:21px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:#fff;margin:0 0 10px}
+.pro-int .pi-s3 p{font-size:17.5px;color:rgba(255,255,255,.82);line-height:1.6;max-width:36ch;margin:0}
+.pro-int .pi-steps-cta{margin-top:56px}
+.pro-int .pi-steps+.svc-final{margin-top:-1px}
+@media(max-width:900px){
+  .pro-int .pi-why-grid,.pro-int .pi-faq{grid-template-columns:1fr;gap:34px}
+  .pro-int .pi-steps3{grid-template-columns:1fr;margin-top:36px}
+  .pro-int .pi-s3{padding:28px 0 0;border-left:0;border-top:1px solid rgba(226,196,122,.4);margin-top:28px}
+  .pro-int .pi-s3:first-child{padding-top:0;border-top:0;margin-top:0}
+  .pro-int .pi-num{font-size:64px;margin-bottom:10px}.pro-int .pi-s3 p{max-width:none}
+  .pro-int .pi-steps{padding:96px 0 90px}
+}
+@media(max-width:640px){
+  .pro-int .pi-sec{padding:56px 0 60px}.pro-int .pi-wrap{padding:0 16px}
+  .pro-int .pi-h2{font-size:clamp(24px,6.6vw,30px)}.pro-int .pi-lead{font-size:16.5px}
+  .pro-int .pi-why li{grid-template-columns:48px 1fr;gap:14px}.pro-int .pi-ico{width:48px;height:48px}.pro-int .pi-why p{font-size:16.5px}
+  .pro-int .pi-card{padding:24px 20px;border-radius:18px}.pro-int .pi-card li{font-size:15px}
+  .pro-int .pi-acc .acc-head{font-size:14px!important;padding:16px 16px!important}.pro-int .pi-acc .acc-body p{padding:0 16px 18px!important;font-size:15.5px}
+  .pro-int .pi-steps{padding:80px 0 76px}.pro-int .pi-btn{min-height:52px;padding:0 24px;font-size:13px}
+}
+
+/* pi-* blocks keep their own colors regardless of the generic light-section rules */
+.pro-int .sec-light .pi-card :where(h3){color:var(--gold-l)!important}
+.pro-int .sec-light .pi-card :where(li,span,b){color:rgba(255,255,255,.88)!important}
+.pro-int .sec-light .pi-card li b{color:#fff!important}
+.pro-int .sec-light .pi-tick,.pro-int .sec-light .pi-tick svg{color:var(--teal)!important}
+.pro-int .sec-light .pi-ico,.pro-int .sec-light .pi-ico svg{color:var(--gold-l)!important}
+.pro-int .sec-light .pi-acc :where(.acc-head,.acc-head span){color:#fff!important}
+.pro-int .sec-light .pi-acc .acc-arrow{color:var(--teal)!important}
+.pro-int .sec-light .pi-acc .acc-body p{color:rgba(255,255,255,.84)!important}
+.pro-int .sec-light .pi-acc .acc-body a{color:var(--gold-l)!important}
+.pro-int .sec-light .pi-btn-line{color:#0d1e35!important}.pro-int .sec-light .pi-btn-line:hover{color:#fff!important}
+.pro-int .pi-lead{white-space:normal}
+
+/* ---- interior polish: cards keep their own colors, page-hero clears the nav, about grid ---- */
+/* anything styled as a navy card inline (blog post cards) or the calculator cards: leave its text alone */
+.pro-int .sec-light a[style*="background:var(--card)"],.pro-int .sec-light a[style*="background:var(--card)"] *{color:inherit!important}
+.pro-int .sec-light a[style*="background:var(--card)"]{background:var(--bg)!important;border-color:var(--border)!important;box-shadow:0 14px 30px rgba(7,24,40,.14)}
+.pro-int .sec-light a[style*="background:var(--card)"] div[style*="var(--gold)"],.pro-int .sec-light a[style*="background:var(--card)"] span[style*="var(--gold"]{color:var(--gold-l)!important}
+.pro-int .sec-light a[style*="background:var(--card)"] div[style*="var(--text)"]{color:#fff!important}
+.pro-int .sec-light a[style*="background:var(--card)"] p{color:rgba(255,255,255,.78)!important}
+.pro-int .sec-light .tool-card{background:var(--bg)!important;border-color:var(--border)!important;box-shadow:0 14px 30px rgba(7,24,40,.14)}
+.pro-int .sec-light .tool-card h3,.pro-int .sec-light .tool-card h3 span{color:var(--gold-l)!important}
+.pro-int .sec-light .tool-card .tool-what{color:var(--gold)!important}
+.pro-int .sec-light .tool-card p{color:rgba(255,255,255,.8)!important}
+.pro-int .sec-light .tool-card .tool-link{color:var(--gold-l)!important;display:inline-flex!important}
+.pro-int .sec-light .tool-icon{background:rgba(201,168,76,.16)!important;border-color:rgba(201,168,76,.5)!important;color:var(--gold-l)!important}
+.pro-int .sec-light .tool-icon svg{color:var(--gold-l)!important;stroke:var(--gold-l)}
+/* page-hero pages (about, faq, tools, blog, calculators, service areas): heading clears the fixed pill */
+.pro-int .page-hero-content{padding-top:calc(var(--nav-h) + 40px)}
+@media(max-width:860px){.pro-int .page-hero-content{padding-top:calc(var(--nav-h) + 16px)}}
+/* about: name sits above the story grid, grid keeps photo and text top-aligned */
+.pro-int .ab-story .ab-story-grid{align-items:start;margin-top:24px}
+.pro-int .ab-story h2{margin-bottom:0}
+
+/* ---- v3 (2026-09-29): CTA band before the footer, page-body chunks on navy, orphan "or" gone ---- */
+.cta-or{display:none!important}
+.pro-int .pi-cta{text-align:center;padding:126px 0 110px}
+.pro-int .pi-cta .pi-wrap{max-width:820px}
+.pro-int .pi-cta .pi-lead{margin:16px auto 0}
+.pro-int .pi-cta .pi-btn{margin-top:30px}
+.pro-int .sec-navy .page-content>h2,.pro-int .sec-navy .page-content h2,.pro-int .sec-navy .page-content h3,.pro-int .sec-navy .page-content>p,.pro-int .sec-navy .page-content li{color:#fff}
+.pro-int .sec-navy .page-content>p,.pro-int .sec-navy .page-content li,.pro-int .sec-navy .page-content .inc-section p{color:rgba(255,255,255,.82)}
+.pro-int .sec-navy .page-content h2 span{color:var(--gold-l)}
+.pro-int .page-hero.wavy-bot{min-height:360px}
+@media(max-width:640px){.pro-int .pi-cta{padding:84px 0 76px}.pro-int .page-body.sec-light{padding-top:32px;padding-bottom:44px}}
+
+/* ---- footer on phones: brand block centred, links in two tidy columns, hours beside payments (2026-09-29) ---- */
+.site-footer .ft-col h4::after{content:'';display:block;width:26px;height:2px;background:var(--gold);margin-top:8px;border-radius:2px}
+@media(max-width:560px){
+  .site-footer .ft-inner{padding:40px 20px 28px}
+  .site-footer .ft-grid{grid-template-columns:1fr 1fr;gap:26px 18px}
+  .site-footer .ft-brand{text-align:center;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .site-footer .ft-brand img{height:82px;margin:0 auto 14px}
+  .site-footer .ft-brand p{margin:0 auto 12px;max-width:34ch;font-size:14px}
+  .site-footer .ft-phone{justify-content:center;font-size:21px}
+  .site-footer .ft-email{display:block;margin-top:2px}
+  .site-footer .footer-social{justify-content:center;margin-top:10px}
+  .site-footer .ft-col h4{font-size:12.5px;margin-bottom:10px}
+  .site-footer .ft-col a{min-height:34px;font-size:14px}
+  .site-footer .ft-col:last-child{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;grid-auto-flow:column;gap:0 18px;padding-top:4px;border-top:1px solid rgba(255,255,255,.08)}
+  .site-footer .ft-col:last-child h4{margin-top:18px}
+  .site-footer .ft-hours{margin:0;font-size:14px;line-height:1.6}
+  .site-footer .ft-pay{gap:5px}
+  .site-footer .ft-area{margin-top:28px;padding-top:18px;font-size:13.5px;text-align:center}
+  .site-footer .ft-bottom{align-items:center;text-align:center;gap:4px;margin-top:14px}
+}
+
+/* ---- accordions on light sections (FAQ page, calculators): same navy cards as the service pages ---- */
+.pro-int .sec-light .acc-list{display:grid;gap:12px}
+.pro-int .sec-light .acc-list .acc-item{background:var(--bg)!important;border:1px solid var(--border)!important;border-radius:16px!important;overflow:hidden;padding:0!important;margin:0!important;box-shadow:0 14px 30px rgba(7,24,40,.14)}
+.pro-int .sec-light .acc-list .acc-head{width:100%;display:flex;align-items:center;gap:14px;padding:18px 20px!important;background:none!important;border:0;color:#fff!important;font-family:var(--font-head)!important;font-size:15px!important;font-weight:600;letter-spacing:.04em;text-transform:uppercase;text-align:left;cursor:pointer;line-height:1.3}
+.pro-int .sec-light .acc-list .acc-head span,.pro-int .sec-light .acc-list .acc-head b{color:#fff!important}
+.pro-int .sec-light .acc-list .acc-arrow{width:30px!important;height:30px!important;padding:7px;border-radius:50%;background:var(--gold)!important;color:var(--teal)!important;border:0!important;flex-shrink:0;transition:transform .3s}
+.pro-int .sec-light .acc-list .acc-item.open .acc-arrow{transform:rotate(180deg)}
+.pro-int .sec-light .acc-list .acc-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.pro-int .sec-light .acc-list .acc-body p,.pro-int .sec-light .acc-list .acc-body li{padding:0 20px 18px!important;margin:0;font-size:16px;color:rgba(255,255,255,.84)!important;line-height:1.65}
+.pro-int .sec-light .acc-list .acc-body ul{margin:0;padding:0 20px 8px 38px}
+.pro-int .sec-light .acc-list .acc-body ul li{padding:0 0 6px!important}
+.pro-int .sec-light .acc-list .acc-body a{color:var(--gold-l)!important}
+.pro-int .sec-light .acc-list .acc-item.open .acc-body{max-height:1200px!important}
+.pro-int .sec-light .inc-section>h3,.pro-int .sec-light .page-content .inc-section h3{color:#0f1c2e!important;border-bottom-color:rgba(13,30,53,.18)!important;margin-bottom:16px}
+.pro-int .sec-navy .inc-section>h3{color:#fff}
+@media(max-width:640px){.pro-int .sec-light .acc-list .acc-head{font-size:13.5px!important;padding:15px 16px!important}.pro-int .sec-light .acc-list .acc-body p{padding:0 16px 16px!important;font-size:15px}}
+
+/* ---- washing pages: the final CTA lives inside the steps band (one CTA, page ends navy into the footer) ---- */
+.pro-int .pi-steps-cta{border-top:1px solid rgba(226,196,122,.32);padding-top:48px;text-align:center}
+.pro-int .pi-final-h{font-family:var(--font-head);font-size:clamp(24px,3.1vw,38px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;line-height:1.15;color:#fff;margin:0 0 14px;text-wrap:balance}
+.pro-int .pi-final-h span{color:var(--gold-l)}
+.pro-int .pi-final-p{font-size:17.5px;line-height:1.6;color:rgba(255,255,255,.8);max-width:62ch;margin:0 auto 26px}
+.pro-int .pi-final-p .kc-szn{color:var(--gold-l)}
+@media(max-width:640px){.pro-int .pi-steps-cta{padding-top:36px}.pro-int .pi-final-p{font-size:16px}}
