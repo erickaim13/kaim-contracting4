@@ -320,4 +320,13 @@ Append notable decisions here so the next session inherits them.
 - **2026-09-29 (v13)** — Hero scrim edge was visible (the radial gradient was
   still ~30% dark where its box ended). Now `closest-side` with a stop at 0
   at 100%, box enlarged, so it fades to nothing before every edge.
+- **2026-09-29 (v14)** — Eric wanted a badge row like the competitor's
+  (Inc 5000, OSHA, PWNA, HomeAdvisor). Told him those are other people's
+  marks and cannot be shown without being a member. Built our OWN seal row
+  (`.pro-trust` / `.seal`) under the two doors with only true claims:
+  Licensed & Insured MA and NH, Family Owned Methuen, Free Estimates,
+  Satisfaction Guaranteed (already on about.html), Fast Reply within the
+  hour (site copy). No third-party logos. Real badges he could earn: Google
+  reviews (free), Angi/HomeAdvisor screened, BBB, PWNA/UAMCC membership,
+  OSHA 10 card.
 

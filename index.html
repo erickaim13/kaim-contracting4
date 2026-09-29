@@ -485,6 +485,18 @@ a{color:inherit}
 .pro-hero.orig .hero-kicker{text-shadow:0 1px 4px rgba(0,0,0,.8)}
 .pro-hero.orig .wrap{z-index:2}
 
+/* ---- trust seals: our own badges, only claims that are true ---- */
+.pro-trust{padding:34px 0 10px}
+.seals{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;max-width:1080px;margin:0 auto}
+.seal{display:flex;flex-direction:column;align-items:center;text-align:center;color:var(--ink)}
+.seal-ring{width:104px;height:104px;border-radius:50%;background:var(--navy);border:3px solid var(--gold);box-shadow:0 0 0 4px #fff,0 0 0 5px rgba(201,168,76,.45),0 14px 30px rgba(7,24,40,.18);display:flex;align-items:center;justify-content:center;color:var(--gold-l);position:relative}
+.seal-ring::before{content:'';position:absolute;inset:6px;border-radius:50%;border:1px dashed rgba(226,196,122,.55)}
+.seal-ring svg{width:44px;height:44px}
+.seal b{font-family:var(--head);font-size:17px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:14px;line-height:1.2}
+.seal small{font-size:14.5px;color:var(--ink2);margin-top:3px}
+@media(max-width:860px){.seals{grid-template-columns:repeat(3,1fr);gap:22px 14px}.seal:nth-child(4),.seal:nth-child(5){grid-column:span 1}}
+@media(max-width:640px){.pro-trust{padding:24px 0 0}.seals{grid-template-columns:repeat(2,1fr);gap:20px 12px}.seal:last-child{grid-column:1/-1}.seal-ring{width:84px;height:84px}.seal-ring svg{width:36px;height:36px}.seal b{font-size:14px;letter-spacing:.08em;margin-top:10px}.seal small{font-size:13px}}
+
 .howit,.home-faq,.serving,.referral,.contact{border-top:1px solid rgba(255,255,255,.055)}
 .ba-wash{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:4/3;touch-action:none;box-shadow:0 18px 50px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08);user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:none}
 .ba-img-after{position:absolute;inset:0;background-size:cover;background-position:center 60%}
@@ -630,6 +642,18 @@ a{color:inherit}
       <a href="/paver-sealing" class="door"><span class="ring"><img src="images/ps-front-after-800.webp" alt="Front walkway pavers with their color back after a Kaim Contracting clean, sand and seal" width="800" height="800" loading="eager"></span><h3>Paver Sealing</h3><small>Deep clean, fresh polymeric sand and a sealer that locks the color in for years.</small></a>
     </div>
     <p class="doors-hint">Not sure which one you need? Call Kaim and describe it. We will tell you straight, and the estimate is free either way.</p>
+  </div>
+</section>
+
+<section class="pro-trust" aria-label="Why homeowners trust Kaim Contracting">
+  <div class="wrap">
+    <div class="seals">
+      <div class="seal"><div class="seal-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l8 3.5v5c0 5-3.4 9.3-8 11.5C7.4 19.8 4 15.5 4 10.5v-5z"/><polyline points="9 12 11 14 15 10"/></svg></div><b>Licensed &amp; Insured</b><small>MA and NH</small></div>
+      <div class="seal"><div class="seal-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div><b>Family Owned</b><small>Methuen, MA</small></div>
+      <div class="seal"><div class="seal-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="2"/></svg></div><b>Free Estimates</b><small>In person, no obligation</small></div>
+      <div class="seal"><div class="seal-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M9 14.5L8 22l4-2 4 2-1-7.5"/><path d="M10.5 9l1 1 2-2.5"/></svg></div><b>Satisfaction</b><small>Guaranteed on every job</small></div>
+      <div class="seal"><div class="seal-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div><b>Fast Reply</b><small>Within the hour</small></div>
+    </div>
   </div>
 </section>
 
