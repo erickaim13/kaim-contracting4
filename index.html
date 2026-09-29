@@ -140,7 +140,7 @@
   --teal:#071828;--bg:#0d1e35;--bg2:#102240;--card:#102545;--text:#f4f8f7;--muted:#a9b7c9;--border:#1e3653;--border2:#2b4a6c;
   --head:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;--body:'Source Sans 3','Segoe UI',Roboto,Helvetica,Arial,sans-serif}
 html{scroll-behavior:smooth;background:var(--paper)}
-body{font-family:var(--body);color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:var(--body);color:var(--ink);background:linear-gradient(rgba(255,255,255,.55),rgba(255,255,255,.55)),url('images/herringbone-pattern.png') center top/440px repeat #fff;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
@@ -170,15 +170,8 @@ a{color:inherit}
 .hero-form{width:100%;max-width:460px;justify-self:end}
 .hero-form{min-width:0}.hero-form .kcf{background:rgba(7,24,40,.8)}.hero-form .kcf input,.hero-form .kcf textarea,.hero-form .kcf .kcf-field,.hero-form .kcf-selwrap{min-width:0}
 
-/* WAVES */
-.wave{display:block;width:100%;height:70px;line-height:0}
-.wave svg{display:block;width:100%;height:100%}
-.wave-top{margin-bottom:-1px}.wave-bot{margin-top:-1px}
-.wave{background:var(--navy)}
-.wave-in{position:absolute;left:0;right:0;bottom:0;background:transparent;z-index:1}
-
 /* DOORS */
-.pro-doors{position:relative;background:var(--paper) url('images/herringbone-light.svg') center/60px repeat;padding:1px 0 64px;z-index:2}
+.pro-doors{position:relative;background:transparent;padding:1px 0 64px;z-index:2}
 .pro-doors .wrap{margin-top:-96px;position:relative}
 .doors{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
 .door{display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:var(--ink)}
@@ -191,7 +184,7 @@ a{color:inherit}
 .doors-hint a{color:var(--navy);font-weight:700}
 
 /* ABOUT */
-.pro-about{background:var(--paper) url('images/herringbone-light.svg') center/60px repeat;padding:24px 0 88px}
+.pro-about{background:transparent;padding:24px 0 88px}
 .about-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:34px;align-items:start}
 .about-panel{background:var(--navy);color:#fff;border-radius:26px;padding:44px 46px 40px;position:relative;overflow:hidden}
 .about-panel::after{content:'';position:absolute;inset:0;background:url('images/herringbone-pattern.svg') center/60px repeat;opacity:.9;pointer-events:none}
@@ -231,7 +224,7 @@ a{color:inherit}
 .svc-more{margin-top:44px}
 
 /* WHY */
-.pro-why{background:var(--paper) url('images/herringbone-light.svg') center/60px repeat;padding:88px 0 80px}
+.pro-why{background:transparent;padding:88px 0 80px}
 .why-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:center}
 .why-photo{position:relative}
 .why-photo img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:26px;position:relative;z-index:1}
@@ -257,14 +250,14 @@ a{color:inherit}
 .section-label{display:none}
 
 /* RESULTS */
-.pro-results{background:var(--paper) url('images/herringbone-light.svg') center/60px repeat;padding:88px 0 80px;text-align:center}
+.pro-results{background:transparent;padding:88px 0 80px;text-align:center}
 .pro-results .kc-ba-grid{margin-top:44px;text-align:left}
 .pro-results .kc-ba figure{border-radius:16px;overflow:hidden}
 .pro-results .kc-ba-item:nth-child(2){margin-top:0}
 .pro-results .kc-ba-cap{color:var(--ink2);font-size:15px}.pro-results .kc-ba-cap b{color:var(--ink);font-weight:700}
 
 /* HOW IT WORKS */
-.pro-steps{background:var(--paper2) url('images/herringbone-light.svg') center/60px repeat;padding:80px 0 88px;text-align:center}
+.pro-steps{background:transparent;padding:80px 0 88px;text-align:center}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px;text-align:left}
 .step{background:var(--navy);color:#fff;border-radius:22px;padding:34px 30px 30px;position:relative;display:flex;flex-direction:column;box-shadow:0 20px 44px rgba(7,24,40,.16)}
 .step .n{width:54px;height:54px;border-radius:50%;background:var(--gold);color:var(--navy);font-family:var(--head);font-size:24px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
@@ -273,7 +266,7 @@ a{color:inherit}
 .steps-cta{margin-top:40px}
 
 /* FAQ */
-.pro-faq{background:var(--paper) url('images/herringbone-light.svg') center/60px repeat;padding:88px 0 80px}
+.pro-faq{background:transparent;padding:88px 0 80px}
 .faq-grid{display:grid;grid-template-columns:.8fr 1.3fr;gap:56px;align-items:start}
 .faq-side p{margin-top:16px;font-size:16.5px;color:var(--ink2);line-height:1.65}
 .faq-side .btn{margin-top:26px}
@@ -324,7 +317,6 @@ a{color:inherit}
   .pro-hero h1{font-size:clamp(30px,8.6vw,38px)}
   .pro-hero .lead{font-size:16px}
   .hero-ctas .btn{flex:1 1 100%}
-  .wave{height:44px}
   .ring{padding:5px;border-width:3px}
   .door h3{font-size:14px;letter-spacing:.08em;margin-top:12px}.door small{display:none}
   .doors-hint{margin-top:26px;font-size:14px}
@@ -380,6 +372,25 @@ a{color:inherit}
 @media(max-width:640px){
   .hero-points{gap:6px 16px}.hero-points li{font-size:13px}
   .doors.two small{display:block;font-size:13px;max-width:none}
+}
+
+/* ---- wavy edges: navy sections are masked so the page pattern shows through ---- */
+.wavy,.wavy-top,.wavy-bot{position:relative}
+.wavy{-webkit-mask:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,48 C260,0 500,0 720,40 C940,80 1180,80 1440,20 L1440,80 L0,80 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") top/100% 70px no-repeat,url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,0 L1440,0 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") bottom/100% 70px no-repeat,linear-gradient(#000,#000) center/100% calc(100% - 138px) no-repeat;mask:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,48 C260,0 500,0 720,40 C940,80 1180,80 1440,20 L1440,80 L0,80 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") top/100% 70px no-repeat,url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,0 L1440,0 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") bottom/100% 70px no-repeat,linear-gradient(#000,#000) center/100% calc(100% - 138px) no-repeat}
+.wavy-top{-webkit-mask:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,48 C260,0 500,0 720,40 C940,80 1180,80 1440,20 L1440,80 L0,80 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") top/100% 70px no-repeat,linear-gradient(#000,#000) bottom/100% calc(100% - 69px) no-repeat;mask:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,48 C260,0 500,0 720,40 C940,80 1180,80 1440,20 L1440,80 L0,80 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") top/100% 70px no-repeat,linear-gradient(#000,#000) bottom/100% calc(100% - 69px) no-repeat}
+.wavy-bot{-webkit-mask:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,0 L1440,0 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") bottom/100% 70px no-repeat,linear-gradient(#000,#000) top/100% calc(100% - 69px) no-repeat;mask:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 80%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,0 L1440,0 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z%22 fill=%22%23000%22/%3E%3C/svg%3E") bottom/100% 70px no-repeat,linear-gradient(#000,#000) top/100% calc(100% - 69px) no-repeat}
+.pro-services.wavy{padding:120px 0 130px}
+.ba-demo.wavy{padding:130px 24px 140px}
+.serving.wavy-top{padding-top:70px}
+.pro-contact{margin-top:0}
+@media(max-width:640px){
+  .wavy{-webkit-mask-size:100% 44px,100% 44px,100% calc(100% - 86px);mask-size:100% 44px,100% 44px,100% calc(100% - 86px)}
+  .wavy-top{-webkit-mask-size:100% 44px,100% calc(100% - 43px);mask-size:100% 44px,100% calc(100% - 43px)}
+  .wavy-bot{-webkit-mask-size:100% 44px,100% calc(100% - 43px);mask-size:100% 44px,100% calc(100% - 43px)}
+  .pro-services.wavy{padding:84px 0 92px}
+  .ba-demo.wavy{padding:88px 16px 96px}
+  .serving.wavy-top{padding-top:44px}
+  body{background-size:auto,320px}
 }
 
 .howit,.home-faq,.serving,.referral,.contact{border-top:1px solid rgba(255,255,255,.055)}
@@ -522,7 +533,7 @@ a{color:inherit}
 </div></nav>
 <div class="kc-bar" role="navigation" aria-label="Call or get an estimate"><a href="tel:978-351-2195" class="kc-bar-call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>978-351-2195</a><a href="/quote" class="kc-bar-quote">Get Free Estimate</a></div>
 
-<section class="pro-hero orig" id="top">
+<section class="pro-hero orig wavy-bot" id="top">
   <div class="bg" aria-hidden="true"></div>
   <div class="wrap">
     <div class="hero-text">
@@ -534,7 +545,6 @@ a{color:inherit}
     <div class="kc-cta-card" style="background:rgba(13,30,53,.72);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:30px 26px 24px;box-shadow:0 28px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.09);text-align:center;color:#fff;width:100%"><div style="font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#e2c47a;margin-bottom:8px;line-height:1.25">Free In-Person Estimate</div><p style="font-size:13.5px;color:rgba(255,255,255,.68);line-height:1.55;margin:0 0 18px">Takes under a minute, and you can pick a day for the visit at the end.</p><a href="/quote?src=home" style="display:block;background:#c9a84c;color:#0d1e35;border-radius:10px;padding:16px;font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;margin-bottom:10px">Get Free Estimate &rarr;</a><a href="tel:978-351-2195" style="display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.45);color:#e2c47a;font-family:'Oswald','Arial Narrow','Roboto Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:11px 10px;border-radius:8px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>Call 978-351-2195</a><div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.55)">Free estimates &middot; Licensed &amp; Insured</div></div>
     </div>
   </div>
-  <div class="wave wave-in" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,80 L1440,80 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z" fill="#ffffff"/></svg></div>
 </section>
 
 <section class="pro-doors" id="services">
@@ -573,8 +583,7 @@ a{color:inherit}
   </div>
 </section>
 
-<div class="wave wave-top" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,0 L1440,0 L1440,20 C1180,80 940,80 720,40 C500,0 260,0 0,48 Z" fill="#ffffff"/></svg></div>
-<section class="pro-services on-navy" id="all-services">
+<section class="pro-services on-navy wavy" id="all-services">
   <div class="wrap">
     <div class="h-eyebrow" style="color:var(--gold-l)">Services</div>
     <h2 class="h2">One call for <span>every surface</span></h2>
@@ -585,7 +594,6 @@ a{color:inherit}
     <div class="svc-more"><a href="/quote" class="btn btn-gold">Get Free Estimate <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
   </div>
 </section>
-<div class="wave wave-bot" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,80 L1440,80 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z" fill="#ffffff"/></svg></div>
 
 <section class="pro-why" id="why">
   <div class="wrap why-grid">
@@ -602,8 +610,7 @@ a{color:inherit}
   </div>
 </section>
 
-<div class="wave wave-top" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,0 L1440,0 L1440,20 C1180,80 940,80 720,40 C500,0 260,0 0,48 Z" fill="#ffffff"/></svg></div>
-<section class="ba-demo" id="see-the-difference">
+<section class="ba-demo wavy" id="see-the-difference">
   <div class="section-inner sec-rise" style="max-width:780px">
     <div class="section-header" style="margin-bottom:26px">
       <div class="section-label">See The Difference</div>
@@ -722,7 +729,6 @@ a{color:inherit}
   window.addEventListener('resize',function(){clearTimeout(rw);rw=setTimeout(function(){if(!finished){drawDirty();}},200);});
 })();
 </script>
-<div class="wave wave-bot" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,80 L1440,80 L1440,52 C1180,-4 940,-4 720,36 C500,76 260,76 0,28 Z" fill="#ffffff"/></svg></div>
 
 <section class="pro-results" id="results">
   <div class="wrap">
@@ -768,8 +774,7 @@ a{color:inherit}
   </div>
 </section>
 
-<div class="wave wave-top" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,0 L1440,0 L1440,20 C1180,80 940,80 720,40 C500,0 260,0 0,48 Z" fill="#ffffff"/></svg></div>
-<section class="serving" id="serving">
+<section class="serving wavy-top" id="serving">
   <div class="topo-bg" aria-hidden="true"></div>
   <div class="serving-inner sec-rise" style="display:block;padding:60px 24px;max-width:1280px">
     <div class="section-header" style="text-align:center;margin-bottom:32px">

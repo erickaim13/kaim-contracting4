@@ -258,3 +258,13 @@ Append notable decisions here so the next session inherits them.
   section had 1px top padding added so its negative margin no longer collapses
   over the hero wave.
 
+- **2026-09-29 (v6 on the branch)** — Eric: the herringbone is his PNG
+  (`images/herringbone-pattern.png`, same file in Downloads and the stock
+  photos folder) and it "needs to go all the way behind the sections top and
+  bottom." So the pattern is now the `body` background (white-washed to about
+  half strength, 440px tile), every white section is transparent, and the
+  navy sections (hero bottom, services band, wash demo, service-area map top)
+  are cut with CSS `mask-image` waves instead of separate wave divs, so the
+  pattern shows through the curves with no seams. `herringbone-light.svg`
+  removed. Masks are inline data-URI SVGs in the page CSS.
+
