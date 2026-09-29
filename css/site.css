@@ -573,3 +573,15 @@ body.pro-int{background:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5
 .pro-int .pi-final-p{font-size:17.5px;line-height:1.6;color:rgba(255,255,255,.8);max-width:62ch;margin:0 auto 26px}
 .pro-int .pi-final-p .kc-szn{color:var(--gold-l)}
 @media(max-width:640px){.pro-int .pi-steps-cta{padding-top:36px}.pro-int .pi-final-p{font-size:16px}}
+
+/* ---- 404 page: heading clears the fixed nav, service links stay white on their navy pills ---- */
+.pro-int.page-404 main{padding-top:calc(var(--nav-h) + 48px)}
+.pro-int .sec-light .svc-list a,.pro-int .sec-light .svc-list a *{color:#fff!important}
+
+/* ---- light sections: elements that carry their own navy background keep white text ---- */
+.pro-int .sec-light .ba-label{color:#fff!important}
+.pro-int .sec-light [style*="background:var(--card)"],.pro-int .sec-light [style*="background:var(--bg)"],.pro-int .sec-light [style*="background:#0d1e35"],.pro-int .sec-light [style*="background:#071828"],.pro-int .sec-light [style*="background:rgba(7,24,40"],.pro-int .sec-light [style*="background:linear-gradient"]{color:#fff!important}
+.pro-int .sec-light [style*="background:var(--card)"] :where(h2,h3,h4,p,li,span,b,strong,a,div),.pro-int .sec-light [style*="background:var(--bg)"] :where(h2,h3,h4,p,li,span,b,strong,a,div),.pro-int .sec-light [style*="background:#0d1e35"] :where(h2,h3,h4,p,li,span,b,strong,a,div),.pro-int .sec-light [style*="background:#071828"] :where(h2,h3,h4,p,li,span,b,strong,a,div),.pro-int .sec-light [style*="background:rgba(7,24,40"] :where(h2,h3,h4,p,li,span,b,strong,a,div),.pro-int .sec-light [style*="background:linear-gradient"] :where(h2,h3,h4,p,li,span,b,strong,a,div){color:#fff!important}
+.pro-int .sec-light [style*="background:var(--card)"] :where(h2,h3,h4) span,.pro-int .sec-light [style*="background:var(--bg)"] :where(h2,h3,h4) span,.pro-int .sec-light [style*="background:linear-gradient"] :where(h2,h3,h4) span{color:var(--gold-l)!important}
+.pro-int .sec-light [style*="background:var(--card)"] p,.pro-int .sec-light [style*="background:var(--bg)"] p,.pro-int .sec-light [style*="background:linear-gradient"] p{color:rgba(255,255,255,.82)!important}
+.pro-int .sec-light [style*="background:var(--card)"] a,.pro-int .sec-light [style*="background:var(--bg)"] a,.pro-int .sec-light [style*="background:linear-gradient"] a{color:var(--gold-l)!important}
