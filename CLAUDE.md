@@ -314,4 +314,7 @@ Append notable decisions here so the next session inherits them.
   bottom band "shouldnt be there." Map section is masked on top only; the
   bottom band overlaps its last 70px with a top wave and one gold line, so the
   two navy sections meet on a single wave.
+- **2026-09-29 (v12)** — Hero legibility: darker left-side gradient over the
+  photo, a radial dark scrim behind the text block, heavier text shadows,
+  sub-line at weight 600.
 
