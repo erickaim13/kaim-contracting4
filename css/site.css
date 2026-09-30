@@ -599,7 +599,7 @@ body.pro-int{overflow-x:hidden;touch-action:pan-y pinch-zoom}
 /* FAQ on navy: translucent cards on the topo map */
 .pro-int .pi-sec.sec-navy{padding:110px 0 100px}
 .pro-int .pi-sec.sec-navy+.pi-sec{padding-top:84px}
-.pro-int .sec-navy .pi-acc .acc-item{background:rgba(255,255,255,.055)!important;border:1px solid rgba(226,196,122,.35)!important;box-shadow:none}
+.pro-int .sec-navy .pi-acc .acc-item{background:#08172b!important;border:1px solid rgba(226,196,122,.45)!important;box-shadow:0 14px 30px rgba(0,0,0,.25)}
 .pro-int .sec-navy .pi-btn-line{color:#fff;border-color:rgba(255,255,255,.7)}.pro-int .sec-navy .pi-btn-line:hover{background:#fff;color:#0d1e35}
 /* steps band on light: gold numerals, dark type, no topo overlay */
 .pro-int .pi-steps.sec-light .topo-bg{display:none}
