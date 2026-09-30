@@ -585,3 +585,33 @@ body.pro-int{background:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5
 .pro-int .sec-light [style*="background:var(--card)"] :where(h2,h3,h4) span,.pro-int .sec-light [style*="background:var(--bg)"] :where(h2,h3,h4) span,.pro-int .sec-light [style*="background:linear-gradient"] :where(h2,h3,h4) span{color:var(--gold-l)!important}
 .pro-int .sec-light [style*="background:var(--card)"] p,.pro-int .sec-light [style*="background:var(--bg)"] p,.pro-int .sec-light [style*="background:linear-gradient"] p{color:rgba(255,255,255,.82)!important}
 .pro-int .sec-light [style*="background:var(--card)"] a,.pro-int .sec-light [style*="background:var(--bg)"] a,.pro-int .sec-light [style*="background:linear-gradient"] a{color:var(--gold-l)!important}
+
+/* ---- v3b (2026-09-30, Eric): no merged white blocks, matching headings, FAQ on navy, steps band on light, wave into the footer, no sideways swipe ---- */
+html{overflow-x:hidden}
+body.pro-int{overflow-x:hidden;touch-action:pan-y pinch-zoom}
+.pro-int .gwave{overflow:hidden}
+/* every section heading reads like the homepage: Montserrat, uppercase, gold second line */
+.pro-int .svc-split-text h2,.pro-int .svc-block-header h2,.pro-int .pw-offers h2,.pro-int .pw-hub h2,.pro-int .page-content>h2,.pro-int .ab-story h2,.pro-int .ab-serving-strip h2,.pro-int .referral h2{font-family:var(--font-head)!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.06em!important;line-height:1.12!important;font-size:clamp(28px,3.6vw,44px)!important;text-wrap:balance}
+.pro-int .sec-navy .svc-split-text h2,.pro-int .sec-navy .svc-block-header h2,.pro-int .sec-navy .pw-offers h2,.pro-int .sec-navy .pw-hub h2,.pro-int .sec-navy .page-content>h2{color:#fff!important}
+.pro-int .sec-navy .svc-split-text h2 span,.pro-int .sec-navy .svc-block-header h2 span,.pro-int .sec-navy .pw-offers h2 span,.pro-int .sec-navy .page-content>h2 span{color:var(--gold-l)!important}
+.pro-int .sec-light .svc-split-text h2 span,.pro-int .sec-light .svc-block-header h2 span{color:#b8933a!important}
+.pro-int .svc-split-text h2{text-shadow:none!important}
+/* FAQ on navy: translucent cards on the topo map */
+.pro-int .pi-sec.sec-navy{padding:110px 0 100px}
+.pro-int .pi-sec.sec-navy+.pi-sec{padding-top:84px}
+.pro-int .sec-navy .pi-acc .acc-item{background:rgba(255,255,255,.055)!important;border:1px solid rgba(226,196,122,.35)!important;box-shadow:none}
+.pro-int .sec-navy .pi-btn-line{color:#fff;border-color:rgba(255,255,255,.7)}.pro-int .sec-navy .pi-btn-line:hover{background:#fff;color:#0d1e35}
+/* steps band on light: gold numerals, dark type, no topo overlay */
+.pro-int .pi-steps.sec-light .topo-bg{display:none}
+.pro-int .pi-steps.sec-light{padding:96px 0 100px}
+.pro-int .pi-steps.sec-light .pi-num{color:#b8933a}
+.pro-int .pi-steps.sec-light .pi-s3{border-left-color:rgba(13,30,53,.14)}
+.pro-int .pi-steps.sec-light .pi-s3 h3,.pro-int .pi-steps.sec-light .pi-final-h{color:#0f1c2e!important}
+.pro-int .pi-steps.sec-light .pi-s3 p,.pro-int .pi-steps.sec-light .pi-final-p{color:#2b3a4e!important}
+.pro-int .pi-steps.sec-light .pi-final-h span{color:#b8933a!important}
+.pro-int .pi-steps.sec-light .pi-steps-cta{border-top-color:rgba(13,30,53,.14)}
+.pro-int .pi-steps.sec-light .pi-final-p .kc-szn{color:#b8933a!important}
+@media(max-width:900px){.pro-int .pi-steps.sec-light .pi-s3{border-top-color:rgba(13,30,53,.14)}}
+/* the footer takes a gold wave when the page above it is light */
+.pro-int footer.site-footer.wavy-top{padding-top:70px}
+@media(max-width:640px){.pro-int footer.site-footer.wavy-top{padding-top:44px}.pro-int .pi-sec.sec-navy{padding:76px 0 70px}.pro-int .pi-steps.sec-light{padding:64px 0 70px}}
