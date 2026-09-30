@@ -615,3 +615,17 @@ body.pro-int{overflow-x:hidden;touch-action:pan-y pinch-zoom}
 /* the footer takes a gold wave when the page above it is light */
 .pro-int footer.site-footer.wavy-top{padding-top:70px}
 @media(max-width:640px){.pro-int footer.site-footer.wavy-top{padding-top:44px}.pro-int .pi-sec.sec-navy{padding:76px 0 70px}.pro-int .pi-steps.sec-light{padding:64px 0 70px}}
+
+/* ---- v3c (2026-09-30, Eric): FAQ boxes = solid navy cards on herringbone; the why grid takes the navy slot ---- */
+.pro-int .pi-sec.sec-navy#good-hands{padding:110px 0 100px}
+.pro-int .sec-navy .pi-why li{border-bottom-color:rgba(255,255,255,.14)}
+.pro-int .sec-navy .pi-why p{color:#fff!important}
+.pro-int .sec-navy .pi-ico{background:rgba(255,255,255,.06);border-color:var(--gold)}
+.pro-int .sec-navy .pi-card{background:rgba(255,255,255,.06);border:1px solid rgba(226,196,122,.4);box-shadow:none}
+.pro-int .sec-navy .pi-card::after{opacity:.35}
+.pro-int .pi-sec.sec-light#faq{padding:96px 0 100px}
+
+/* ---- gold wave line between two sections of the same colour (keeps the wave rhythm without a colour change) ---- */
+.gwave.mid{height:70px;margin:-10px 0 -10px;z-index:1}
+.gwave.mid svg path{opacity:.9}
+@media(max-width:640px){.gwave.mid{height:44px;margin:-6px 0}}
