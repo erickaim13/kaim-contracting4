@@ -629,3 +629,32 @@ body.pro-int{overflow-x:hidden;touch-action:pan-y pinch-zoom}
 .gwave.mid{height:70px;margin:-10px 0 -10px;z-index:1}
 .gwave.mid svg path{opacity:.9}
 @media(max-width:640px){.gwave.mid{height:44px;margin:-6px 0}}
+
+/* ---- scroll reveals on interior pages (same flavours as the homepage; only active once JS adds .rv-on) ---- */
+.rv-on .rv{opacity:0;transition:opacity .8s cubic-bezier(.2,.65,.2,1),transform .9s cubic-bezier(.2,.65,.2,1);will-change:opacity,transform}
+.rv-on .rv-up{transform:translateY(36px)}
+.rv-on .rv-left{transform:translateX(-48px)}
+.rv-on .rv-right{transform:translateX(48px)}
+.rv-on .rv-pop{transform:scale(.82)}
+.rv-on .rv-zoom{transform:scale(1.12)}
+.rv-on .rv.in{opacity:1;transform:none}
+.rv-on .rv-d2{transition-delay:.15s}.rv-on .rv-d3{transition-delay:.3s}
+.rv-on .rv-stagger>*{opacity:0;transform:translateY(34px) scale(.94);transition:opacity .7s cubic-bezier(.2,.65,.2,1),transform .8s cubic-bezier(.2,.65,.2,1)}
+.rv-on .rv-stagger.in>*{opacity:1;transform:none}
+.rv-on .rv-stagger-right>*{opacity:0;transform:translateX(44px);transition:opacity .7s cubic-bezier(.2,.65,.2,1),transform .8s cubic-bezier(.2,.65,.2,1)}
+.rv-on .rv-stagger-right.in>*{opacity:1;transform:none}
+.rv-on .rv-stagger.in>*:nth-child(2),.rv-on .rv-stagger-right.in>*:nth-child(2){transition-delay:.1s}
+.rv-on .rv-stagger.in>*:nth-child(3),.rv-on .rv-stagger-right.in>*:nth-child(3){transition-delay:.2s}
+.rv-on .rv-stagger.in>*:nth-child(4),.rv-on .rv-stagger-right.in>*:nth-child(4){transition-delay:.3s}
+.rv-on .rv-stagger.in>*:nth-child(5){transition-delay:.4s}
+.rv-on .rv-stagger.in>*:nth-child(6){transition-delay:.5s}
+.rv-on .rv-stagger.in>*:nth-child(7){transition-delay:.6s}
+.rv-on .rv-stagger.in>*:nth-child(8){transition-delay:.7s}
+/* accordion bodies must never inherit the reveal transform (they animate max-height) */
+.rv-on .rv-stagger.in>.acc-item{transform:none}
+@media(prefers-reduced-motion:reduce){.rv-on .rv,.rv-on .rv-stagger>*,.rv-on .rv-stagger-right>*{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* ---- bigger logo while the top bar is fully expanded at the top of the page (2026-09-30, Eric) ---- */
+@media(min-width:861px){nav.site-nav:not(.scrolled) .nav-inner{height:104px}nav.site-nav:not(.scrolled) .nav-logo img{height:78px}}
+@media(max-width:860px){nav.site-nav:not(.scrolled) .nav-inner{height:100px}nav.site-nav:not(.scrolled) .nav-logo img{height:78px}nav.site-nav:not(.scrolled) .nav-burger{transform:translateY(2px)}}
+.site-nav .nav-logo img,.site-nav .nav-inner{transition:height .25s ease}
