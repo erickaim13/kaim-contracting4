@@ -357,14 +357,14 @@ export async function intakeLead(opts) {
     );
   }
 
-  // Roof-cleaning leads with an address also kick off the CRM's internal
-  // roof estimate (measure from public map data, price with the cheat sheet,
+  // Roof-cleaning and house-washing leads with an address also kick off the
+  // CRM's internal desk estimate (measure from public map data, price with the cheat sheet,
   // PDF into Eric's inbox). Only the enqueue ack is awaited; the CRM does the
   // measuring when Eric opens it or on its own sweep. Needs ROOF_PIPELINE_SECRET
   // set on BOTH the website and the CRM in Vercel; silently skipped otherwise.
   // Never sends the client anything.
   const roofSecret = (process.env.ROOF_PIPELINE_SECRET || '').trim();
-  if (roofSecret && address && /^roof/i.test(String(service || '').trim())) {
+  if (roofSecret && address && /^(roof|house wash)/i.test(String(service || '').trim())) {
     const crmBase = (process.env.CRM_API_BASE || 'https://kaimcontractingapp.com').replace(/\/$/, '');
     queueInserts.push((async () => {
       const ctrl = new AbortController();
