@@ -403,10 +403,11 @@ Append notable decisions here so the next session inherits them.
   auto-reply when the lead books, so a lead who books gets ONE confirmation
   text instead of two texts back to back. Owner notify is still immediate.
 
-## 2026-09-29 (branch claude/interior-v3, NOT merged): every interior page matches the homepage
+## 2026-09-29 to 10-02 (LIVE 2026-10-02): every interior page matches the homepage
 - Body class `pro-int` puts the white herringbone behind every page. Sections alternate strictly: `sec-light` (transparent, dark text) and `sec-navy` (navy with the topo map, white text), with a gold `.gwave` line and a `wavy`/`wavy-top`/`wavy-bot` mask at every light-to-navy edge. A navy "Get your free estimate" band (`.pi-cta`) closes pages that would otherwise end light.
 - page-body pages (FAQ, blog, calculators, tools, service areas) are split into alternating chunks at their `inc-section`/`proc-section`/calculator boundaries; the nine washing pages carry the why grid, FAQ cards and numeral steps band from the v2 refresh, reordered as hero, free sections, why, package band, FAQ, steps. The old final CTA section is folded into the steps band (`.pi-final-h`), so every washing page ends navy into the footer with one CTA.
 - Leftover call wording is gone: the orphan `<span class="cta-or">or</span>` next to the removed Call buttons, "Call or send the form", "call or text", "First Call", "One call to Kaim", the FAQ and service-area phone prompts. Meta descriptions still say "Call 978-351-2195" (not visible).
 - Footer on phones: brand block centred, Services and Company in two columns with gold rules, Hours beside Payments, centred bottom row.
 - Tooling lives in the scratchpad (`interior3.py`, `interior2.py`, `alt_washing.py`, `reorder_washing.py`, `normalize.py`); `normalize.py` rederives every wave from the section classes and is safe to rerun. Bump the deploy-bust line on merge.
+- Final shape (Oct 2): washing pages run hero, light section, then alternate; every washing page has the live "Good Hands" block on navy (centred heading, 3 checks, "Services We Offer" accordion with one `.acc-featured` Most Requested item) and a light FAQ with solid navy cards; the package band folds into the navy steps band (`.pkg-inline`) where it would otherwise sit alone; scroll reveals auto-tagged in `js/site.js` (`body.pro-int` only); bigger logo while the header is expanded; mobile menu groups start closed; `html{overflow-x:hidden}`; no bars under footer headings. Front patio photos (`ps-front-*`) are cleaned and re-sanded, not sealed; say so.
 
