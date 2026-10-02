@@ -81,6 +81,10 @@ function weekdayOf(dateStr) {
 const DEFAULTS = {
   weekdaySlots: ['17:00', '18:00', '19:00'],
   satSlots: ['12:30', '13:30', '14:30', '15:30'],
+  // Extra times on a day with no job on the calendar, tried after the usual
+  // ones (evenings stay the first offer, earlier fills in when those are
+  // taken or after dark).
+  freeDaySlots: ['15:00', '13:00', '11:00'],
   minLeadDays: 2,     // earliest offer = 2 days out, so Eric can always veto
   scanDays: 21,
   maxVisitsPerDay: 2, // stop offering a day once it has this many visits
@@ -138,7 +142,9 @@ export function computeOpenDays(jobs, settings = {}, now = new Date(), count = 3
     if (blocked.has(date)) continue;
     const wd = weekdayOf(date);
     if (wd === 'Sun') continue;
-    const slots = wd === 'Sat' ? cfg.satSlots : cfg.weekdaySlots;
+    const hasJob = (jobs || []).some(j => j && j.type !== 'Estimate Visit' && j.status !== 'cancelled'
+      && (j.start || j.date) && (j.start || j.date) <= date && date <= (j.end || j.start || j.date));
+    const slots = (wd === 'Sat' ? cfg.satSlots : cfg.weekdaySlots).concat(hasJob ? [] : cfg.freeDaySlots);
     const visits = (jobs || []).filter(j => isEstimateVisit(j) && j.start === date);
     if (visits.length >= cfg.maxVisitsPerDay) continue;
     // A visit with no readable time counts as holding the day's first slot.
