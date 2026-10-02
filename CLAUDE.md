@@ -418,3 +418,9 @@ Append notable decisions here so the next session inherits them.
   now has a required **Town** field under the street field. Tapping a
   suggestion fills it; on submit the town is appended to `address` unless it
   is already there after the street. Payload shape unchanged, `?v=12`.
+
+- **2026-10-02 (calculator)** — Eric: no form fill on the Sand & Seal
+  Calculator, just the Get Free Estimate button. The embedded `kc-form` slot
+  is gone; both buttons go to `/quote?service=Paver Sealing&src=paver-sealing-calculator`.
+  Calculator answers no longer ride along with the lead. `/quote` is the only
+  page that loads `kc-form.js` now.
