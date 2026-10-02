@@ -104,7 +104,8 @@
       + '<div class="kcf-field" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input type="text" data-kcf="name" placeholder="First name" autocomplete="given-name" aria-label="First name"><input type="text" data-kcf="lname" placeholder="Last name" autocomplete="family-name" aria-label="Last name"></div>'
       + '<div class="kcf-field"><input type="tel" data-kcf="phone" placeholder="Phone number" autocomplete="tel" inputmode="tel" aria-label="Phone number"></div>'
       + '<div class="kcf-field"><input type="email" data-kcf="email" placeholder="Email (optional)" autocomplete="email" aria-label="Email"></div>'
-      + '<div class="kcf-field" style="position:relative"><input type="text" data-kcf="address" placeholder="Property address" autocomplete="off" aria-label="Property address"><div class="kcf-sug" data-kcf="asug"></div></div>'
+      + '<div class="kcf-field" style="position:relative"><input type="text" data-kcf="address" placeholder="Street address" autocomplete="off" aria-label="Street address"><div class="kcf-sug" data-kcf="asug"></div></div>'
+      + '<div class="kcf-field"><input type="text" data-kcf="town" placeholder="Town" autocomplete="address-level2" aria-label="Town"></div>'
       + '<div class="kcf-field"><textarea data-kcf="note" rows="2" placeholder="Anything we should know? (optional)" aria-label="Optional message"></textarea></div>'
       + (cfg.photos ? '<div class="kcf-field"><label class="kcf-file"><input type="file" data-kcf="files" accept="image/*" multiple style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Add photos of the project (optional)</label><div class="kcf-files" data-kcf="filelist"></div></div>' : '')
       + '<button type="submit" class="kcf-cta" data-kcf="submit">' + esc(cfg.submitLabel) + '</button>'
@@ -148,7 +149,7 @@
       else if (d.length > 3) out = d.slice(0, 3) + '-' + d.slice(3);
       phoneEl.value = out; phoneEl.classList.remove('kcf-err');
     });
-    ['name', 'lname', 'email', 'note'].forEach(function (id) {
+    ['name', 'lname', 'email', 'town', 'note'].forEach(function (id) {
       q(id).addEventListener('input', function () { q(id).classList.remove('kcf-err'); });
     });
 
@@ -169,13 +170,20 @@
             }).map(function (f) {
               var p = f.properties || {};
               var street = ((p.housenumber ? p.housenumber + ' ' : '') + (p.street || p.name || '')).trim();
-              return [street, p.city || p.town || p.village || p.district, p.state, p.postcode].filter(Boolean).join(', ');
-            }).filter(function (x, i, a) { return x && a.indexOf(x) === i; }).slice(0, 4);
+              var town = p.city || p.town || p.village || p.district || '';
+              return { label: [street, town, p.state, p.postcode].filter(Boolean).join(', '), town: town };
+            }).filter(function (x, i, a) {
+              return x.label && a.map(function (y) { return y.label; }).indexOf(x.label) === i;
+            }).slice(0, 4);
             if (!items.length || document.activeElement !== aEl) { sug.style.display = 'none'; return; }
-            sug.innerHTML = items.map(function (t) { return '<button type="button">' + esc(t) + '</button>'; }).join('');
+            sug.innerHTML = items.map(function (t) { return '<button type="button" data-town="' + esc(t.town) + '">' + esc(t.label) + '</button>'; }).join('');
             sug.style.display = 'block';
             [].slice.call(sug.querySelectorAll('button')).forEach(function (b) {
-              b.addEventListener('mousedown', function (ev) { ev.preventDefault(); aEl.value = b.textContent; sug.style.display = 'none'; });
+              b.addEventListener('mousedown', function (ev) { ev.preventDefault();
+                aEl.value = b.textContent; sug.style.display = 'none';
+                // Picking a suggestion fills the town too.
+                if (b.getAttribute('data-town')) { q('town').value = b.getAttribute('data-town'); q('town').classList.remove('kcf-err'); }
+              });
             });
           })
           .catch(function () { sug.style.display = 'none'; });
@@ -231,6 +239,7 @@
       var phone = phoneEl.value || '';
       var email = (q('email').value || '').trim();
       var address = (q('address').value || '').trim();
+      var town = (q('town').value || '').trim();
       var note = (q('note').value || '').trim();
 
       var bad = null;
@@ -239,7 +248,13 @@
       if (phone.replace(/\D/g, '').length < 10) { phoneEl.classList.add('kcf-err'); bad = bad || phoneEl; }
       if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { q('email').classList.add('kcf-err'); bad = bad || q('email'); }
       if (!address) { q('address').classList.add('kcf-err'); bad = bad || q('address'); }
+      if (!town) { q('town').classList.add('kcf-err'); bad = bad || q('town'); }
       if (bad) { bad.focus(); return; }
+
+      // A street typed without tapping a suggestion has no town in it; the
+      // town field guarantees the address we save always carries one.
+      var afterStreet = address.indexOf(',') > -1 ? address.slice(address.indexOf(',') + 1).toLowerCase() : '';
+      if (afterStreet.indexOf(town.toLowerCase()) === -1) address += ', ' + town;
 
       var lines = ['Quote page request:', '- Looking for: ' + svc, '- Address: ' + address];
       if (note) lines.push('- Note: ' + note);

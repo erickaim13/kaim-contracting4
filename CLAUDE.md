@@ -411,3 +411,10 @@ Append notable decisions here so the next session inherits them.
 - Tooling lives in the scratchpad (`interior3.py`, `interior2.py`, `alt_washing.py`, `reorder_washing.py`, `normalize.py`); `normalize.py` rederives every wave from the section classes and is safe to rerun. Bump the deploy-bust line on merge.
 - Final shape (Oct 2): washing pages run hero, light section, then alternate; every washing page has the live "Good Hands" block on navy (centred heading, 3 checks, "Services We Offer" accordion with one `.acc-featured` Most Requested item) and a light FAQ with solid navy cards; the package band folds into the navy steps band (`.pkg-inline`) where it would otherwise sit alone; scroll reveals auto-tagged in `js/site.js` (`body.pro-int` only); bigger logo while the header is expanded; mobile menu groups start closed; `html{overflow-x:hidden}`; no bars under footer headings. Front patio photos (`ps-front-*`) are cleaned and re-sanded, not sealed; say so.
 
+
+- **2026-10-02 (form)** — Leads were arriving with no town ("18 Pine Street",
+  "10 Robandy Rd"): people typed the street and submitted without tapping an
+  address suggestion, and the form accepted any non-empty text. `js/kc-form.js`
+  now has a required **Town** field under the street field. Tapping a
+  suggestion fills it; on submit the town is appended to `address` unless it
+  is already there after the street. Payload shape unchanged, `?v=12`.
