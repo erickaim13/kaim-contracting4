@@ -424,3 +424,7 @@ Append notable decisions here so the next session inherits them.
   is gone; both buttons go to `/quote?service=Paver Sealing&src=paver-sealing-calculator`.
   Calculator answers no longer ride along with the lead. `/quote` is the only
   page that loads `kc-form.js` now.
+- **2026-10-02 (calculator, later)** — Eric: no price per sq ft on the Sand &
+  Seal Calculator, and "Which Finish Is Right For You?" offers only Natural
+  Look and Wet Look (Semi Gloss and the three `$ / sq ft` lines removed, grid
+  is two cards). The calculator buttons already offered only those two.
