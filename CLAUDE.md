@@ -4,7 +4,7 @@ Context file for AI sessions. Read this first. Update it when something here goe
 
 ## The business
 
-Kaim Contracting LLC — family-run paver, hardscaping, landscaping, drainage and
+Kaim Contracting LLC — local paver, hardscaping, landscaping, drainage and
 pressure washing contractor. Based in Methuen, MA. Owner: Eric Kaim.
 
 - Site: https://kaimcontracting.com
@@ -436,3 +436,12 @@ Append notable decisions here so the next session inherits them.
   identical time, so a 6:30 visit left 6:00 "open"). After the clocks change
   in November there is no weekday daylight after 5, so only Saturdays are
   offered until spring unless Eric opens earlier weekday times.
+- **2026-10-02 (copy and pricing)** — Eric is moving away from "family run":
+  the phrase is gone from every footer, meta description, schema block, the
+  about page and the trust rows ("Locally Owned" now). Do not bring it back.
+  House washing starts at **$450** everywhere (was $350): service pages, FAQ
+  and its schema, blog, calculators page, and the PW calculator's smallest
+  house tier is 450 to 550. The PW calculator's bottom lead form is replaced
+  by the Get Free Estimate button (`/quote?src=pressure-washing-calculator`),
+  so `/quote` is the only form on the site. Calculators page: Driveways is
+  listed under the Sand & Seal Calculator, not the Pressure Wash one.
