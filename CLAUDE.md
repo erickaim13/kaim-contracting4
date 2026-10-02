@@ -428,3 +428,11 @@ Append notable decisions here so the next session inherits them.
   Seal Calculator, and "Which Finish Is Right For You?" offers only Natural
   Look and Wet Look (Semi Gloss and the three `$ / sq ft` lines removed, grid
   is two cards). The calculator buttons already offered only those two.
+- **2026-10-02 (booking)** — Self-booking slots follow the same rules as the
+  AI scheduler (`kaim-crm/mac/slots.py`): weekdays from 5:00 PM, Saturdays
+  from 12:30, a visit starts at least 30 minutes before sunset in Methuen
+  (`sunsetMinutes` in `api/_lib/booking.js`), and two estimate visits are at
+  least 60 minutes apart whatever their exact times (it used to block only an
+  identical time, so a 6:30 visit left 6:00 "open"). After the clocks change
+  in November there is no weekday daylight after 5, so only Saturdays are
+  offered until spring unless Eric opens earlier weekday times.
