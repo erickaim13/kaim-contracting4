@@ -11,7 +11,7 @@
 // so the CRM calendar, reschedule flow, and reminder cancellation all treat
 // web bookings like any other estimate visit.
 
-import { sbAdmin, sanitize, normalizePhone, textOptOutReason } from './_lib/intake.js';
+import { sbAdmin, sanitize, normalizePhone, textOptOutReason, usPhoneDigits } from './_lib/intake.js';
 import { computeOpenDays, slotIsOpen, dateLabel, nyToUtc, nyParts } from './_lib/booking.js';
 
 const ALLOWED_ORIGINS = new Set([
@@ -104,11 +104,12 @@ async function bookVisit(req, res) {
   const date = sanitize(body.date, 10);
   const time = sanitize(body.time, 10);
 
-  // A real US number is 10 digits, or 11 with the country code. Anything else
-  // is a typo or a bot, and it would only queue texts that can never land.
-  const phoneDigits = String(phone).replace(/\D/g, '');
-  if (!first || phoneDigits.length < 10) return res.status(400).json({ error: 'Name and phone required' });
-  if (phoneDigits.length !== 10 && phoneDigits.length !== 11) return res.status(400).json({ error: 'Invalid phone' });
+  // A real US number is 10 dialable digits (11 with the country code, which
+  // usPhoneDigits strips). Anything else is a typo or a bot, and it would only
+  // queue texts that can never land.
+  if (!first || !String(phone).replace(/\D/g, '')) return res.status(400).json({ error: 'Name and phone required' });
+  const phoneDigits = usPhoneDigits(phone);
+  if (!phoneDigits) return res.status(400).json({ error: 'Invalid phone' });
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{1,2}:\d{2} [AP]M$/i.test(time)) {
     return res.status(400).json({ error: 'Invalid slot' });
   }

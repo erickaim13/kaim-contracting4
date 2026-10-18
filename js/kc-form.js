@@ -142,9 +142,19 @@
       .then(function (j) { if (j && j.ok && Array.isArray(j.days) && j.days.length) days = j.days; })
       .catch(function () { });
 
+    // The 10 digits of a dialable US number, or '' when it is not one. A
+    // leading country-code 1 is dropped when 11 digits were typed; area code
+    // and exchange must start with 2-9 (so "150-852-3468" is not accepted).
+    function usDigits(v) {
+      var d = (v || '').replace(/\D/g, '');
+      if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
+      return /^[2-9]\d{2}[2-9]\d{6}$/.test(d) ? d : '';
+    }
     var phoneEl = q('phone');
     phoneEl.addEventListener('input', function () {
-      var d = phoneEl.value.replace(/\D/g, '').slice(0, 10), out = d;
+      var d = phoneEl.value.replace(/\D/g, ''), out;
+      if (d.length > 10 && d.charAt(0) === '1') d = d.slice(1);
+      d = d.slice(0, 10); out = d;
       if (d.length > 6) out = d.slice(0, 3) + '-' + d.slice(3, 6) + '-' + d.slice(6);
       else if (d.length > 3) out = d.slice(0, 3) + '-' + d.slice(3);
       phoneEl.value = out; phoneEl.classList.remove('kcf-err');
@@ -245,7 +255,7 @@
       var bad = null;
       if (!svc && ddBtn) { ddBtn.classList.add('kcf-err'); bad = bad || ddBtn; }
       if (!first) { q('name').classList.add('kcf-err'); bad = bad || q('name'); }
-      if (phone.replace(/\D/g, '').length < 10) { phoneEl.classList.add('kcf-err'); bad = bad || phoneEl; }
+      if (!usDigits(phone)) { phoneEl.classList.add('kcf-err'); bad = bad || phoneEl; }
       if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { q('email').classList.add('kcf-err'); bad = bad || q('email'); }
       if (!address) { q('address').classList.add('kcf-err'); bad = bad || q('address'); }
       if (!town) { q('town').classList.add('kcf-err'); bad = bad || q('town'); }

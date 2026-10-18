@@ -32,6 +32,28 @@ export function normalizePhone(p) {
   return digits.length === 10 ? '+1' + digits : '+' + digits;
 }
 
+// The 10 digits of a dialable US number, or null. Strips a leading country
+// code 1 when 11 digits were typed. A US area code and exchange both start
+// with 2-9, so "150-852-3468" (which is 10 digits) is still rejected: a text
+// queued to a number like that can never land. Every server-side phone check
+// goes through this so the rule lives in one place.
+export function usPhoneDigits(p) {
+  let digits = String(p || '').replace(/\D/g, '');
+  if (digits.length === 11 && digits[0] === '1') digits = digits.slice(1);
+  return /^[2-9]\d{2}[2-9]\d{6}$/.test(digits) ? digits : null;
+}
+
+// Title-case a name typed ALL CAPS or all lowercase ("BRIAN" -> "Brian",
+// "o'brien" -> "O'Brien") so the auto-texts never shout "Hey BRIAN". Anything
+// already mixed case is left exactly as typed.
+export function tidyName(s) {
+  const str = String(s || '').trim();
+  if (!str) return str;
+  const hasUpper = /[A-Z]/.test(str), hasLower = /[a-z]/.test(str);
+  if (hasUpper && hasLower) return str;
+  return str.toLowerCase().replace(/(^|[^a-z])([a-z])/g, (m, pre, ch) => pre + ch.toUpperCase());
+}
+
 // Why a client-facing text must NOT be queued, or null when it is fine to send.
 // A client who texted STOP gets do_not_text / ai_optout set on their record by
 // the Mac's reply watcher; a dead or declined client should not hear from the
@@ -59,7 +81,7 @@ export function textOptOutReason(db, phone) {
 // How long the lead auto-text waits so an online booking can replace it.
 const LEAD_AUTOREPLY_HOLD_MS = 120 * 1000;
 
-const FALLBACK_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about {service}! When are you available for me to come by for a free in person estimate? I'm free for estimates weekday evenings after 6 and Saturday afternoons.";
+const FALLBACK_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about {service}! I do free in person estimates weekday evenings from 5 and Saturday afternoons. What day works best for you to have me come by?";
 
 export const sanitize = (s, max = 200) =>
   String(s || '').replace(/[\u0000-\u001F\u007F]/g, '').trim().slice(0, max);
@@ -178,7 +200,7 @@ async function degradedNotify(opts, db) {
  */
 export async function intakeLead(opts) {
   const {
-    first = '', last = '', phone = '', email = '', address = '', service = '',
+    first: rawFirst = '', last: rawLast = '', phone = '', email = '', address = '', service = '',
     message = '', contactPref = '', leadSource = '',
     attribution = null,
     attachments = [],
@@ -188,6 +210,9 @@ export async function intakeLead(opts) {
     activityIco = '🌐',
     confirmationEmail = true
   } = opts || {};
+  // "BRIAN BELMORE" and "brian" become "Brian": this is the name every
+  // auto-text and the confirmation email greet the lead with.
+  const first = tidyName(rawFirst), last = tidyName(rawLast);
 
   // 1 + 2. Read crm_data, add the lead, write it back — as a compare-and-swap
   // keyed on updated_at. The whole CRM is one JSONB row, so a blind
@@ -305,8 +330,10 @@ export async function intakeLead(opts) {
   }
 
   // 3. Queue iMessages — owner notify (immediate) + auto-reply (2-6s delay)
-  const phoneDigits = String(phone).replace(/\D/g, '');
-  const clientNumE164 = phoneDigits.length === 10 ? '+1' + phoneDigits : '+' + phoneDigits;
+  // Only a dialable US number gets the auto-reply (empty string otherwise, so
+  // the length gate below skips it the same way it skips a missing phone).
+  const phoneDigits = usPhoneDigits(phone) || '';
+  const clientNumE164 = '+1' + phoneDigits;
 
   // Queue inserts are AWAITED (via allSettled below). Vercel freezes the
   // function once the handler returns, so a fire-and-forget insert can be

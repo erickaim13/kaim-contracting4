@@ -4,7 +4,7 @@
 // input validation) then hands off to the shared intakeLead() automation in
 // _lib/intake.js — the exact same path the Meta Lead Ads webhook uses.
 
-import { intakeLead, sanitize } from './_lib/intake.js';
+import { intakeLead, sanitize, usPhoneDigits } from './_lib/intake.js';
 
 const ALLOWED_ORIGINS = new Set([
   'https://kaimcontracting.com',
@@ -47,7 +47,10 @@ export default async function handler(req, res) {
 
   const first = sanitize(body.first, 60);
   const last = sanitize(body.last, 60);
-  const phone = sanitize(body.phone, 30);
+  // Stored as the 10 dialable digits in the form's own xxx-xxx-xxxx shape, a
+  // leading country-code 1 stripped; null means not a real US number.
+  const phoneDigits = usPhoneDigits(sanitize(body.phone, 30));
+  const phone = phoneDigits ? phoneDigits.replace(/^(\d{3})(\d{3})(\d{4})$/, '$1-$2-$3') : '';
   const email = sanitize(body.email, 120);
   const service = sanitize(body.service, 60);
   const address = sanitize(body.address, 160);
@@ -58,7 +61,7 @@ export default async function handler(req, res) {
   const leadSource = sanitize(body.source, 120) || 'Website (kaimcontracting.com)';
 
   if (!first) return res.status(400).json({ error: 'Name required' });
-  if (!phone || phone.replace(/\D/g, '').length < 10) return res.status(400).json({ error: 'Invalid phone' });
+  if (!phone) return res.status(400).json({ error: 'Invalid phone' });
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Invalid email' });
   if (service && !SERVICE_OPTS.has(service)) return res.status(400).json({ error: 'Invalid service' });
 
