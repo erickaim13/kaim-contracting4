@@ -38,6 +38,28 @@
   ],
   "cleanUrls": true,
   "crons": [
-    { "path": "/api/queue-health", "schedule": "0 11 * * *" }
-  ]
+    {
+      "path": "/api/queue-health",
+      "schedule": "0 11 * * *"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/blog",
+      "destination": "/api/blog"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/api/blog?slug=:slug"
+    },
+    {
+      "source": "/sitemap-blog.xml",
+      "destination": "/api/blog?sitemap=1"
+    }
+  ],
+  "functions": {
+    "api/blog.js": {
+      "includeFiles": "blog-*template.html"
+    }
+  }
 }
