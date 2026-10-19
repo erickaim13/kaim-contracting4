@@ -235,7 +235,10 @@ async function bookVisit(req, res) {
   let dayBeforeSend = dayBefore;
   if (dbParts.hour < 7 || (dbParts.hour === 7 && dbParts.minute < 30)) dayBeforeSend = nyToUtc(dbParts.date, '07:30');
   else if (dbParts.hour >= 21) dayBeforeSend = nyToUtc(dbParts.date, '20:00');
-  if (!optOut && dayBeforeSend.getTime() > Date.now()) {
+  // One reminder per visit: the day-before when there is time for it,
+  // otherwise the morning-of. Never both on top of the booking text.
+  const dayBeforeOk = !optOut && dayBeforeSend.getTime() > Date.now();
+  if (dayBeforeOk) {
     tasks.push(sbAdmin.from('imessage_queue').insert({
       phone: phoneE164,
       body: `Quick reminder that I'll be out tomorrow (${dayStr}) for your free estimate, arriving ${windowStr}. If anything comes up before then, just call or text me. See you then!`,
@@ -247,7 +250,7 @@ async function bookVisit(req, res) {
   }
 
   const morningOf = nyToUtc(date, '07:30');
-  if (!optOut && morningOf.getTime() > Date.now() && morningOf.getTime() < startUtc.getTime()) {
+  if (!optOut && !dayBeforeOk && morningOf.getTime() > Date.now() && morningOf.getTime() < startUtc.getTime()) {
     tasks.push(sbAdmin.from('imessage_queue').insert({
       phone: phoneE164,
       body: `Just a reminder that I'll be out today for your free estimate, arriving ${windowStr}. If anything comes up, just call or text me. See you soon!`,
