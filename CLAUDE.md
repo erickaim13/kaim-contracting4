@@ -73,9 +73,13 @@ it finds stuck rows it emails erickaim13@gmail.com (cc info@) telling Eric to
 check the machine, and keeps emailing on every check until the queue drains.
 
 Triggered two ways: a daily Vercel cron at 11:00 UTC (see `vercel.json`), and
-an hourly scheduled Claude task that fetches the URL and pushes a phone
-notification if the response reports stuck messages. The endpoint is GET-only,
-public, and safe to hit manually: https://kaimcontracting.com/api/queue-health
+an hourly `pg_cron` job inside Supabase itself (job `queue-health-hourly`, runs at
+:07 past every hour, uses `pg_net` to GET the URL). The Supabase job was added
+2026-10-19 so the check does not depend on Claude, Claude usage limits, or the
+Vercel plan's once-a-day cron rule. Inspect it with `select * from cron.job;` and
+recent fires with `select * from cron.job_run_details order by start_time desc
+limit 20;`. The endpoint is GET-only, public, and safe to hit manually:
+https://kaimcontracting.com/api/queue-health
 
 ## Gotchas that have bitten before
 
@@ -445,3 +449,5 @@ Append notable decisions here so the next session inherits them.
   by the Get Free Estimate button (`/quote?src=pressure-washing-calculator`),
   so `/quote` is the only form on the site. Calculators page: Driveways is
   listed under the Sand & Seal Calculator, not the Pressure Wash one.
+
+- 2026-10-19: Added `help-wanted.html` (kaimcontracting.com/help-wanted), an unlisted "Work With Me" page Eric texts to people he might hire: the work, $25 to $30 an hour, honest hours (not steady yet, snow on call), what he needs and what they can expect, Text and Call buttons. `noindex, nofollow`, not in nav or sitemap, no form. Built from the about.html skeleton (same nav, footer, tags). Left uncommitted here on purpose alongside Eric's own CLAUDE.md edits.

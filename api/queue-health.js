@@ -9,7 +9,9 @@ import nodemailer from 'nodemailer';
 //
 // Called two ways:
 //   - Vercel cron (see vercel.json) once a day as a backup
-//   - An hourly scheduled Claude check that fetches this URL
+//   - A pg_cron job inside Supabase ('queue-health-hourly') that GETs this URL
+//     at :07 past every hour via pg_net. Lives in the database, not in Claude
+//     or Vercel, so it keeps running no matter what.
 //
 // While the queue is stuck it will email on every check. That is intentional —
 // a nagging inbox beats a silently dead pipeline.
