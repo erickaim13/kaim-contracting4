@@ -451,3 +451,17 @@ Append notable decisions here so the next session inherits them.
   listed under the Sand & Seal Calculator, not the Pressure Wash one.
 
 - 2026-10-19: Added `help-wanted.html` (kaimcontracting.com/help-wanted), an unlisted "Work With Me" page Eric texts to people he might hire: the work, $25 to $30 an hour, honest hours (not steady yet, snow on call), what he needs and what they can expect, Text and Call buttons. `noindex, nofollow`, not in nav or sitemap, no form. Built from the about.html skeleton (same nav, footer, tags). Left uncommitted here on purpose alongside Eric's own CLAUDE.md edits.
+
+- 2026-11-02 (internal linking pass, GSC showed only 3 of 20 pages indexed): the
+  footer, nav dropdown and mobile menu already carried every page as plain
+  server rendered links, so the real gaps were small. Footer now has a
+  Calculators group (Pressure Wash Calculator, Sand & Seal Calculator, All
+  Calculators) above Hours on every page; `/paver-sealing-calculator` went from 2
+  inbound pages to 28. The footer email is a real `mailto:` link with visible
+  text (it was an empty anchor filled by `js/site.js`, which still runs and is
+  now a no-op). Every homepage service card shows "Learn more". The 9 service
+  pages got a "Related Services" pre-footer row (`.rel-svcs`, 3 text cards, CSS
+  at the end of `css/site.css`). house-washing's footer `wavy-top` moved onto that
+  row so the wave still sits between the light section and the navy. Audit
+  script: parse every page's anchors, count internal links and empty text
+  anchors; zero empty anchors remain. Deploy bust bumped on all 28 pages.

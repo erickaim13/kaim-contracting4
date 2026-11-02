@@ -668,3 +668,18 @@ body.pro-int{overflow-x:hidden;touch-action:pan-y pinch-zoom}
 .pro-int .pi-steps .pkg-inline{margin:56px 0 0;padding:0;background:none!important}
 .pro-int .pi-steps .pkg-inline .pkg-band-inner{margin:0 auto}
 @media(max-width:640px){.pro-int .pi-steps .pkg-inline{margin-top:36px}}
+
+/* Footer calculator links + related-services pre-footer row (2026-11-02, internal linking pass) */
+.site-footer .ft-col ul.ft-calcs{margin:0 0 22px}
+.rel-svcs.sec-navy{padding:64px 0 72px;border-top:1px solid rgba(255,255,255,.08)}
+.rel-svcs.wavy-top{border-top:0;padding-top:120px}
+.rel-head{text-align:center;margin-bottom:28px}
+.rel-eyebrow{font-family:var(--font-head);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-l);margin-bottom:10px}
+.rel-h2{font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(22px,2.6vw,30px);color:#fff;margin:0}
+.rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:980px;margin:0 auto}
+.rel-card{display:flex;flex-direction:column;gap:6px;padding:22px 24px;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:rgba(255,255,255,.05);text-decoration:none;color:#fff;transition:transform .15s,background .2s,border-color .2s}
+.rel-card:hover{transform:translateY(-3px);background:rgba(255,255,255,.09);border-color:var(--gold)}
+.rel-card b{font-family:var(--font-head);font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.rel-card span{font-size:14.5px;color:rgba(255,255,255,.68);line-height:1.5}
+.rel-card em{font-style:normal;font-family:var(--font-head);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-l);margin-top:6px}
+@media(max-width:700px){.rel-grid{grid-template-columns:1fr}.rel-svcs.sec-navy{padding:48px 0 56px}.rel-svcs.wavy-top{padding-top:84px}}
