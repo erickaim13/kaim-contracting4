@@ -406,8 +406,8 @@ body.pro-int{background:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5
   .pro-int .sec-navy.wavy,.pro-int .sec-navy.wavy-bot{padding-bottom:84px}
   .pro-int .svc-hero.wavy-bot,.pro-int .page-hero.wavy-bot{padding-bottom:44px}
 }
-.pro-int .sec-light :where(h1,h2,h3,h4,p,li,span,small,b,strong,em,i,dt,dd,label,figcaption,summary,th,td,a,div):not(:where(.pi-card,.pi-acc,.pi-ico,.pi-tick,.pi-btn,.acc-item,.acc-head,.acc-body,.kc-svc,.kc-svc-body,.svc-tile,.svc-tile-body,.calc-card,.calc-results,.calc-cta,.deal,.pkg-band-inner,.hw-step,.step-card,.kc-cta-card,.btn,.btn-primary,.btn-gold,.deal-btn,.pkg-band-btn,.calc-surface-btn,.calc-condition-btn,.calc-toggle-btn,.cw-chip,.pkg-chip,.ba-pair figure,.kc-ba,.job,.tool-card,.post-card,.blog-card,.blog-hero,.ab-photo,.svc-final-cta,.hf-card,.other-svcs,.leaflet-container,.loc-explorer,.loc-sidebar,figure,[class*="badge"],[class*="pill"],[class*="ribbon"],[class*="burst"]) *){color:#0f1c2e!important;text-shadow:none!important}
-.pro-int .sec-light :where(p,li,dd,small,figcaption,.sub,.svc-block-header p,.page-intro):not(:where(.pi-card,.pi-acc,.pi-why,.acc-item,.deal,.pkg-band-inner,.kc-cta-card,.calc-card,.calc-results,.kc-svc,.svc-tile,.job,.tool-card,.post-card,.blog-card,.hw-step,.step-card,.ba-pair figure,figure,.loc-sidebar,.leaflet-container) *){color:#2b3a4e!important}
+.pro-int .sec-light :where(h1,h2,h3,h4,p,li,span,small,b,strong,em,i,dt,dd,label,figcaption,summary,th,td,a,div):not(:where(.pi-card,.rel-card,.pi-acc,.pi-ico,.pi-tick,.pi-btn,.acc-item,.acc-head,.acc-body,.kc-svc,.kc-svc-body,.svc-tile,.svc-tile-body,.calc-card,.calc-results,.calc-cta,.deal,.pkg-band-inner,.hw-step,.step-card,.kc-cta-card,.btn,.btn-primary,.btn-gold,.deal-btn,.pkg-band-btn,.calc-surface-btn,.calc-condition-btn,.calc-toggle-btn,.cw-chip,.pkg-chip,.ba-pair figure,.kc-ba,.job,.tool-card,.post-card,.blog-card,.blog-hero,.ab-photo,.svc-final-cta,.hf-card,.other-svcs,.leaflet-container,.loc-explorer,.loc-sidebar,figure,[class*="badge"],[class*="pill"],[class*="ribbon"],[class*="burst"]) *){color:#0f1c2e!important;text-shadow:none!important}
+.pro-int .sec-light :where(p,li,dd,small,figcaption,.sub,.svc-block-header p,.page-intro):not(:where(.pi-card,.rel-card,.pi-acc,.pi-why,.acc-item,.deal,.pkg-band-inner,.kc-cta-card,.calc-card,.calc-results,.kc-svc,.svc-tile,.job,.tool-card,.post-card,.blog-card,.hw-step,.step-card,.ba-pair figure,figure,.loc-sidebar,.leaflet-container) *){color:#2b3a4e!important}
 .pro-int .sec-light :where(a):not(:where(.pi-card,.pi-acc,.acc-item,.deal,.pkg-band-inner,.kc-cta-card,.calc-card,.kc-svc,.svc-tile,.job,.tool-card,.post-card,.blog-card,.hw-step,.step-card,figure,.loc-sidebar,.loc-explorer,.leaflet-container,.other-svcs,.hf-card) *):not([class*="btn"]){color:#0d1e35!important;text-decoration-color:rgba(201,168,76,.6)}
 
 /* ---------- Interior service pages: homepage components (2026-09-29) ---------- */
@@ -683,3 +683,17 @@ body.pro-int{overflow-x:hidden;touch-action:pan-y pinch-zoom}
 .rel-card span{font-size:14.5px;color:rgba(255,255,255,.68);line-height:1.5}
 .rel-card em{font-style:normal;font-family:var(--font-head);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-l);margin-top:6px}
 @media(max-width:700px){.rel-grid{grid-template-columns:1fr}.rel-svcs.sec-navy{padding:48px 0 56px}.rel-svcs.wavy-top{padding-top:84px}}
+/* Related Services on a light section (Nov 2 2026): herringbone behind, navy
+   cards with the herringbone overlay like .pi-card, so the row alternates with
+   the navy steps band above it instead of stacking two topo sections. */
+.pro-int .rel-svcs.sec-light{padding:72px 0 96px}
+.pro-int .rel-svcs.sec-light .rel-eyebrow{color:#b8933a!important}
+.pro-int .rel-svcs.sec-light .rel-h2{color:#0f1c2e!important}
+.pro-int .rel-svcs.sec-light .rel-card{background:var(--bg);border:1px solid rgba(13,30,53,.12);border-radius:20px;box-shadow:0 16px 36px rgba(7,24,40,.16);position:relative;overflow:hidden}
+.pro-int .rel-svcs.sec-light .rel-card::after{content:'';position:absolute;inset:0;background:url('/images/herringbone-pattern.svg') center/60px repeat;opacity:.9;pointer-events:none}
+.pro-int .rel-svcs.sec-light .rel-card>*{position:relative;z-index:1}
+.pro-int .rel-svcs.sec-light .rel-card:hover{background:var(--bg);border-color:var(--gold);box-shadow:0 20px 40px rgba(7,24,40,.22)}
+.pro-int .rel-svcs.sec-light .rel-card b{color:#fff!important}
+.pro-int .rel-svcs.sec-light .rel-card span{color:rgba(255,255,255,.78)!important}
+.pro-int .rel-svcs.sec-light .rel-card em{color:var(--gold-l)!important}
+@media(max-width:700px){.pro-int .rel-svcs.sec-light{padding:52px 0 76px}}
