@@ -345,7 +345,8 @@ export async function intakeLead(opts) {
   queueInserts.push(
     sbAdmin.from('imessage_queue').insert({
       phone: ownerNotifyPhone,
-      body: 'New quote request from ' + client.first + ' ' + client.last + ' for ' + (service || 'a service') + '\nPhone: ' + phone,
+      body: 'New quote request from ' + client.first + ' ' + client.last + ' for ' + (service || 'a service') + '\nPhone: ' + phone
+        + (attachments.length ? '\n📷 Sent ' + attachments.length + ' photo' + (attachments.length > 1 ? 's' : '') + ' with the form. Open ' + client.first + ' in the CRM to see ' + (attachments.length > 1 ? 'them' : 'it') + '.' : ''),
       direction: 'outgoing',
       status: 'pending',
       client_name: client.first + ' ' + client.last,
