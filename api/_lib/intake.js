@@ -81,7 +81,7 @@ export function textOptOutReason(db, phone) {
 // How long the lead auto-text waits so an online booking can replace it.
 const LEAD_AUTOREPLY_HOLD_MS = 120 * 1000;
 
-const FALLBACK_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about {service}! I do free in person estimates weekday evenings from 5 and Saturday afternoons. What day works best for you to have me come by?";
+const FALLBACK_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about {service}! What day works best for me to come by for a free in person estimate?";
 
 export const sanitize = (s, max = 200) =>
   String(s || '').replace(/[\u0000-\u001F\u007F]/g, '').trim().slice(0, max);
