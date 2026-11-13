@@ -3,7 +3,9 @@
 //   /blog/<slug>         -> one post
 //   /sitemap-blog.xml    -> sitemap of the database posts
 // Posts are written by the blog agent on Eric's Mac (kaim-crm/mac/blog_writer.py)
-// and land in Supabase table blog_posts. The page shell comes from
+// and land in Supabase table blog_posts as drafts; Eric publishes them in the CRM.
+//   /blog/<slug>?preview=1 shows a draft (noindex). A hidden post with
+//   redirect_to set answers 301 to that slug. The page shell comes from
 // blog-template.html / blog-index-template.html (the site's own markup) so a
 // post looks exactly like every other page.
 
@@ -63,8 +65,16 @@ async function renderIndex(res) {
   return res.status(200).send(html);
 }
 
-async function renderPost(res, slug) {
-  const { data: p } = await sb.from('blog_posts').select('*').eq('slug', slug).eq('status', 'published').maybeSingle();
+async function renderPost(res, slug, preview) {
+  const { data: row } = await sb.from('blog_posts').select('*').eq('slug', slug).maybeSingle();
+  // A hidden duplicate sends its old address to the post that replaced it.
+  if (row && row.status !== 'published' && row.redirect_to && /^[a-z0-9-]{1,80}$/.test(row.redirect_to)) {
+    res.setHeader('Location', `/blog/${row.redirect_to}`);
+    return res.status(301).send('');
+  }
+  // A draft is readable only through the preview link from the CRM, and never indexed.
+  const isDraft = !!(row && row.status === 'draft' && preview);
+  const p = row && (row.status === 'published' || isDraft) ? row : null;
   if (!p) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     return res.status(404).send(fill(tpl('blog-index-template.html'), { LDJSON: '{}', POSTS: '<p>That post is not here any more. <a href="/blog">See the latest posts.</a></p>', COUNT: '0' }));
@@ -100,6 +110,12 @@ async function renderPost(res, slug) {
     MORE: (more || []).concat(STATIC_POSTS).slice(0, 3).map(card).join('\n'),
   });
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  if (isDraft) {
+    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+    return res.status(200).send(html.replace('<head>', '<head><meta name="robots" content="noindex, nofollow">')
+      .replace(/<body([^>]*)>/, '<body$1><div style="background:#b45309;color:#fff;font:600 14px/1.4 sans-serif;padding:10px 16px;text-align:center;position:relative;z-index:9999">DRAFT. Not on the site yet. Publish it from the CRM, Blog and Agents.</div>'));
+  }
   res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate=86400');
   return res.status(200).send(html);
 }
@@ -120,7 +136,7 @@ export default async function handler(req, res) {
     const slug = String(q.slug || '').trim().toLowerCase();
     if (slug) {
       if (!/^[a-z0-9-]{1,80}$/.test(slug)) return res.status(404).send('Not found');
-      return await renderPost(res, slug);
+      return await renderPost(res, slug, !!q.preview);
     }
     return await renderIndex(res);
   } catch (e) {
