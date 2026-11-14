@@ -281,6 +281,8 @@ export async function intakeLead(opts) {
         client.attribution = attribution;
         const attrLine = (attribution.gclid || attribution.gbraid || attribution.wbraid)
           ? 'Came from a Google Ads click'
+          : attribution.fbclid
+            ? 'Came from a Facebook or Instagram ad click'
           : attribution.utm_source
             ? 'Came from tagged link: ' + attribution.utm_source + (attribution.utm_campaign ? ' (' + attribution.utm_campaign + ')' : '')
             : attribution.referrer ? 'Came from: ' + attribution.referrer : '';

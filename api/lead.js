@@ -84,8 +84,10 @@ export default async function handler(req, res) {
   // organic). Whitelisted keys only, length-capped like every other field.
   const rawAttr = (body.attribution && typeof body.attribution === 'object') ? body.attribution : {};
   const attribution = {};
-  for (const k of ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'referrer', 'landing']) {
-    const v = sanitize(rawAttr[k], 200);
+  // fbclid / fbc / fbp are the Facebook click and browser ids; the CRM passes
+  // them back to Meta with the Purchase event so a paid job matches its ad.
+  for (const k of ['gclid', 'gbraid', 'wbraid', 'fbclid', 'fbc', 'fbp', 'utm_source', 'utm_medium', 'utm_campaign', 'referrer', 'landing']) {
+    const v = sanitize(rawAttr[k], (k === 'fbclid' || k === 'fbc') ? 600 : 200);
     if (v) attribution[k] = v;
   }
   if (Number.isFinite(rawAttr.captured)) attribution.captured = rawAttr.captured;
