@@ -50,7 +50,8 @@ function card(p) {
 }
 
 async function renderIndex(res) {
-  const { data } = await sb.from('blog_posts').select('slug,title,excerpt,category,published_at').eq('status', 'published').order('published_at', { ascending: false }).limit(200);
+  const { data, error } = await sb.from('blog_posts').select('slug,title,excerpt,category,published_at').eq('status', 'published').order('published_at', { ascending: false }).limit(200);
+  if (error) throw error;   // a database blip must answer 500 uncached, never a cached "no posts" / 404
   const posts = [...(data || []), ...STATIC_POSTS].sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
   const ld = { '@context': 'https://schema.org', '@type': 'Blog', name: 'Kaim Contracting Blog', url: `${SITE}/blog`,
     publisher: { '@type': 'Organization', name: 'Kaim Contracting LLC', url: `${SITE}/` },
@@ -66,7 +67,8 @@ async function renderIndex(res) {
 }
 
 async function renderPost(res, slug, preview) {
-  const { data: row } = await sb.from('blog_posts').select('*').eq('slug', slug).maybeSingle();
+  const { data: row, error } = await sb.from('blog_posts').select('*').eq('slug', slug).maybeSingle();
+  if (error) throw error;   // a database blip must answer 500 uncached, never a cached "no posts" / 404
   // A hidden duplicate sends its old address to the post that replaced it.
   if (row && row.status !== 'published' && row.redirect_to && /^[a-z0-9-]{1,80}$/.test(row.redirect_to)) {
     res.setHeader('Location', `/blog/${row.redirect_to}`);
@@ -121,7 +123,8 @@ async function renderPost(res, slug, preview) {
 }
 
 async function renderSitemap(res) {
-  const { data } = await sb.from('blog_posts').select('slug,updated_at,published_at').eq('status', 'published').order('published_at', { ascending: false }).limit(1000);
+  const { data, error } = await sb.from('blog_posts').select('slug,updated_at,published_at').eq('status', 'published').order('published_at', { ascending: false }).limit(1000);
+  if (error) throw error;   // a database blip must answer 500 uncached, never a cached "no posts" / 404
   const urls = (data || []).map(p => `  <url><loc>${SITE}/blog/${esc(p.slug)}</loc><lastmod>${String(p.updated_at || p.published_at).slice(0, 10)}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>`);
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`;
   res.setHeader('Content-Type', 'application/xml; charset=utf-8');

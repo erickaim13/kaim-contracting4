@@ -72,7 +72,7 @@ export default async function handler(req, res) {
     const data = typeof a?.data === 'string'
       && /^data:image\/(png|jpe?g|webp|gif);base64,/.test(a.data)
       && a.data.length < 2_500_000 ? a.data : null;
-    return { name: sanitize(a?.name, 80), data };
+    return { name: sanitize(a?.name, 80).replace(/["'<>`=]/g, ''), data };   // the CRM shows this name inside HTML
   }).filter(a => {
     if (!a.data) return false;
     attachTotal += a.data.length;

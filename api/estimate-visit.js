@@ -200,6 +200,13 @@ async function bookVisit(req, res) {
   const optOut = textOptOutReason(db, phone);
   if (optOut) console.log('[estimate-visit] skipped client texts for job ' + jobRec.id + ': ' + optOut);
 
+  // Booking again moves the same visit: its old arrival reminder still named the old day, and nothing
+  // cancelled it (the Mac's healer saw the job as covered). Clear it before the new one is queued.
+  try {
+    await sbAdmin.from('imessage_queue').update({ status: 'cancelled', error: 'not sent: the visit was re-booked online' })
+      .eq('job_id', String(jobRec.id)).eq('status', 'pending').in('trigger_type', ['arrival_daybefore', 'arrival_morningof']);
+  } catch (e) { console.warn('[estimate-visit] could not clear old reminders:', e?.message || e); }
+
   // The pending "when are you available?" auto-reply is now obsolete.
   tasks.push(sbAdmin.from('imessage_queue')
     .update({ status: 'cancelled' })
