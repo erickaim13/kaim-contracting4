@@ -490,3 +490,5 @@ Append notable decisions here so the next session inherits them.
   Left alone, Eric decides: town count 26 vs 24 listed on service-areas, old landscape / drainage wording
   there, cramped footer Hours column on phones, two X icons in the open mobile menu, quote form errors are
   red outlines with no text, "Reserve your summer spot" on the calculators off season, help-wanted has two H1s.
+
+- 2026-11-14: Sand and Seal calculator sideways pan on phones (open since Sep 28) was the scroll reveal: `.rv-right` / `.rv-left` / `.rv-zoom` park a card past the screen edge until it scrolls in. Under 640px they rise instead (`css/site.css`, right after the reveal rules). Checked all live pages at 393px with headless Chrome.

@@ -650,6 +650,8 @@ body.pro-int{overflow-x:hidden;touch-action:pan-y pinch-zoom}
 .rv-on .rv-stagger.in>*{opacity:1;transform:none}
 .rv-on .rv-stagger-right>*{opacity:0;transform:translateX(44px);transition:opacity .7s cubic-bezier(.2,.65,.2,1),transform .8s cubic-bezier(.2,.65,.2,1)}
 .rv-on .rv-stagger-right.in>*{opacity:1;transform:none}
+/* phones: nothing waits off the side of the screen (a card parked 48px right of the edge let the page pan sideways on iPhones, e.g. the Sand & Seal calculator results); slide-ins rise instead */
+@media(max-width:640px){.rv-on .rv-left,.rv-on .rv-right{transform:translateY(30px)}.rv-on .rv-stagger-right>*{transform:translateY(30px)}.rv-on .rv-zoom{transform:scale(.96)}}
 .rv-on .rv-stagger.in>*:nth-child(2),.rv-on .rv-stagger-right.in>*:nth-child(2){transition-delay:.1s}
 .rv-on .rv-stagger.in>*:nth-child(3),.rv-on .rv-stagger-right.in>*:nth-child(3){transition-delay:.2s}
 .rv-on .rv-stagger.in>*:nth-child(4),.rv-on .rv-stagger-right.in>*:nth-child(4){transition-delay:.3s}
