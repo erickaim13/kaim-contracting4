@@ -415,6 +415,8 @@ body.pro-int{background:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5
    with class on-dark instead of growing the list. */
 .pro-int .sec-light .on-dark,.pro-int .sec-light .pw-bundle,.pro-int .sec-light .deal--free{color:#f4f6f9}
 .pro-int .sec-light .on-dark.on-dark,.pro-int .sec-light a.pw-bundle{color:#f4f6f9!important}
+.pro-int .sec-light .on-dark{--text:#f4f6f9;--muted:#b9c4d4}
+
 /* ---------- Interior service pages: homepage components (2026-09-29) ---------- */
 .pro-int .pi-wrap{max-width:1200px;margin:0 auto;padding:0 24px}
 .pro-int .pi-sec{padding:84px 0 88px}
@@ -702,3 +704,7 @@ body.pro-int{overflow-x:hidden;touch-action:pan-y pinch-zoom}
 .pro-int .rel-svcs.sec-light .rel-card span{color:rgba(255,255,255,.78)!important}
 .pro-int .rel-svcs.sec-light .rel-card em{color:var(--gold-l)!important}
 @media(max-width:700px){.pro-int .rel-svcs.sec-light{padding:52px 0 76px}}
+/* on-dark cards: headings and buttons, placed last so the page-content heading rules above do not win */
+.pro-int .sec-light .on-dark.on-dark.on-dark :is(h2,h3,h4){color:#f4f6f9!important}
+.pro-int .sec-light .on-dark.on-dark.on-dark :is(h2,h3,h4) span{color:var(--gold-l)!important}
+.pro-int .sec-light .on-dark.on-dark.on-dark a[class*="btn"]{color:#0d1e35!important}
