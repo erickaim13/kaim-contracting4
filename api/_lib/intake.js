@@ -175,6 +175,36 @@ async function degradedNotify(opts, db) {
   }
 }
 
+// Form photos go to the public client-photos bucket and the lead keeps only the link (Nov 14 2026).
+// They used to be written into crm_data as base64: two leads' photos were 1.0 MB of a 1.45 MB CRM,
+// re-uploaded on every save and re-downloaded by every device on every refresh. The CRM shows
+// `data` as an image address either way. If storage is down the photo is kept inline as before
+// (the CRM moves it out later), so a lead never loses its photos.
+async function storePhotos(list) {
+  if (!Array.isArray(list) || !list.length) return [];
+  try { await sbAdmin.storage.createBucket('client-photos', { public: true }); } catch (_) {}
+  return Promise.all(list.map(async (a, i) => {
+    try {
+      const m = /^data:image\/(png|jpe?g|webp|gif);base64,(.+)$/s.exec(String(a.data || ''));
+      if (!m) return a;
+      const ext = m[1] === 'jpeg' ? 'jpg' : m[1];
+      const buf = Buffer.from(m[2], 'base64');
+      const rnd = (await import('node:crypto')).randomBytes(12).toString('hex');
+      const path = `${new Date().toISOString().slice(0, 7)}/lead-${Date.now()}-${i}-${rnd}.${ext}`;
+      const up = await Promise.race([
+        sbAdmin.storage.from('client-photos').upload(path, buf, { contentType: 'image/' + (ext === 'jpg' ? 'jpeg' : ext), cacheControl: '31536000', upsert: false }),
+        new Promise(r => setTimeout(() => r({ error: new Error('upload timed out') }), 6000))
+      ]);
+      if (up.error) throw up.error;
+      const url = sbAdmin.storage.from('client-photos').getPublicUrl(path).data.publicUrl;
+      return url ? { ...a, data: url } : a;
+    } catch (e) {
+      console.warn('[intake] photo kept inline:', e?.message || e);
+      return a;
+    }
+  }));
+}
+
 /**
  * Create a new lead and fire the full new-lead automation.
  *
@@ -203,7 +233,7 @@ export async function intakeLead(opts) {
     first: rawFirst = '', last: rawLast = '', phone = '', email = '', address = '', service = '',
     message = '', contactPref = '', leadSource = '',
     attribution = null,
-    attachments = [],
+    attachments: rawAttachments = [],
     dedupeKey = null,
     extraClientFields = {},
     activityText = null,
@@ -213,6 +243,7 @@ export async function intakeLead(opts) {
   // "BRIAN BELMORE" and "brian" become "Brian": this is the name every
   // auto-text and the confirmation email greet the lead with.
   const first = tidyName(rawFirst), last = tidyName(rawLast);
+  const attachments = await storePhotos(rawAttachments);
 
   // 1 + 2. Read crm_data, add the lead, write it back — as a compare-and-swap
   // keyed on updated_at. The whole CRM is one JSONB row, so a blind
