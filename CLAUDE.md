@@ -471,3 +471,22 @@ Append notable decisions here so the next session inherits them.
 - 2026-11-14 (Meta click ids): the attribution script on line 7 of every page now also keeps `fbclid` and sends `fbclid`, `fbc` (the `_fbc` cookie, else built from the click id) and `fbp` (the `_fbp` cookie) with every `/api/lead` post, even on a visit with no stored source. `api/lead.js` whitelists them, `intake.js` stores them on `client.attribution` and notes "Came from a Facebook or Instagram ad click". The CRM's `api/_lib/capi.js` passes `fbc` / `fbp` to Meta with the Purchase event. Nothing reaches Meta until `META_CAPI_TOKEN` is set in the CRM's Vercel project.
 
 - 2026-11-14 (about page): Eric said the sections "repeating the same pattern looks glitchy". Meet the Owner and Where We Work were two light sections back to back. Order is now hero, Meet the Owner (light), Refer & Earn (navy, `wavy` both edges), Where We Work (light), the standard `.pi-cta` estimate band (navy), footer. No copy changed.
+
+- **2026-11-14** — Audit pass (headless Chrome over every page at 393 and 1280 wide, plus an API review).
+  (1) Form photos are uploaded to the public Supabase bucket `client-photos` by `storePhotos()` in
+  `api/_lib/intake.js` and the lead keeps only the link in `attachments[].data` (they were base64 inside
+  `crm_data`: 1.0 MB of a 1.45 MB CRM). If storage fails the photo stays inline and the CRM moves it later.
+  Upload names lose quote and angle characters in `api/lead.js`. (2) `api/blog.js` throws on a database error
+  so a blip answers 500 uncached instead of a cached empty blog or 404. (3) `api/estimate-visit.js` cancels the
+  pending arrival reminder of a visit that is re-booked. (4) Dark cards inside a light section: `site.css`
+  paints everything in `.sec-light` navy unless the card is on its exclusion list, so unlisted dark cards went
+  navy on navy (FAQ "Still have a question", the 10% bundle strip, the blog author box, the deal card's
+  "from"). Tag a dark card with class `on-dark`; do not grow the list. (5) Both calculators had a reveal script
+  with no opening script tag printing as text under the footer. (6) Paver sealing accordion: the featured item
+  swallowed the next two. (7) Quote page H1 cleared from under the fixed header on phones (116px). (8) 28
+  small before / after and circle images got 560px versions with `srcset` / `sizes`; phones preload
+  `faq-hero-800.webp`. Regenerate a `-560.webp` when one of those photos is replaced. (9) Homepage footer
+  referral link, quote favicon, "Calculators" naming, two em dashes in the paver sealing post.
+  Left alone, Eric decides: town count 26 vs 24 listed on service-areas, old landscape / drainage wording
+  there, cramped footer Hours column on phones, two X icons in the open mobile menu, quote form errors are
+  red outlines with no text, "Reserve your summer spot" on the calculators off season, help-wanted has two H1s.
