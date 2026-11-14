@@ -18,7 +18,7 @@
   'use strict';
 
   var SERVICES = ['House Washing', 'Roof Cleaning', 'Driveway or Walkway', 'Patio or Pool Deck',
-    'Deck or Fence', 'Paver Sealing', 'Oxidation Removal', 'Gutter Brightening', 'Something Else'];
+    'Deck or Fence', 'Paver Sealing', 'Oxidation Removal', 'Gutter Cleaning', 'Gutter Brightening', 'Something Else'];
 
   var CSS = '.kcf{background:rgba(13,30,53,.72);-webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:26px 22px 18px;box-shadow:0 28px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.09);width:100%;color:#fff;font-family:"Source Sans 3",sans-serif;text-align:left}'
     + '.kcf-title{font-family:"Montserrat",sans-serif;font-size:19px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#e2c47a;margin:0 0 4px;line-height:1.2;text-align:center}'

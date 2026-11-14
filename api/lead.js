@@ -18,7 +18,7 @@ const SERVICE_OPTS = new Set([
   // Specific service labels from the quote form dropdown - keep in sync with
   // js/kc-form.js SERVICES. The auto-reply text uses this label verbatim.
   'House Washing', 'Roof Cleaning', 'Driveway or Walkway', 'Patio or Pool Deck',
-  'Deck or Fence', 'Oxidation Removal', 'Gutter Brightening'
+  'Deck or Fence', 'Oxidation Removal', 'Gutter Brightening', 'Gutter Cleaning'
 ]);
 
 export default async function handler(req, res) {
