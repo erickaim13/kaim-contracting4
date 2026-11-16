@@ -34,6 +34,41 @@
       "source": "/mulch-calculator",
       "destination": "/tools",
       "permanent": true
+    },
+    {
+      "source": "/blog/black-roof-streaks-why-scrubbing-makes-worse-2",
+      "destination": "/blog/black-roof-streaks-why-scrubbing-makes-worse",
+      "permanent": true
+    },
+    {
+      "source": "/blog/what-black-roof-streaks-are-scrubbing-worse",
+      "destination": "/blog/black-roof-streaks-why-scrubbing-makes-worse",
+      "permanent": true
+    },
+    {
+      "source": "/blog/diy-roof-cleaning-mistake-scrubbing",
+      "destination": "/blog/black-roof-streaks-why-scrubbing-makes-worse",
+      "permanent": true
+    },
+    {
+      "source": "/blog/fall-roof-streaks-before-winter",
+      "destination": "/blog/black-roof-streaks-why-scrubbing-makes-worse",
+      "permanent": true
+    },
+    {
+      "source": "/blog/black-roof-streaks-what-they-are-scrubbing",
+      "destination": "/blog/black-roof-streaks-why-scrubbing-makes-worse",
+      "permanent": true
+    },
+    {
+      "source": "/blog/pressure-washer-wrecks-roof-black-streaks",
+      "destination": "/blog/black-roof-streaks-why-scrubbing-makes-worse",
+      "permanent": true
+    },
+    {
+      "source": "/blog/north-side-siding-algae-fall",
+      "destination": "/blog/wash-north-side-house-before-winter",
+      "permanent": true
     }
   ],
   "cleanUrls": true,
