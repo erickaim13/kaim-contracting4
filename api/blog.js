@@ -20,9 +20,9 @@ const SITE = 'https://kaimcontracting.com';
 
 // The two posts that were hand built as static pages before the agent existed.
 const STATIC_POSTS = [
-  { slug: '/blog-fall-house-washing', title: 'Wash Your House Before Winter: Why Fall Is the Deadline', category: 'Pressure Washing', published_at: '2026-07-21',
+  { slug: '/blog-fall-house-washing', title: 'Wash Your House Before Winter: Why Fall Is the Deadline', category: 'Pressure Washing', published_at: '2026-07-21', cover_image: '/images/ba-siding-after.webp', cover_alt: 'Vinyl siding after a soft wash', read_minutes: 5,
     excerpt: 'Algae and mildew do not die over a New England winter, they spread under the snow. What a fall soft wash protects, the difference between soft washing and pressure washing, and when to book before the schedule fills.' },
-  { slug: '/blog-paver-sealing', title: 'Benefits of Sealing a Paver Patio in Massachusetts', category: 'Pavers', published_at: '2026-05-26',
+  { slug: '/blog-paver-sealing', title: 'Benefits of Sealing a Paver Patio in Massachusetts', category: 'Paver Sealing', published_at: '2026-05-26', cover_image: '/images/ps-real-after-2.webp', cover_alt: 'Paver patio after cleaning, sanding and sealing', read_minutes: 6,
     excerpt: 'Why sealing matters in New England, when to do it, and how to know your paver patio or driveway is ready. The five real benefits, the cost range, and when DIY makes sense vs. when to call us.' },
 ];
 
@@ -49,8 +49,24 @@ function card(p) {
   </a>`;
 }
 
+// The blog index card: photo on top, light card, used only on /blog.
+function indexCard(p, i) {
+  const href = p.slug.startsWith('/') ? p.slug : `/blog/${p.slug}`;
+  const mins = p.read_minutes || Math.max(2, Math.round((p.word_count || 900) / 220));
+  const img = p.cover_image || '/images/ps-hero-after.webp';
+  return `<a href="${esc(href)}" class="kbx-card${i === 0 ? ' kbx-lead' : ''}">
+    <div class="kbx-img"><img src="${esc(img)}" alt="${esc(p.cover_alt || p.title)}" width="800" height="500" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"></div>
+    <div class="kbx-body">
+      <span class="kbx-cat">${i === 0 ? 'Newest &middot; ' : ''}${esc(p.category || 'Blog')}</span>
+      <h3 class="kbx-title">${esc(p.title)}</h3>
+      <p class="kbx-x">${esc(p.excerpt || '')}</p>
+      <div class="kbx-foot"><span class="kbx-date">${esc(fmtDate(p.published_at))} &middot; ${mins} min read</span><span class="kbx-go">Read post <i aria-hidden="true">&rarr;</i></span></div>
+    </div>
+  </a>`;
+}
+
 async function renderIndex(res) {
-  const { data, error } = await sb.from('blog_posts').select('slug,title,excerpt,category,published_at').eq('status', 'published').order('published_at', { ascending: false }).limit(200);
+  const { data, error } = await sb.from('blog_posts').select('slug,title,excerpt,category,published_at,cover_image,cover_alt,read_minutes,word_count').eq('status', 'published').order('published_at', { ascending: false }).limit(200);
   if (error) throw error;   // a database blip must answer 500 uncached, never a cached "no posts" / 404
   const posts = [...(data || []), ...STATIC_POSTS].sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
   const ld = { '@context': 'https://schema.org', '@type': 'Blog', name: 'Kaim Contracting Blog', url: `${SITE}/blog`,
@@ -58,7 +74,7 @@ async function renderIndex(res) {
     blogPost: posts.slice(0, 50).map(p => ({ '@type': 'BlogPosting', headline: p.title, url: p.slug.startsWith('/') ? SITE + p.slug : `${SITE}/blog/${p.slug}`, datePublished: p.published_at, author: { '@type': 'Person', name: 'Eric Kaim' } })) };
   const html = fill(tpl('blog-index-template.html'), {
     LDJSON: JSON.stringify(ld),
-    POSTS: posts.map(card).join('\n'),
+    POSTS: posts.map(indexCard).join('\n'),
     COUNT: String(posts.length),
   });
   res.setHeader('Content-Type', 'text/html; charset=utf-8');

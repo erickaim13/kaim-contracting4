@@ -492,3 +492,5 @@ Append notable decisions here so the next session inherits them.
   red outlines with no text, "Reserve your summer spot" on the calculators off season, help-wanted has two H1s.
 
 - 2026-11-14: Sand and Seal calculator sideways pan on phones (open since Sep 28) was the scroll reveal: `.rv-right` / `.rv-left` / `.rv-zoom` park a card past the screen edge until it scrolls in. Under 640px they rise instead (`css/site.css`, right after the reveal rules). Checked all live pages at 393px with headless Chrome.
+
+- 2026-11-16 (blog): the 7 hidden duplicate posts are deleted from `blog_posts`; their old addresses forward from `vercel.json` now (the `redirect_to` path in `api/blog.js` still works but no row uses it). `/blog` index rebuilt: the cards were navy text on navy cards inside a light section. Now light photo cards (`indexCard` in `api/blog.js`, `.kbx-*` CSS in `blog-index-template.html`): newest post wide with its photo beside it, the rest two across, one column on phones, cover photo, category pill, read time. The post page's "More from the blog" cards (`card`, `.kb-card`, on navy) are unchanged. The two static posts carry a cover in `STATIC_POSTS`.
