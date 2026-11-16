@@ -710,3 +710,19 @@ body.pro-int{overflow-x:hidden;touch-action:pan-y pinch-zoom}
 .pro-int .sec-light .on-dark.on-dark.on-dark :is(h2,h3,h4){color:#f4f6f9!important}
 .pro-int .sec-light .on-dark.on-dark.on-dark :is(h2,h3,h4) span{color:var(--gold-l)!important}
 .pro-int .sec-light .on-dark.on-dark.on-dark a[class*="btn"]{color:#0d1e35!important}
+
+/* Blog newsletter sign-up box (markup: SIGNUP in api/blog.js) */
+.kbn{display:grid;grid-template-columns:1.1fr 1fr;gap:20px 32px;align-items:center;margin:44px 0 0;padding:30px 32px;background:#fdf8ea;border:1px solid rgba(201,168,76,.6);border-radius:18px;box-shadow:0 10px 30px rgba(7,24,40,.08)}
+.pro-int .sec-light .kbn h3{font-family:Montserrat,'Arial Narrow',sans-serif;font-size:22px;font-weight:700;line-height:1.25;letter-spacing:0;text-transform:none;color:#0f1c2e!important;margin:0 0 6px;padding:0;border:0}
+.pro-int .sec-light .kbn p{font-size:15.5px;line-height:1.6;color:#2b3a4e!important;margin:0}
+.kbn-form{display:flex;flex-wrap:wrap;gap:10px;margin:0}
+.kbn-form input[type=email]{flex:1 1 190px;min-width:0;height:52px;padding:0 16px;font:16px 'Source Sans 3','Segoe UI',Arial,sans-serif;color:#0f1c2e;background:#fff;border:1px solid rgba(13,30,53,.28);border-radius:12px;-webkit-appearance:none;appearance:none}
+.kbn-form input[type=email]:focus{outline:2px solid #c9a84c;outline-offset:1px;border-color:#c9a84c}
+.pro-int .sec-light .kbn-form button{height:52px;padding:0 24px;border:0;border-radius:12px;background:#0d1e35;color:#fff!important;font:700 14.5px Montserrat,'Arial Narrow',sans-serif;letter-spacing:.02em;cursor:pointer;transition:background .2s,transform .15s}
+.pro-int .sec-light .kbn-form button:hover{background:#1b3a63;transform:translateY(-1px)}
+.kbn-form button:disabled{opacity:.7;cursor:default}
+.kbn-hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+.pro-int .sec-light .kbn .kbn-msg{flex-basis:100%;font-size:14px;color:#9a2b1e!important}
+.kbn-msg:empty{display:none}
+.pro-int .sec-light .kbn .kbn-ok{flex-basis:100%;font-size:17px;font-weight:600;color:#0f1c2e!important}
+@media(max-width:760px){.kbn{grid-template-columns:1fr;padding:24px 20px;margin-top:32px;text-align:center}.kbn-form button{flex:1 1 100%}}

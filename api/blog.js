@@ -49,6 +49,26 @@ function card(p) {
   </a>`;
 }
 
+// Newsletter sign-up box, shown under the post list and under every post.
+// Posts to /api/subscribe; styles are .kbn in css/site.css.
+const SIGNUP = `<aside class="kbn" id="newsletter">
+  <div class="kbn-txt"><h3>Want the next one in your inbox?</h3><p>Seasonal tips for your home from our crew, sent when there is something worth knowing. Unsubscribe any time.</p></div>
+  <form class="kbn-form" novalidate>
+    <input type="email" name="email" placeholder="Your email" autocomplete="email" inputmode="email" aria-label="Your email" required>
+    <input type="text" name="kc_hpot_xyz" class="kbn-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button type="submit">Sign me up</button>
+    <p class="kbn-msg" role="status"></p>
+  </form>
+</aside>
+<script>(function(){var box=document.getElementById('newsletter');if(!box)return;var f=box.querySelector('form'),msg=box.querySelector('.kbn-msg'),btn=f.querySelector('button'),busy=false;
+f.addEventListener('submit',function(e){e.preventDefault();if(busy)return;var em=(f.email.value||'').trim();
+if(!/^[^\\s@]+@[^\\s@]+\\.[a-z]{2,}$/i.test(em)){msg.textContent='That email does not look right.';f.email.focus();return;}
+busy=true;btn.disabled=true;btn.textContent='Sending...';msg.textContent='';
+fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,kc_hpot_xyz:f.kc_hpot_xyz.value,source:'Blog '+location.pathname})})
+.then(function(r){if(r.ok){box.classList.add('done');f.innerHTML='<p class="kbn-ok">You are on the list. Talk soon.</p>';try{if(window.gtag)gtag('event','newsletter_signup',{page:location.pathname});}catch(_){}return;}
+busy=false;btn.disabled=false;btn.textContent='Sign me up';msg.textContent=r.status===400?'That email does not look right.':'That did not go through. Try again in a minute.';})
+.catch(function(){busy=false;btn.disabled=false;btn.textContent='Sign me up';msg.textContent='That did not go through. Try again in a minute.';});});})();</script>`;
+
 // The blog index card: photo on top, light card, used only on /blog.
 function indexCard(p, i) {
   const href = p.slug.startsWith('/') ? p.slug : `/blog/${p.slug}`;
@@ -76,6 +96,7 @@ async function renderIndex(res) {
     LDJSON: JSON.stringify(ld),
     POSTS: posts.map(indexCard).join('\n'),
     COUNT: String(posts.length),
+    SIGNUP,
   });
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=86400');
@@ -125,6 +146,7 @@ async function renderPost(res, slug, preview) {
     COVER: esc(p.cover_image || '/images/ps-hero-after.webp'),
     COVER_ALT: esc(p.cover_alt || p.title),
     CONTENT: p.html,
+    SIGNUP,
     MORE: (more || []).concat(STATIC_POSTS).slice(0, 3).map(card).join('\n'),
   });
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
