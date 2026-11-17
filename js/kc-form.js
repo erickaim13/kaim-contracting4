@@ -89,6 +89,8 @@
 
     var params = new URLSearchParams(location.search);
     var preService = params.get('service') || '';
+    // Water Treatment is only offered to visitors arriving from /water-treatment (not in the everyday list).
+    if (preService === 'Water Treatment' && SERVICES.indexOf(preService) < 0) SERVICES.splice(SERVICES.length - 1, 0, preService);
     var srcPage = (params.get('src') || '').replace(/[^a-z0-9-]/gi, '').slice(0, 40);
     var urlOffer = (params.get('offer') || '').slice(0, 240);
 
@@ -299,7 +301,7 @@
           try {
             if (window.gtag) {
               var ph = (payload.phone || '').replace(/\D/g, '');
-              var val = payload.service === 'Paver Sealing' ? 400 : 150;
+              var val = (payload.service === 'Paver Sealing' || payload.service === 'Water Treatment') ? 400 : 150;
               gtag('event', 'conversion', { send_to: 'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD', value: val, currency: 'USD', user_data: { email: payload.email || undefined, phone_number: ph.length >= 10 ? '+1' + ph.slice(-10) : undefined, address: { first_name: payload.first || undefined } } });
               gtag('event', 'generate_lead', { lead_source: payload.source || 'Website' });
             }
