@@ -1,7 +1,7 @@
 // Blog newsletter sign-up.
 //   POST /api/subscribe {email, source}  -> saves the address in Supabase table
-//        newsletter_subscribers (one row per address; signing up again after
-//        leaving turns it back on). Same origin allow-list and honeypot as
+//        newsletter_subscribers (one row per address per list, list = 'blog' or
+//        'build'; signing up again after leaving turns it back on). Same origin allow-list and honeypot as
 //        api/lead.js. Nothing is emailed from here.
 //   GET  /api/subscribe?u=<token>        -> the unsubscribe link every
 //        newsletter email must carry. Marks the row and says so.
@@ -51,8 +51,10 @@ export default async function handler(req, res) {
     if (!/^[^\s@<>"']+@[^\s@<>"']+\.[a-z]{2,}$/.test(email)) return res.status(400).json({ error: 'Invalid email' });
     const source = String(body.source || 'Blog').replace(/[<>"'`]/g, '').trim().slice(0, 80);
 
+    // Two lists: 'blog' (homeowners, emailed each new post) and 'build' (the /build page).
+    const list = body.list === 'build' ? 'build' : 'blog';
     const { error } = await sb.from('newsletter_subscribers')
-      .upsert({ email, source, unsubscribed_at: null }, { onConflict: 'email' });
+      .upsert({ email, source, list, unsubscribed_at: null }, { onConflict: 'email,list' });
     if (error) throw error;
     return res.status(200).json({ ok: true });
   } catch (e) {
