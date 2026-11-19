@@ -165,7 +165,8 @@ body.menu-open::before{content:'';position:fixed;inset:0;background:rgba(2,10,22
   .kc-bar-call{color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)}
   .kc-bar-quote{color:var(--teal);background:var(--gold)}
   .kc-bar-quote:hover{background:var(--gold-l)}
-  body.has-bar{padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom))}
+  /* room for the bar goes inside the footer so no strip of page background shows under it */
+  body.has-bar .site-footer{padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom))}
   body.menu-open .kc-bar{display:none}
   .hf-call-row{display:none!important}
 }
@@ -548,7 +549,14 @@ body.pro-int{background:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5
   .site-footer .footer-social{justify-content:center;margin-top:10px}
   .site-footer .ft-col h4{font-size:12.5px;margin-bottom:10px}
   .site-footer .ft-col a{min-height:34px;font-size:14px}
-  .site-footer .ft-col:last-child{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;grid-auto-flow:column;gap:0 18px;padding-top:4px;border-top:1px solid rgba(255,255,255,.08)}
+  .site-footer .ft-col:last-child{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:0 18px;padding-top:4px;border-top:1px solid rgba(255,255,255,.08)}
+  /* calculators on their own row, then hours beside payments */
+  .site-footer .ft-col:last-child>h4:first-child,.site-footer .ft-col:last-child>.ft-calcs{grid-column:1/-1}
+  .site-footer .ft-col:last-child>.ft-calcs{margin:0}
+  .site-footer .ft-col:last-child>h4:nth-of-type(2){grid-column:1;grid-row:3}
+  .site-footer .ft-col:last-child>.ft-hours{grid-column:1;grid-row:4}
+  .site-footer .ft-col:last-child>h4:nth-of-type(3){grid-column:2;grid-row:3}
+  .site-footer .ft-col:last-child>.ft-pay{grid-column:2;grid-row:4;align-self:start}
   .site-footer .ft-col:last-child h4{margin-top:18px}
   .site-footer .ft-hours{margin:0;font-size:14px;line-height:1.6}
   .site-footer .ft-pay{gap:5px}
@@ -726,3 +734,6 @@ body.pro-int{overflow-x:hidden;touch-action:pan-y pinch-zoom}
 .kbn-msg:empty{display:none}
 .pro-int .sec-light .kbn .kbn-ok{flex-basis:100%;font-size:17px;font-weight:600;color:#0f1c2e!important}
 @media(max-width:760px){.kbn{grid-template-columns:1fr;padding:24px 20px;margin-top:32px;text-align:center}.kbn-form button{flex:1 1 100%}}
+
+/* process step numbers stay gold on their navy circle, in light sections too (2026-11-19) */
+.pro-int .sec-light .svc-process-circle .svc-process-num,.svc-process-circle .svc-process-num{color:#e2c47a!important}
