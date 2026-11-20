@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- deploy-bust:20261119215435 -->
+<!-- deploy-bust:20261119220535 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -211,6 +211,14 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
 .gp-modal-x:hover{background:rgba(255,255,255,.16)}.gp-modal-x b{font-size:20px;line-height:1;font-weight:400}
 .gp-modal iframe{flex:1;width:100%;border:0;background:#f1f5f9}
 body.gp-lock{overflow:hidden}
+.gp-h2{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;line-height:1.2;margin:6px 0 6px}
+.gp-bar{height:10px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden;margin:18px 0 8px}
+.gp-bar i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#c9a84c,#e2c47a);transition:width 1.1s cubic-bezier(.3,.7,.3,1);position:relative;overflow:hidden}
+.gp-bar i::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-100%);animation:gpShine 1.3s linear infinite}
+@keyframes gpShine{to{transform:translateX(100%)}}
+.gp-bar-lbl{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;color:rgba(255,255,255,.75)}
+.gp-bar-lbl b{font-family:'Montserrat',sans-serif;font-size:14px;color:var(--gold-l);font-variant-numeric:tabular-nums}
+@media(prefers-reduced-motion:reduce){.gp-bar i::after{animation:none}}
 @media(prefers-reduced-motion:reduce){.gp-step.on,.gp-scan::after,.gp-ticks li.go .gp-dot{animation:none}.gp-tiles,.gp-pin{transition:none}}
 </style>
 <link rel="stylesheet" href="/css/site.css">
@@ -277,7 +285,7 @@ body.gp-lock{overflow:hidden}
         <div class="gp-field"><label for="gpState">State</label><select id="gpState" name="state" autocomplete="address-level1"><option value="MA" selected>MA</option><option value="NH">NH</option></select></div>
         <div class="gp-field"><label for="gpZip">ZIP code</label><input type="text" id="gpZip" name="postal-code" autocomplete="postal-code" inputmode="numeric" maxlength="5"><div class="gp-err">5 digits.</div></div>
       </div>
-      <button type="submit" class="gp-cta">Find My House</button>
+      <button type="submit" class="gp-cta">Continue</button>
       <div class="gp-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Only used to price your gutters. Takes about 10 seconds.</div>
     </form>
     <div class="gp-trust"><span><b>&#10003;</b>Licensed &amp; Insured</span><span><b>&#10003;</b>Locally Owned</span><span><b>&#10003;</b>No Deposit</span></div>
@@ -291,8 +299,11 @@ body.gp-lock{overflow:hidden}
         <li data-t="find"><span class="gp-dot"></span><span>Finding your home<small></small></span></li>
         <li data-t="rec"><span class="gp-dot"></span><span>Pulling the town record<small></small></span></li>
         <li data-t="run"><span class="gp-dot"></span><span>Sizing up the gutter run<small></small></span></li>
-        <li data-t="price"><span class="gp-dot"></span><span>Building your price<small></small></span></li>
+        <li data-t="price"><span class="gp-dot"></span><span>Calculating your price<small></small></span></li>
+        <li data-t="quote"><span class="gp-dot"></span><span>Writing up your quote<small></small></span></li>
       </ul>
+      <div class="gp-bar" role="progressbar" aria-label="Calculating your price" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="gpBarBox"><i id="gpBar"></i></div>
+      <div class="gp-bar-lbl"><span id="gpBarTxt">Calculating your price</span><b id="gpBarPct">0%</b></div>
     </div>
   </section>
 
@@ -300,8 +311,8 @@ body.gp-lock{overflow:hidden}
   <section class="gp-step" data-step="gate">
     <div class="gp-card">
       <div class="gp-ready">
-        <div class="gp-ready-k" id="gpGateK">Your price is ready</div>
-        <div class="gp-blur" id="gpBlur" aria-hidden="true">$288</div>
+        <div class="gp-ready-k">Last step</div>
+        <h2 class="gp-h2">Who is this quote for?</h2>
         <div class="gp-facts" id="gpFacts"></div>
       </div>
       <form id="gpGateForm" novalidate autocomplete="on">
@@ -312,8 +323,8 @@ body.gp-lock{overflow:hidden}
         </div>
         <div class="gp-field"><label for="gpPhone">Mobile number</label><input type="tel" id="gpPhone" name="tel" placeholder="978-555-0123" autocomplete="tel" inputmode="tel"><div class="gp-err">Enter a 10 digit phone number.</div></div>
         <div class="gp-field"><label for="gpEmail">Email</label><input type="email" id="gpEmail" name="email" placeholder="you@example.com" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false"><div class="gp-err">Enter a valid email address.</div></div>
-        <button type="submit" class="gp-cta" id="gpGateBtn">Show My Price</button>
-        <div class="gp-note" id="gpGateNote">Your quote is sent to this number and email. No spam, ever.</div>
+        <button type="submit" class="gp-cta" id="gpGateBtn">Calculate My Price</button>
+        <div class="gp-note" id="gpGateNote">I text a copy of your quote to this number. No spam, ever.</div>
         <div class="gp-note" id="gpGateFail" style="display:none;color:#ff9d8f">That did not go through. Try again or <a href="tel:978-351-2195">call 978-351-2195</a>.</div>
       </form>
     </div>
@@ -370,7 +381,7 @@ body.gp-lock{overflow:hidden}
   <div class="gp-modal-bar"><span class="gp-modal-t">Your quote</span><button type="button" class="gp-modal-x" id="gpModalX" aria-label="Close the quote and go back to your price"><b>&times;</b> Back to my price</button></div>
   <iframe id="gpFrame" title="Your quote from Kaim Contracting"></iframe>
 </div>
-<script src="/js/gutter-price.js?v=2" defer></script>
+<script src="/js/gutter-price.js?v=3" defer></script>
 
 
 

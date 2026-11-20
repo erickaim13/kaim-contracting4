@@ -56,10 +56,12 @@ export function priceHouse(sqft, stories, cfg = IQ_DEFAULTS) {
   if (!(a >= MIN_SQFT) || a > cfg.iqMaxSqft) return null;
   if (!(st >= 1) || st > 2.5) return null;
   const two = st >= 1.75;
-  return {
-    clean: clamp(round25(a * (two ? cfg.iqClean2 : cfg.iqClean1)), cfg.iqCleanMin, cfg.iqCleanMax),
-    bright: clamp(round25(a * (two ? cfg.iqBright2 : cfg.iqBright1)), cfg.iqBrightMin, cfg.iqBrightMax)
-  };
+  const clean = clamp(round25(a * (two ? cfg.iqClean2 : cfg.iqClean1)), cfg.iqCleanMin, cfg.iqCleanMax);
+  // Brightening is the upsell (Eric, 2026-11-19): whatever the numbers in the
+  // CRM say, it never comes out at or above the cleaning price.
+  const bright = Math.max(0, Math.min(clean - 25,
+    clamp(round25(a * (two ? cfg.iqBright2 : cfg.iqBright1)), cfg.iqBrightMin, cfg.iqBrightMax)));
+  return { clean, bright };
 }
 
 /** "12A Oak Hill Rd, Haverhill" -> "12A" (the house number as typed), or ''. */

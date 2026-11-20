@@ -104,3 +104,11 @@ test('lookup: the same number on a same-named street one town over is not this h
   assert.deepEqual(sameTown([hav, law], 'BRADFORD', ['BRADFORD']), []);
   assert.deepEqual(sameTown([hav], '', []), [hav]);
 });
+test('brightening (the upsell) always comes out under the cleaning price', () => {
+  for (const [a, st] of [[1332, 1], [2004, 2], [2600, 1], [3744, 2], [4900, 2], [3000, 1.5]]) {
+    const p = priceHouse(a, st); assert.ok(p.bright <= p.clean - 25, a + ' sq ft');
+  }
+  // even when the CRM numbers would put it above
+  const p = priceHouse(2400, 2, iqConfig({ pq: { iqBrightMin: 400, iqBrightMax: 500 } }));
+  assert.equal(p.clean, 300); assert.equal(p.bright, 275);
+});

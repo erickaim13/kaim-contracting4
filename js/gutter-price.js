@@ -112,14 +112,71 @@
     S.unit = unit;
     S.address = st.split(',')[0].trim() + ', ' + tn + ', ' + stateEl.value + (zp ? ' ' + zp : '');
     ev('instant_quote_address');
-    scan();
+    gate();
   });
 
-  // ---- 2. finding the house -------------------------------------------------
+  // ---- 2. who the quote is for ---------------------------------------------
+  // Name, mobile number and email come BEFORE anything is calculated (Eric,
+  // 2026-11-19: no blurred price; gather the info, then the loading screen).
+  var phone = $('gpPhone');
+  function usDigits(v) {
+    var d = (v || '').replace(/\D/g, '');
+    if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
+    return /^[2-9]\d{2}[2-9]\d{6}$/.test(d) ? d : '';
+  }
+  phone.addEventListener('input', function () {
+    var d = phone.value.replace(/\D/g, ''), out;
+    if (d.length > 10 && d.charAt(0) === '1') d = d.slice(1);
+    d = d.slice(0, 10); out = d;
+    if (d.length > 6) out = d.slice(0, 3) + '-' + d.slice(3, 6) + '-' + d.slice(6);
+    else if (d.length > 3) out = d.slice(0, 3) + '-' + d.slice(3);
+    phone.value = out; mark(phone, false);
+  });
+
+  function gate(failed) {
+    $('gpFacts').textContent = S.address;
+    var btn = $('gpGateBtn'); btn.disabled = false; btn.textContent = 'Calculate My Price';
+    $('gpGateFail').style.display = failed ? 'block' : 'none';
+    show('gate');
+    if (!failed) setTimeout(function () { try { $('gpFirst').focus({ preventScroll: true }); } catch (_) { } }, 400);
+  }
+
+  $('gpGateForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = $('gpGateBtn'); if (btn.disabled) return;
+    var first = $('gpFirst').value.trim(), last = $('gpLast').value.trim(), email = $('gpEmail').value.trim(), bad = null;
+    mark($('gpFirst'), !first); mark($('gpLast'), !last); mark(phone, !usDigits(phone.value));
+    mark($('gpEmail'), !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email));
+    [$('gpFirst'), $('gpLast'), phone, $('gpEmail')].forEach(function (el) { if (!bad && el.classList.contains('err')) bad = el; });
+    if (bad) { bad.focus(); return; }
+    S.lead = {
+      first: first, last: last, phone: phone.value, email: email,
+      address: S.address, service: 'Gutter Cleaning',
+      message: 'Instant gutter price page:\n- Address: ' + S.address + (S.unit ? '\n- Unit: ' + S.unit : ''),
+      contactPref: 'Phone Call', source: 'Gutter Price Page' + (srcTag ? ' (from ' + srcTag + ')' : ''),
+      kc_hpot_xyz: $('gpHp').value || ''
+    };
+    btn.disabled = true;
+    calc();
+  });
+
+  // ---- 3. calculating -------------------------------------------------------
   function tick(name, state, note) {
     var li = root.querySelector('#gpTicks li[data-t="' + name + '"]'); if (!li) return;
     li.classList.remove('go', 'ok'); if (state) li.classList.add(state);
     if (note != null) li.querySelector('small').textContent = note;
+  }
+  // The bar: the fill eases to each mark, the number counts along with it.
+  var barAt = 0, barTimer = null;
+  function bar(to, label) {
+    $('gpBar').style.width = to + '%';
+    if (label) $('gpBarTxt').textContent = label;
+    clearInterval(barTimer);
+    barTimer = setInterval(function () {
+      if (barAt >= to) { clearInterval(barTimer); return; }
+      barAt = Math.min(to, barAt + 1);
+      $('gpBarPct').textContent = barAt + '%'; $('gpBarBox').setAttribute('aria-valuenow', String(barAt));
+    }, 28);
   }
   // The house from above: the state's 2025 aerial photo (MassGIS, public map tiles,
   // about 4 inches a pixel at zoom 20), laid out so the lot sits in the middle.
@@ -138,123 +195,78 @@
       box.appendChild(im);
     }
   }
-  function scan() {
-    var box = $('gpScan');
+  function leadEvents() {
+    try {
+      if (window.gtag) {
+        var ph = S.lead.phone.replace(/\D/g, '');
+        gtag('event', 'conversion', { send_to: 'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD', value: 150, currency: 'USD', user_data: { email: S.lead.email || undefined, phone_number: ph.length >= 10 ? '+1' + ph.slice(-10) : undefined, address: { first_name: S.lead.first || undefined } } });
+        gtag('event', 'generate_lead', { lead_source: S.lead.source });
+      }
+      if (window.fbq) fbq('track', 'Lead');
+    } catch (_) { }
+  }
+  function calc() {
+    var box = $('gpScan'), started = Date.now();
     box.classList.remove('has', 'done'); $('gpTiles').innerHTML = '';
     $('gpScanLbl').textContent = S.address.replace(/,? (MA|NH)( \d{5})?$/, '');
-    ['find', 'rec', 'run', 'price'].forEach(function (t) { tick(t, '', ''); });
+    ['find', 'rec', 'run', 'price', 'quote'].forEach(function (t) { tick(t, '', ''); });
+    barAt = 0; $('gpBarPct').textContent = '0%'; $('gpBar').style.width = '0%';
     show('scan');
-    tick('find', 'go');
-    var started = Date.now();
-    post('/api/instant-quote', { action: 'lookup', address: S.address })
-      .catch(function () { return { ok: true, found: false }; })
-      .then(function (h) {
-        // Never faster than a beat: the steps are meant to be read.
-        return wait(Math.max(0, 1500 - (Date.now() - started))).then(function () { return h; });
-      })
+    tick('find', 'go'); bar(14, 'Finding your home');
+    // Both run while the steps play: the house facts for this screen, and the
+    // real work (the lead and the quote saved in the CRM). "?via=/api/lead" makes
+    // the page's attribution script attach the ad click ids; if the instant
+    // endpoint fails, the lead still goes in the normal way.
+    var look = post('/api/instant-quote', { action: 'lookup', address: S.address }).catch(function () { return { ok: true, found: false }; });
+    var quote = post('/api/instant-quote?via=/api/lead', Object.assign({ action: 'quote', variant: variant }, S.lead))
+      .catch(function () { return post('/api/lead', S.lead).then(function () { return { ok: true, instant: false }; }); })
+      .then(function (r) { leadEvents(); return r; }, function () { return null; });
+
+    look.then(function (h) { return wait(Math.max(0, 1500 - (Date.now() - started))).then(function () { return h; }); })
       .then(function (h) {
         S.house = h && h.found ? h : null;
         if (!S.house) {
           tick('find', 'ok', 'Got the address');
-          tick('rec', 'go');
-          return wait(1200).then(function () {
+          tick('rec', 'go'); bar(55, 'Checking the town record');
+          return wait(1300).then(function () {
             box.classList.add('done');
             tick('rec', 'ok', 'This one needs a quick look from me');
-            return wait(900).then(function () { gate(); });
+            bar(90, 'Sending it to Eric');
           });
         }
         if (h.lat && h.lng) aerialTiles(Number(h.lat), Number(h.lng), function () { box.classList.add('has'); });
         var two = Number(h.stories) >= 1.75;
         tick('find', 'ok', titleCase(h.addr) + (h.city ? ', ' + titleCase(h.city) : ''));
-        tick('rec', 'go');
+        tick('rec', 'go'); bar(34, 'Pulling the town record');
         return wait(1300).then(function () {
           tick('rec', 'ok', Number(h.sqft).toLocaleString('en-US') + ' sq ft' + (h.style ? ' · ' + titleCase(h.style) : '') + (h.year ? ' · built ' + h.year : ''));
-          tick('run', 'go');
+          tick('run', 'go'); bar(56, 'Sizing up the gutter run');
           return wait(1300);
         }).then(function () {
           tick('run', 'ok', two ? '2 story roofline, ladder work' : '1 story roofline');
-          tick('price', 'go');
-          return wait(1200);
+          tick('price', 'go'); bar(76, 'Calculating your price');
+          return wait(1300);
         }).then(function () {
           tick('price', 'ok', 'Done');
-          box.classList.add('done');
-          return wait(550);
-        }).then(function () { gate(); });
-      });
-  }
-
-  // ---- 3. name and phone ----------------------------------------------------
-  var phone = $('gpPhone');
-  function usDigits(v) {
-    var d = (v || '').replace(/\D/g, '');
-    if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
-    return /^[2-9]\d{2}[2-9]\d{6}$/.test(d) ? d : '';
-  }
-  phone.addEventListener('input', function () {
-    var d = phone.value.replace(/\D/g, ''), out;
-    if (d.length > 10 && d.charAt(0) === '1') d = d.slice(1);
-    d = d.slice(0, 10); out = d;
-    if (d.length > 6) out = d.slice(0, 3) + '-' + d.slice(3, 6) + '-' + d.slice(6);
-    else if (d.length > 3) out = d.slice(0, 3) + '-' + d.slice(3);
-    phone.value = out; phone.classList.remove('err');
-  });
-  phone.addEventListener('input', function () { mark(phone, false); });
-
-  function gate() {
-    var h = S.house;
-    $('gpGateK').textContent = h ? 'Your price is ready' : 'I will price this one myself';
-    $('gpBlur').style.display = h ? '' : 'none';
-    $('gpFacts').textContent = h
-      ? S.address
-      : 'The town record does not give me enough on this house to price it on the spot. Leave your number and I will text you a price.';
-    $('gpGateBtn').textContent = h ? 'Show My Price' : 'Text Me My Price';
-    $('gpGateNote').textContent = h ? 'Your quote is sent to this number and email. No spam, ever.' : 'Usually within the hour. No spam, ever.';
-    show('gate');
-    setTimeout(function () { try { $('gpFirst').focus({ preventScroll: true }); } catch (_) { } }, 400);
-  }
-
-  $('gpGateForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var btn = $('gpGateBtn'); if (btn.disabled) return;
-    var first = $('gpFirst').value.trim(), last = $('gpLast').value.trim(), email = $('gpEmail').value.trim(), bad = null;
-    // Name, mobile number and email are all taken before the price is shown (Eric, 2026-11-19).
-    mark($('gpFirst'), !first); mark($('gpLast'), !last); mark(phone, !usDigits(phone.value));
-    mark($('gpEmail'), !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email));
-    [$('gpFirst'), $('gpLast'), phone, $('gpEmail')].forEach(function (el) { if (!bad && el.classList.contains('err')) bad = el; });
-    if (bad) { bad.focus(); return; }
-    var source = 'Gutter Price Page' + (srcTag ? ' (from ' + srcTag + ')' : '');
-    var payload = {
-      first: first, last: last, phone: phone.value, email: email,
-      address: S.address, service: 'Gutter Cleaning',
-      message: 'Instant gutter price page:\n- Address: ' + S.address + (S.unit ? '\n- Unit: ' + S.unit : ''),
-      contactPref: 'Phone Call', source: source, kc_hpot_xyz: $('gpHp').value || ''
-    };
-    S.lead = payload;
-    var label = btn.textContent;
-    btn.disabled = true; btn.textContent = S.house ? 'Getting your price...' : 'Sending...';
-    $('gpGateFail').style.display = 'none';
-    // "?via=/api/lead": the attribution script in the page head only attaches the
-    // ad click ids to requests with /api/lead in the address. If the instant
-    // endpoint fails, the lead still goes in the normal way.
-    post('/api/instant-quote?via=/api/lead', Object.assign({ action: 'quote', variant: variant }, payload))
-      .catch(function () { return post('/api/lead', payload); })
-      .then(function (res) {
-        try {
-          if (window.gtag) {
-            var ph = payload.phone.replace(/\D/g, '');
-            gtag('event', 'conversion', { send_to: 'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD', value: 150, currency: 'USD', user_data: { email: payload.email || undefined, phone_number: ph.length >= 10 ? '+1' + ph.slice(-10) : undefined, address: { first_name: payload.first || undefined } } });
-            gtag('event', 'generate_lead', { lead_source: source });
-          }
-          if (window.fbq) fbq('track', 'Lead');
-        } catch (_) { }
-        if (res && res.instant && res.url) { S.quote = res; price(); }
-        else done('Got it, ' + first + '!', 'I will take a look at your house and text you a price, usually within the hour.');
+          tick('quote', 'go'); bar(92, 'Writing up your quote');
+          return wait(900);
+        });
       })
-      .catch(function () {
-        btn.disabled = false; btn.textContent = label;
-        $('gpGateFail').style.display = 'block';
+      .then(function () { return quote; })
+      .then(function (res) {
+        if (!res) { gate(true); return; }   // nothing went through: back to the form, nothing lost
+        box.classList.add('done');
+        if (res.instant && res.url) {
+          S.quote = res;
+          tick('quote', 'ok', 'Ready'); bar(100, 'Your quote is ready');
+          return wait(750).then(function () { price(); });
+        }
+        bar(100, 'Sent');
+        return wait(600).then(function () {
+          done('Got it, ' + S.lead.first + '!', 'I will take a look at your house myself and text you a price, usually within the hour.');
+        });
       });
-  });
+  }
 
   // ---- 4. the price ---------------------------------------------------------
   function countUp(el, to, ms) {
