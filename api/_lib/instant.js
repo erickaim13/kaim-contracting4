@@ -207,7 +207,6 @@ export async function lookupHouse(address, fetchImpl = fetch) {
     if (m.addressComponents && m.addressComponents.state && m.addressComponents.state !== 'MA') return { ok: false, why: 'not_ma' };
     const lng = Number(m.coordinates.x), lat = Number(m.coordinates.y);
     // Only records within 2 miles of where the address really is.
-<<<<<<< Updated upstream
     // ... and only records in the town the address is in: the same number on a
     // same-named street one town over is a different house. A record's town
     // must be the geocoder's town or one the visitor typed (a village name like
@@ -215,12 +214,8 @@ export async function lookupHouse(address, fetchImpl = fetch) {
     // every candidate is in one town AND that town was not contradicted).
     const gcTown = normTown(m.addressComponents && m.addressComponents.city);
     const near = ((d && d.features) || []).filter(f => f && f.centroid && distM(lat, lng, Number(f.centroid.y), Number(f.centroid.x)) <= 3200)
-      .map(f => f.attributes || {});
-    const rows = sameTown(near, gcTown, parts);
-=======
-    const rows = ((d && d.features) || []).filter(f => f && f.centroid && distM(lat, lng, Number(f.centroid.y), Number(f.centroid.x)) <= 3200)
       .map(f => ({ ...(f.attributes || {}), _cx: f.centroid.x, _cy: f.centroid.y }));
->>>>>>> Stashed changes
+    const rows = sameTown(near, gcTown, parts);
     const out = pickParcel(rows, num, street);
     if (out.ok) { out.lat = lat; out.lng = lng; }
     return out;
