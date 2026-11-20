@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- deploy-bust:20261119220535 -->
+<!-- deploy-bust:20261120031948 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -165,52 +165,12 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
 .gp-ticks li.ok .gp-dot{background:var(--gold);border-color:var(--gold);animation:none}
 .gp-ticks li.ok .gp-dot::before{content:'\2713'}
 @keyframes gpSpin{to{transform:rotate(360deg)}}
-/* price ready, behind the name and phone */
 .gp-ready{text-align:center;margin-bottom:16px}
 .gp-ready-k{font-family:'Montserrat',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-l)}
-.gp-blur{font-family:'Montserrat',sans-serif;font-size:58px;font-weight:800;line-height:1.1;letter-spacing:.02em;filter:blur(11px);-webkit-user-select:none;user-select:none;margin:2px 0 4px}
 .gp-facts{font-size:13.5px;color:rgba(255,255,255,.62)}
 .gp-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-/* the price */
-.gp-price-k{font-family:'Montserrat',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-l);text-align:center}
-.gp-price{font-family:'Montserrat',sans-serif;font-size:64px;font-weight:800;line-height:1.05;text-align:center;margin:4px 0 2px;font-variant-numeric:tabular-nums}
-.gp-price-sub{text-align:center;font-size:14px;color:rgba(255,255,255,.66);line-height:1.5;margin-bottom:6px}
-.gp-incl{list-style:none;display:grid;gap:7px;margin:14px 0 2px;font-size:14.5px;color:rgba(255,255,255,.86)}
-.gp-incl li{display:flex;gap:9px;align-items:flex-start}.gp-incl li::before{content:'\2713';color:var(--gold-l);font-weight:700}
-.gp-up{margin-top:16px;border:1px solid rgba(201,168,76,.42);border-radius:18px;overflow:hidden;background:linear-gradient(180deg,rgba(201,168,76,.1),rgba(13,30,53,.6))}
-.gp-up-head{padding:16px 18px 12px}
-.gp-up-k{font-family:'Montserrat',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-l);margin-bottom:5px}
-.gp-up-h{font-family:'Montserrat',sans-serif;font-size:21px;font-weight:800;line-height:1.15}
-.gp-ba{position:relative;aspect-ratio:1018/704;overflow:hidden;touch-action:pan-y;cursor:ew-resize;-webkit-user-select:none;user-select:none;background:#0c1a2e}
-.gp-ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
-.gp-ba-top{position:absolute;inset:0;overflow:hidden;width:50%}
-.gp-ba-top img{width:auto;max-width:none;height:100%}
-.gp-ba-line{position:absolute;top:0;bottom:0;left:50%;width:3px;margin-left:-1.5px;background:#fff;box-shadow:0 0 12px rgba(0,0,0,.5)}
-.gp-ba-knob{position:absolute;top:50%;left:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#fff;color:var(--teal);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.45);font-size:17px;font-weight:700}
-.gp-ba-tag{position:absolute;top:10px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px;border-radius:6px}
-.gp-ba-tag.b{left:10px;background:rgba(7,24,40,.8);color:#fff}.gp-ba-tag.a{right:10px;background:var(--gold);color:var(--teal)}
-.gp-up-body{padding:14px 18px 18px}
-.gp-up-p{font-size:15px;line-height:1.55;color:rgba(255,255,255,.84);margin-bottom:14px}.gp-up-p b{color:var(--gold-l)}
-.gp-add{display:flex;align-items:center;gap:12px;width:100%;min-height:62px;padding:12px 14px;border-radius:14px;border:2px solid var(--gold);background:rgba(201,168,76,.1);color:#fff;font-family:'Source Sans 3',sans-serif;text-align:left;cursor:pointer;transition:background .15s,transform .15s}
-.gp-add:hover{transform:translateY(-1px)}
-.gp-add.on{background:var(--gold);color:var(--teal)}
-.gp-add .sw{flex-shrink:0;width:26px;height:26px;border-radius:8px;border:2px solid var(--gold-l);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:transparent}
-.gp-add.on .sw{background:var(--teal);border-color:var(--teal);color:var(--gold-l)}
-.gp-add .nm{flex:1;font-size:16px;font-weight:700;line-height:1.25}.gp-add .nm small{display:block;font-size:12.5px;font-weight:400;opacity:.8}
-.gp-add .pr{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:800;white-space:nowrap}
-.gp-total{display:flex;align-items:baseline;justify-content:space-between;margin:18px 2px 12px;font-size:15px;color:rgba(255,255,255,.7)}
-.gp-total b{font-family:'Montserrat',sans-serif;font-size:30px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
 .gp-fine{font-size:12px;color:rgba(255,255,255,.5);line-height:1.5;margin-top:11px;text-align:center}
 .gp-done-ico{width:58px;height:58px;border-radius:50%;background:rgba(201,168,76,.18);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:26px;color:var(--gold-l)}
-/* the full quote, opened over the page with a way back */
-.gp-modal{position:fixed;inset:0;z-index:3000;background:rgba(4,12,24,.82);display:none;flex-direction:column;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
-.gp-modal.on{display:flex;animation:gpIn .25s ease both}
-.gp-modal-bar{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px 10px 18px;padding-top:calc(10px + env(safe-area-inset-top));background:#0d1e35;border-bottom:1px solid rgba(255,255,255,.14)}
-.gp-modal-t{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-l)}
-.gp-modal-x{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;font-family:'Source Sans 3',sans-serif;font-size:15px;font-weight:600;cursor:pointer}
-.gp-modal-x:hover{background:rgba(255,255,255,.16)}.gp-modal-x b{font-size:20px;line-height:1;font-weight:400}
-.gp-modal iframe{flex:1;width:100%;border:0;background:#f1f5f9}
-body.gp-lock{overflow:hidden}
 .gp-h2{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;line-height:1.2;margin:6px 0 6px}
 .gp-bar{height:10px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden;margin:18px 0 8px}
 .gp-bar i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#c9a84c,#e2c47a);transition:width 1.1s cubic-bezier(.3,.7,.3,1);position:relative;overflow:hidden}
@@ -330,42 +290,16 @@ body.gp-lock{overflow:hidden}
     </div>
   </section>
 
-  <!-- 4. the price -->
+  <!-- 4. back from the quote: one button to open it again -->
   <section class="gp-step" data-step="price">
-    <div class="gp-card">
-      <div class="gp-price-k">Your gutter cleaning price</div>
-      <div class="gp-price" id="gpPrice">$0</div>
-      <div class="gp-price-sub" id="gpPriceSub"></div>
-      <ul class="gp-incl">
-        <li>Leaves and debris cleared from every gutter</li>
-        <li>Downspouts flushed and tested</li>
-        <li>No deposit, pay when the job is done</li>
-      </ul>
+    <div class="gp-card" style="text-align:center;padding:30px 20px">
+      <div class="gp-ready-k">Gutter cleaning</div>
+      <h2 class="gp-h2" id="gpReadyH">Your quote is ready</h2>
+      <div class="gp-facts" id="gpReadyAddr"></div>
+      <button type="button" class="gp-cta" id="gpGo" style="margin-top:20px">See My Quote</button>
+      <div class="gp-fine">The same quote I send every customer. Approve it there and I text you to set the day. No deposit.</div>
     </div>
-
-    <div class="gp-up" id="gpUp">
-      <div class="gp-up-head">
-        <div class="gp-up-k">While the ladders are up</div>
-        <div class="gp-up-h">Make your gutters look new again</div>
-      </div>
-      <div class="gp-ba" id="gpBa" role="slider" aria-label="Drag to compare before and after gutter brightening" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
-        <img src="/images/ba-gutter-after.webp" alt="Gutter bright white after brightening" width="1018" height="704">
-        <div class="gp-ba-top" id="gpBaTop"><img src="/images/ba-gutter-before.webp" alt="The same gutter covered in black streaks before brightening" width="1018" height="704"></div>
-        <div class="gp-ba-line" id="gpBaLine"></div><div class="gp-ba-knob" id="gpBaKnob" aria-hidden="true">&#8596;</div>
-        <span class="gp-ba-tag b">Before</span><span class="gp-ba-tag a">After</span>
-      </div>
-      <div class="gp-up-body">
-        <p class="gp-up-p">Those black streaks are <b>years of asphalt shingle runoff</b>, and rain will never wash them off. A specialized cleaner takes the staining off your gutters and brings them back to their former white glory. Same visit, done while I am already up there.</p>
-        <button type="button" class="gp-add" id="gpAdd" aria-pressed="false"><span class="sw">&#10003;</span><span class="nm">Add gutter brightening<small>Same visit</small></span><span class="pr" id="gpAddPr"></span></button>
-      </div>
-    </div>
-
-    <div class="gp-total"><span id="gpTotalLbl">Total</span><b id="gpTotal">$0</b></div>
-    <button type="button" class="gp-cta" id="gpGo">See My Full Quote</button>
-    <div class="gp-fine">Opens the real quote, same one I send every customer. Approve it there and I text you to set the day. No deposit. Price is for a single family home with gutters in normal condition.</div>
-    <button type="button" class="gp-link" id="gpLater">Not ready yet, text me the quote</button>
   </section>
-
   <!-- 5. done (texted the quote, or a house that needs a look) -->
   <section class="gp-step" data-step="done">
     <div class="gp-card" style="text-align:center;padding:30px 20px">
@@ -377,11 +311,7 @@ body.gp-lock{overflow:hidden}
   </section>
 
 </main>
-<div class="gp-modal" id="gpModal" role="dialog" aria-modal="true" aria-label="Your quote">
-  <div class="gp-modal-bar"><span class="gp-modal-t">Your quote</span><button type="button" class="gp-modal-x" id="gpModalX" aria-label="Close the quote and go back to your price"><b>&times;</b> Back to my price</button></div>
-  <iframe id="gpFrame" title="Your quote from Kaim Contracting"></iframe>
-</div>
-<script src="/js/gutter-price.js?v=3" defer></script>
+<script src="/js/gutter-price.js?v=4" defer></script>
 
 
 

@@ -1,14 +1,12 @@
 /* /gutter-price: the instant gutter cleaning price, as its own flow (2026-11-19).
  *
- * Eric did not want the instant price to feel like the normal lead form with a
- * number bolted on. So: address first -> a "finding your home" step that shows
- * the real house from above and what the town record says about it -> name and
- * phone to see the price -> the price, with brightening sold by a drag-to-compare
- * before and after -> the CRM quote page to approve.
+ * address -> who the quote is for (first, last, mobile, email) -> a calculating
+ * screen (the real house from above, the town record ticking in) -> the real
+ * CRM quote page, the same one every customer gets, where they see the number
+ * and approve it. There is no price screen on this page.
  *
  * Server: /api/instant-quote  { action:'lookup' }  house facts, never a price
- *                             { action:'quote' }   saves the lead + the CRM quote, returns the price
- *                             { action:'addon' }   adds brightening to that quote
+ *                             { action:'quote' }   saves the lead + the CRM quote, returns its link
  * A house the town record cannot price still becomes a normal lead: the same
  * 'quote' call saves it and Eric prices it himself.
  */
@@ -19,7 +17,7 @@
   var params = new URLSearchParams(location.search);
   var srcTag = (params.get('src') || '').replace(/[^a-z0-9-]/gi, '').slice(0, 40);
   var variant = params.get('instant') === '1' ? 'preview' : 'b';
-  var S = { address: '', house: null, lead: null, quote: null, bright: false };
+  var S = { address: '', house: null, lead: null, quote: null };
 
   // Eric's switch (CRM > Lead Sources). Off, or this visitor is on the normal
   // form side of a split test: the normal quote form takes over.
@@ -37,14 +35,14 @@
     }).catch(function () { });
   }
 
-  // The price screen survives a reload or the back button (2 hours).
+  // The finished quote survives a reload or the back button (2 hours).
   var KEEP = 'kc_gp_state';
-  function remember() { try { sessionStorage.setItem(KEEP, JSON.stringify({ t: Date.now(), address: S.address, house: S.house, lead: S.lead, quote: S.quote, bright: S.bright, sent: S.sent, approved: S.approved })); } catch (_) { } }
+  function remember() { try { sessionStorage.setItem(KEEP, JSON.stringify({ t: Date.now(), address: S.address, house: S.house, lead: S.lead, quote: S.quote })); } catch (_) { } }
   function recall() {
     try {
       var o = JSON.parse(sessionStorage.getItem(KEEP) || 'null');
       if (!o || !o.quote || !o.lead || Date.now() - o.t > 72e5) return false;
-      S.address = o.address; S.house = o.house; S.lead = o.lead; S.quote = o.quote; S.bright = !!o.bright; S.sent = !!o.sent; S.approved = !!o.approved;
+      S.address = o.address; S.house = o.house; S.lead = o.lead; S.quote = o.quote;
       return true;
     } catch (_) { return false; }
   }
@@ -259,7 +257,7 @@
         if (res.instant && res.url) {
           S.quote = res;
           tick('quote', 'ok', 'Ready'); bar(100, 'Your quote is ready');
-          return wait(750).then(function () { price(); });
+          return wait(750).then(openQuote);
         }
         bar(100, 'Sent');
         return wait(600).then(function () {
@@ -268,132 +266,34 @@
       });
   }
 
-  // ---- 4. the price ---------------------------------------------------------
-  function countUp(el, to, ms) {
-    var t0 = null;
-    function f(t) {
-      if (t0 == null) t0 = t;
-      var k = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - k, 3);
-      el.textContent = usd(to * e);
-      if (k < 1) requestAnimationFrame(f); else el.textContent = usd(to);
-    }
-    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = usd(to); return; }
-    requestAnimationFrame(f);
-    // Whatever happens to the animation (a background tab never runs it), the real number lands.
-    setTimeout(function () { el.textContent = usd(to); }, ms + 250);
-  }
-  function total() { return Number(S.quote.clean) + (S.bright ? Number(S.quote.bright) : 0); }
-  function drawTotal() {
-    $('gpTotal').textContent = usd(total());
-    $('gpTotalLbl').textContent = S.bright ? 'Cleaning + brightening' : 'Gutter cleaning';
-    var a = $('gpAdd');
-    a.classList.toggle('on', S.bright); a.setAttribute('aria-pressed', S.bright ? 'true' : 'false');
-    a.querySelector('.nm').firstChild.nodeValue = S.bright ? 'Brightening added' : 'Add gutter brightening';
-  }
-  function price(restored) {
-    var qd = S.quote;
-    $('gpPriceSub').textContent = S.lead.address;
-    $('gpUp').style.display = Number(qd.bright) > 0 ? '' : 'none';
-    $('gpAddPr').textContent = '+ ' + usd(qd.bright);
-    if (!restored) { S.bright = false; S.sent = false; }
-    drawTotal();
-    show('price');
-    if (restored) $('gpPrice').textContent = usd(qd.clean);
-    else { countUp($('gpPrice'), Number(qd.clean), 900); ev('instant_quote_shown', { value: Number(qd.clean), currency: 'USD' }); }
-    remember();
-    setTimeout(baHint, restored ? 300 : 1300);
-  }
-  $('gpAdd').addEventListener('click', function () {
-    S.bright = !S.bright; drawTotal(); remember();
-    if (S.bright) ev('instant_quote_add_brightening', { value: Number(S.quote.bright), currency: 'USD' });
-  });
-  // The quote on the CRM is kept in step with the brightening box: only told when it changed.
-  function syncAddon() {
-    if (!!S.sent === !!S.bright) return Promise.resolve();
-    var want = S.bright;
-    return post('/api/instant-quote', { action: 'addon', token: S.quote.token, bright: want })
-      .then(function () { S.sent = want; remember(); }, function () { });
-  }
-  // The full quote opens over this page. The button in its top bar (or Esc, or
-  // the phone's back button) closes it and the price screen is right where it was.
-  var modal = $('gpModal'), frame = $('gpFrame');
+  // ---- 4. the quote ---------------------------------------------------------
+  // Eric, 2026-11-19: no price screen of its own ("i just want the real quote i
+  // normally send customers for them to see the number and approve it"). The
+  // calculating screen ends on the real CRM quote page: the number is there, and
+  // so is the approve button.
   function openQuote() {
-    frame.src = S.quote.url + (S.quote.url.indexOf('?') > -1 ? '&' : '?') + 'embed=1&t=' + Date.now();
-    modal.classList.add('on'); document.body.classList.add('gp-lock');
-    try { history.pushState({ gpQuote: 1 }, ''); } catch (_) { }
-    $('gpModalX').focus();
+    remember();
+    ev('instant_quote_shown', { value: Number(S.quote.clean), currency: 'USD' });
+    location.href = S.quote.url;
   }
-  function closeQuote(fromPop) {
-    if (!modal.classList.contains('on')) return;
-    modal.classList.remove('on'); document.body.classList.remove('gp-lock');
-    frame.removeAttribute('src');
-    if (!fromPop) { try { if (history.state && history.state.gpQuote) history.back(); } catch (_) { } }
-    var go = $('gpGo'); go.disabled = false; go.textContent = S.approved ? 'See My Approved Quote' : 'See My Full Quote';
-    if (S.approved) approved();
-  }
-  $('gpModalX').addEventListener('click', function () { closeQuote(false); });
-  window.addEventListener('popstate', function () { closeQuote(true); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeQuote(false); });
-  // The quote page says so when it is approved or declined (kaim-crm index.html submitApproval).
-  window.addEventListener('message', function (e) {
-    if (!/^https:\/\/(billing\.kaimcontracting\.com|(www\.)?kaimcontractingapp\.com)$/.test(e.origin)) return;
-    var d = e.data || {};
-    if (d.kc === 'quote-approved') { S.approved = true; remember(); ev('instant_quote_approved', { value: total(), currency: 'USD' }); }
-  });
-  function approved() {
-    try { sessionStorage.removeItem(KEEP); } catch (_) { }
-    done('You are all set, ' + S.lead.first + '!', 'Quote approved. I will text you to set the day. No deposit, you pay when the job is done.');
+  // Only seen coming back from the quote (the back button, a reload): one button to open it again.
+  function ready() {
+    $('gpReadyH').textContent = 'Your quote is ready, ' + S.lead.first;
+    $('gpReadyAddr').textContent = S.lead.address;
+    var go = $('gpGo'); go.disabled = false; go.textContent = 'See My Quote';
+    show('price');
   }
   $('gpGo').addEventListener('click', function () {
     var go = $('gpGo'); if (go.disabled) return;
     go.disabled = true; go.textContent = 'Opening your quote...';
-    ev('instant_quote_continue', { value: total(), currency: 'USD' });
-    syncAddon().then(openQuote);
+    openQuote();
   });
-  $('gpLater').addEventListener('click', function () {
-    syncAddon().then(function () {
-      try { sessionStorage.removeItem(KEEP); } catch (_) { }
-      done('Got it!', 'Your quote is on its way by text. Open it whenever you are ready.');
-    });
-  });
-
-  // Before / after: drag (or arrow keys) to compare.
-  var ba = $('gpBa'), baTop = $('gpBaTop'), baLine = $('gpBaLine'), baKnob = $('gpBaKnob'), baPct = 50, baUsed = false;
-  function baSet(p) {
-    baPct = Math.max(3, Math.min(97, p));
-    baTop.style.width = baPct + '%'; baLine.style.left = baPct + '%'; baKnob.style.left = baPct + '%';
-    ba.setAttribute('aria-valuenow', String(Math.round(baPct)));
-  }
-  function baSize() { var w = ba.getBoundingClientRect().width; if (w) baTop.querySelector('img').style.width = w + 'px'; }
-  function baFrom(e) { var r = ba.getBoundingClientRect(); baSet((e.clientX - r.left) / r.width * 100); }
-  ba.addEventListener('pointerdown', function (e) { baUsed = true; try { ba.setPointerCapture(e.pointerId); } catch (_) { } baFrom(e); });
-  ba.addEventListener('pointermove', function (e) { if (e.buttons || e.pointerType === 'touch') { baUsed = true; baFrom(e); } });
-  ba.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowLeft') { baUsed = true; baSet(baPct - 6); e.preventDefault(); }
-    if (e.key === 'ArrowRight') { baUsed = true; baSet(baPct + 6); e.preventDefault(); }
-  });
-  window.addEventListener('resize', baSize);
-  // A short wiggle the first time so it is obvious the photo can be dragged.
-  function baHint() {
-    baSize();
-    if (baUsed || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
-    var path = [50, 22, 78, 50], i = 0, from = 50, t0 = null;
-    function f(t) {
-      if (baUsed) return;
-      if (t0 == null) t0 = t;
-      var k = Math.min(1, (t - t0) / 620), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-      baSet(from + (path[i + 1] - from) * e);
-      if (k < 1) { requestAnimationFrame(f); return; }
-      i++; from = path[i]; t0 = null;
-      if (i < path.length - 1) requestAnimationFrame(f);
-    }
-    requestAnimationFrame(f);
-  }
-  baSet(50);
+  // Back from the quote on a phone: the browser brings this page back frozen on the calculating screen.
+  window.addEventListener('pageshow', function (e) { if (e.persisted && S.quote && S.lead) ready(); });
 
   // ---- 5. done --------------------------------------------------------------
   function done(h, p) { $('gpDoneH').textContent = h; $('gpDoneP').textContent = p; show('done'); }
 
-  // Back on this page with a price already worked out: straight to it.
-  if (recall()) price(true);
+  // Back on this page with a quote already written: straight to its button.
+  if (recall()) ready();
 })();

@@ -223,7 +223,7 @@ async function makeQuote(req, body, res) {
     try {
       const r = await sbAdmin.from('imessage_queue').insert({
         phone: '+1' + phoneDigits,
-        body: `Hey ${first}, it's Eric with Kaim Contracting. Here's your gutter cleaning quote in case you want to look it over or grab a day: ${quoted.url}`,
+        body: `Hey ${first}, it's Eric with Kaim Contracting. Here's your gutter cleaning quote in case you want to look it over again: ${quoted.url}`,
         direction: 'outgoing', status: 'pending',
         client_name: `${first} ${last}`.trim(), trigger_type: 'instant_quote_link',
         send_after: new Date(Date.now() + 5 * 60 * 1000).toISOString()
