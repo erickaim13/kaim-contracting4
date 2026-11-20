@@ -194,6 +194,9 @@
       q('title').textContent = on ? 'Get Your Gutter Cleaning Price' : cfg.title;
       q('kicker').textContent = on ? 'Your price on screen in seconds' : cfg.kicker;
       b.textContent = on ? 'See My Price' : cfg.submitLabel;
+      // The quote page swaps its headline too (quote.html .qp-std / .qp-iq), so an ad click lands on "See Your Price Now".
+      var pStd = document.querySelector('.qp-std'), pIq = document.querySelector('.qp-iq');
+      if (pStd && pIq) { pStd.hidden = on; pIq.hidden = !on; }
     }
     // iqShare: null until the switch is known, then 0 / 50 / 100.
     var iqShare = null, iqAsking = false;
