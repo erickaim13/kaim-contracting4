@@ -89,6 +89,8 @@
     + '.kcf-ba figure+figure figcaption{background:#c9a84c;color:#0d1e35}'
     + '.kcf-pitch{font-size:13.5px;color:rgba(255,255,255,.8);line-height:1.5;margin:0 0 10px;text-align:left}.kcf-pitch b{color:#e2c47a;font-weight:700}'
     + '.kcf-brbox{border:1px solid rgba(201,168,76,.32);border-radius:12px;padding:11px 11px 1px;margin:0 0 12px;background:rgba(201,168,76,.05)}.kcf-brbox .kcf-addon{margin-bottom:10px}'
+    + '.kcf-iqtip{align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px;padding:12px 14px;border-radius:12px;border:1px solid rgba(201,168,76,.55);background:rgba(201,168,76,.12);color:#fff;text-decoration:none;font-family:"Source Sans 3",sans-serif;font-size:13px;line-height:1.3;transition:background .15s}'
+    + '.kcf-iqtip:hover{background:rgba(201,168,76,.2)}.kcf-iqtip b{display:block;font-size:14.5px}.kcf-iqtip i{font-style:normal;font-family:"Montserrat",sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0d1e35;background:#c9a84c;border-radius:8px;padding:9px 11px;white-space:nowrap}'
     + '.kcf-fine{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;margin-top:10px}'
     + '@media(max-width:640px){.kcf{padding:20px 16px 14px}.kcf-title{font-size:16px}.kcf-price{font-size:40px}}';
 
@@ -145,6 +147,7 @@
       + '<div class="kcf-field"><input type="text" data-kcf="town" placeholder="Town" autocomplete="address-level2" aria-label="Town"></div>'
       + '<div class="kcf-field"><textarea data-kcf="note" rows="2" placeholder="Anything we should know? (optional)" aria-label="Optional message"></textarea></div>'
       + (cfg.photos ? '<div class="kcf-field"><label class="kcf-file"><input type="file" data-kcf="files" accept="image/*" multiple style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Add photos of the project (optional)</label><div class="kcf-files" data-kcf="filelist"></div></div>' : '')
+      + '<a class="kcf-iqtip" data-kcf="iqtip" href="/gutter-price" style="display:none"><span><b>Want your price right now?</b>See it in seconds, no visit needed</span><i>Instant price &rarr;</i></a>'
       + '<div class="kcf-brbox" data-kcf="brbox" style="display:none">' + BRIGHT_PITCH + addonBtn('brwant', 'Add gutter brightening to my quote', 'One visit, both done') + '</div>'
       + '<button type="submit" class="kcf-cta" data-kcf="submit">' + esc(cfg.submitLabel) + '</button>'
       + '<div class="kcf-fail" data-kcf="fail">Could not send. Please try again or <a href="tel:978-351-2195">call 978-351-2195</a>.</div>'
@@ -168,7 +171,7 @@
         ddBtn.classList.remove('kcf-empty'); ddBtn.classList.remove('kcf-err');
         [].slice.call(ddPanel.querySelectorAll('button')).forEach(function (x) { x.classList.toggle('sel', x === b); });
         ddPanel.classList.remove('open'); ddBtn.classList.remove('open');
-        iqSync(); iqDeal();
+        iqPicked = true; iqSync(); iqDeal();
       });
     });
     if (ddPanel) document.addEventListener('click', function (e) {
@@ -184,6 +187,7 @@
     // Instant gutter price split test. iqGroup: '' (test off), 'a' (this form
     // as is), 'b' (instant price) or 'preview' (?instant=1).
     var iqGroup = params.get('instant') === '1' ? 'preview' : '';
+    var iqPicked = false;   // true once the visitor picks a service from the list themselves
     function iqOn() { return (iqGroup === 'b' || iqGroup === 'preview') && q('service').value === 'Gutter Cleaning'; }
     var wantBright = false;
     function iqSync() {
@@ -191,21 +195,17 @@
       if (!b || b.disabled) return;
       // The instant price is its own page (/gutter-price, 2026-11-19): a visitor
       // who is getting it is sent there, keeping the ad tags on the address.
-      if (on) {
-        var keep = new URLSearchParams(location.search); keep.delete('service');
-        if (iqGroup !== 'preview') keep.delete('instant');
-        var qs = keep.toString();
-        location.replace('/gutter-price' + (qs ? '?' + qs : ''));
-        return;
-      }
-      // Normal form: gutter cleaning visitors can ask for brightening too (the instant side offers it with the price).
-      q('brbox').style.display = (!on && q('service').value === 'Gutter Cleaning') ? 'block' : 'none';
-      q('title').textContent = on ? 'Get Your Gutter Cleaning Price' : cfg.title;
-      q('kicker').textContent = on ? 'Your price on screen in seconds' : cfg.kicker;
-      b.textContent = on ? 'See My Price' : cfg.submitLabel;
-      // The quote page swaps its headline too (quote.html .qp-std / .qp-iq), so an ad click lands on "See Your Price Now".
-      var pStd = document.querySelector('.qp-std'), pIq = document.querySelector('.qp-iq');
-      if (pStd && pIq) { pStd.hidden = on; pIq.hidden = !on; }
+      var keep = new URLSearchParams(location.search); keep.delete('service');
+      if (iqGroup !== 'preview') keep.delete('instant');
+      var qs = keep.toString(), dest = '/gutter-price' + (qs ? '?' + qs : '');
+      // Arrived with Gutter Cleaning already picked (an ad or a site button): straight to the price page.
+      if (on && !iqPicked) { location.replace(dest); return; }
+      // Picked Gutter Cleaning here themselves (Eric, 2026-11-19: "it should allow u to fill it out"):
+      // the form stays a normal form, with one line offering the instant price.
+      var tip = q('iqtip');
+      tip.style.display = on ? 'flex' : 'none'; tip.setAttribute('href', dest);
+      // Gutter cleaning visitors can ask for brightening on this form too.
+      q('brbox').style.display = q('service').value === 'Gutter Cleaning' ? 'block' : 'none';
     }
     // iqShare: null until the switch is known, then 0 / 50 / 100.
     var iqShare = null, iqAsking = false;
@@ -392,7 +392,7 @@
       if (iqGroup === 'a' && svc === 'Gutter Cleaning') payload.iq = 'a';
 
       var origText = btn.textContent;
-      var instant = iqOn();
+      var instant = false;   // the price lives on /gutter-price; this form always sends a normal lead
       btn.disabled = true; btn.textContent = instant ? 'Working out your price...' : 'Sending...';
       q('fail').style.display = 'none';
 
