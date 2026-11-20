@@ -95,6 +95,10 @@
   "functions": {
     "api/blog.js": {
       "includeFiles": "blog-*template.html"
+    },
+    "api/instant-quote.js": {
+      "includeFiles": "node_modules/laz-perf/lib/node/**",
+      "maxDuration": 30
     }
   }
 }

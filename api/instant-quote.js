@@ -26,9 +26,6 @@ import { randomBytes } from 'node:crypto';
 import { intakeLead, sbAdmin, sanitize, usPhoneDigits } from './_lib/intake.js';
 import { iqConfig, priceHouse, lookupHouse, buildEstimate, applyItems } from './_lib/instant.js';
 
-// A New Hampshire house is measured from the laser scan, a few seconds of work.
-export const config = { maxDuration: 30 };
-
 const ALLOWED_ORIGINS = new Set([
   'https://kaimcontracting.com',
   'https://www.kaimcontracting.com'
@@ -127,7 +124,8 @@ async function lookupOnly(req, body, res) {
   ]);
   const price = house.ok ? priceHouse(house.sqft, house.stories, iqConfig({ pq: pqRow?.pq || {} })) : null;
   res.setHeader('Cache-Control', 'no-store');
-  if (!price) return res.status(200).json({ ok: true, found: false });
+  // why: the reason code only (no_record, not_single_family, no_laser...), handy when checking an address
+  if (!price) return res.status(200).json({ ok: true, found: false, why: house.ok ? 'outside_range' : house.why });
   return res.status(200).json({
     ok: true, found: true, sqft: house.sqft, stories: house.stories,
     style: house.style, year: house.year, addr: house.addr, city: house.city, laser: !!house.laser,
