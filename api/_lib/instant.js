@@ -135,6 +135,33 @@ function distM(lat1, lng1, lat2, lng2) {
   return Math.hypot((lng2 - lng1) * k * 111320, (lat2 - lat1) * 110540);
 }
 
+const normTown = s => String(s || '').toUpperCase().replace(/[^A-Z ]/g, ' ').replace(/\s+/g, ' ').trim();
+// Town names found in both Massachusetts and New Hampshire.
+const BOTH_STATES = new Set(['SALEM', 'HUDSON', 'KINGSTON', 'NEWTON', 'BEDFORD', 'SALISBURY', 'WINDHAM', 'AUBURN', 'CHESTER',
+  'PELHAM', 'AMHERST', 'MILFORD', 'CONCORD', 'DOVER', 'PLYMOUTH', 'ROCHESTER', 'MANCHESTER', 'LEE', 'HAMPSTEAD']);
+/**
+ * Keep the candidate records that are in the address's own town. Pure, tested.
+ * known = the geocoder's town plus whatever the visitor typed after the street.
+ * A record whose town is one of those is kept. When none is, the records are
+ * kept only if the known names are not towns on any candidate at all (a
+ * village name such as Bradford for Haverhill) and they all sit in one town.
+ */
+export function sameTown(rows, gcTown, typedParts) {
+  const known = new Set([gcTown, ...(typedParts || [])].filter(Boolean));
+  if (!known.size) return rows;
+  const hit = rows.filter(a => known.has(normTown(a.CITY)));
+  if (hit.length) return hit;
+  const towns = new Set(rows.map(a => normTown(a.CITY)).filter(Boolean));
+  // The geocoder named a real town and no record is in it: wrong house.
+  if (gcTown && MA_TOWNS_NEARBY.has(gcTown)) return [];
+  return towns.size <= 1 ? rows : [];
+}
+// The towns Kaim works in: when the geocoder says one of these, a record from
+// any other town is never this house.
+const MA_TOWNS_NEARBY = new Set(['METHUEN', 'ANDOVER', 'NORTH ANDOVER', 'LAWRENCE', 'HAVERHILL', 'LOWELL', 'DRACUT', 'TEWKSBURY',
+  'BOXFORD', 'GEORGETOWN', 'GROVELAND', 'MERRIMAC', 'WEST NEWBURY', 'NORTH READING', 'MIDDLETON', 'WILMINGTON', 'CHELMSFORD',
+  'TYNGSBOROUGH', 'NEWBURYPORT', 'AMESBURY', 'READING', 'BILLERICA']);
+
 /**
  * Typed address -> the assessor record for that house.
  * The parcel layer is asked for that house number on streets starting with
@@ -150,6 +177,14 @@ export async function lookupHouse(address, fetchImpl = fetch) {
     const num = houseNumber(typed), street = typedStreet(typed);
     if (!num || !street) return { ok: false, why: 'no_house_number' };
     if (/\b(NH|New Hampshire)\b/i.test(typed)) return { ok: false, why: 'not_ma' };
+    // A New Hampshire zip, or a town name both states have with nothing that
+    // says Massachusetts: no instant price, the lead takes the normal form.
+    // ("12 Main St, Salem" was priced off the Salem MA house.)
+    const zip = (typed.match(/\b(\d{5})(?:-\d{4})?\s*$/) || [])[1] || '';
+    if (zip.startsWith('03')) return { ok: false, why: 'not_ma' };
+    const parts = typed.split(',').slice(1).map(normTown).filter(Boolean);
+    const saysMA = /\b(MA|Massachusetts)\b/i.test(typed) || /^0[12]/.test(zip);
+    if (!saysMA && parts.some(p => BOTH_STATES.has(p))) return { ok: false, why: 'state_unclear' };
     // The zip is dropped: the form's address suggestions sometimes carry a
     // neighbouring town's zip ("3 Bedford Place, Andover, 01841"), which
     // sends the geocoder to the wrong town.
@@ -170,8 +205,15 @@ export async function lookupHouse(address, fetchImpl = fetch) {
     if (m.addressComponents && m.addressComponents.state && m.addressComponents.state !== 'MA') return { ok: false, why: 'not_ma' };
     const lng = Number(m.coordinates.x), lat = Number(m.coordinates.y);
     // Only records within 2 miles of where the address really is.
-    const rows = ((d && d.features) || []).filter(f => f && f.centroid && distM(lat, lng, Number(f.centroid.y), Number(f.centroid.x)) <= 3200)
+    // ... and only records in the town the address is in: the same number on a
+    // same-named street one town over is a different house. A record's town
+    // must be the geocoder's town or one the visitor typed (a village name like
+    // Bradford is neither, so a record with no town match is kept only when
+    // every candidate is in one town AND that town was not contradicted).
+    const gcTown = normTown(m.addressComponents && m.addressComponents.city);
+    const near = ((d && d.features) || []).filter(f => f && f.centroid && distM(lat, lng, Number(f.centroid.y), Number(f.centroid.x)) <= 3200)
       .map(f => f.attributes || {});
+    const rows = sameTown(near, gcTown, parts);
     const out = pickParcel(rows, num, street);
     if (out.ok) { out.lat = lat; out.lng = lng; }
     return out;

@@ -235,6 +235,7 @@ export async function intakeLead(opts) {
     attribution = null,
     attachments: rawAttachments = [],
     dedupeKey = null,
+    webKey = null,
     extraClientFields = {},
     activityText = null,
     activityIco = '🌐',
@@ -295,6 +296,8 @@ export async function intakeLead(opts) {
         const exists = (db.clients || []).some(c => c && c.metaLeadgenId === dedupeKey);
         if (exists) return { ok: true, duplicate: true };
       }
+      // Same website submission posted twice (the form retried after a lost answer).
+      if (webKey && (db.clients || []).some(c => c && c.webSubmitId === webKey)) return { ok: true, duplicate: true };
 
       now = new Date();
       client = {
@@ -309,7 +312,8 @@ export async function intakeLead(opts) {
         priv: contactPref ? `Preferred contact: ${contactPref}` : '',
         added: now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
         addedRaw: now.toISOString(),
-        ...extraClientFields
+        ...extraClientFields,
+        ...(webKey ? { webSubmitId: webKey } : {})
       };
       if (attachments.length) client.attachments = attachments;
 
@@ -463,5 +467,5 @@ export async function intakeLead(opts) {
     await sendConfirmationEmail(first, email, service);
   }
 
-  return { ok: true, duplicate: false, clientId: client.id, optOut: !!optOut };
+  return { ok: true, duplicate: false, clientId: client.id, optOut: !!optOut, autoTexts: db.settings?.aiScheduler !== false };
 }

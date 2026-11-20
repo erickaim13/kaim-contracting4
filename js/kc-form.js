@@ -372,7 +372,11 @@
         contactPref: 'Phone Call',
         source: source,
         kc_hpot_xyz: (new FormData(form).get('hf_hpot') || '').toString(),
-        attachments: photos
+        attachments: photos,
+        // One id per submission: if the instant request is lost after the server
+        // saved it and the form falls back to /api/lead, the server sees the
+        // same id and does not make a second lead or send a second set of texts.
+        sid: Date.now().toString(36) + Math.random().toString(36).slice(2, 12)
       };
       lead = payload;
       // Split test: stamp the normal-form group so the CRM can compare.
@@ -421,7 +425,7 @@
     // Instant price: the number, the brightening add-on, then off to the
     // normal quote page to approve it and pick a day.
     function showPrice(res) {
-      var clean = Number(res.clean) || 0, bright = Number(res.bright) || 0, withBright = false;
+      var clean = Number(res.clean) || 0, bright = Number(res.bright) || 0, withBright = false, savedBright = false;
       var usd = function (n) { return '$' + Number(n).toLocaleString('en-US'); };
       try { if (window.gtag) gtag('event', 'instant_quote_shown', { value: clean, currency: 'USD' }); } catch (_) { }
       form.innerHTML = '<div class="kcf-done">'
@@ -430,6 +434,7 @@
         + '<div class="kcf-price-sub">' + esc(lead.address) + '<br>Gutters cleared out and downspouts flushed. No deposit.</div>'
         + (bright > 0 ? '<div class="kcf-brbox">' + BRIGHT_PITCH + addonBtn('addon', 'Add gutter brightening', 'Same visit', '+ ' + usd(bright)) + '</div>' : '')
         + '<button type="button" class="kcf-cta" data-kcf="accept">Review and Approve</button>'
+        + '<div data-kcf="pfail" style="display:none;color:#b42318;font-size:14px;margin-top:8px">That did not save. Tap again, or call (978) 351-2195.</div>'
         + '<div class="kcf-fine">Next you approve the quote, then I will text you to set the day. Price is for a single family home with gutters in normal condition.</div>'
         + '<button type="button" class="kcf-skip" data-kcf="later">Not ready yet, text me the quote</button>'
         + '</div>';
@@ -444,10 +449,30 @@
         go.disabled = true; go.textContent = 'Opening your quote...';
         try { if (window.gtag) gtag('event', 'instant_quote_continue', { value: clean + (withBright ? bright : 0), currency: 'USD' }); } catch (_) { }
         var open = function () { location.href = res.url; };
-        // The quote starts as cleaning only; brightening is added to it before they see it.
-        if (!withBright) { open(); return; }
-        fetch('/api/instant-quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'addon', token: res.token, bright: true }) })
-          .then(open, open);
+        // The quote starts as cleaning only; the brightening choice is saved on
+        // it before they see it, and the save is checked: an unsaved add-on
+        // opened a cheaper quote than the price on this screen.
+        if (withBright === savedBright) { open(); return; }
+        var want = withBright, tries = 0;
+        var save = function () {
+          tries++;
+          fetch('/api/instant-quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'addon', token: res.token, bright: want }) })
+            .then(function (r) {
+              if (r.ok) { savedBright = want; open(); return; }
+              if (r.status === 409 || r.status === 404) { open(); return; }   // already answered: show them the quote as it stands
+              throw new Error('fail');
+            })
+            .catch(function () {
+              if (tries < 3) { setTimeout(save, 600); return; }
+              go.disabled = false; go.textContent = 'Try again';
+              var f = q('pfail'); if (f) f.style.display = 'block';
+            });
+        };
+        save();
+      });
+      // Coming back from the quote page (iPhone keeps this screen as it was): the button works again.
+      window.addEventListener('pageshow', function (ev) {
+        if (ev.persisted && go) { go.disabled = false; go.textContent = 'Review and Approve'; }
       });
       q('later').addEventListener('click', function () {
         showDone('<div class="kcf-done-h">Got it!</div><div class="kcf-done-p">Your quote is on its way by text. Open it whenever you are ready.</div>');

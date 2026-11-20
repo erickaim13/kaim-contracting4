@@ -128,6 +128,20 @@ async function makeQuote(req, body, res) {
   }
   if (Number.isFinite(rawAttr.captured)) attribution.captured = rawAttr.captured;
 
+  // Photos, checked the same way as api/lead.js. (They were dropped here, so
+  // an instant-price visitor's photos never reached the CRM.)
+  let attachTotal = 0;
+  const attachments = Array.isArray(body.attachments) ? body.attachments.slice(0, 5).map(a => {
+    const data = typeof a?.data === 'string'
+      && /^data:image\/(png|jpe?g|webp|gif);base64,/.test(a.data)
+      && a.data.length < 2_500_000 ? a.data : null;
+    return { name: sanitize(a?.name, 80).replace(/["'<>`=]/g, ''), data };
+  }).filter(a => {
+    if (!a.data) return false;
+    attachTotal += a.data.length;
+    return attachTotal < 6_000_000;
+  }) : [];
+
   // The house lookup and Eric's numbers are read side by side; the price is
   // settled before the lead is saved so the right texts go out with it.
   const [house, pqRow] = await Promise.all([
@@ -140,7 +154,8 @@ async function makeQuote(req, body, res) {
 
   const out = await intakeLead({
     first, last, phone, email, address, service: 'Gutter Cleaning', message,
-    contactPref: 'Phone Call', leadSource,
+    contactPref: 'Phone Call', leadSource, attachments,
+    webKey: /^[a-z0-9]{8,40}$/.test(String(body.sid || '')) ? String(body.sid) : null,
     attribution: Object.keys(attribution).length ? attribution : null,
     // A priced lead gets its quote on screen, not "what day works for an estimate".
     autoReply: !price,
@@ -171,7 +186,9 @@ async function makeQuote(req, body, res) {
 
   // One text with the quote link, held a few minutes: if they accept on the
   // spot the CRM cancels it, otherwise it lands instead of the usual auto-reply.
-  if (!out.optOut) {
+  // Not when "Automated Lead Texting" is off in the CRM: that switch stops
+  // the welcome text this one stands in for.
+  if (!out.optOut && out.autoTexts !== false) {
     try {
       const r = await sbAdmin.from('imessage_queue').insert({
         phone: '+1' + phoneDigits,

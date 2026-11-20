@@ -103,6 +103,7 @@ export default async function handler(req, res) {
     await intakeLead({
       first, last, phone, email, address, service, message, contactPref,
       leadSource, attachments, extraClientFields,
+      webKey: /^[a-z0-9]{8,40}$/.test(String(body.sid || '')) ? String(body.sid) : null,
       attribution: Object.keys(attribution).length ? attribution : null
     });
     return res.status(200).json({ ok: true });

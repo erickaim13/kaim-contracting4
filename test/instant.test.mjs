@@ -83,3 +83,24 @@ test('street names match across spellings', () => {
   assert.equal(pickParcel([row({ SITE_ADDR: '163 OLD FERRY DR LT 3', ADDR_NUM: '163', FULL_STR: 'OLD FERRY DR', STORIES: '2A', RES_AREA: 1920 })], '163', 'Old Ferry Drive').stories, 2);
   assert.equal(pickParcel([row({ USE_CODE: '1010', UNITS: 0 })], '7', 'alpine dr').ok, true);
 });
+
+import { sameTown } from '../api/_lib/instant.js';
+test('lookup: New Hampshire zip and two-state town names get no instant price', async () => {
+  const dead = () => { throw new Error('x'); };
+  assert.equal((await lookupHouse('12 Main St, Salem, 03079', dead)).why, 'not_ma');
+  assert.equal((await lookupHouse('12 Main St, Salem', dead)).why, 'state_unclear');
+  assert.equal((await lookupHouse('12 Main St, Hudson', dead)).why, 'state_unclear');
+  // Massachusetts said outright, or a Massachusetts zip: carries on to the lookup
+  assert.equal((await lookupHouse('12 Main St, Salem, MA', () => Promise.reject(new Error('down')))).why, 'lookup_failed');
+  assert.equal((await lookupHouse('12 Main St, Bedford, 01730', () => Promise.reject(new Error('down')))).why, 'lookup_failed');
+  assert.equal((await lookupHouse('5 Main St, Methuen', () => Promise.reject(new Error('down')))).why, 'lookup_failed');
+});
+test('lookup: the same number on a same-named street one town over is not this house', () => {
+  const law = { CITY: 'LAWRENCE' }, met = { CITY: 'METHUEN' }, hav = { CITY: 'HAVERHILL' };
+  assert.deepEqual(sameTown([law], 'METHUEN', ['METHUEN']), []);
+  assert.deepEqual(sameTown([law, met], 'METHUEN', ['METHUEN']), [met]);
+  assert.deepEqual(sameTown([hav], 'HAVERHILL', ['BRADFORD']), [hav]);   // village typed, geocoder names the town
+  assert.deepEqual(sameTown([hav], 'BRADFORD', ['BRADFORD']), [hav]);    // village on both: one town of records, kept
+  assert.deepEqual(sameTown([hav, law], 'BRADFORD', ['BRADFORD']), []);
+  assert.deepEqual(sameTown([hav], '', []), [hav]);
+});
