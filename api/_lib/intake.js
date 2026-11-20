@@ -238,7 +238,15 @@ export async function intakeLead(opts) {
     extraClientFields = {},
     activityText = null,
     activityIco = '🌐',
-    confirmationEmail = true
+    confirmationEmail = true,
+    // Instant quote (api/instant-quote.js): onDb(db, client, now) runs inside
+    // the save loop, after the client is added and before the write, so the
+    // quote lands in the same write as the lead. autoReply false skips the
+    // "what day works for an estimate" text; ownerExtra() adds a line to
+    // Eric's new-lead text.
+    onDb = null,
+    autoReply = true,
+    ownerExtra = null
   } = opts || {};
   // "BRIAN BELMORE" and "brian" become "Brian": this is the name every
   // auto-text and the confirmation email greet the lead with.
@@ -321,6 +329,7 @@ export async function intakeLead(opts) {
       }
 
       db.clients.unshift(client);
+      if (typeof onDb === 'function') onDb(db, client, now);
       db.activity.unshift({
         text: activityText || ('New website lead: ' + client.first + ' ' + client.last + (attachments.length ? ' (' + attachments.length + ' photo' + (attachments.length > 1 ? 's' : '') + ')' : '')),
         ico: activityIco,
@@ -379,6 +388,7 @@ export async function intakeLead(opts) {
     sbAdmin.from('imessage_queue').insert({
       phone: ownerNotifyPhone,
       body: 'New quote request from ' + client.first + ' ' + client.last + ' for ' + (service || 'a service') + '\nPhone: ' + phone
+        + (typeof ownerExtra === 'function' ? (ownerExtra() || '') : '')
         + (attachments.length ? '\n📷 Sent ' + attachments.length + ' photo' + (attachments.length > 1 ? 's' : '') + ' with the form. Open ' + client.first + ' in the CRM to see ' + (attachments.length > 1 ? 'them' : 'it') + '.' : ''),
       direction: 'outgoing',
       status: 'pending',
@@ -393,7 +403,7 @@ export async function intakeLead(opts) {
   // the owner notify above still fires but the lead gets no auto-text.
   const optOut = phoneDigits.length >= 10 ? textOptOutReason(db, phone) : null;
   if (optOut) console.log('[intake] skipped lead_autoreply: ' + optOut);
-  if (phoneDigits.length >= 10 && !optOut && db.settings?.aiScheduler !== false) {
+  if (autoReply && phoneDigits.length >= 10 && !optOut && db.settings?.aiScheduler !== false) {
     const template = await loadTemplate('lead_autoreply', FALLBACK_AUTOREPLY);
     const replyBody = template.replace(/\{name\}/g, client.first).replace(/\{service\}/g, service || 'your project');
     // Short hold (2026-09-29, Eric): the quote page offers a self-serve
@@ -453,5 +463,5 @@ export async function intakeLead(opts) {
     await sendConfirmationEmail(first, email, service);
   }
 
-  return { ok: true, duplicate: false, clientId: client.id };
+  return { ok: true, duplicate: false, clientId: client.id, optOut: !!optOut };
 }

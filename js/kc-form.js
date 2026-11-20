@@ -10,6 +10,14 @@
  * free in-person estimate via /api/estimate-visit (address rides along onto
  * the calendar entry).
  *
+ * Instant gutter price (split test, 2026-11-19): when the CRM says the test is
+ * on (GET /api/instant-quote -> share %), that share of visitors is dealt
+ * group 'b' (remembered in localStorage kc_iq) and, for Gutter Cleaning only,
+ * the form posts to /api/instant-quote, shows the price with a brightening
+ * add-on, and sends them to the CRM quote page to approve and pick a day.
+ * Everyone else is group 'a' and gets this form unchanged. ?instant=1 forces
+ * the instant flow for a look (tagged 'preview', kept out of the scoreboard).
+ *
  * URL params: ?service=Paver%20Sealing preselects the dropdown,
  *             ?src=paver-sealing tags the lead source with the page it came from,
  *             ?offer=... arms an offer banner (from the deal cards).
@@ -65,7 +73,16 @@
     + '.kcf-files{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}'
     + '.kcf-files span{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:4px 9px;font-size:12px;color:rgba(255,255,255,.8)}'
     + '.kcf-files button{background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:14px;padding:0;line-height:1}.kcf-files button:hover{color:#ff9d8f}'
-    + '@media(max-width:640px){.kcf{padding:20px 16px 14px}.kcf-title{font-size:16px}}';
+    + '.kcf-price{font-family:"Montserrat",sans-serif;font-size:46px;font-weight:700;color:#fff;line-height:1.05;margin:6px 0 2px}'
+    + '.kcf-price-sub{font-size:13px;color:rgba(255,255,255,.62);line-height:1.45;margin-bottom:14px}'
+    + '.kcf-addon{display:flex;align-items:center;gap:11px;width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:13px 14px;cursor:pointer;color:#fff;font-family:"Source Sans 3",sans-serif;text-align:left;transition:all .15s;margin-bottom:12px}'
+    + '.kcf-addon:hover{border-color:#c9a84c}.kcf-addon.on{border-color:#c9a84c;background:rgba(201,168,76,.14)}'
+    + '.kcf-addon .bx{width:22px;height:22px;flex-shrink:0;border-radius:6px;border:2px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;color:#0d1e35}'
+    + '.kcf-addon.on .bx{background:#c9a84c;border-color:#c9a84c}.kcf-addon .bx svg{width:14px;height:14px;display:none}.kcf-addon.on .bx svg{display:block}'
+    + '.kcf-addon .nm{flex:1;font-size:14.5px;font-weight:700;line-height:1.3}.kcf-addon .nm small{display:block;font-weight:400;font-size:12.5px;color:rgba(255,255,255,.6)}'
+    + '.kcf-addon .pr{font-family:"Montserrat",sans-serif;font-size:13px;font-weight:700;color:#e2c47a;white-space:nowrap}'
+    + '.kcf-fine{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;margin-top:10px}'
+    + '@media(max-width:640px){.kcf{padding:20px 16px 14px}.kcf-title{font-size:16px}.kcf-price{font-size:40px}}';
 
   var PHONE_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.5 2.18 2 2 0 012.49.5h3a2 2 0 012 1.72c.12.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0122 16.92z"/></svg>';
   var CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
@@ -95,8 +112,8 @@
     var urlOffer = (params.get('offer') || '').slice(0, 240);
 
     slot.innerHTML = '<form class="kcf" novalidate autocomplete="on">'
-      + '<div class="kcf-title">' + esc(cfg.title) + '</div>'
-      + '<div class="kcf-kicker">' + esc(cfg.kicker) + '</div>'
+      + '<div class="kcf-title" data-kcf="title">' + esc(cfg.title) + '</div>'
+      + '<div class="kcf-kicker" data-kcf="kicker">' + esc(cfg.kicker) + '</div>'
       + '<div class="kcf-offer" data-kcf="offer"></div>'
       + '<div style="display:none" aria-hidden="true"><label>Leave empty<input type="text" name="hf_hpot" tabindex="-1" autocomplete="off" value=""></label></div>'
       + (cfg.service ? '<input type="hidden" data-kcf="service" value="' + esc(cfg.service) + '">' : '<div class="kcf-field kcf-selwrap"><input type="hidden" data-kcf="service" value="' + esc(SERVICES.indexOf(preService) > -1 ? preService : '') + '">'
@@ -132,6 +149,7 @@
         ddBtn.classList.remove('kcf-empty'); ddBtn.classList.remove('kcf-err');
         [].slice.call(ddPanel.querySelectorAll('button')).forEach(function (x) { x.classList.toggle('sel', x === b); });
         ddPanel.classList.remove('open'); ddBtn.classList.remove('open');
+        iqSync();
       });
     });
     if (ddPanel) document.addEventListener('click', function (e) {
@@ -143,6 +161,34 @@
     fetch('/api/estimate-visit').then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) { if (j && j.ok && Array.isArray(j.days) && j.days.length) days = j.days; })
       .catch(function () { });
+
+    // Instant gutter price split test. iqGroup: '' (test off), 'a' (this form
+    // as is), 'b' (instant price) or 'preview' (?instant=1).
+    var iqGroup = params.get('instant') === '1' ? 'preview' : '';
+    function iqOn() { return (iqGroup === 'b' || iqGroup === 'preview') && q('service').value === 'Gutter Cleaning'; }
+    function iqSync() {
+      var on = iqOn(), b = q('submit');
+      if (!b || b.disabled) return;
+      q('title').textContent = on ? 'Get Your Gutter Cleaning Price' : cfg.title;
+      q('kicker').textContent = on ? 'Your price on screen in seconds' : cfg.kicker;
+      b.textContent = on ? 'See My Price' : cfg.submitLabel;
+    }
+    if (iqGroup) iqSync();
+    else {
+      fetch('/api/instant-quote').then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          var share = j && j.ok ? Number(j.share) || 0 : 0;
+          if (!(share > 0)) return;
+          var g = '';
+          try { g = localStorage.getItem('kc_iq') || ''; } catch (_) { }
+          if (g !== 'a' && g !== 'b') {
+            g = Math.random() * 100 < share ? 'b' : 'a';
+            try { localStorage.setItem('kc_iq', g); } catch (_) { }
+          }
+          iqGroup = g; iqSync();
+        })
+        .catch(function () { });
+    }
 
     // The 10 digits of a dialable US number, or '' when it is not one. A
     // leading country-code 1 is dropped when 11 digits were typed; area code
@@ -290,14 +336,28 @@
         attachments: photos
       };
       lead = payload;
+      // Split test: stamp the normal-form group so the CRM can compare.
+      if (iqGroup === 'a' && svc === 'Gutter Cleaning') payload.iq = 'a';
 
       var origText = btn.textContent;
-      btn.disabled = true; btn.textContent = 'Sending...';
+      var instant = iqOn();
+      btn.disabled = true; btn.textContent = instant ? 'Working out your price...' : 'Sending...';
       q('fail').style.display = 'none';
 
-      fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-        .then(function (r) { if (!r.ok) throw new Error('fail'); return r.json(); })
-        .then(function () {
+      var post = function (url, body) {
+        return fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+          .then(function (r) { if (!r.ok) throw new Error('fail'); return r.json(); });
+      };
+      // The "?via=/api/lead" tail is what makes the page's attribution script
+      // (it watches for /api/lead in the address) attach the ad click ids here too.
+      // If the instant endpoint fails for any reason the lead still goes in the normal way.
+      var send = instant
+        ? post('/api/instant-quote?via=/api/lead', Object.assign({ action: 'quote', variant: iqGroup }, payload))
+          .catch(function () { return post('/api/lead', payload); })
+        : post('/api/lead', payload);
+
+      send
+        .then(function (res) {
           try {
             if (window.gtag) {
               var ph = (payload.phone || '').replace(/\D/g, '');
@@ -307,7 +367,7 @@
             }
             if (window.fbq) fbq('track', 'Lead');
           } catch (_) { }
-          showBooking();
+          if (res && res.instant && res.url) showPrice(res); else showBooking();
         })
         .catch(function () {
           btn.disabled = false; btn.textContent = origText;
@@ -317,6 +377,42 @@
 
     function showDone(extraHtml) {
       form.innerHTML = '<div class="kcf-done"><div class="kcf-done-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#e2c47a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>' + extraHtml + '</div>';
+    }
+
+    // Instant price: the number, the brightening add-on, then off to the
+    // normal quote page to approve it and pick a day.
+    function showPrice(res) {
+      var clean = Number(res.clean) || 0, bright = Number(res.bright) || 0, withBright = false;
+      var usd = function (n) { return '$' + Number(n).toLocaleString('en-US'); };
+      try { if (window.gtag) gtag('event', 'instant_quote_shown', { value: clean, currency: 'USD' }); } catch (_) { }
+      form.innerHTML = '<div class="kcf-done">'
+        + '<div class="kcf-done-h">Your gutter cleaning price</div>'
+        + '<div class="kcf-price" data-kcf="ptotal">' + usd(clean) + '</div>'
+        + '<div class="kcf-price-sub">' + esc(lead.address) + '<br>Gutters cleared out and downspouts flushed. No deposit.</div>'
+        + (bright > 0 ? '<button type="button" class="kcf-addon" data-kcf="addon" aria-pressed="false"><span class="bx">' + CHECK_SVG + '</span><span class="nm">Add gutter brightening<small>Takes the black streaks off the outside of the gutters</small></span><span class="pr">+ ' + usd(bright) + '</span></button>' : '')
+        + '<button type="button" class="kcf-cta" data-kcf="accept">Review and Book</button>'
+        + '<div class="kcf-fine">Next you approve the quote and pick your day. Price is for a single family home with gutters in normal condition.</div>'
+        + '<button type="button" class="kcf-skip" data-kcf="later">Not ready yet, text me the quote</button>'
+        + '</div>';
+      var addon = q('addon'), go = q('accept');
+      if (addon) addon.addEventListener('click', function () {
+        withBright = !withBright;
+        addon.classList.toggle('on', withBright); addon.setAttribute('aria-pressed', withBright ? 'true' : 'false');
+        q('ptotal').textContent = usd(clean + (withBright ? bright : 0));
+      });
+      go.addEventListener('click', function () {
+        if (go.disabled) return;
+        go.disabled = true; go.textContent = 'Opening your quote...';
+        try { if (window.gtag) gtag('event', 'instant_quote_continue', { value: clean + (withBright ? bright : 0), currency: 'USD' }); } catch (_) { }
+        var open = function () { location.href = res.url; };
+        // The quote starts as cleaning only; brightening is added to it before they see it.
+        if (!withBright) { open(); return; }
+        fetch('/api/instant-quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'addon', token: res.token, bright: true }) })
+          .then(open, open);
+      });
+      q('later').addEventListener('click', function () {
+        showDone('<div class="kcf-done-h">Got it!</div><div class="kcf-done-p">Your quote is on its way by text. Open it whenever you are ready.</div>');
+      });
     }
 
     function showBooking() {

@@ -94,10 +94,15 @@ export default async function handler(req, res) {
   }
   if (Number.isFinite(rawAttr.captured)) attribution.captured = rawAttr.captured;
 
+  // Split test (api/instant-quote.js): a gutter cleaning visitor who was dealt
+  // the normal form is stamped 'a' so the CRM can compare the two groups.
+  const extraClientFields = body.iq === 'a' && service === 'Gutter Cleaning'
+    ? { iq: { v: 'a', at: new Date().toISOString() } } : {};
+
   try {
     await intakeLead({
       first, last, phone, email, address, service, message, contactPref,
-      leadSource, attachments,
+      leadSource, attachments, extraClientFields,
       attribution: Object.keys(attribution).length ? attribution : null
     });
     return res.status(200).json({ ok: true });
