@@ -82,6 +82,13 @@
     + '.kcf-addon.on .bx{background:#c9a84c;border-color:#c9a84c}.kcf-addon .bx svg{width:14px;height:14px;display:none}.kcf-addon.on .bx svg{display:block}'
     + '.kcf-addon .nm{flex:1;font-size:14.5px;font-weight:700;line-height:1.3}.kcf-addon .nm small{display:block;font-weight:400;font-size:12.5px;color:rgba(255,255,255,.6)}'
     + '.kcf-addon .pr{font-family:"Montserrat",sans-serif;font-size:13px;font-weight:700;color:#e2c47a;white-space:nowrap}'
+    + '.kcf-ba{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0 0 9px}'
+    + '.kcf-ba figure{position:relative;margin:0;border-radius:9px;overflow:hidden;border:1px solid rgba(255,255,255,.16);aspect-ratio:1018/704;background:rgba(255,255,255,.05)}'
+    + '.kcf-ba img{width:100%;height:100%;object-fit:cover;display:block}'
+    + '.kcf-ba figcaption{position:absolute;left:7px;top:7px;font-family:"Montserrat",sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:5px;background:rgba(13,30,53,.82);color:#fff}'
+    + '.kcf-ba figure+figure figcaption{background:#c9a84c;color:#0d1e35}'
+    + '.kcf-pitch{font-size:13.5px;color:rgba(255,255,255,.8);line-height:1.5;margin:0 0 10px;text-align:left}.kcf-pitch b{color:#e2c47a;font-weight:700}'
+    + '.kcf-brbox{border:1px solid rgba(201,168,76,.32);border-radius:12px;padding:11px 11px 1px;margin:0 0 12px;background:rgba(201,168,76,.05)}.kcf-brbox .kcf-addon{margin-bottom:10px}'
     + '.kcf-fine{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;margin-top:10px}'
     + '@media(max-width:640px){.kcf{padding:20px 16px 14px}.kcf-title{font-size:16px}.kcf-price{font-size:40px}}';
 
@@ -89,6 +96,16 @@
   var CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+  // Gutter brightening: the same photos and the same words on both sides of
+  // the split test, so the only difference between them is the instant price.
+  var BRIGHT_PITCH = '<div class="kcf-ba">'
+    + '<figure><img src="/images/ba-gutter-before.webp" alt="Gutter covered in dark streaks before brightening" loading="lazy" width="1018" height="704"><figcaption>Before</figcaption></figure>'
+    + '<figure><img src="/images/ba-gutter-after.webp" alt="The same gutter bright white after brightening" loading="lazy" width="1018" height="704"><figcaption>After</figcaption></figure></div>'
+    + '<div class="kcf-pitch">Those black streaks are <b>years of asphalt shingle runoff</b>. A specialized cleaner takes the staining off your gutters and brings them back to their former white glory.</div>';
+  function addonBtn(key, title, sub, right) {
+    return '<button type="button" class="kcf-addon" data-kcf="' + key + '" aria-pressed="false"><span class="bx">' + CHECK_SVG + '</span><span class="nm">' + title + (sub ? '<small>' + sub + '</small>' : '') + '</span>' + (right ? '<span class="pr">' + right + '</span>' : '') + '</button>';
+  }
 
   var inst = null;
 
@@ -128,6 +145,7 @@
       + '<div class="kcf-field"><input type="text" data-kcf="town" placeholder="Town" autocomplete="address-level2" aria-label="Town"></div>'
       + '<div class="kcf-field"><textarea data-kcf="note" rows="2" placeholder="Anything we should know? (optional)" aria-label="Optional message"></textarea></div>'
       + (cfg.photos ? '<div class="kcf-field"><label class="kcf-file"><input type="file" data-kcf="files" accept="image/*" multiple style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Add photos of the project (optional)</label><div class="kcf-files" data-kcf="filelist"></div></div>' : '')
+      + '<div class="kcf-brbox" data-kcf="brbox" style="display:none">' + BRIGHT_PITCH + addonBtn('brwant', 'Add gutter brightening to my quote', 'One visit, both done') + '</div>'
       + '<button type="submit" class="kcf-cta" data-kcf="submit">' + esc(cfg.submitLabel) + '</button>'
       + '<div class="kcf-fail" data-kcf="fail">Could not send. Please try again or <a href="tel:978-351-2195">call 978-351-2195</a>.</div>'
       + '<div class="kcf-foot">We typically respond within the hour. No spam, ever.</div>'
@@ -167,9 +185,12 @@
     // as is), 'b' (instant price) or 'preview' (?instant=1).
     var iqGroup = params.get('instant') === '1' ? 'preview' : '';
     function iqOn() { return (iqGroup === 'b' || iqGroup === 'preview') && q('service').value === 'Gutter Cleaning'; }
+    var wantBright = false;
     function iqSync() {
       var on = iqOn(), b = q('submit');
       if (!b || b.disabled) return;
+      // Normal form: gutter cleaning visitors can ask for brightening too (the instant side offers it with the price).
+      q('brbox').style.display = (!on && q('service').value === 'Gutter Cleaning') ? 'block' : 'none';
       q('title').textContent = on ? 'Get Your Gutter Cleaning Price' : cfg.title;
       q('kicker').textContent = on ? 'Your price on screen in seconds' : cfg.kicker;
       b.textContent = on ? 'See My Price' : cfg.submitLabel;
@@ -193,8 +214,12 @@
         })
         .catch(function () { iqAsking = false; });
     }
-    if (iqGroup) iqSync();
-    else {
+    q('brwant').addEventListener('click', function () {
+      wantBright = !wantBright;
+      q('brwant').classList.toggle('on', wantBright); q('brwant').setAttribute('aria-pressed', wantBright ? 'true' : 'false');
+    });
+    iqSync();
+    if (!iqGroup) {
       fetch('/api/instant-quote').then(function (r) { return r.ok ? r.json() : null; })
         .then(function (j) { iqShare = j && j.ok ? Number(j.share) || 0 : 0; iqDeal(); })
         .catch(function () { });
@@ -327,6 +352,7 @@
       var lines = ['Quote page request:', '- Looking for: ' + svc, '- Address: ' + address];
       if (note) lines.push('- Note: ' + note);
       if (offer) lines.push('- Offer: ' + offer);
+      if (wantBright && svc === 'Gutter Cleaning' && !iqOn()) lines.push('- Also wants a price for: Gutter Brightening');
       extraLines.forEach(function (l) { lines.push(l); });
 
       var source = cfg.source + (srcPage ? ' (from ' + srcPage + ')' : '');
@@ -399,7 +425,7 @@
         + '<div class="kcf-done-h">Your gutter cleaning price</div>'
         + '<div class="kcf-price" data-kcf="ptotal">' + usd(clean) + '</div>'
         + '<div class="kcf-price-sub">' + esc(lead.address) + '<br>Gutters cleared out and downspouts flushed. No deposit.</div>'
-        + (bright > 0 ? '<button type="button" class="kcf-addon" data-kcf="addon" aria-pressed="false"><span class="bx">' + CHECK_SVG + '</span><span class="nm">Add gutter brightening<small>Takes the black streaks off the outside of the gutters</small></span><span class="pr">+ ' + usd(bright) + '</span></button>' : '')
+        + (bright > 0 ? '<div class="kcf-brbox">' + BRIGHT_PITCH + addonBtn('addon', 'Add gutter brightening', 'Same visit', '+ ' + usd(bright)) + '</div>' : '')
         + '<button type="button" class="kcf-cta" data-kcf="accept">Review and Book</button>'
         + '<div class="kcf-fine">Next you approve the quote and pick your day. Price is for a single family home with gutters in normal condition.</div>'
         + '<button type="button" class="kcf-skip" data-kcf="later">Not ready yet, text me the quote</button>'
