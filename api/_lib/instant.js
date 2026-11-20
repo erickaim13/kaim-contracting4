@@ -119,7 +119,9 @@ export function pickParcel(rows, num, street) {
   return {
     ok: true, sqft, stories,
     style: String(a.STYLE || ''), year: Number(a.YEAR_BUILT) || 0,
-    addr: String(a.SITE_ADDR || '').replace(/\s+/g, ' ').trim(), city: String(a.CITY || '')
+    addr: String(a.SITE_ADDR || '').replace(/\s+/g, ' ').trim(), city: String(a.CITY || ''),
+    // Centre of the lot itself (the geocoder's point sits out on the street).
+    lotLat: Number(a._cy) || null, lotLng: Number(a._cx) || null
   };
 }
 
@@ -205,6 +207,7 @@ export async function lookupHouse(address, fetchImpl = fetch) {
     if (m.addressComponents && m.addressComponents.state && m.addressComponents.state !== 'MA') return { ok: false, why: 'not_ma' };
     const lng = Number(m.coordinates.x), lat = Number(m.coordinates.y);
     // Only records within 2 miles of where the address really is.
+<<<<<<< Updated upstream
     // ... and only records in the town the address is in: the same number on a
     // same-named street one town over is a different house. A record's town
     // must be the geocoder's town or one the visitor typed (a village name like
@@ -214,6 +217,10 @@ export async function lookupHouse(address, fetchImpl = fetch) {
     const near = ((d && d.features) || []).filter(f => f && f.centroid && distM(lat, lng, Number(f.centroid.y), Number(f.centroid.x)) <= 3200)
       .map(f => f.attributes || {});
     const rows = sameTown(near, gcTown, parts);
+=======
+    const rows = ((d && d.features) || []).filter(f => f && f.centroid && distM(lat, lng, Number(f.centroid.y), Number(f.centroid.x)) <= 3200)
+      .map(f => ({ ...(f.attributes || {}), _cx: f.centroid.x, _cy: f.centroid.y }));
+>>>>>>> Stashed changes
     const out = pickParcel(rows, num, street);
     if (out.ok) { out.lat = lat; out.lng = lng; }
     return out;

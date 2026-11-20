@@ -189,6 +189,15 @@
     function iqSync() {
       var on = iqOn(), b = q('submit');
       if (!b || b.disabled) return;
+      // The instant price is its own page (/gutter-price, 2026-11-19): a visitor
+      // who is getting it is sent there, keeping the ad tags on the address.
+      if (on) {
+        var keep = new URLSearchParams(location.search); keep.delete('service');
+        if (iqGroup !== 'preview') keep.delete('instant');
+        var qs = keep.toString();
+        location.replace('/gutter-price' + (qs ? '?' + qs : ''));
+        return;
+      }
       // Normal form: gutter cleaning visitors can ask for brightening too (the instant side offers it with the price).
       q('brbox').style.display = (!on && q('service').value === 'Gutter Cleaning') ? 'block' : 'none';
       q('title').textContent = on ? 'Get Your Gutter Cleaning Price' : cfg.title;

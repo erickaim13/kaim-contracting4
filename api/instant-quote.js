@@ -11,6 +11,10 @@
 //         (status sent) and answers { instant:true, clean, bright, token, url }.
 //         When it cannot be priced the lead is still saved the normal way and
 //         the answer is { instant:false }, so the form carries on as usual.
+// POST { action: 'lookup', address } -> what the town record says about the
+//         house ({ found, sqft, stories, style, year, lat, lng }) for the
+//         "finding your home" step on /gutter-price. Never returns a price:
+//         the price only comes back with a name and phone ('quote').
 // POST { action: 'addon', token, bright } -> adds or removes the gutter
 //         brightening line on that quote before the visitor accepts it.
 //
@@ -73,6 +77,7 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
       const body = req.body || {};
       if (body.action === 'addon') return await setAddon(body, res);
+      if (body.action === 'lookup') return await lookupOnly(req, body, res);
       return await makeQuote(req, body, res);
     }
   } catch (e) {
@@ -99,6 +104,32 @@ async function getShare(res, assign) {
   }
   res.setHeader('Cache-Control', 'no-store');
   return res.status(200).json(out);
+}
+
+// The house facts for the loading screen. Its own, looser limit: a visitor
+// may fix a typo a few times before the form is ever sent.
+const lookHits = new Map();
+async function lookupOnly(req, body, res) {
+  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
+  const now = Date.now();
+  const mine = (lookHits.get(ip) || []).filter(t => now - t < WINDOW_MS);
+  if (mine.length >= 25) return res.status(429).json({ error: 'Too many requests' });
+  mine.push(now); lookHits.set(ip, mine);
+  if (lookHits.size > 5000) lookHits.clear();
+
+  const address = sanitize(body.address, 160);
+  const [house, pqRow] = await Promise.all([
+    lookupHouse(address),
+    sbAdmin.from('crm_data').select('pq:data->settings->pq').eq('id', 1).single().then(r => r.data, () => null)
+  ]);
+  const price = house.ok ? priceHouse(house.sqft, house.stories, iqConfig({ pq: pqRow?.pq || {} })) : null;
+  res.setHeader('Cache-Control', 'no-store');
+  if (!price) return res.status(200).json({ ok: true, found: false });
+  return res.status(200).json({
+    ok: true, found: true, sqft: house.sqft, stories: house.stories,
+    style: house.style, year: house.year, addr: house.addr, city: house.city,
+    lat: house.lotLat || house.lat, lng: house.lotLng || house.lng
+  });
 }
 
 async function makeQuote(req, body, res) {

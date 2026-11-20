@@ -527,3 +527,16 @@ Eric wants to see whether an instant price converts better than the normal form.
 - **The quote link text obeys the Automated Lead Texting switch** (`intakeLead` returns `autoTexts`).
 - **Brightening add-on:** the save is checked and retried three times; on failure the button says Try again instead of opening a cheaper quote. Unticking is saved too. The button works again after Back on an iPhone (`pageshow`).
 - Run the test file by name. `node --test test/` fails on its own, before and after these changes.
+
+## 2026-11-19 (late): /gutter-price, the instant gutter price as its own page
+
+Eric did not like the instant price living inside the normal lead form ("it should be doing something different and showing a loading screen type of deal to build a illusion", and a plain "+$200 brightening" box "isnt gonna make anyone say hell yeah").
+
+- **`gutter-price.html` + `js/gutter-price.js`** (bump its `?v=` on edits). The page head, nav and footer were copied from quote.html; if the shared nav or footer markup changes, paste it here too. Steps: address -> "finding your home" (the state's 2025 aerial photo of the lot from MassGIS map tiles, then the town record facts ticking in, about 6 seconds) -> name and phone to see the price (the lead is saved here) -> the price, with brightening sold by a drag-to-compare before / after and his wording -> "See My Full Quote".
+- **The quote opens over the page** in an overlay (an iframe of the CRM quote page) with a "Back to my price" button; Esc and the phone's back button close it too. Eric: being stuck on the quote with no way back was "a annoying bug". The CRM quote page posts a message when it is approved, and closing the overlay then shows "You are all set". The price screen is also kept in sessionStorage (`kc_gp_state`, 2 hours), so a reload or coming back lands on the price, not the address step.
+- **`POST /api/instant-quote { action:'lookup', address }`** returns the house facts and the lot centre for that screen, never a price. The price only comes back from `action:'quote'` with a name and phone.
+- **Where the instant price now lives:** only on /gutter-price. `js/kc-form.js` (v21) no longer shows a price: a visitor who should get the instant price is sent from /quote to /gutter-price (ad tags kept). /gutter-price sends a visitor back to /quote when the CRM switch is Off or they are on the normal-form side of a split.
+- A house the town record cannot price: the scan says "this one needs a quick look from me", the same name and phone step saves a normal lead, and Eric prices it.
+- /gutter-cleaning buttons now read "Get an Instant Price" and go to `/gutter-price?src=gutter-cleaning` (hero card, sticky bar, bottom call to action).
+- Copy rule learned here: only claim what his quotes already say (leaves and debris cleared, downspouts flushed and tested). I had written "by hand" and "debris bagged and hauled away" and took them out.
+- Checked in headless Chrome and in real Chrome on a local copy with the API stubbed (scan, gate, price, add brightening, open quote, close, reopen, reload). NOT yet run end to end on the live site or on a phone.
