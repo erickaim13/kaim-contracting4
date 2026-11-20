@@ -426,8 +426,8 @@
         + '<div class="kcf-price" data-kcf="ptotal">' + usd(clean) + '</div>'
         + '<div class="kcf-price-sub">' + esc(lead.address) + '<br>Gutters cleared out and downspouts flushed. No deposit.</div>'
         + (bright > 0 ? '<div class="kcf-brbox">' + BRIGHT_PITCH + addonBtn('addon', 'Add gutter brightening', 'Same visit', '+ ' + usd(bright)) + '</div>' : '')
-        + '<button type="button" class="kcf-cta" data-kcf="accept">Review and Book</button>'
-        + '<div class="kcf-fine">Next you approve the quote and pick your day. Price is for a single family home with gutters in normal condition.</div>'
+        + '<button type="button" class="kcf-cta" data-kcf="accept">Review and Approve</button>'
+        + '<div class="kcf-fine">Next you approve the quote, then I will text you to set the day. Price is for a single family home with gutters in normal condition.</div>'
         + '<button type="button" class="kcf-skip" data-kcf="later">Not ready yet, text me the quote</button>'
         + '</div>';
       var addon = q('addon'), go = q('accept');
