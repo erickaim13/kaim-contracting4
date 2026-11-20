@@ -64,9 +64,13 @@
   function titleCase(s) { return String(s || '').toLowerCase().replace(/(^|[\s-])([a-z])/g, function (m, p, c) { return p + c.toUpperCase(); }); }
 
   // ---- 1. address ---------------------------------------------------------
-  var street = $('gpStreet'), town = $('gpTown'), sug = $('gpSug'), aTimer = null;
+  var street = $('gpStreet'), town = $('gpTown'), stateEl = $('gpState'), zip = $('gpZip'), sug = $('gpSug'), aTimer = null;
+  function mark(el, bad) { el.classList.toggle('err', !!bad); var f = el.closest ? el.closest('.gp-field') : null; if (f) f.classList.toggle('bad', !!bad); }
+  [town, zip, $('gpFirst'), $('gpLast'), $('gpEmail')].forEach(function (el) { el.addEventListener('input', function () { mark(el, false); }); });
+  zip.addEventListener('input', function () { zip.value = zip.value.replace(/\D/g, '').slice(0, 5); });
+  var ST = { 'massachusetts': 'MA', 'new hampshire': 'NH' };
   street.addEventListener('input', function () {
-    street.classList.remove('err'); clearTimeout(aTimer);
+    mark(street, false); clearTimeout(aTimer);
     var v = street.value.trim();
     if (v.length < 4) { sug.style.display = 'none'; return; }
     aTimer = setTimeout(function () {
@@ -77,7 +81,7 @@
             .map(function (f) {
               var p = f.properties || {}, st = ((p.housenumber ? p.housenumber + ' ' : '') + (p.street || p.name || '')).trim();
               var tn = p.city || p.town || p.village || p.district || '';
-              return { street: st, town: tn, label: [st, tn, p.state].filter(Boolean).join(', ') };
+              return { street: st, town: tn, state: ST[String(p.state || '').toLowerCase()] || '', zip: /^\d{5}$/.test(p.postcode || '') ? p.postcode : '', label: [st, tn, p.state].filter(Boolean).join(', ') };
             }).filter(function (x, i, a) { return x.street && a.map(function (y) { return y.label; }).indexOf(x.label) === i; }).slice(0, 4);
           if (!items.length || document.activeElement !== street) { sug.style.display = 'none'; return; }
           sug.innerHTML = items.map(function (t, i) { return '<button type="button" data-i="' + i + '">' + esc(t.label) + '</button>'; }).join('');
@@ -86,7 +90,10 @@
             b.addEventListener('mousedown', function (e) {
               e.preventDefault();
               var t = items[Number(b.getAttribute('data-i'))];
-              street.value = t.street; if (t.town) { town.value = t.town; town.classList.remove('err'); }
+              street.value = t.street; mark(street, false);
+              if (t.town) { town.value = t.town; mark(town, false); }
+              if (t.state) stateEl.value = t.state;
+              if (t.zip) { zip.value = t.zip; mark(zip, false); }
               sug.style.display = 'none';
             });
           });
@@ -94,15 +101,16 @@
     }, 250);
   });
   street.addEventListener('blur', function () { setTimeout(function () { sug.style.display = 'none'; }, 200); });
-  town.addEventListener('input', function () { town.classList.remove('err'); });
 
   $('gpAddrForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    var st = street.value.trim(), tn = town.value.trim(), bad = null;
-    if (!/^\d+[A-Za-z]?\s+\S/.test(st)) { street.classList.add('err'); bad = bad || street; }
-    if (!tn) { town.classList.add('err'); bad = bad || town; }
+    var st = street.value.trim(), tn = town.value.trim(), zp = zip.value.trim(), unit = $('gpUnit').value.trim(), bad = null;
+    mark(street, !/^\d+[A-Za-z]?\s+\S/.test(st)); mark(town, !tn); mark(zip, zp !== '' && !/^\d{5}$/.test(zp));
+    [street, town, zip].forEach(function (el) { if (!bad && el.classList.contains('err')) bad = el; });
     if (bad) { bad.focus(); return; }
-    S.address = st.split(',')[0].trim() + ', ' + tn + (/\b(MA|NH)\b/i.test(tn) ? '' : ', MA');
+    // "7 Alpine Dr, Haverhill, MA 01830". The unit rides along in the lead notes, not in the address the house is looked up by.
+    S.unit = unit;
+    S.address = st.split(',')[0].trim() + ', ' + tn + ', ' + stateEl.value + (zp ? ' ' + zp : '');
     ev('instant_quote_address');
     scan();
   });
@@ -133,7 +141,7 @@
   function scan() {
     var box = $('gpScan');
     box.classList.remove('has', 'done'); $('gpTiles').innerHTML = '';
-    $('gpScanLbl').textContent = S.address.replace(/, MA$/, '');
+    $('gpScanLbl').textContent = S.address.replace(/,? (MA|NH)( \d{5})?$/, '');
     ['find', 'rec', 'run', 'price'].forEach(function (t) { tick(t, '', ''); });
     show('scan');
     tick('find', 'go');
@@ -190,17 +198,17 @@
     else if (d.length > 3) out = d.slice(0, 3) + '-' + d.slice(3);
     phone.value = out; phone.classList.remove('err');
   });
-  $('gpFirst').addEventListener('input', function () { $('gpFirst').classList.remove('err'); });
+  phone.addEventListener('input', function () { mark(phone, false); });
 
   function gate() {
     var h = S.house;
     $('gpGateK').textContent = h ? 'Your price is ready' : 'I will price this one myself';
     $('gpBlur').style.display = h ? '' : 'none';
     $('gpFacts').textContent = h
-      ? S.address.replace(/, MA$/, '')
+      ? S.address
       : 'The town record does not give me enough on this house to price it on the spot. Leave your number and I will text you a price.';
     $('gpGateBtn').textContent = h ? 'Show My Price' : 'Text Me My Price';
-    $('gpGateNote').textContent = h ? 'I text you a copy of the quote. No spam, ever.' : 'Usually within the hour. No spam, ever.';
+    $('gpGateNote').textContent = h ? 'Your quote is sent to this number and email. No spam, ever.' : 'Usually within the hour. No spam, ever.';
     show('gate');
     setTimeout(function () { try { $('gpFirst').focus({ preventScroll: true }); } catch (_) { } }, 400);
   }
@@ -208,15 +216,17 @@
   $('gpGateForm').addEventListener('submit', function (e) {
     e.preventDefault();
     var btn = $('gpGateBtn'); if (btn.disabled) return;
-    var first = $('gpFirst').value.trim(), last = $('gpLast').value.trim(), bad = null;
-    if (!first) { $('gpFirst').classList.add('err'); bad = bad || $('gpFirst'); }
-    if (!usDigits(phone.value)) { phone.classList.add('err'); bad = bad || phone; }
+    var first = $('gpFirst').value.trim(), last = $('gpLast').value.trim(), email = $('gpEmail').value.trim(), bad = null;
+    // Name, mobile number and email are all taken before the price is shown (Eric, 2026-11-19).
+    mark($('gpFirst'), !first); mark($('gpLast'), !last); mark(phone, !usDigits(phone.value));
+    mark($('gpEmail'), !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email));
+    [$('gpFirst'), $('gpLast'), phone, $('gpEmail')].forEach(function (el) { if (!bad && el.classList.contains('err')) bad = el; });
     if (bad) { bad.focus(); return; }
     var source = 'Gutter Price Page' + (srcTag ? ' (from ' + srcTag + ')' : '');
     var payload = {
-      first: first, last: last || '(not provided)', phone: phone.value, email: '',
-      address: S.address.replace(/, MA$/, ''), service: 'Gutter Cleaning',
-      message: 'Instant gutter price page:\n- Address: ' + S.address.replace(/, MA$/, ''),
+      first: first, last: last, phone: phone.value, email: email,
+      address: S.address, service: 'Gutter Cleaning',
+      message: 'Instant gutter price page:\n- Address: ' + S.address + (S.unit ? '\n- Unit: ' + S.unit : ''),
       contactPref: 'Phone Call', source: source, kc_hpot_xyz: $('gpHp').value || ''
     };
     S.lead = payload;
@@ -232,7 +242,7 @@
         try {
           if (window.gtag) {
             var ph = payload.phone.replace(/\D/g, '');
-            gtag('event', 'conversion', { send_to: 'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD', value: 150, currency: 'USD', user_data: { phone_number: ph.length >= 10 ? '+1' + ph.slice(-10) : undefined, address: { first_name: payload.first || undefined } } });
+            gtag('event', 'conversion', { send_to: 'AW-18069179134/4aB2CMbQmrUcEP6Vh6hD', value: 150, currency: 'USD', user_data: { email: payload.email || undefined, phone_number: ph.length >= 10 ? '+1' + ph.slice(-10) : undefined, address: { first_name: payload.first || undefined } } });
             gtag('event', 'generate_lead', { lead_source: source });
           }
           if (window.fbq) fbq('track', 'Lead');

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- deploy-bust:20261119214829 -->
+<!-- deploy-bust:20261119215435 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -118,7 +118,18 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
 .gp-h1 span{color:var(--gold-l)}
 .gp-sub{font-size:16px;line-height:1.55;color:rgba(255,255,255,.68);text-align:center;max-width:400px;margin:0 auto 22px}
 .gp-card{background:rgba(13,30,53,.72);-webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:20px 18px;box-shadow:0 28px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.09)}
-.gp-field{position:relative;margin-bottom:10px}
+.gp-field{position:relative;margin-bottom:12px}
+.gp-field label{display:block;font-size:13px;font-weight:600;color:rgba(255,255,255,.82);margin:0 0 6px 2px;letter-spacing:.01em}
+.gp-field label i{font-style:normal;font-weight:400;color:rgba(255,255,255,.5)}
+.gp-grid3{display:grid;grid-template-columns:1.5fr .8fr 1fr;gap:10px}
+.gp-main select{width:100%;min-height:54px;padding:14px 34px 14px 15px;border:1px solid rgba(255,255,255,.18);border-radius:12px;font-family:'Source Sans 3',sans-serif;font-size:17px;color:#fff;background:rgba(255,255,255,.07) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23e2c47a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 13px center;outline:none;-webkit-appearance:none;appearance:none;cursor:pointer}
+.gp-main select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.22)}
+.gp-main select option{background:#0d1e35;color:#fff}
+.gp-err{display:none;font-size:12.5px;color:#ff9d8f;margin:5px 0 0 2px}
+.gp-field.bad .gp-err{display:block}
+.gp-sec{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px;font-size:12.5px;color:rgba(255,255,255,.55)}
+.gp-sec svg{width:13px;height:13px;flex-shrink:0;color:var(--gold-l)}
+@media(max-width:420px){.gp-grid3{grid-template-columns:1fr 1fr}.gp-grid3 .gp-field:first-child{grid-column:1/-1}}
 .gp-main input{width:100%;min-height:54px;padding:14px 15px;border:1px solid rgba(255,255,255,.18);border-radius:12px;font-family:'Source Sans 3',sans-serif;font-size:17px;color:#fff;background:rgba(255,255,255,.07);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s,background .15s,box-shadow .15s}
 .gp-main input::placeholder{color:rgba(255,255,255,.5)}
 .gp-main input:focus{border-color:var(--gold);background:rgba(255,255,255,.11);box-shadow:0 0 0 3px rgba(201,168,76,.22)}
@@ -259,10 +270,15 @@ body.gp-lock{overflow:hidden}
     <h1 class="gp-h1">Your gutter cleaning price <span>in seconds</span></h1>
     <p class="gp-sub">Type your address. I pull up your house and price it right here. No visit, no waiting on a call.</p>
     <form class="gp-card" id="gpAddrForm" novalidate autocomplete="on">
-      <div class="gp-field"><input type="text" id="gpStreet" placeholder="Street address" autocomplete="off" aria-label="Street address"><div class="gp-sug" id="gpSug"></div></div>
-      <div class="gp-field"><input type="text" id="gpTown" placeholder="Town" autocomplete="address-level2" aria-label="Town"></div>
+      <div class="gp-field"><label for="gpStreet">Street address</label><input type="text" id="gpStreet" name="address-line1" placeholder="Start typing your address" autocomplete="address-line1" autocapitalize="words" spellcheck="false"><div class="gp-sug" id="gpSug"></div><div class="gp-err">Enter the house number and street.</div></div>
+      <div class="gp-field"><label for="gpUnit">Apt, suite, unit <i>(optional)</i></label><input type="text" id="gpUnit" name="address-line2" autocomplete="address-line2"></div>
+      <div class="gp-grid3">
+        <div class="gp-field"><label for="gpTown">City</label><input type="text" id="gpTown" name="city" autocomplete="address-level2" autocapitalize="words"><div class="gp-err">Enter the city or town.</div></div>
+        <div class="gp-field"><label for="gpState">State</label><select id="gpState" name="state" autocomplete="address-level1"><option value="MA" selected>MA</option><option value="NH">NH</option></select></div>
+        <div class="gp-field"><label for="gpZip">ZIP code</label><input type="text" id="gpZip" name="postal-code" autocomplete="postal-code" inputmode="numeric" maxlength="5"><div class="gp-err">5 digits.</div></div>
+      </div>
       <button type="submit" class="gp-cta">Find My House</button>
-      <div class="gp-note">Takes about 10 seconds.</div>
+      <div class="gp-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Only used to price your gutters. Takes about 10 seconds.</div>
     </form>
     <div class="gp-trust"><span><b>&#10003;</b>Licensed &amp; Insured</span><span><b>&#10003;</b>Locally Owned</span><span><b>&#10003;</b>No Deposit</span></div>
   </section>
@@ -290,10 +306,14 @@ body.gp-lock{overflow:hidden}
       </div>
       <form id="gpGateForm" novalidate autocomplete="on">
         <div style="display:none" aria-hidden="true"><label>Leave empty<input type="text" id="gpHp" tabindex="-1" autocomplete="off" value=""></label></div>
-        <div class="gp-field gp-row2"><input type="text" id="gpFirst" placeholder="First name" autocomplete="given-name" aria-label="First name"><input type="text" id="gpLast" placeholder="Last name" autocomplete="family-name" aria-label="Last name"></div>
-        <div class="gp-field"><input type="tel" id="gpPhone" placeholder="Phone number" autocomplete="tel" inputmode="tel" aria-label="Phone number"></div>
+        <div class="gp-row2">
+          <div class="gp-field"><label for="gpFirst">First name</label><input type="text" id="gpFirst" name="given-name" autocomplete="given-name" autocapitalize="words"><div class="gp-err">Required.</div></div>
+          <div class="gp-field"><label for="gpLast">Last name</label><input type="text" id="gpLast" name="family-name" autocomplete="family-name" autocapitalize="words"><div class="gp-err">Required.</div></div>
+        </div>
+        <div class="gp-field"><label for="gpPhone">Mobile number</label><input type="tel" id="gpPhone" name="tel" placeholder="978-555-0123" autocomplete="tel" inputmode="tel"><div class="gp-err">Enter a 10 digit phone number.</div></div>
+        <div class="gp-field"><label for="gpEmail">Email</label><input type="email" id="gpEmail" name="email" placeholder="you@example.com" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false"><div class="gp-err">Enter a valid email address.</div></div>
         <button type="submit" class="gp-cta" id="gpGateBtn">Show My Price</button>
-        <div class="gp-note" id="gpGateNote">I text you a copy of the quote. No spam, ever.</div>
+        <div class="gp-note" id="gpGateNote">Your quote is sent to this number and email. No spam, ever.</div>
         <div class="gp-note" id="gpGateFail" style="display:none;color:#ff9d8f">That did not go through. Try again or <a href="tel:978-351-2195">call 978-351-2195</a>.</div>
       </form>
     </div>
@@ -350,7 +370,7 @@ body.gp-lock{overflow:hidden}
   <div class="gp-modal-bar"><span class="gp-modal-t">Your quote</span><button type="button" class="gp-modal-x" id="gpModalX" aria-label="Close the quote and go back to your price"><b>&times;</b> Back to my price</button></div>
   <iframe id="gpFrame" title="Your quote from Kaim Contracting"></iframe>
 </div>
-<script src="/js/gutter-price.js?v=1" defer></script>
+<script src="/js/gutter-price.js?v=2" defer></script>
 
 
 
