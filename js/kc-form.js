@@ -10,13 +10,14 @@
  * free in-person estimate via /api/estimate-visit (address rides along onto
  * the calendar entry).
  *
- * Instant gutter price (split test, 2026-11-19): when the CRM says the test is
- * on (GET /api/instant-quote -> share %), that share of visitors is dealt
- * group 'b' (remembered in localStorage kc_iq) and, for Gutter Cleaning only,
- * the form posts to /api/instant-quote, shows the price with a brightening
- * add-on, and sends them to the CRM quote page to approve and pick a day.
- * Everyone else is group 'a' and gets this form unchanged. ?instant=1 forces
- * the instant flow for a look (tagged 'preview', kept out of the scoreboard).
+ * Instant gutter price (2026-11-19): Eric's switch in the CRM (GET
+ * /api/instant-quote -> share: 0 off, 50 split test, 100 everyone). The first
+ * time a visitor has Gutter Cleaning picked, the server deals them a group
+ * (?assign=1; in a split test every other visitor), remembered in
+ * localStorage kc_iq. Group 'b' posts to /api/instant-quote, sees the price
+ * with a brightening add-on, and goes to the CRM quote page to approve and
+ * pick a day. Group 'a' gets this form unchanged. ?instant=1 forces the
+ * instant flow for a look (tagged 'preview', kept out of the scoreboard).
  *
  * URL params: ?service=Paver%20Sealing preselects the dropdown,
  *             ?src=paver-sealing tags the lead source with the page it came from,
@@ -149,7 +150,7 @@
         ddBtn.classList.remove('kcf-empty'); ddBtn.classList.remove('kcf-err');
         [].slice.call(ddPanel.querySelectorAll('button')).forEach(function (x) { x.classList.toggle('sel', x === b); });
         ddPanel.classList.remove('open'); ddBtn.classList.remove('open');
-        iqSync();
+        iqSync(); iqDeal();
       });
     });
     if (ddPanel) document.addEventListener('click', function (e) {
@@ -173,20 +174,29 @@
       q('kicker').textContent = on ? 'Your price on screen in seconds' : cfg.kicker;
       b.textContent = on ? 'See My Price' : cfg.submitLabel;
     }
+    // iqShare: null until the switch is known, then 0 / 50 / 100.
+    var iqShare = null, iqAsking = false;
+    function iqDeal() {
+      if (iqGroup || iqAsking || !(iqShare > 0) || q('service').value !== 'Gutter Cleaning') return;
+      var g = '';
+      try { g = localStorage.getItem('kc_iq') || ''; } catch (_) { }
+      if (iqShare >= 100) g = 'b';
+      if (g === 'a' || g === 'b') { iqGroup = g; iqSync(); return; }
+      iqAsking = true;
+      fetch('/api/instant-quote?assign=1').then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          iqAsking = false;
+          if (!j || (j.group !== 'a' && j.group !== 'b') || iqGroup) return;
+          iqGroup = j.group;
+          try { localStorage.setItem('kc_iq', iqGroup); } catch (_) { }
+          iqSync();
+        })
+        .catch(function () { iqAsking = false; });
+    }
     if (iqGroup) iqSync();
     else {
       fetch('/api/instant-quote').then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (j) {
-          var share = j && j.ok ? Number(j.share) || 0 : 0;
-          if (!(share > 0)) return;
-          var g = '';
-          try { g = localStorage.getItem('kc_iq') || ''; } catch (_) { }
-          if (g !== 'a' && g !== 'b') {
-            g = Math.random() * 100 < share ? 'b' : 'a';
-            try { localStorage.setItem('kc_iq', g); } catch (_) { }
-          }
-          iqGroup = g; iqSync();
-        })
+        .then(function (j) { iqShare = j && j.ok ? Number(j.share) || 0 : 0; iqDeal(); })
         .catch(function () { });
     }
 

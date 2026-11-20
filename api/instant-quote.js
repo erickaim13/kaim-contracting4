@@ -1,7 +1,10 @@
 // Instant gutter cleaning quote (a split test against the normal quote form).
 //
-// GET  -> { ok, share }: what percent of gutter cleaning visitors get the
-//         instant price (Eric's number in the CRM; 0 = the test is off).
+// GET  -> { ok, share }: Eric's switch in the CRM (Lead Sources page):
+//         0 = off, 50 = split test, 100 = everyone gets the instant price.
+// GET ?assign=1 -> also { group }: 'b' (instant price) or 'a' (normal form)
+//         for a visitor who has none yet. In a split test it is every other
+//         visitor, counted by the Postgres sequence behind iq_next().
 // POST { action: 'quote', ...the normal lead fields, variant }
 //      -> saves the lead exactly like /api/lead, looks the house up on the
 //         town record, and when it can be priced also saves a real CRM quote
@@ -66,7 +69,7 @@ export default async function handler(req, res) {
   if (!okOrigin) return res.status(403).json({ error: 'Forbidden' });
 
   try {
-    if (req.method === 'GET') return await getShare(res);
+    if (req.method === 'GET') return await getShare(res, String(req.query?.assign || '') === '1');
     if (req.method === 'POST') {
       const body = req.body || {};
       if (body.action === 'addon') return await setAddon(body, res);
@@ -79,12 +82,23 @@ export default async function handler(req, res) {
   return res.status(405).json({ error: 'Method not allowed' });
 }
 
-async function getShare(res) {
+async function getShare(res, assign) {
   // Only the price settings are read, not the whole CRM row.
   const { data, error } = await sbAdmin.from('crm_data').select('pq:data->settings->pq').eq('id', 1).single();
   if (error) throw error;
+  const share = iqConfig({ pq: data?.pq || {} }).iqShare;
+  const out = { ok: true, share };
+  if (assign && share > 0) {
+    if (share >= 100) out.group = 'b';
+    else {
+      // Every other visitor. If the counter cannot be read, a coin flip.
+      let n = null;
+      try { const r = await sbAdmin.rpc('iq_next'); if (!r.error) n = Number(r.data); } catch (_) { }
+      out.group = Number.isFinite(n) ? (n % 2 === 1 ? 'b' : 'a') : (Math.random() < 0.5 ? 'b' : 'a');
+    }
+  }
   res.setHeader('Cache-Control', 'no-store');
-  return res.status(200).json({ ok: true, share: iqConfig({ pq: data?.pq || {} }).iqShare });
+  return res.status(200).json(out);
 }
 
 async function makeQuote(req, body, res) {
