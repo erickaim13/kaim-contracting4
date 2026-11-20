@@ -88,7 +88,7 @@ export default async function handler(req, res) {
   const attribution = {};
   // fbclid / fbc / fbp are the Facebook click and browser ids; the CRM passes
   // them back to Meta with the Purchase event so a paid job matches its ad.
-  for (const k of ['gclid', 'gbraid', 'wbraid', 'fbclid', 'fbc', 'fbp', 'utm_source', 'utm_medium', 'utm_campaign', 'referrer', 'landing']) {
+  for (const k of ['gclid', 'gbraid', 'wbraid', 'fbclid', 'fbc', 'fbp', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'referrer', 'landing']) {
     const v = sanitize(rawAttr[k], (k === 'fbclid' || k === 'fbc') ? 600 : 200);
     if (v) attribution[k] = v;
   }
