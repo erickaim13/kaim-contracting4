@@ -207,7 +207,7 @@ async function makeQuote(req, body, res) {
       quoted = { clean: price.clean, bright: price.bright, url: quoteUrl(db.settings, token) };
     },
     ownerExtra: () => quoted
-      ? `\nInstant price shown on the website: ${money(quoted.clean)} (${Number(house.sqft).toLocaleString('en-US')} sq ft, ${house.stories} story). The quote is in the CRM.`
+      ? `\nInstant price shown on the website: ${money(quoted.clean)} (${Number(house.sqft).toLocaleString('en-US')} sq ft, ${house.stories} story${house.twoFamily ? ', two family' : ''}). The quote is in the CRM.`
       : '\nNo instant price for this house, quote it yourself.'
   });
 

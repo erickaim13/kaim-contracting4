@@ -110,16 +110,21 @@ export function pickParcel(rows, num, street) {
   const mine = (rows || []).filter(a => a && normNum(a.ADDR_NUM) === want && normStreet(a.FULL_STR) === st);
   if (!mine.length) return { ok: false, why: 'no_record' };
   // More than one record at one address is a condo or a multi-unit building.
-  if (mine.length > 1 || Number(mine[0].UNITS) > 1) return { ok: false, why: 'not_single_family' };
+  if (mine.length > 1) return { ok: false, why: 'not_single_family' };
   const a = mine[0];
-  // 101 (some towns write 1010) is a single family house on the state's use codes.
-  if (String(a.USE_CODE || '').slice(0, 3) !== '101') return { ok: false, why: 'not_single_family' };
+  // 101 (some towns write 1010) is a single family house on the state's use
+  // codes, 104 a two family (priced the same way since 2026-11-20, Eric).
+  // Three families and up, condos and everything else: he quotes it himself.
+  const use = String(a.USE_CODE || '').slice(0, 3), units = Number(a.UNITS) || 0;
+  const two = use === '104';
+  if (use !== '101' && !two) return { ok: false, why: 'not_single_family' };
+  if (units > (two ? 2 : 1)) return { ok: false, why: 'not_single_family' };
   // Stories come as "2", "1.5", "2A", "1H": the leading number is the count.
   const sqft = Number(a.RES_AREA) || 0, stories = parseFloat(a.STORIES) || 0;
   if (!(sqft > 0)) return { ok: false, why: 'no_size' };
   if (!(stories > 0)) return { ok: false, why: 'no_stories' };
   return {
-    ok: true, sqft, stories,
+    ok: true, sqft, stories, twoFamily: two,
     style: String(a.STYLE || ''), year: Number(a.YEAR_BUILT) || 0,
     addr: String(a.SITE_ADDR || '').replace(/\s+/g, ' ').trim(), city: String(a.CITY || ''),
     // Centre of the lot itself (the geocoder's point sits out on the street).

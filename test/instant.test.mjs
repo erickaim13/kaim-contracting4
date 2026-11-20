@@ -112,3 +112,12 @@ test('brightening (the upsell) always comes out under the cleaning price', () =>
   const p = priceHouse(2400, 2, iqConfig({ pq: { iqBrightMin: 400, iqBrightMax: 500 } }));
   assert.equal(p.clean, 300); assert.equal(p.bright, 275);
 });
+test('parcel: a two family is priced, three families and up are not', () => {
+  const two = pickParcel([row({ USE_CODE: '104', UNITS: 2, RES_AREA: 2954, STORIES: '2H' })], '7', 'ALPINE DR');
+  assert.equal(two.ok, true); assert.equal(two.twoFamily, true); assert.equal(two.sqft, 2954); assert.equal(two.stories, 2);
+  assert.equal(pickParcel([row({ USE_CODE: '1040', UNITS: 0 })], '7', 'ALPINE DR').ok, true);
+  assert.equal(pickParcel([row()], '7', 'ALPINE DR').twoFamily, false);
+  assert.equal(pickParcel([row({ USE_CODE: '104', UNITS: 3 })], '7', 'ALPINE DR').why, 'not_single_family');
+  assert.equal(pickParcel([row({ USE_CODE: '105', UNITS: 3 })], '7', 'ALPINE DR').why, 'not_single_family');
+  assert.equal(pickParcel([row({ USE_CODE: '102' })], '7', 'ALPINE DR').why, 'not_single_family');   // condo
+});
