@@ -6,14 +6,23 @@
 // as settings.pq.iq*); the ones below are only the starting values.
 //
 // The house size and story count come from the MassGIS property tax parcel
-// (the assessor record) for the typed address. No record, not a single family
-// house, an odd size or a New Hampshire address means NO instant price: the
-// lead goes through the normal form and Eric quotes it himself.
+// (the assessor record) for the typed address. No record, not a one or two
+// family house, or an odd size means NO instant price: the lead goes through
+// the normal form and Eric quotes it himself.
+//
+// New Hampshire (since 2026-11-20) has no town record with the house size, so
+// the house is measured instead: the state's lot record says it is a single
+// family lot, FEMA's building outlines give the house on it, and the airplane
+// laser scan gives its floors (laserhouse.js). Less exact than a town record.
 //
 // Everything network-facing takes `fetch` as an argument so the tests run
 // with no network.
 
+import { laserCells, houseFromCells } from './laserhouse.js';
+
 const CENSUS = 'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress';
+const NH_PARCELS = 'https://nhgeodata.unh.edu/nhgeodata/rest/services/CAD/ParcelMosaic/MapServer/1/query';
+const STRUCTURES = 'https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/USA_Structures_View/FeatureServer/0/query';
 const PARCELS = 'https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Property_Tax_Parcels/FeatureServer/0/query';
 
 export const IQ_DEFAULTS = {
@@ -171,26 +180,114 @@ const MA_TOWNS_NEARBY = new Set(['METHUEN', 'ANDOVER', 'NORTH ANDOVER', 'LAWRENC
   'BOXFORD', 'GEORGETOWN', 'GROVELAND', 'MERRIMAC', 'WEST NEWBURY', 'NORTH READING', 'MIDDLETON', 'WILMINGTON', 'CHELMSFORD',
   'TYNGSBOROUGH', 'NEWBURYPORT', 'AMESBURY', 'READING', 'BILLERICA']);
 
+// ---- New Hampshire ---------------------------------------------------------
+
+/**
+ * The town of a New Hampshire address, or '' when the address is not in New
+ * Hampshire (or names no town). "5 Elm St, Salem, NH 03079" -> "SALEM".
+ */
+export function nhTown(address) {
+  const typed = String(address || '');
+  const zip = (typed.match(/\b(\d{5})(?:-\d{4})?\s*$/) || [])[1] || '';
+  if (!/\b(NH|New Hampshire)\b/i.test(typed) && !zip.startsWith('03')) return '';
+  const parts = typed.split(',').slice(1).map(normTown).map(p => p.replace(/\s*\b(NH|NEW HAMPSHIRE)$/, '').trim());
+  return parts.find(p => p && p !== 'NH' && p !== 'NEW HAMPSHIRE') || '';
+}
+
+/**
+ * The lot that is this house out of the state's lot records for that house
+ * number in that town. Pure, tested. Land use 11 is a single family home
+ * (11-70 and the like are the same with a local note); anything else, or two
+ * records at one address, is not priced.
+ */
+export function pickNhParcel(rows, num, street) {
+  const want = normNum(num), st = normStreet(street);
+  const mine = (rows || []).filter(f => {
+    const m = String((f && f.attributes && f.attributes.StreetAddress) || '').trim().match(/^(\d+[A-Za-z]?)\s+(.+)$/);
+    return m && normNum(m[1]) === want && normStreet(m[2].replace(/\b(APT|UNIT|#).*$/i, '')) === st;
+  });
+  if (!mine.length) return { ok: false, why: 'no_record' };
+  if (mine.length > 1) return { ok: false, why: 'not_single_family' };
+  const f = mine[0], ring = f.geometry && f.geometry.rings && f.geometry.rings[0];
+  if (!/^11(-|$)/.test(String(f.attributes.SLU || '').trim())) return { ok: false, why: 'not_single_family' };
+  if (!ring || ring.length < 3) return { ok: false, why: 'no_record' };
+  return { ok: true, ring, addr: String(f.attributes.StreetAddress).replace(/\s+/g, ' ').trim(), city: String(f.attributes.Town || '') };
+}
+
+function inRing(ring, x, y) {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const a = ring[i], b = ring[j];
+    if ((a[1] > y) !== (b[1] > y) && x < (b[0] - a[0]) * (y - a[1]) / (b[1] - a[1]) + a[0]) inside = !inside;
+  }
+  return inside;
+}
+/** The house on the lot: the biggest building whose middle sits inside it. Pure, tested. */
+export function pickBuilding(features, lot) {
+  const on = (features || []).filter(f => f && f.attributes && f.geometry && f.geometry.rings && f.geometry.rings[0]
+    && inRing(lot, Number(f.attributes.LONGITUDE), Number(f.attributes.LATITUDE)))
+    .sort((a, b) => Number(b.attributes.SQFEET) - Number(a.attributes.SQFEET));
+  if (!on.length || !(Number(on[0].attributes.SQFEET) >= 500)) return null;
+  return { ring: on[0].geometry.rings[0], lat: Number(on[0].attributes.LATITUDE), lng: Number(on[0].attributes.LONGITUDE) };
+}
+
+/**
+ * A New Hampshire address -> the house measured from the lot record, the
+ * building outline and the laser scan. Same answer shape as a town record,
+ * plus laser:true. deps.laserCells is swapped out in the tests.
+ */
+async function lookupHouseNH(typed, num, street, fetchImpl, deps) {
+  const town = nhTown(typed);
+  if (!town) return { ok: false, why: 'no_record' };
+  const p = await getJson(fetchImpl, NH_PARCELS + '?' + new URLSearchParams({
+    where: `UPPER(Town) = '${town.replace(/[^A-Z ]/g, '')}' AND StreetAddress LIKE '${normNum(num)} %'`,
+    outFields: 'StreetAddress,Town,SLU', returnGeometry: 'true', outSR: '4326', f: 'json'
+  }), 6000);
+  const lot = pickNhParcel(p && p.features, num, street);
+  if (!lot.ok) return lot;
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  lot.ring.forEach(q => { x0 = Math.min(x0, q[0]); y0 = Math.min(y0, q[1]); x1 = Math.max(x1, q[0]); y1 = Math.max(y1, q[1]); });
+  const s = await getJson(fetchImpl, STRUCTURES + '?' + new URLSearchParams({
+    geometry: [x0, y0, x1, y1].join(','), geometryType: 'esriGeometryEnvelope', inSR: '4326', spatialRel: 'esriSpatialRelIntersects',
+    outFields: 'SQFEET,LONGITUDE,LATITUDE', returnGeometry: 'true', outSR: '4326', f: 'json'
+  }), 6000);
+  const b = pickBuilding(s && s.features, lot.ring);
+  if (!b) return { ok: false, why: 'no_building' };
+  const h = houseFromCells(await (deps.laserCells || laserCells)(b.ring, { fetch: fetchImpl }));
+  if (!h.ok) return h;
+  return {
+    ok: true, sqft: h.sqft, stories: h.stories, twoFamily: false, laser: true,
+    style: '', year: 0, addr: lot.addr, city: lot.city,
+    lotLat: b.lat, lotLng: b.lng, lat: b.lat, lng: b.lng
+  };
+}
+
 /**
  * Typed address -> the assessor record for that house.
  * The parcel layer is asked for that house number on streets starting with
  * the same word (a plain attribute search, well under a second; searching by
  * map area takes 10 seconds or more), and the Census geocoder says where the
  * address is so a same-named street in another town is not picked.
+ * A New Hampshire address (it says NH, or carries an 03 zip) is measured
+ * instead, see lookupHouseNH, and gives up after 9 seconds.
  * Never throws: any failure is { ok:false, why } and the lead takes the
  * normal form path.
  */
-export async function lookupHouse(address, fetchImpl = fetch) {
+export async function lookupHouse(address, fetchImpl = fetch, deps = {}) {
   try {
     const typed = String(address || '').trim();
     const num = houseNumber(typed), street = typedStreet(typed);
     if (!num || !street) return { ok: false, why: 'no_house_number' };
-    if (/\b(NH|New Hampshire)\b/i.test(typed)) return { ok: false, why: 'not_ma' };
-    // A New Hampshire zip, or a town name both states have with nothing that
-    // says Massachusetts: no instant price, the lead takes the normal form.
-    // ("12 Main St, Salem" was priced off the Salem MA house.)
     const zip = (typed.match(/\b(\d{5})(?:-\d{4})?\s*$/) || [])[1] || '';
-    if (zip.startsWith('03')) return { ok: false, why: 'not_ma' };
+    if (/\b(NH|New Hampshire)\b/i.test(typed) || zip.startsWith('03')) {
+      let timer;
+      const slow = new Promise(r => { timer = setTimeout(() => r({ ok: false, why: 'lookup_slow' }), deps.nhMs || 9000); });
+      try { return await Promise.race([lookupHouseNH(typed, num, street, fetchImpl, deps), slow]); }
+      finally { clearTimeout(timer); }
+    }
+    // A town name both states have with nothing that says which state: no
+    // instant price, the lead takes the normal form.
+    // ("12 Main St, Salem" was priced off the Salem MA house.)
     const parts = typed.split(',').slice(1).map(normTown).filter(Boolean);
     const saysMA = /\b(MA|Massachusetts)\b/i.test(typed) || /^0[12]/.test(zip);
     if (!saysMA && parts.some(p => BOTH_STATES.has(p))) return { ok: false, why: 'state_unclear' };

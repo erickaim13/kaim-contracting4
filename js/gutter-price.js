@@ -164,6 +164,11 @@
     li.classList.remove('go', 'ok'); if (state) li.classList.add(state);
     if (note != null) li.querySelector('small').textContent = note;
   }
+  // The second step's wording: a town record in Massachusetts, a measurement in New Hampshire.
+  function recLabel(t) {
+    var li = root.querySelector('#gpTicks li[data-t="rec"]'), sp = li && li.querySelector('span:not(.gp-dot)');
+    if (sp && sp.firstChild && sp.firstChild.nodeType === 3) sp.firstChild.nodeValue = t;
+  }
   // The bar: the fill eases to each mark, the number counts along with it.
   var barAt = 0, barTimer = null;
   function bar(to, label) {
@@ -208,6 +213,7 @@
     box.classList.remove('has', 'done'); $('gpTiles').innerHTML = '';
     $('gpScanLbl').textContent = S.address.replace(/,? (MA|NH)( \d{5})?$/, '');
     ['find', 'rec', 'run', 'price', 'quote'].forEach(function (t) { tick(t, '', ''); });
+    recLabel('Pulling the town record');
     barAt = 0; $('gpBarPct').textContent = '0%'; $('gpBar').style.width = '0%';
     show('scan');
     tick('find', 'go'); bar(14, 'Finding your home');
@@ -235,9 +241,13 @@
         if (h.lat && h.lng) aerialTiles(Number(h.lat), Number(h.lng), function () { box.classList.add('has'); });
         var two = Number(h.stories) >= 1.75;
         tick('find', 'ok', titleCase(h.addr) + (h.city ? ', ' + titleCase(h.city) : ''));
-        tick('rec', 'go'); bar(34, 'Pulling the town record');
+        // New Hampshire has no town record with the house size: the house is measured from the air.
+        if (h.laser) recLabel('Measuring your home');
+        tick('rec', 'go'); bar(34, h.laser ? 'Measuring your home' : 'Pulling the town record');
         return wait(1300).then(function () {
-          tick('rec', 'ok', Number(h.sqft).toLocaleString('en-US') + ' sq ft' + (h.style ? ' · ' + titleCase(h.style) : '') + (h.year ? ' · built ' + h.year : ''));
+          tick('rec', 'ok', h.laser
+            ? 'About ' + (Math.round(Number(h.sqft) / 50) * 50).toLocaleString('en-US') + ' sq ft · measured from the air'
+            : Number(h.sqft).toLocaleString('en-US') + ' sq ft' + (h.style ? ' · ' + titleCase(h.style) : '') + (h.year ? ' · built ' + h.year : ''));
           tick('run', 'go'); bar(56, 'Sizing up the gutter run');
           return wait(1300);
         }).then(function () {

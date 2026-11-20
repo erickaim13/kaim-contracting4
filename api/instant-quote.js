@@ -26,6 +26,9 @@ import { randomBytes } from 'node:crypto';
 import { intakeLead, sbAdmin, sanitize, usPhoneDigits } from './_lib/intake.js';
 import { iqConfig, priceHouse, lookupHouse, buildEstimate, applyItems } from './_lib/instant.js';
 
+// A New Hampshire house is measured from the laser scan, a few seconds of work.
+export const config = { maxDuration: 30 };
+
 const ALLOWED_ORIGINS = new Set([
   'https://kaimcontracting.com',
   'https://www.kaimcontracting.com'
@@ -127,7 +130,7 @@ async function lookupOnly(req, body, res) {
   if (!price) return res.status(200).json({ ok: true, found: false });
   return res.status(200).json({
     ok: true, found: true, sqft: house.sqft, stories: house.stories,
-    style: house.style, year: house.year, addr: house.addr, city: house.city,
+    style: house.style, year: house.year, addr: house.addr, city: house.city, laser: !!house.laser,
     lat: house.lotLat || house.lat, lng: house.lotLng || house.lng
   });
 }
@@ -203,11 +206,11 @@ async function makeQuote(req, body, res) {
       client.status = 'estimate';
       client.statusAt = now.toISOString();
       client.val = est.total;
-      client.iq = { v: variant, priced: true, at: now.toISOString(), sqft: house.sqft, stories: house.stories, clean: price.clean, bright: price.bright, estId: est.id };
+      client.iq = { v: variant, priced: true, at: now.toISOString(), sqft: house.sqft, stories: house.stories, clean: price.clean, bright: price.bright, estId: est.id, ...(house.laser ? { laser: true } : {}) };
       quoted = { clean: price.clean, bright: price.bright, url: quoteUrl(db.settings, token) };
     },
     ownerExtra: () => quoted
-      ? `\nInstant price shown on the website: ${money(quoted.clean)} (${Number(house.sqft).toLocaleString('en-US')} sq ft, ${house.stories} story${house.twoFamily ? ', two family' : ''}). The quote is in the CRM.`
+      ? `\nInstant price shown on the website: ${money(quoted.clean)} (${Number(house.sqft).toLocaleString('en-US')} sq ft, ${house.stories} story${house.twoFamily ? ', two family' : ''}${house.laser ? ', New Hampshire: no town record, size measured from the air' : ''}). The quote is in the CRM.`
       : '\nNo instant price for this house, quote it yourself.'
   });
 

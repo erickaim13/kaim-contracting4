@@ -50,7 +50,7 @@ test('parcel: neighbour, other street, condo, school, blanks are refused', () =>
 });
 test('lookup: no number, NH, and a dead network never throw', async () => {
   assert.equal((await lookupHouse('North Andover', () => { throw new Error('x'); })).why, 'no_house_number');
-  assert.equal((await lookupHouse('5 Main St, Salem, NH', () => { throw new Error('x'); })).why, 'not_ma');
+  assert.equal((await lookupHouse('5 Main St, Salem, NH', () => { throw new Error('x'); })).why, 'lookup_failed');
   assert.equal((await lookupHouse('5 Main St, Methuen', () => Promise.reject(new Error('down')))).why, 'lookup_failed');
 });
 test('quote: cleaning alone, then with brightening, then without', () => {
@@ -85,9 +85,9 @@ test('street names match across spellings', () => {
 });
 
 import { sameTown } from '../api/_lib/instant.js';
-test('lookup: New Hampshire zip and two-state town names get no instant price', async () => {
+test('lookup: a two-state town name with no state gets no instant price', async () => {
   const dead = () => { throw new Error('x'); };
-  assert.equal((await lookupHouse('12 Main St, Salem, 03079', dead)).why, 'not_ma');
+  assert.equal((await lookupHouse('12 Main St, Salem, 03079', dead)).why, 'lookup_failed');   // New Hampshire: measured, and the network is down
   assert.equal((await lookupHouse('12 Main St, Salem', dead)).why, 'state_unclear');
   assert.equal((await lookupHouse('12 Main St, Hudson', dead)).why, 'state_unclear');
   // Massachusetts said outright, or a Massachusetts zip: carries on to the lookup
@@ -120,4 +120,80 @@ test('parcel: a two family is priced, three families and up are not', () => {
   assert.equal(pickParcel([row({ USE_CODE: '104', UNITS: 3 })], '7', 'ALPINE DR').why, 'not_single_family');
   assert.equal(pickParcel([row({ USE_CODE: '105', UNITS: 3 })], '7', 'ALPINE DR').why, 'not_single_family');
   assert.equal(pickParcel([row({ USE_CODE: '102' })], '7', 'ALPINE DR').why, 'not_single_family');   // condo
+});
+
+// ---- New Hampshire: lot record + building outline + laser scan --------------
+import { nhTown, pickNhParcel, pickBuilding } from '../api/_lib/instant.js';
+import { cellHeights, houseFromCells } from '../api/_lib/laserhouse.js';
+test('NH: the town out of the typed address', () => {
+  assert.equal(nhTown('101 Bluff St, Salem, NH 03079'), 'SALEM');
+  assert.equal(nhTown('101 Bluff St, Salem NH'), 'SALEM');
+  assert.equal(nhTown('5 Elm St, North Hampton, New Hampshire'), 'NORTH HAMPTON');
+  assert.equal(nhTown('5 Elm St, Pelham, 03076'), 'PELHAM');
+  assert.equal(nhTown('7 Alpine Dr, Haverhill, MA 01830'), '');
+  assert.equal(nhTown('5 Elm St, NH'), '');
+});
+const sq = (x, y, s) => [[x, y], [x + s, y], [x + s, y + s], [x, y + s], [x, y]];
+const lotRow = (o) => ({ attributes: { StreetAddress: '101 BLUFF ST', Town: 'Salem', SLU: '11', ...o }, geometry: { rings: [sq(0, 0, 10)] } });
+test('NH: the single family lot at that address, nothing else', () => {
+  const r = pickNhParcel([lotRow({ StreetAddress: '101 N MAIN ST' }), lotRow()], '101', 'Bluff Street');
+  assert.equal(r.ok, true); assert.equal(r.addr, '101 BLUFF ST'); assert.equal(r.city, 'Salem');
+  assert.equal(pickNhParcel([lotRow({ StreetAddress: '101  BLUFF ST', SLU: '11-70' })], '101', 'BLUFF ST').ok, true);
+  assert.equal(pickNhParcel([lotRow({ StreetAddress: '1010 BLUFF ST' })], '101', 'BLUFF ST').why, 'no_record');
+  assert.equal(pickNhParcel([lotRow({ SLU: '12' })], '101', 'BLUFF ST').why, 'not_single_family');   // 2 to 4 units
+  assert.equal(pickNhParcel([lotRow({ SLU: '22' })], '101', 'BLUFF ST').why, 'not_single_family');   // empty lot
+  assert.equal(pickNhParcel([lotRow(), lotRow()], '101', 'BLUFF ST').why, 'not_single_family');
+});
+const bld = (lng, lat, sqft) => ({ attributes: { LONGITUDE: lng, LATITUDE: lat, SQFEET: sqft }, geometry: { rings: [sq(lng, lat, 1)] } });
+test('NH: the house is the biggest building on the lot, not the shed or the neighbour', () => {
+  const lot = sq(0, 0, 10);
+  assert.equal(pickBuilding([bld(5, 5, 300), bld(3, 3, 1400), bld(20, 5, 3000)], lot).lng, 3);
+  assert.equal(pickBuilding([bld(5, 5, 300)], lot), null);
+  assert.equal(pickBuilding([bld(20, 5, 3000)], lot), null);
+});
+// A made-up scan: ground all round, a flat roof `up` metres high over a 12 x 10 m outline.
+function scan(up, part) {
+  const p = { x: [], y: [], z: [], c: [] };
+  for (let x = -8; x < 20; x += 0.5) for (let y = -8; y < 18; y += 0.5) {
+    const on = x >= 0 && x < 12 && y >= 0 && y < 10;
+    p.x.push(x + 0.1); p.y.push(y + 0.1);
+    if (on) { p.z.push(100 + (part && x >= 8 ? part : up)); p.c.push(1); } else { p.z.push(100); p.c.push(2); }
+  }
+  return p;
+}
+const outline = [[0, 0], [12, 0], [12, 10], [0, 10], [0, 0]];
+test('laser: a low roof is a one story house, a high roof a two story with twice the floor', () => {
+  const one = houseFromCells(cellHeights(scan(3.2), outline));
+  assert.equal(one.ok, true); assert.equal(one.stories, 1); assert.equal(one.footSqft, 1292); assert.equal(one.sqft, 1033);
+  const two = houseFromCells(cellHeights(scan(6.6), outline));
+  assert.equal(two.stories, 2); assert.equal(two.sqft, 2325);
+  // a two story house with a one story garage on a third of it is still a two story
+  const mix = houseFromCells(cellHeights(scan(6.6, 3.2), outline));
+  assert.equal(mix.stories, 2); assert.ok(mix.sqft > 1700 && mix.sqft < 2100, String(mix.sqft));
+  assert.equal(houseFromCells(cellHeights(scan(9.5), outline)).why, 'three_story');
+  assert.equal(houseFromCells(null).why, 'no_laser');
+});
+test('laser: a tree over the roof does not make the house taller', () => {
+  const p = scan(3.2);
+  for (let x = 0; x < 12; x += 0.5) for (let y = 0; y < 10; y += 0.5) { p.x.push(x + 0.3); p.y.push(y + 0.3); p.z.push(112); p.c.push(1); }
+  assert.equal(houseFromCells(cellHeights(p, outline)).stories, 1);
+});
+test('NH lookup: lot, outline and laser put together; no network needed', async () => {
+  const fake = async (url) => ({ ok: true, json: async () => String(url).includes('ParcelMosaic')
+    ? { features: [{ attributes: { StreetAddress: '101 BLUFF ST', Town: 'Salem', SLU: '11' }, geometry: { rings: [sq(-71.2, 42.8, 0.001)] } }] }
+    : { features: [bld(-71.1995, 42.8005, 1400)] } });
+  const cells = async () => cellHeights(scan(6.6), outline);
+  const r = await lookupHouse('101 Bluff Street, Salem, NH 03079', fake, { laserCells: cells });
+  assert.equal(r.ok, true); assert.equal(r.laser, true); assert.equal(r.stories, 2); assert.equal(r.sqft, 2325); assert.equal(r.city, 'Salem');
+  assert.equal(priceHouse(r.sqft, r.stories).clean, 275);
+  // the scan has nothing over the house, or takes too long: no price, a normal lead
+  assert.equal((await lookupHouse('101 Bluff Street, Salem, NH', fake, { laserCells: async () => null })).why, 'no_laser');
+  assert.equal((await lookupHouse('101 Bluff Street, Salem, NH', fake, { laserCells: () => new Promise(() => { }), nhMs: 30 })).why, 'lookup_slow');
+  assert.equal((await lookupHouse('9 Bluff Street, Salem, NH', fake, { laserCells: cells })).why, 'no_record');
+});
+test('LIVE: New Hampshire addresses', { skip: !process.env.LIVE }, async () => {
+  for (const q of ['101 Bluff St, Salem, NH 03079', '101 Millville St, Salem, NH 03079', '101 Lawrence Rd, Salem, NH 03079', '12 Main St, Pelham, NH 03076', '20 Indian Rock Rd, Windham, NH 03087']) {
+    const t = Date.now(), r = await lookupHouse(q);
+    console.log(q, '->', Date.now() - t, 'ms', JSON.stringify(r), JSON.stringify(r.ok ? priceHouse(r.sqft, r.stories) : null));
+  }
 });
