@@ -32,6 +32,7 @@ const SERVICES = [
 // services, add the form's ID here. Every incoming lead logs its form_id (see
 // the console.log in the handler), or find it in Meta's Instant Forms library.
 const FORM_SERVICE = {
+  '4776697499139261': 'Gutter Cleaning',   // "Gutter question form | Nov 2026" (cleaning, brightening or both)
   // '1234567890123456': 'Paver Installation',
   // '2345678901234567': 'Drainage Solutions',
 };
@@ -85,8 +86,61 @@ function verifySignature(rawBody, header, secret) {
   return crypto.timingSafeEqual(a, b);
 }
 
+// The Facebook Page the forms live on (Kaim Contracting).
+const PAGE_ID = (process.env.META_PAGE_ID || '862804586908541').trim();
+const graph = path => `https://graph.facebook.com/${GRAPH_VERSION}/${path}`;
+
+// PAGE_ACCESS_TOKEN may be a Page token or a system user token that has the
+// Page. Asking the Page for its own token works with either, so Eric only
+// ever has to make one token. Kept for the life of the warm function.
+let pageTok = null;
+async function pageToken(token) {
+  if (!token) return '';
+  if (pageTok && pageTok.from === token) return pageTok.value;
+  let value = token;
+  try {
+    const r = await fetch(graph(`${PAGE_ID}?fields=access_token&access_token=${encodeURIComponent(token)}`));
+    const j = await r.json().catch(() => ({}));
+    if (r.ok && j.access_token) value = j.access_token;
+  } catch (_) { }
+  pageTok = { from: token, value };
+  return value;
+}
+
+// Tell Facebook to send this Page's new form leads to the app (the second
+// half of the hookup; without it the webhook is verified but never called).
+async function subscribePage(token) {
+  const pt = await pageToken(token);
+  const r = await fetch(graph(`${PAGE_ID}/subscribed_apps?subscribed_fields=leadgen&access_token=${encodeURIComponent(pt)}`), { method: 'POST' });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j?.error?.message || 'HTTP ' + r.status);
+  return true;
+}
+
+// GET ?check=1: is everything in place? Answers yes / no only, never a key.
+async function hookupStatus() {
+  const token = (process.env.PAGE_ACCESS_TOKEN || '').trim();
+  const out = {
+    verifyTokenSet: !!(process.env.META_VERIFY_TOKEN || '').trim(),
+    appSecretSet: !!(process.env.META_APP_SECRET || '').trim(),
+    pageTokenSet: !!token,
+    pageTokenWorks: false, pageSendsLeads: false
+  };
+  if (!token) return out;
+  try {
+    const pt = await pageToken(token);
+    const r = await fetch(graph(`${PAGE_ID}/subscribed_apps?access_token=${encodeURIComponent(pt)}`));
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) { out.problem = String(j?.error?.message || 'HTTP ' + r.status).slice(0, 200); return out; }
+    out.pageTokenWorks = true;
+    out.pageSendsLeads = (j.data || []).some(a => (a.subscribed_fields || []).includes('leadgen'));
+  } catch (e) { out.problem = String(e?.message || e).slice(0, 200); }
+  return out;
+}
+
 // Pull the lead's field_data from the Graph API.
-async function fetchLead(leadgenId, token) {
+async function fetchLead(leadgenId, rawToken) {
+  const token = await pageToken(rawToken);
   const url = `https://graph.facebook.com/${GRAPH_VERSION}/${encodeURIComponent(leadgenId)}`
     + `?fields=field_data,created_time,form_id`
     + `&access_token=${encodeURIComponent(token)}`;
@@ -244,7 +298,15 @@ export default async function handler(req, res) {
     const token = req.query['hub.verify_token'];
     const challenge = req.query['hub.challenge'];
     const expected = (process.env.META_VERIFY_TOKEN || '').trim();
+    if (String(req.query.check || '') === '1') {
+      res.setHeader('Cache-Control', 'no-store');
+      return res.status(200).json(await hookupStatus());
+    }
     if (mode === 'subscribe' && expected && token === expected) {
+      // Verifying the webhook in the Meta app also points the Page at it,
+      // so there is no separate "subscribe the Page" step to remember.
+      try { await subscribePage((process.env.PAGE_ACCESS_TOKEN || '').trim()); }
+      catch (e) { console.error('[meta-lead-webhook] page subscribe', e?.message || e); }
       return res.status(200).send(challenge);
     }
     return res.status(403).json({ error: 'Verification failed' });
