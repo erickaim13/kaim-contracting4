@@ -15,7 +15,8 @@
 // parsing is disabled and we read the stream ourselves.
 
 import crypto from 'crypto';
-import { intakeLead, sanitize } from './_lib/intake.js';
+import { intakeLead, sanitize, sbAdmin, usPhoneDigits, sendQuoteEmail } from './_lib/intake.js';
+import { iqConfig, priceHouse, lookupHouse, buildEstimate, applyItems } from './_lib/instant.js';
 
 export const config = { api: { bodyParser: false } };
 
@@ -101,8 +102,8 @@ async function fetchLead(leadgenId, token) {
 // Map Meta's field_data array into the fields we care about. Custom-question
 // `name` keys are derived by Meta from the question text, so we match on
 // keywords and keep anything unrecognized in `extras` so nothing is lost.
-function parseFields(fieldData) {
-  const out = { fullName: '', first: '', last: '', phone: '', email: '', serviceRaw: '', whatClean: '', howSoon: '', stories: '', extras: [] };
+export function parseFields(fieldData) {
+  const out = { fullName: '', first: '', last: '', phone: '', email: '', serviceRaw: '', whatClean: '', howSoon: '', stories: '', gutterWant: '', street: '', city: '', state: '', zip: '', extras: [] };
   for (const f of (fieldData || [])) {
     const key = String(f?.name || '').toLowerCase();
     const val = sanitize(Array.isArray(f?.values) ? f.values.join(', ') : '', 500);
@@ -112,6 +113,13 @@ function parseFields(fieldData) {
     else if (key.includes('full_name') || key === 'name' || key === 'your_name') out.fullName = val;
     else if (key.includes('phone')) out.phone = val;
     else if (key.includes('email')) out.email = val;
+    // The gutter form's question ("What do you need done to your gutters?")
+    // and Meta's own address fields.
+    else if (key.includes('gutter')) out.gutterWant = val;
+    else if (key.includes('street') || key === 'address') out.street = val;
+    else if (key === 'city') out.city = val;
+    else if (key === 'state' || key === 'province') out.state = val;
+    else if (key.includes('zip') || key.includes('post')) out.zip = val;
     else if (key.includes('service') || key.includes('interested') || key.includes('project_type')) out.serviceRaw = val;
     else if (key.includes('clean')) out.whatClean = val;
     else if (key.includes('soon') || key.includes('when') || key.includes('timeline') || key.includes('start')) out.howSoon = val;
@@ -127,8 +135,98 @@ function parseFields(fieldData) {
   return out;
 }
 
+// "12 Oak St" + "Methuen" + "MA" + "01844" -> "12 Oak St, Methuen, MA 01844".
+export function formAddress(p) {
+  if (!p.street) return '';
+  const tail = [p.state, p.zip].filter(Boolean).join(' ');
+  return [p.street, p.city, tail].filter(Boolean).join(', ');
+}
+
+// What a gutter form lead asked for: 'clean', 'both' or 'bright' ('' when the
+// lead is not from a gutter form). Meta sends the answer as the option's key,
+// so "Gutter cleaning" may arrive as "gutter_cleaning".
+export function gutterChoice(p, service) {
+  const a = String(p.gutterWant || (/gutter/i.test(p.serviceRaw) ? p.serviceRaw : '')).toLowerCase();
+  if (!a) return service === 'Gutter Cleaning' ? 'clean' : '';
+  if (a.includes('both') || (a.includes('clean') && a.includes('bright'))) return 'both';
+  if (a.includes('bright')) return 'bright';
+  return 'clean';
+}
+
+function quoteUrl(settings, token) {
+  let b = String((settings && settings.publicBase) || '').trim().replace(/\/+$/, '');
+  if (!/^https:\/\//i.test(b)) b = 'https://kaimcontractingapp.com';
+  return b + '/?approve=' + token;
+}
+const money = n => '$' + Number(n || 0).toLocaleString('en-US');
+
+// A gutter form lead (cleaning, or cleaning and brightening): the house is
+// priced from the address the same way /gutter-price does it, the real CRM
+// quote is saved with the lead, and the quote link goes to them by text a
+// minute later and by email right away. A house that cannot be priced (or no
+// address) is saved as a normal lead with the usual welcome text.
+async function intakeGutterLead(parsed, lead, leadgenId, wantBright) {
+  const address = formAddress(parsed);
+  const [house, pqRow] = await Promise.all([
+    address ? lookupHouse(address) : Promise.resolve({ ok: false, why: 'no_address' }),
+    sbAdmin.from('crm_data').select('pq:data->settings->pq').eq('id', 1).single().then(r => r.data, () => null)
+  ]);
+  const price = house.ok ? priceHouse(house.sqft, house.stories, iqConfig({ pq: pqRow?.pq || {} })) : null;
+  const token = crypto.randomBytes(20).toString('hex');
+  const first = parsed.first || '(no name)';
+  let quoted = null;
+
+  const out = await intakeLead({
+    first, last: parsed.last, phone: parsed.phone, email: parsed.email, address,
+    service: 'Gutter Cleaning',
+    message: buildNotes(parsed) + (wantBright ? '\n- Also wants gutter brightening' : ''),
+    contactPref: '', leadSource: 'Meta gutter form', dedupeKey: leadgenId,
+    extraClientFields: { metaLeadgenId: leadgenId, metaFormId: sanitize(lead.form_id, 60) },
+    activityText: 'New Meta lead ad: ' + first + ' ' + (parsed.last || ''), activityIco: '📣',
+    autoReply: !price, confirmationEmail: !price,
+    onDb: (db, client, now) => {
+      quoted = null;   // the save loop can run more than once
+      if (!price) {
+        client.iq = { v: 'form', priced: false, why: house.ok ? 'outside_range' : house.why, at: now.toISOString() };
+        return;
+      }
+      if (db._ne == null) db._ne = 1001;
+      const est = buildEstimate(db, client, house, price, 'form', token, now);
+      if (wantBright) applyItems(est, true);
+      db.estimates.unshift(est);
+      client.status = 'estimate';
+      client.statusAt = now.toISOString();
+      client.val = est.total;
+      client.iq = { v: 'form', priced: true, at: now.toISOString(), sqft: house.sqft, stories: house.stories, clean: price.clean, bright: price.bright, estId: est.id, ...(house.laser ? { laser: true } : {}) };
+      quoted = { total: est.total, url: quoteUrl(db.settings, token) };
+    },
+    ownerExtra: () => quoted
+      ? `\nQuote sent to them by text and email: ${money(quoted.total)}${wantBright ? ' (cleaning and brightening)' : ''}, ${Number(house.sqft).toLocaleString('en-US')} sq ft, ${house.stories} story${house.twoFamily ? ', two family' : ''}${house.laser ? ', New Hampshire: size measured from the air' : ''}. It is in the CRM.`
+      : '\nNo instant price for this house, quote it yourself.'
+  });
+  if (out.duplicate || out.degraded || !quoted) return out;
+
+  const phoneDigits = usPhoneDigits(parsed.phone);
+  const what = wantBright ? 'gutter cleaning and brightening' : 'gutter cleaning';
+  if (phoneDigits && !out.optOut && out.autoTexts !== false) {
+    try {
+      const r = await sbAdmin.from('imessage_queue').insert({
+        phone: '+1' + phoneDigits,
+        body: `Hey ${first}, it's Eric with Kaim Contracting. Thanks for reaching out. Here's your ${what} quote: ${quoted.url}\nYou can approve it right there and I'll get you on the schedule.`,
+        direction: 'outgoing', status: 'pending',
+        client_name: `${first} ${parsed.last || ''}`.trim(), trigger_type: 'instant_quote_link',
+        send_after: new Date(Date.now() + 60 * 1000).toISOString()
+      });
+      if (r?.error) console.error('[meta-lead-webhook] link text', r.error.message);
+    } catch (e) { console.error('[meta-lead-webhook] link text', e?.message || e); }
+  }
+  if (parsed.email) await sendQuoteEmail(first, parsed.email, quoted.url, quoted.total, what);
+  return out;
+}
+
 function buildNotes(p) {
   const lines = ['Meta Lead Ad submission.'];
+  if (p.gutterWant) lines.push('Asked for: ' + p.gutterWant.replace(/_/g, ' '));
   if (p.serviceRaw) lines.push('Service requested: ' + p.serviceRaw);
   if (p.whatClean) lines.push('What to clean: ' + p.whatClean);
   if (p.howSoon) lines.push('Timeline: ' + p.howSoon);
@@ -189,14 +287,21 @@ export default async function handler(req, res) {
     try {
       const lead = await fetchLead(leadgenId, token);
       const parsed = parseFields(lead.field_data);
-      const service = resolveService(lead.form_id, parsed.serviceRaw);
-      console.log('[meta-lead-webhook] lead', leadgenId, 'form', lead.form_id, '-> service', service);
+      let service = resolveService(lead.form_id, parsed.serviceRaw);
+      const gutter = gutterChoice(parsed, service);
+      if (gutter === 'bright') service = 'Gutter Brightening';
+      else if (gutter) service = 'Gutter Cleaning';
+      console.log('[meta-lead-webhook] lead', leadgenId, 'form', lead.form_id, '-> service', service, gutter);
 
-      const result = await intakeLead({
+      // Brightening alone has no instant price: a normal lead, Eric quotes it.
+      const result = (gutter === 'clean' || gutter === 'both')
+        ? await intakeGutterLead(parsed, lead, leadgenId, gutter === 'both')
+        : await intakeLead({
         first: parsed.first || '(no name)',
         last: parsed.last,
         phone: parsed.phone,
         email: parsed.email,
+        address: formAddress(parsed),
         service,
         message: buildNotes(parsed),
         contactPref: '',

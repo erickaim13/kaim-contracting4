@@ -144,22 +144,24 @@ async function sendConfirmationEmail(first, email, service) {
 // The instant gutter quote, emailed the moment it is made, so the customer has
 // it in their inbox and the conversation is not stuck on the page (or in the
 // Instagram / Facebook app) they came from. Never throws.
-export async function sendQuoteEmail(first, email, url, price) {
+export async function sendQuoteEmail(first, email, url, price, what = 'gutter cleaning') {
+  const label = what.charAt(0).toUpperCase() + what.slice(1);
+  const title = what.replace(/\b[a-z]/g, (c, i) => what.slice(i, i + 4) === 'and ' ? c : c.toUpperCase());
   const safe = s => String(s || '').replace(/[<>&"']/g, '');
   const total = '$' + Number(price || 0).toLocaleString('en-US');
   try {
     await transporter.sendMail({
       from: 'Eric at Kaim Contracting <info@kaimcontracting.com>',
       to: email,
-      subject: 'Your gutter cleaning quote',
+      subject: `Your ${what} quote`,
       replyTo: 'info@kaimcontracting.com',
-      text: `Hi ${safe(first)},\n\nHere is your gutter cleaning quote: ${total}.\n\nYou can look it over and approve it here whenever you are ready:\n${url}\n\nOnce you approve it I will reach out to get you on the schedule. Any questions, reply to this email or call or text me at (978) 351-2195.\n\nEric\nKaim Contracting`,
+      text: `Hi ${safe(first)},\n\nHere is your ${what} quote: ${total}.\n\nYou can look it over and approve it here whenever you are ready:\n${url}\n\nOnce you approve it I will reach out to get you on the schedule. Any questions, reply to this email or call or text me at (978) 351-2195.\n\nEric\nKaim Contracting`,
       html: brandedHtml(`
-        <h2 style="margin:0 0 8px;font-size:22px;color:#1a1a1a">Your Gutter Cleaning Quote</h2>
+        <h2 style="margin:0 0 8px;font-size:22px;color:#1a1a1a">Your ${title} Quote</h2>
         <p style="margin:0 0 20px;font-size:15px;color:#555;line-height:1.6">Hi ${safe(first)},</p>
-        <p style="margin:0 0 20px;font-size:15px;color:#555;line-height:1.6">Here is your gutter cleaning quote. You can look it over and approve it whenever you are ready.</p>
+        <p style="margin:0 0 20px;font-size:15px;color:#555;line-height:1.6">Here is your ${what} quote. You can look it over and approve it whenever you are ready.</p>
         <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px"><tr><td style="background:#f8f8f8;border-radius:8px;padding:22px 24px;text-align:center">
-          <div style="font-size:13px;color:#999;margin-bottom:6px">Gutter cleaning</div>
+          <div style="font-size:13px;color:#999;margin-bottom:6px">${label}</div>
           <div style="font-size:30px;font-weight:700;color:#1a1a1a;margin-bottom:16px">${total}</div>
           <a href="${safe(url)}" style="display:inline-block;background:#0071e3;color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;padding:13px 30px;border-radius:999px">View and Approve My Quote</a>
         </td></tr></table>
