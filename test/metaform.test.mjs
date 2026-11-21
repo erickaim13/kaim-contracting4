@@ -14,6 +14,9 @@ test('gutter form: name, address and the question are read', () => {
   assert.equal(formAddress(p), '59 Marblehead St, North Andover, MA 01845');
   assert.equal(gutterChoice(p, ''), 'both');
   assert.deepEqual(p.extras, []);
+  const q = parseFields(F({ street_address: '7 Alpine Dr', city: 'Haverhill', zip_code: '01830' }));
+  assert.equal(formAddress(q), '7 Alpine Dr, Haverhill, MA 01830');
+  assert.equal(formAddress(parseFields(F({ street_address: '5 Elm St', city: 'Salem', zip_code: '03079' }))), '5 Elm St, Salem, NH 03079');
 });
 
 test('gutter form: each answer', () => {

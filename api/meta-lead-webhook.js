@@ -138,7 +138,9 @@ export function parseFields(fieldData) {
 // "12 Oak St" + "Methuen" + "MA" + "01844" -> "12 Oak St, Methuen, MA 01844".
 export function formAddress(p) {
   if (!p.street) return '';
-  const tail = [p.state, p.zip].filter(Boolean).join(' ');
+  // The gutter form asks street, city and ZIP only: the state comes from the ZIP.
+  const st = p.state || (/^0[12]/.test(p.zip) ? 'MA' : /^03/.test(p.zip) ? 'NH' : '');
+  const tail = [st, p.zip].filter(Boolean).join(' ');
   return [p.street, p.city, tail].filter(Boolean).join(', ');
 }
 
