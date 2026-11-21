@@ -23,7 +23,7 @@
 // the job day happens there too (kaim-crm api/portal.js instant_days / instant_book).
 
 import { randomBytes } from 'node:crypto';
-import { intakeLead, sbAdmin, sanitize, usPhoneDigits } from './_lib/intake.js';
+import { intakeLead, sbAdmin, sanitize, usPhoneDigits, sendQuoteEmail } from './_lib/intake.js';
 import { iqConfig, priceHouse, lookupHouse, buildEstimate, applyItems } from './_lib/instant.js';
 
 const ALLOWED_ORIGINS = new Set([
@@ -232,6 +232,10 @@ async function makeQuote(req, body, res) {
       if (r?.error) console.error('[instant-quote] link text', r.error.message);
     } catch (e) { console.error('[instant-quote] link text', e?.message || e); }
   }
+
+  // And the same quote by email, right away, so they have it outside the app
+  // the ad opened in.
+  if (email) await sendQuoteEmail(first, email, quoted.url, quoted.clean);
 
   return res.status(200).json({ ok: true, instant: true, clean: quoted.clean, bright: quoted.bright, token, url: quoted.url });
 }
