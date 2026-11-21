@@ -4,15 +4,16 @@ import assert from 'node:assert/strict';
 import { priceHouse, iqConfig, pickParcel, houseNumber, lookupHouse, buildEstimate, applyItems, IQ_DEFAULTS } from '../api/_lib/instant.js';
 
 test('price: minimum, rate in between, maximum', () => {
-  assert.deepEqual(priceHouse(1332, 1), { clean: 250, bright: 200 });
-  assert.deepEqual(priceHouse(2004, 2), { clean: 250, bright: 200 });
-  assert.equal(priceHouse(2400, 2).clean, 300);
+  assert.deepEqual(priceHouse(1332, 1), { clean: 199, bright: 175 });
+  assert.deepEqual(priceHouse(2004, 2), { clean: 199, bright: 175 });
+  assert.equal(priceHouse(2157, 2).clean, 199);
+  assert.equal(priceHouse(2400, 2).clean, 225);
   assert.deepEqual(priceHouse(3744, 2), { clean: 350, bright: 300 });
-  assert.equal(priceHouse(3000, 1).clean, 300);
+  assert.equal(priceHouse(3000, 1).clean, 250);
 });
 test('price: a cape (1.5) is priced as one story', () => {
-  assert.equal(priceHouse(3000, 1.5).clean, 300);
-  assert.equal(priceHouse(2600, 2).clean, 300);
+  assert.equal(priceHouse(3000, 1.5).clean, 250);
+  assert.equal(priceHouse(2600, 2).clean, 250);
 });
 test('price: nothing for houses outside the range', () => {
   assert.equal(priceHouse(14704, 2), null);
@@ -106,11 +107,11 @@ test('lookup: the same number on a same-named street one town over is not this h
 });
 test('brightening (the upsell) always comes out under the cleaning price', () => {
   for (const [a, st] of [[1332, 1], [2004, 2], [2600, 1], [3744, 2], [4900, 2], [3000, 1.5]]) {
-    const p = priceHouse(a, st); assert.ok(p.bright <= p.clean - 25, a + ' sq ft');
+    const p = priceHouse(a, st); assert.ok(p.bright < p.clean, a + ' sq ft');
   }
   // even when the CRM numbers would put it above
   const p = priceHouse(2400, 2, iqConfig({ pq: { iqBrightMin: 400, iqBrightMax: 500 } }));
-  assert.equal(p.clean, 300); assert.equal(p.bright, 275);
+  assert.equal(p.clean, 225); assert.equal(p.bright, 200);
 });
 test('parcel: a two family is priced, three families and up are not', () => {
   const two = pickParcel([row({ USE_CODE: '104', UNITS: 2, RES_AREA: 2954, STORIES: '2H' })], '7', 'ALPINE DR');
@@ -185,7 +186,7 @@ test('NH lookup: lot, outline and laser put together; no network needed', async 
   const cells = async () => cellHeights(scan(6.6), outline);
   const r = await lookupHouse('101 Bluff Street, Salem, NH 03079', fake, { laserCells: cells });
   assert.equal(r.ok, true); assert.equal(r.laser, true); assert.equal(r.stories, 2); assert.equal(r.sqft, 2325); assert.equal(r.city, 'Salem');
-  assert.equal(priceHouse(r.sqft, r.stories).clean, 275);
+  assert.equal(priceHouse(r.sqft, r.stories).clean, 225);
   // the scan has nothing over the house, or takes too long: no price, a normal lead
   assert.equal((await lookupHouse('101 Bluff Street, Salem, NH', fake, { laserCells: async () => null })).why, 'no_laser');
   assert.equal((await lookupHouse('101 Bluff Street, Salem, NH', fake, { laserCells: () => new Promise(() => { }), nhMs: 30 })).why, 'lookup_slow');

@@ -26,9 +26,9 @@ const STRUCTURES = 'https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/se
 const PARCELS = 'https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Property_Tax_Parcels/FeatureServer/0/query';
 
 export const IQ_DEFAULTS = {
-  iqClean1: 0.10,      // $ per sq ft of house, 1 story
-  iqClean2: 0.12,      // $ per sq ft of house, 2 story
-  iqCleanMin: 250,
+  iqClean1: 0.08,      // $ per sq ft of house, 1 story
+  iqClean2: 0.095,     // $ per sq ft of house, 2 story
+  iqCleanMin: 199,
   iqCleanMax: 350,
   iqBright1: 0.085,
   iqBright2: 0.10,
@@ -53,7 +53,9 @@ export function iqConfig(settings) {
 }
 
 const round25 = n => Math.round(n / 25) * 25;
-const clamp = (n, lo, hi) => Math.max(lo, Math.min(Math.max(lo, hi), n));
+// A price that rounds to the lowest price's $25 step (or under it) is the lowest
+// price itself, so a $199 minimum shows $199, never $200.
+const clamp = (n, lo, hi) => n <= round25(lo) ? lo : Math.min(Math.max(lo, hi), n);
 
 /**
  * { clean, bright } in whole dollars, or null when the house is outside what
@@ -68,7 +70,7 @@ export function priceHouse(sqft, stories, cfg = IQ_DEFAULTS) {
   const clean = clamp(round25(a * (two ? cfg.iqClean2 : cfg.iqClean1)), cfg.iqCleanMin, cfg.iqCleanMax);
   // Brightening is the upsell (Eric, 2026-11-19): whatever the numbers in the
   // CRM say, it never comes out at or above the cleaning price.
-  const bright = Math.max(0, Math.min(clean - 25,
+  const bright = Math.max(0, Math.min(round25(clean) - 25,
     clamp(round25(a * (two ? cfg.iqBright2 : cfg.iqBright1)), cfg.iqBrightMin, cfg.iqBrightMax)));
   return { clean, bright };
 }
