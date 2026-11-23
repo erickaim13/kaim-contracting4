@@ -334,7 +334,7 @@ export async function lookupHouse(address, fetchImpl = fetch, deps = {}) {
 
 export const CLEAN_ITEM = {
   desc: 'Gutter Cleaning',
-  brief: '• Clear all leaves and debris from the gutters\n• Flush gutters and downspouts thoroughly to ensure proper drainage'
+  brief: '• Clear all leaves and debris from the gutters\n• Clear every downspout and check that it drains properly'
 };
 export const BRIGHT_ITEM = {
   desc: 'Gutter Brightening',

@@ -440,7 +440,7 @@
       form.innerHTML = '<div class="kcf-done">'
         + '<div class="kcf-done-h">Your gutter cleaning price</div>'
         + '<div class="kcf-price" data-kcf="ptotal">' + usd(clean) + '</div>'
-        + '<div class="kcf-price-sub">' + esc(lead.address) + '<br>Gutters cleared out and downspouts flushed. No deposit.</div>'
+        + '<div class="kcf-price-sub">' + esc(lead.address) + '<br>Gutters cleared out and downspouts checked. No deposit.</div>'
         + (bright > 0 ? '<div class="kcf-brbox">' + BRIGHT_PITCH + addonBtn('addon', 'Add gutter brightening', 'Same visit', '+ ' + usd(bright)) + '</div>' : '')
         + '<button type="button" class="kcf-cta" data-kcf="accept">Review and Approve</button>'
         + '<div data-kcf="pfail" style="display:none;color:#b42318;font-size:14px;margin-top:8px">That did not save. Tap again, or call (978) 351-2195.</div>'

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<!-- deploy-bust:20261120102352 -->
+<!-- deploy-bust:20261123181359 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f5f7">
 <script>/* Attribution capture: gclid/fbclid/UTMs/referrer -> localStorage (90d) -> auto-attached to /api/lead posts */(function(){try{var q=new URLSearchParams(location.search),K=['gclid','gbraid','wbraid','fbclid','utm_source','utm_medium','utm_campaign','utm_term','utm_content'],cur={},has=false;K.forEach(function(k){var v=q.get(k);if(v&&v.length<500){cur[k]=v;has=true;}});var st=null;try{st=JSON.parse(localStorage.getItem('kc_attr')||'null')}catch(e){}if(st&&st.ts&&Date.now()-st.ts>7776e6)st=null;if(has){cur.ts=Date.now();cur.lp=location.pathname;st=cur;}else if(!st&&document.referrer){var rh='';try{rh=new URL(document.referrer).hostname}catch(e){}if(rh&&rh!==location.hostname){st={ref:rh,ts:Date.now(),lp:location.pathname};}}if(st)try{localStorage.setItem('kc_attr',JSON.stringify(st))}catch(e){}var of=window.fetch;window.fetch=function(u,o){try{if(o&&typeof o.body==='string'&&String(o.method||'').toUpperCase()==='POST'&&String(u).indexOf('/api/lead')>-1){var b=JSON.parse(o.body);if(b&&typeof b==='object'&&!b.attribution){var s=st||{},ck=function(n){var m=document.cookie.match('(?:^|; )'+n+'=([^;]*)');return m?m[1]:''};b.attribution={gclid:s.gclid||'',gbraid:s.gbraid||'',wbraid:s.wbraid||'',fbclid:s.fbclid||'',fbc:ck('_fbc')||(s.fbclid?'fb.1.'+(s.ts||Date.now())+'.'+s.fbclid:''),fbp:ck('_fbp'),utm_source:s.utm_source||'',utm_medium:s.utm_medium||'',utm_campaign:s.utm_campaign||'',utm_term:s.utm_term||'',utm_content:s.utm_content||'',referrer:s.ref||'',landing:s.lp||'',captured:s.ts||0};o.body=JSON.stringify(b);}}}catch(e){}return of.apply(this,arguments)};}catch(e){}})();</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8HBEMX0PPR"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8HBEMX0PPR');gtag('config','AW-18069179134');</script>
@@ -183,6 +184,64 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
 </style>
 <link rel="stylesheet" href="/css/site.css">
 <script src="/js/site.js" defer></script>
+<style>
+/* ---- 2026-11-23 clean pass: light, plain, same look as the quote they land on next.
+   The shared nav and footer stay in the markup (so a site-wide paste still works) but are hidden here:
+   an ad visitor gets a logo, the form and nothing else. ---- */
+html{background:#f5f5f7}
+body.page-gp{background:#f5f5f7;color:#1d1d1f;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+body.page-gp::before{display:none}
+.page-gp nav.site-nav,.page-gp footer.site-footer,.page-gp .kc-bar{display:none!important}
+.gp-top{display:flex;align-items:center;justify-content:space-between;max-width:480px;margin:0 auto;padding:16px 18px 6px;width:100%}
+.gp-top a{display:inline-flex;align-items:center;gap:10px;color:#1d1d1f;text-decoration:none;font-size:15px;font-weight:600;letter-spacing:-.01em}
+.gp-top img{width:32px;height:32px;border-radius:8px;display:block}
+.gp-top a.gp-top-call{font-weight:400;font-size:14px;color:#6e6e73}
+.page-gp main.gp-main{max-width:480px;padding:22px 16px 40px}
+@media(max-width:900px){.page-gp main.gp-main{padding-top:22px}}
+.page-gp .gp-main *{font-family:inherit}
+.page-gp .gp-eyebrow{display:none}
+.page-gp .gp-h1{font-size:clamp(28px,7.6vw,36px);font-weight:700;letter-spacing:-.025em;line-height:1.1;color:#1d1d1f;margin-bottom:10px}
+.page-gp .gp-h1 span{color:inherit}
+.page-gp .gp-sub{font-size:16px;color:#6e6e73;max-width:380px;margin-bottom:22px}
+.page-gp .gp-card{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;border:1px solid #e8e8ed;border-radius:18px;padding:20px 18px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.page-gp .gp-field label{font-size:13px;font-weight:500;color:#6e6e73}
+.page-gp .gp-field.gp-unit{display:none}
+.page-gp .gp-grid3{row-gap:0}
+.page-gp .gp-main input,.page-gp .gp-main select{min-height:52px;border:1px solid #d2d2d7;border-radius:12px;background-color:#fff;color:#1d1d1f;font-size:17px}
+.page-gp .gp-main select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%236e6e73' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.page-gp .gp-main select option{background:#fff;color:#1d1d1f}
+.page-gp .gp-main input::placeholder{color:#a1a1a6}
+.page-gp .gp-main input:focus,.page-gp .gp-main select:focus{border-color:#0071e3;background-color:#fff;box-shadow:0 0 0 3px rgba(0,113,227,.18)}
+.page-gp .gp-main input.err{border-color:#d70015;box-shadow:0 0 0 3px rgba(215,0,21,.12)}
+.page-gp .gp-err{color:#d70015}
+.page-gp .gp-sug{background:#fff;border:1px solid #d2d2d7;box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.page-gp .gp-sug button{color:#1d1d1f;border-bottom:1px solid #f0f0f2}
+.page-gp .gp-sug button:hover{background:#f5f5f7}
+.page-gp .gp-cta{min-height:52px;background:#0071e3;color:#fff;border-radius:999px;padding:14px 16px;font-size:17px;font-weight:600;letter-spacing:0;text-transform:none;margin-top:6px}
+.page-gp .gp-cta:hover{background:#0077ed;transform:none}
+.page-gp .gp-sec,.page-gp .gp-note,.page-gp .gp-fine,.page-gp .gp-facts{color:#86868b}
+.page-gp .gp-note a,.page-gp .gp-link{color:#0071e3}
+.page-gp .gp-trust{color:#86868b;font-size:13px;margin-top:16px}
+.page-gp .gp-ready-k{font-size:12px;font-weight:600;letter-spacing:.08em;color:#86868b}
+.page-gp .gp-h2{font-weight:700;letter-spacing:-.02em;color:#1d1d1f}
+.page-gp .gp-scan{background:#e8e8ed;border:1px solid #e8e8ed}
+.page-gp .gp-scan::after{background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.28) 82%,rgba(255,255,255,.8))}
+.page-gp .gp-pin{border-color:#fff;box-shadow:0 0 0 2px rgba(0,113,227,.9),0 0 18px rgba(0,113,227,.45)}
+.page-gp .gp-scan-lbl{font-size:12.5px;font-weight:600;letter-spacing:0;text-transform:none;background:rgba(29,29,31,.72)}
+.page-gp .gp-ticks li{color:#a1a1a6}
+.page-gp .gp-ticks li.go,.page-gp .gp-ticks li.ok{color:#1d1d1f}
+.page-gp .gp-ticks li small{color:#86868b}
+.page-gp .gp-dot{border-color:#d2d2d7;color:#fff}
+.page-gp .gp-ticks li.go .gp-dot{border-color:#0071e3;border-top-color:transparent}
+.page-gp .gp-ticks li.ok .gp-dot{background:#0071e3;border-color:#0071e3}
+.page-gp .gp-bar{height:6px;background:#e8e8ed}
+.page-gp .gp-bar i{background:#0071e3}
+.page-gp .gp-bar-lbl{color:#6e6e73}
+.page-gp .gp-bar-lbl b{color:#1d1d1f;font-weight:600}
+.page-gp .gp-done-ico{background:#e8f2fe;border:none;color:#0071e3}
+.gp-foot{text-align:center;font-size:12px;color:#86868b;padding:0 16px 28px;line-height:1.7}
+.gp-foot a{color:#86868b;text-decoration:underline;text-underline-offset:2px}
+</style>
 <link rel="icon" type="image/png" sizes="192x192" href="images/icon-192.png">
 <link rel="icon" type="image/png" sizes="32x32" href="images/icon-192.png">
 <link rel="apple-touch-icon" href="images/icon-192.png">
@@ -230,6 +289,8 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
   </div>
 </div></nav>
 
+<header class="gp-top"><a href="/" aria-label="Kaim Contracting home"><img src="/images/icon-192.png" alt="" width="32" height="32">Kaim Contracting</a><a class="gp-top-call" href="tel:978-351-2195">978-351-2195</a></header>
+
 <main class="gp-main" id="gp">
 
   <!-- 1. the address -->
@@ -239,16 +300,16 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
     <p class="gp-sub">Type your address. I pull up your house and price it right here. No visit, no waiting on a call.</p>
     <form class="gp-card" id="gpAddrForm" novalidate autocomplete="on">
       <div class="gp-field"><label for="gpStreet">Street address</label><input type="text" id="gpStreet" name="address-line1" placeholder="Start typing your address" autocomplete="address-line1" autocapitalize="words" spellcheck="false"><div class="gp-sug" id="gpSug"></div><div class="gp-err">Enter the house number and street.</div></div>
-      <div class="gp-field"><label for="gpUnit">Apt, suite, unit <i>(optional)</i></label><input type="text" id="gpUnit" name="address-line2" autocomplete="address-line2"></div>
+      <div class="gp-field gp-unit"><label for="gpUnit">Apt, suite, unit <i>(optional)</i></label><input type="text" id="gpUnit" name="address-line2" autocomplete="address-line2"></div>
       <div class="gp-grid3">
         <div class="gp-field"><label for="gpTown">City</label><input type="text" id="gpTown" name="city" autocomplete="address-level2" autocapitalize="words"><div class="gp-err">Enter the city or town.</div></div>
         <div class="gp-field"><label for="gpState">State</label><select id="gpState" name="state" autocomplete="address-level1"><option value="MA" selected>MA</option><option value="NH">NH</option></select></div>
         <div class="gp-field"><label for="gpZip">ZIP code</label><input type="text" id="gpZip" name="postal-code" autocomplete="postal-code" inputmode="numeric" maxlength="5"><div class="gp-err">5 digits.</div></div>
       </div>
       <button type="submit" class="gp-cta">Continue</button>
-      <div class="gp-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Only used to price your gutters. Takes about 10 seconds.</div>
+      <div class="gp-sec">Only used to price your gutters. Takes about 10 seconds.</div>
     </form>
-    <div class="gp-trust"><span><b>&#10003;</b>Licensed &amp; Insured</span><span><b>&#10003;</b>Locally Owned</span><span><b>&#10003;</b>No Deposit</span></div>
+    <div class="gp-trust">Licensed and insured &middot; Locally owned &middot; No deposit</div>
   </section>
 
   <!-- 2. finding the house -->
@@ -311,6 +372,7 @@ body::before{content:'';position:fixed;inset:0;background:url('images/herringbon
   </section>
 
 </main>
+<div class="gp-foot">&copy; 2026 Kaim Contracting LLC &middot; Methuen, MA &middot; <a href="/privacy">Privacy</a></div>
 <script src="/js/gutter-price.js?v=5" defer></script>
 
 
