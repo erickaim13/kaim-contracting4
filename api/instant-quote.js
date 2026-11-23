@@ -147,6 +147,8 @@ async function makeQuote(req, body, res) {
   const leadSource = sanitize(body.source, 120) || 'Website (kaimcontracting.com)';
   // 'preview' = opened with ?instant=1 (Eric looking at it); kept out of the scoreboard.
   const variant = body.variant === 'preview' ? 'preview' : 'b';
+  // Ticked "Add gutter brightening to my quote" on /gutter-price: the quote opens with both lines.
+  const wantBright = body.bright === true;
 
   if (!first) return res.status(400).json({ error: 'Name required' });
   if (!phone) return res.status(400).json({ error: 'Invalid phone' });
@@ -200,15 +202,16 @@ async function makeQuote(req, body, res) {
       }
       if (db._ne == null) db._ne = 1001;
       const est = buildEstimate(db, client, house, price, variant, token, now);
+      if (wantBright && price.bright > 0) applyItems(est, true);
       db.estimates.unshift(est);
       client.status = 'estimate';
       client.statusAt = now.toISOString();
       client.val = est.total;
       client.iq = { v: variant, priced: true, at: now.toISOString(), sqft: house.sqft, stories: house.stories, clean: price.clean, bright: price.bright, estId: est.id, ...(house.laser ? { laser: true } : {}) };
-      quoted = { clean: price.clean, bright: price.bright, url: quoteUrl(db.settings, token) };
+      quoted = { clean: price.clean, bright: price.bright, withBright: !!est.instant.withBright, total: est.total, url: quoteUrl(db.settings, token) };
     },
     ownerExtra: () => quoted
-      ? `\nInstant price shown on the website: ${money(quoted.clean)} (${Number(house.sqft).toLocaleString('en-US')} sq ft, ${house.stories} story${house.twoFamily ? ', two family' : ''}${house.laser ? ', New Hampshire: no town record, size measured from the air' : ''}). The quote is in the CRM.`
+      ? `\nInstant price shown on the website: ${money(quoted.clean)}${quoted.withBright ? ` cleaning + ${money(quoted.bright)} brightening = ${money(quoted.total)}` : ''} (${Number(house.sqft).toLocaleString('en-US')} sq ft, ${house.stories} story${house.twoFamily ? ', two family' : ''}${house.laser ? ', New Hampshire: no town record, size measured from the air' : ''}). The quote is in the CRM.`
       : '\nNo instant price for this house, quote it yourself.'
   });
 
@@ -224,7 +227,7 @@ async function makeQuote(req, body, res) {
     try {
       const r = await sbAdmin.from('imessage_queue').insert({
         phone: '+1' + phoneDigits,
-        body: `Hey ${first}, it's Eric with Kaim Contracting. Here's your gutter cleaning quote in case you want to look it over again: ${quoted.url}`,
+        body: `Hey ${first}, it's Eric with Kaim Contracting. Here's your ${quoted.withBright ? 'gutter cleaning and brightening' : 'gutter cleaning'} quote in case you want to look it over again: ${quoted.url}`,
         direction: 'outgoing', status: 'pending',
         client_name: `${first} ${last}`.trim(), trigger_type: 'instant_quote_link',
         send_after: new Date(Date.now() + 5 * 60 * 1000).toISOString()
@@ -235,9 +238,9 @@ async function makeQuote(req, body, res) {
 
   // And the same quote by email, right away, so they have it outside the app
   // the ad opened in.
-  if (email) await sendQuoteEmail(first, email, quoted.url, quoted.clean);
+  if (email) await sendQuoteEmail(first, email, quoted.url, quoted.withBright ? quoted.total : quoted.clean, quoted.withBright ? 'gutter cleaning and brightening' : 'gutter cleaning');
 
-  return res.status(200).json({ ok: true, instant: true, clean: quoted.clean, bright: quoted.bright, token, url: quoted.url });
+  return res.status(200).json({ ok: true, instant: true, clean: quoted.clean, bright: quoted.bright, withBright: quoted.withBright, total: quoted.total, token, url: quoted.url });
 }
 
 // Add or remove the brightening line. Only while the quote is still waiting

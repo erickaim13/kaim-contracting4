@@ -131,6 +131,15 @@
     phone.value = out; mark(phone, false);
   });
 
+  // Gutter brightening, the add-on (back on this page 2026-11-23): ticked here, it
+  // is a second line on the quote they are about to see. No price is shown on this page.
+  var brBtn = $('gpBright');
+  brBtn.addEventListener('click', function () {
+    var on = !brBtn.classList.contains('on');
+    brBtn.classList.toggle('on', on); brBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if (on) ev('instant_quote_brightening');
+  });
+
   function gate(failed) {
     $('gpFacts').textContent = S.address;
     var btn = $('gpGateBtn'); btn.disabled = false; btn.textContent = 'Calculate My Price';
@@ -147,10 +156,11 @@
     mark($('gpEmail'), !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email));
     [$('gpFirst'), $('gpLast'), phone, $('gpEmail')].forEach(function (el) { if (!bad && el.classList.contains('err')) bad = el; });
     if (bad) { bad.focus(); return; }
+    var wantBright = brBtn.classList.contains('on');
     S.lead = {
-      first: first, last: last, phone: phone.value, email: email,
+      first: first, last: last, phone: phone.value, email: email, bright: wantBright,
       address: S.address, service: 'Gutter Cleaning',
-      message: 'Instant gutter price page:\n- Address: ' + S.address + (S.unit ? '\n- Unit: ' + S.unit : ''),
+      message: 'Instant gutter price page:\n- Address: ' + S.address + (S.unit ? '\n- Unit: ' + S.unit : '') + (wantBright ? '\n- Also wants gutter brightening' : ''),
       contactPref: 'Phone Call', source: 'Gutter Price Page' + (srcTag ? ' (from ' + srcTag + ')' : ''),
       kc_hpot_xyz: $('gpHp').value || ''
     };
@@ -283,7 +293,7 @@
   // so is the approve button.
   function openQuote() {
     remember();
-    ev('instant_quote_shown', { value: Number(S.quote.clean), currency: 'USD' });
+    ev('instant_quote_shown', { value: Number(S.quote.total || S.quote.clean), currency: 'USD' });
     location.href = S.quote.url;
   }
   // Only seen coming back from the quote (the back button, a reload): one button to open it again.
