@@ -5,7 +5,10 @@
 // Saturday afternoons); a slot is blocked when the CRM calendar already has an
 // Estimate Visit at that date+time, and a whole day is skipped when it
 // already carries 2+ estimate visits or is listed in
-// settings.webBooking.blockedDates. All date math is done in Eastern time —
+// settings.webBooking.blockedDates (Eric's days off, set on the CRM Schedule
+// page under "Block time off"). settings.webBooking.blockedTimes
+// [{date, from:'HH:MM', to:'HH:MM'}] takes out part of a day: no visit may
+// overlap it. kaim-crm/mac/slots.py reads the same two lists. All date math is done in Eastern time —
 // Vercel runs in UTC, so never use plain new Date() calendar parts here.
 
 const NY_TZ = 'America/New_York';
@@ -150,9 +153,13 @@ export function computeOpenDays(jobs, settings = {}, now = new Date(), count = 3
     // A visit with no readable time counts as holding the day's first slot.
     const taken = visits.map(j => timeToMin(j.time) ?? timeToMin(slots[0]));
     const cutoff = sunsetMinutes(date) - cfg.daylightBufferMin;
+    // Eric's blocked hours that day: a visit (an hour long) may not overlap one.
+    const off = (cfg.blockedTimes || []).filter(b => b && b.date === date)
+      .map(b => [timeToMin(b.from), timeToMin(b.to)]).filter(b => b[0] != null && b[1] != null);
     const free = slots.find(hm => {
       const t = timeToMin(hm);
-      return t <= cutoff && !taken.some(v => Math.abs(v - t) < cfg.visitGapMin);
+      return t <= cutoff && !taken.some(v => Math.abs(v - t) < cfg.visitGapMin)
+        && !off.some(([a, z]) => t < z && t + cfg.visitGapMin > a);
     });
     if (!free) continue;
     out.push({ date, time: hmToLabel(free), hm: free });
