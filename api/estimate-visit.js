@@ -221,10 +221,12 @@ async function bookVisit(req, res) {
     client_name: clientName, trigger_type: 'web_booking_notify'
   }).then(r => { if (r?.error) console.error('owner notify', r.error.message); }, e => console.error('owner notify', e?.message)));
 
-  // Client confirmation — first person, same voice as the AI lock-in text.
+  // Client confirmation, first person. This is often the FIRST text they ever get from Eric
+  // (booking cancels the welcome text), so it says who he is and never opens like a reply
+  // ("Perfect, got you down..." read as nonsense to a lead who had heard nothing yet).
   if (!optOut) tasks.push(sbAdmin.from('imessage_queue').insert({
     phone: phoneE164,
-    body: `Perfect, got you down for ${dayStr} at ${time} for your free estimate. If anything changes just call or text me. I'll text you when I'm on my way. Eric`,
+    body: `Hey ${first}, it's Eric with Kaim Contracting. You're all set for your free estimate on ${dayStr} at ${time}. If anything changes just call or text me here. I'll text you when I'm on my way.`,
     direction: 'outgoing', status: 'pending',
     client_name: clientName, trigger_type: 'web_booking_confirm',
     send_after: new Date(Date.now() + 4000).toISOString()
