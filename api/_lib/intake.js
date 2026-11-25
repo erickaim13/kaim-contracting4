@@ -10,6 +10,7 @@
 
 import { createClient } from '@supabase/supabase-js';
 import nodemailer from 'nodemailer';
+import { mergeDupClients } from './dupes.js';
 
 const SB_URL = 'https://dfquwxmoidhhcwezgnry.supabase.co';
 const SERVICE_KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
@@ -370,8 +371,23 @@ export async function intakeLead(opts) {
 
       db.clients.unshift(client);
       if (typeof onDb === 'function') onDb(db, client, now);
+
+      // One contact per person: when this name with this phone or email is
+      // already in the CRM, fold the new request into that record (the older
+      // one is kept; a quote onDb just made is pointed at it) instead of
+      // leaving two. Every text below still goes out as for any lead.
+      let returning = false;
+      try {
+        const newId = client.id;
+        const hit = mergeDupClients(db).find(m => m.gone === newId);
+        if (hit) {
+          const kept = db.clients.find(c => c && c.id === hit.keep);
+          if (kept) { client = kept; returning = true; }
+        }
+      } catch (e) { console.error('[intake] duplicate merge skipped:', e?.message || e); }
+
       db.activity.unshift({
-        text: activityText || ('New website lead: ' + client.first + ' ' + client.last + (attachments.length ? ' (' + attachments.length + ' photo' + (attachments.length > 1 ? 's' : '') + ')' : '')),
+        text: activityText || ((returning ? 'New request from an existing contact: ' : 'New website lead: ') + client.first + ' ' + client.last + (returning && service ? ' (' + service + ')' : '') + (attachments.length ? ' (' + attachments.length + ' photo' + (attachments.length > 1 ? 's' : '') + ')' : '')),
         ico: activityIco,
         time: now.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
       });
