@@ -110,6 +110,9 @@
     S.unit = unit;
     S.address = st.split(',')[0].trim() + ', ' + tn + ', ' + stateEl.value + (zp ? ' ' + zp : '');
     ev('instant_quote_address');
+    // Meta gets this step too (2026-11-28): it happens far more often than a finished
+    // lead, so an ad set can be pointed at it and get enough examples to learn from.
+    try { if (window.fbq && variant !== 'preview') fbq('trackCustom', 'GutterAddressEntered'); } catch (_) { }
     gate();
   });
 
