@@ -149,7 +149,7 @@
       + (cfg.photos ? '<div class="kcf-field"><label class="kcf-file"><input type="file" data-kcf="files" accept="image/*" multiple style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Add photos of the project (optional)</label><div class="kcf-files" data-kcf="filelist"></div></div>' : '')
       + '<a class="kcf-iqtip" data-kcf="iqtip" href="/gutter-price" style="display:none"><span><b>Want your price right now?</b>See it in seconds, no visit needed</span><i>Instant price &rarr;</i></a>'
       + '<div class="kcf-brbox" data-kcf="brbox" style="display:none">' + BRIGHT_PITCH + addonBtn('brwant', 'Add gutter brightening to my quote', 'One visit, both done') + '</div>'
-      + '<div class="kcf-field" data-kcf="gdbox" style="display:none">' + addonBtn('gdwant', 'My gutters have gutter guards', 'So the price comes out right') + '</div>'
+      + '<div class="kcf-field" data-kcf="gdbox" style="display:none">' + addonBtn('gdwant', 'My gutters have gutter guards', 'Good for me to know ahead of time') + '</div>'
       + '<button type="submit" class="kcf-cta" data-kcf="submit">' + esc(cfg.submitLabel) + '</button>'
       + '<div class="kcf-fail" data-kcf="fail">Could not send. Please try again or <a href="tel:978-351-2195">call 978-351-2195</a>.</div>'
       + '<div class="kcf-foot">We typically respond within the hour. No spam, ever.</div>'
@@ -401,8 +401,8 @@
       var origText = btn.textContent;
       // Gutter work is priced without a visit (2026-11-28). Gutter cleaning sent
       // from this form is priced by the server like /gutter-price and the real
-      // quote opens; guards, or a house that cannot be priced, gets a text from
-      // Eric instead. No gutter lead is offered the estimate booking step.
+      // quote opens; a house that cannot be priced gets a text from Eric instead.
+      // Guards do not change the price, they are noted on the lead. No gutter lead is offered the estimate booking step.
       var gutter = /^Gutter/.test(svc);
       if (gutter && hasGuards) payload.guards = true;
       if (svc === 'Gutter Cleaning' && wantBright) payload.bright = true;
@@ -434,7 +434,7 @@
             if (window.fbq) fbq('track', 'Lead');
           } catch (_) { }
           if (res && res.instant && res.url) { location.href = res.url; return; }
-          if (gutter) showDone('<div class="kcf-done-h">Got it!</div><div class="kcf-done-p">' + (hasGuards ? 'Gutter guards change the job, so I price those myself. Watch for a text from me in a few minutes.' : 'I am putting your price together now. Watch for a text from me shortly.') + '</div>');
+          if (gutter) showDone('<div class="kcf-done-h">Got it!</div><div class="kcf-done-p">' + 'I am putting your price together now. Watch for a text from me shortly.' + '</div>');
           else showBooking();
         })
         .catch(function () {

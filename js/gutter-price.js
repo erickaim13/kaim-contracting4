@@ -140,8 +140,8 @@
     if (on) ev('instant_quote_brightening');
   });
 
-  // Gutter guards (2026-11-28): asked on every quote. Yes means no instant
-  // price: a price off the house size cannot see them, so Eric prices it.
+  // Gutter guards (2026-11-28): asked on every quote. The price is the same
+  // either way; the answer rides along on the lead so Eric knows beforehand.
   var gdBox = $('gpGuards'), gdBtns = gdBox ? [].slice.call(gdBox.querySelectorAll('.gp-gd-btn')) : [];   // an older cached page has no question
   gdBtns.forEach(function (b) {
     b.addEventListener('click', function () {
@@ -177,19 +177,9 @@
       kc_hpot_xyz: $('gpHp').value || ''
     };
     btn.disabled = true;
-    if (S.lead.guards) { btn.textContent = 'Sending...'; sendGuards(); return; }
+    if (S.lead.guards) ev('instant_quote_guards');
     calc();
   });
-
-  // Guards: nothing to calculate. The lead is saved, Eric texts for photos.
-  function sendGuards() {
-    post('/api/instant-quote?via=/api/lead', Object.assign({ action: 'quote', variant: variant }, S.lead))
-      .catch(function () { return post('/api/lead', S.lead); })
-      .then(function () {
-        leadEvents(); ev('instant_quote_guards');
-        done('Got it, ' + S.lead.first + '!', 'Gutter guards change the job, so I price those myself. Watch for a text from me in a few minutes asking for a couple photos, then I will send your quote.');
-      }, function () { gate(true); });
-  }
 
   // ---- 3. calculating -------------------------------------------------------
   function tick(name, state, note) {

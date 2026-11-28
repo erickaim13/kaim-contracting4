@@ -4,7 +4,7 @@
 // input validation) then hands off to the shared intakeLead() automation in
 // _lib/intake.js — the exact same path the Meta Lead Ads webhook uses.
 
-import { intakeLead, sanitize, usPhoneDigits, GUTTER_GUARDS_AUTOREPLY, isGutterService } from './_lib/intake.js';
+import { intakeLead, sanitize, usPhoneDigits, isGutterService } from './_lib/intake.js';
 
 const ALLOWED_ORIGINS = new Set([
   'https://kaimcontracting.com',
@@ -99,15 +99,13 @@ export default async function handler(req, res) {
   const extraClientFields = body.iq === 'a' && service === 'Gutter Cleaning'
     ? { iq: { v: 'a', at: new Date().toISOString() } } : {};
 
-  // Gutter guards ticked on the quote form: noted on the lead, and the first
-  // text asks for photos (gutter leads are never offered a visit, intake.js).
+  // Gutter guards ticked on the quote form: noted on the lead for Eric.
   const guards = body.guards === true && isGutterService(service);
 
   try {
     await intakeLead({
       first, last, phone, email, address, service, contactPref,
       message: message + (guards ? '\n- Has gutter guards' : ''),
-      autoReplyText: guards ? GUTTER_GUARDS_AUTOREPLY : null,
       leadSource, attachments, extraClientFields,
       webKey: /^[a-z0-9]{8,40}$/.test(String(body.sid || '')) ? String(body.sid) : null,
       attribution: Object.keys(attribution).length ? attribution : null

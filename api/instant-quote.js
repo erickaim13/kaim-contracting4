@@ -23,7 +23,7 @@
 // the job day happens there too (kaim-crm api/portal.js instant_days / instant_book).
 
 import { randomBytes } from 'node:crypto';
-import { intakeLead, sbAdmin, sanitize, usPhoneDigits, sendQuoteEmail, GUTTER_GUARDS_AUTOREPLY } from './_lib/intake.js';
+import { intakeLead, sbAdmin, sanitize, usPhoneDigits, sendQuoteEmail } from './_lib/intake.js';
 import { iqConfig, priceFor, whyNoPrice, lookupHouse, buildEstimate, applyItems } from './_lib/instant.js';
 
 const ALLOWED_ORIGINS = new Set([
@@ -144,8 +144,9 @@ async function makeQuote(req, body, res) {
   const phone = phoneDigits ? phoneDigits.replace(/^(\d{3})(\d{3})(\d{4})$/, '$1-$2-$3') : '';
   const email = sanitize(body.email, 120);
   const address = sanitize(body.address, 160);
-  // "Do your gutters have gutter guards?" answered yes: a price off the house
-  // size would be wrong, so there is no instant price and Eric quotes it.
+  // "Do your gutters have gutter guards?" answered yes. Same price (Eric,
+  // 2026-11-28: leaves still build up on guards and he cleans those too); it is
+  // noted on the lead and in his new-lead text so he knows before he shows up.
   const guards = body.guards === true;
   const message = sanitize(body.message, 2000) + (guards ? '\n- Has gutter guards' : '');
   const leadSource = sanitize(body.source, 120) || 'Website (kaimcontracting.com)';
@@ -183,7 +184,7 @@ async function makeQuote(req, body, res) {
   // The house lookup and Eric's numbers are read side by side; the price is
   // settled before the lead is saved so the right texts go out with it.
   const [house, pqRow] = await Promise.all([
-    guards ? Promise.resolve({ ok: false, why: 'guards' }) : lookupHouse(address),
+    lookupHouse(address),
     sbAdmin.from('crm_data').select('pq:data->settings->pq').eq('id', 1).single().then(r => r.data, () => null)
   ]);
   const cfg = iqConfig({ pq: pqRow?.pq || {} });
@@ -198,7 +199,6 @@ async function makeQuote(req, body, res) {
     attribution: Object.keys(attribution).length ? attribution : null,
     // A priced lead gets its quote on screen, not "what day works for an estimate".
     autoReply: !price,
-    autoReplyText: guards ? GUTTER_GUARDS_AUTOREPLY : null,
     confirmationEmail: !price,
     onDb: (db, client, now) => {
       quoted = null;   // the save loop can run more than once
@@ -213,13 +213,12 @@ async function makeQuote(req, body, res) {
       client.status = 'estimate';
       client.statusAt = now.toISOString();
       client.val = est.total;
-      client.iq = { v: variant, priced: true, at: now.toISOString(), sqft: house.sqft, stories: house.stories, clean: price.clean, bright: price.bright, estId: est.id, ...(price.travel ? { travel: price.travel, miles: price.miles } : {}), ...(house.laser ? { laser: true } : {}) };
+      client.iq = { v: variant, priced: true, at: now.toISOString(), sqft: house.sqft, stories: house.stories, clean: price.clean, bright: price.bright, estId: est.id, ...(price.travel ? { travel: price.travel, miles: price.miles } : {}), ...(house.laser ? { laser: true } : {}), ...(guards ? { guards: true } : {}) };
       quoted = { clean: price.clean, bright: price.bright, travel: price.travel, miles: price.miles, withBright: !!est.instant.withBright, total: est.total, url: quoteUrl(db.settings, token) };
     },
     ownerExtra: () => quoted
-      ? `\nInstant price shown on the website: ${money(quoted.clean)}${quoted.withBright ? ` cleaning + ${money(quoted.bright)} brightening = ${money(quoted.total)}` : ''} (${Number(house.sqft).toLocaleString('en-US')} sq ft, ${house.stories} story${house.twoFamily ? ', two family' : ''}${quoted.travel ? `, ${money(quoted.travel)} of it is travel, ${Math.round(quoted.miles)} miles out` : ''}${house.laser ? ', New Hampshire: no town record, size measured from the air' : ''}). The quote is in the CRM.`
-      : guards ? '\nThey have gutter guards, so no instant price. They were asked to text photos. Quote it yourself.'
-      : (house.ok && whyNoPrice(house, cfg) === 'too_far' ? '\nNo instant price, this one is past your distance limit. Quote it yourself.' : '\nNo instant price for this house, quote it yourself.')
+      ? `\nInstant price shown on the website: ${money(quoted.clean)}${quoted.withBright ? ` cleaning + ${money(quoted.bright)} brightening = ${money(quoted.total)}` : ''} (${Number(house.sqft).toLocaleString('en-US')} sq ft, ${house.stories} story${house.twoFamily ? ', two family' : ''}${quoted.travel ? `, ${money(quoted.travel)} of it is travel, ${Math.round(quoted.miles)} miles out` : ''}${house.laser ? ', New Hampshire: no town record, size measured from the air' : ''}). The quote is in the CRM.${guards ? ' They have gutter guards.' : ''}`
+      : (house.ok && whyNoPrice(house, cfg) === 'too_far' ? '\nNo instant price, this one is past your distance limit. Quote it yourself.' : '\nNo instant price for this house, quote it yourself.') + (guards ? ' They have gutter guards.' : '')
   });
 
   // The CRM write failed (the degraded path texted Eric the lead) or the

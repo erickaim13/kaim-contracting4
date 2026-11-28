@@ -86,7 +86,6 @@ const LEAD_AUTOREPLY_HOLD_MS = 120 * 1000;
 // pay for a $200 job, and a missed estimate visit lost one). A gutter lead that
 // got no instant price is told a price is coming, never offered a visit.
 export const GUTTER_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about your gutters! I'm putting your price together now and will text it over shortly.";
-export const GUTTER_GUARDS_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about your gutters! Since you have gutter guards I want to take a look before I give you a price. Can you text me a couple photos of the gutters? I'll get your quote right over.";
 export const isGutterService = s => /^gutter/i.test(String(s || '').trim());
 const FALLBACK_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about {service}! What day works best for me to come by for a free in person estimate?";
 
