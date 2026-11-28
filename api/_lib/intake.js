@@ -82,6 +82,12 @@ export function textOptOutReason(db, phone) {
 // How long the lead auto-text waits so an online booking can replace it.
 const LEAD_AUTOREPLY_HOLD_MS = 120 * 1000;
 
+// Gutter work is priced without a visit (Eric, 2026-11-28: a drive out does not
+// pay for a $200 job, and a missed estimate visit lost one). A gutter lead that
+// got no instant price is told a price is coming, never offered a visit.
+export const GUTTER_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about your gutters! I'm putting your price together now and will text it over shortly.";
+export const GUTTER_GUARDS_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about your gutters! Since you have gutter guards I want to take a look before I give you a price. Can you text me a couple photos of the gutters? I'll get your quote right over.";
+export const isGutterService = s => /^gutter/i.test(String(s || '').trim());
 const FALLBACK_AUTOREPLY = "Hey {name}, it's Eric with Kaim Contracting, thanks for reaching out about {service}! What day works best for me to come by for a free in person estimate?";
 
 export const sanitize = (s, max = 200) =>
@@ -284,6 +290,7 @@ export async function intakeLead(opts) {
     // Eric's new-lead text.
     onDb = null,
     autoReply = true,
+    autoReplyText = null,   // these exact words instead of the template ({name}, {service})
     ownerExtra = null
   } = opts || {};
   // "BRIAN BELMORE" and "brian" become "Brian": this is the name every
@@ -460,7 +467,7 @@ export async function intakeLead(opts) {
   const optOut = phoneDigits.length >= 10 ? textOptOutReason(db, phone) : null;
   if (optOut) console.log('[intake] skipped lead_autoreply: ' + optOut);
   if (autoReply && phoneDigits.length >= 10 && !optOut && db.settings?.aiScheduler !== false) {
-    const template = await loadTemplate('lead_autoreply', FALLBACK_AUTOREPLY);
+    const template = autoReplyText || (isGutterService(service) ? GUTTER_AUTOREPLY : await loadTemplate('lead_autoreply', FALLBACK_AUTOREPLY));
     const replyBody = template.replace(/\{name\}/g, client.first).replace(/\{service\}/g, service || 'your project');
     // Short hold (2026-09-29, Eric): the quote page offers a self-serve
     // booking step right after the form. If the lead books within this window,

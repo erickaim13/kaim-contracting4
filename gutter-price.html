@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- deploy-bust:20261123182334 -->
+<!-- deploy-bust:2026-11-28T1205 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -239,6 +239,14 @@ body.page-gp::before{display:none}
 .page-gp .gp-bar-lbl{color:#6e6e73}
 .page-gp .gp-bar-lbl b{color:#1d1d1f;font-weight:600}
 .page-gp .gp-done-ico{background:#e8f2fe;border:none;color:#0071e3}
+.page-gp .gp-gd{margin:4px 0 14px;padding-top:14px;border-top:1px solid #e8e8ed}
+.page-gp .gp-gd-q{font-size:15px;font-weight:600;color:#1d1d1f;margin-bottom:9px}
+.page-gp .gp-gd-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.page-gp .gp-gd-btn{min-height:50px;background:#fff;border:1px solid #d2d2d7;border-radius:12px;font-size:16px;font-weight:600;color:#1d1d1f;cursor:pointer;transition:border-color .15s,background .15s}
+.page-gp .gp-gd-btn.on{border-color:#0071e3;background:#f2f8ff;color:#0071e3}
+.page-gp .gp-gd.bad .gp-gd-btn{border-color:#d70015}
+.page-gp .gp-gd-err{display:none;font-size:13px;color:#d70015;margin-top:6px}
+.page-gp .gp-gd.bad .gp-gd-err{display:block}
 .page-gp .gp-br{margin:4px 0 14px;padding-top:14px;border-top:1px solid #e8e8ed}
 .page-gp .gp-br-k{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#86868b;margin-bottom:8px}
 .page-gp .gp-br-ba{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:9px}
@@ -357,6 +365,11 @@ body.page-gp::before{display:none}
         </div>
         <div class="gp-field"><label for="gpPhone">Mobile number</label><input type="tel" id="gpPhone" name="tel" placeholder="978-555-0123" autocomplete="tel" inputmode="tel"><div class="gp-err">Enter a 10 digit phone number.</div></div>
         <div class="gp-field"><label for="gpEmail">Email</label><input type="email" id="gpEmail" name="email" placeholder="you@example.com" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false"><div class="gp-err">Enter a valid email address.</div></div>
+        <div class="gp-gd" id="gpGuards">
+          <div class="gp-gd-q">Do your gutters have gutter guards?</div>
+          <div class="gp-gd-row"><button type="button" class="gp-gd-btn" data-v="no" aria-pressed="false">No</button><button type="button" class="gp-gd-btn" data-v="yes" aria-pressed="false">Yes</button></div>
+          <div class="gp-gd-err">Pick one so the price comes out right.</div>
+        </div>
         <div class="gp-br">
           <div class="gp-br-k">Optional add-on</div>
           <div class="gp-br-ba"><figure><img src="/images/ba-gutter-before.webp" alt="Gutter covered in dark streaks before brightening" loading="lazy" width="1018" height="704"><figcaption>Before</figcaption></figure><figure><img src="/images/ba-gutter-after.webp" alt="The same gutter bright white after brightening" loading="lazy" width="1018" height="704"><figcaption>After</figcaption></figure></div>
@@ -392,7 +405,7 @@ body.page-gp::before{display:none}
 
 </main>
 <div class="gp-foot">&copy; 2026 Kaim Contracting LLC &middot; Methuen, MA &middot; <a href="/privacy">Privacy</a></div>
-<script src="/js/gutter-price.js?v=6" defer></script>
+<script src="/js/gutter-price.js?v=7" defer></script>
 
 
 

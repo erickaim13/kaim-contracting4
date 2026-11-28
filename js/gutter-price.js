@@ -140,6 +140,17 @@
     if (on) ev('instant_quote_brightening');
   });
 
+  // Gutter guards (2026-11-28): asked on every quote. Yes means no instant
+  // price: a price off the house size cannot see them, so Eric prices it.
+  var gdBox = $('gpGuards'), gdBtns = gdBox ? [].slice.call(gdBox.querySelectorAll('.gp-gd-btn')) : [];   // an older cached page has no question
+  gdBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      S.guards = b.getAttribute('data-v');
+      gdBtns.forEach(function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+      gdBox.classList.remove('bad');
+    });
+  });
+
   function gate(failed) {
     $('gpFacts').textContent = S.address;
     var btn = $('gpGateBtn'); btn.disabled = false; btn.textContent = 'Calculate My Price';
@@ -156,17 +167,29 @@
     mark($('gpEmail'), !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email));
     [$('gpFirst'), $('gpLast'), phone, $('gpEmail')].forEach(function (el) { if (!bad && el.classList.contains('err')) bad = el; });
     if (bad) { bad.focus(); return; }
+    if (gdBox && S.guards !== 'yes' && S.guards !== 'no') { gdBox.classList.add('bad'); try { gdBox.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (_) { } return; }
     var wantBright = brBtn.classList.contains('on');
     S.lead = {
-      first: first, last: last, phone: phone.value, email: email, bright: wantBright,
+      first: first, last: last, phone: phone.value, email: email, bright: wantBright, guards: S.guards === 'yes',
       address: S.address, service: 'Gutter Cleaning',
       message: 'Instant gutter price page:\n- Address: ' + S.address + (S.unit ? '\n- Unit: ' + S.unit : '') + (wantBright ? '\n- Also wants gutter brightening' : ''),
       contactPref: 'Phone Call', source: 'Gutter Price Page' + (srcTag ? ' (from ' + srcTag + ')' : ''),
       kc_hpot_xyz: $('gpHp').value || ''
     };
     btn.disabled = true;
+    if (S.lead.guards) { btn.textContent = 'Sending...'; sendGuards(); return; }
     calc();
   });
+
+  // Guards: nothing to calculate. The lead is saved, Eric texts for photos.
+  function sendGuards() {
+    post('/api/instant-quote?via=/api/lead', Object.assign({ action: 'quote', variant: variant }, S.lead))
+      .catch(function () { return post('/api/lead', S.lead); })
+      .then(function () {
+        leadEvents(); ev('instant_quote_guards');
+        done('Got it, ' + S.lead.first + '!', 'Gutter guards change the job, so I price those myself. Watch for a text from me in a few minutes asking for a couple photos, then I will send your quote.');
+      }, function () { gate(true); });
+  }
 
   // ---- 3. calculating -------------------------------------------------------
   function tick(name, state, note) {
