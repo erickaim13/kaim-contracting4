@@ -24,7 +24,7 @@
 
 import { randomBytes } from 'node:crypto';
 import { intakeLead, sbAdmin, sanitize, usPhoneDigits, sendQuoteEmail } from './_lib/intake.js';
-import { iqConfig, priceHouse, lookupHouse, buildEstimate, applyItems } from './_lib/instant.js';
+import { iqConfig, priceFor, whyNoPrice, lookupHouse, buildEstimate, applyItems } from './_lib/instant.js';
 
 const ALLOWED_ORIGINS = new Set([
   'https://kaimcontracting.com',
@@ -122,10 +122,11 @@ async function lookupOnly(req, body, res) {
     lookupHouse(address),
     sbAdmin.from('crm_data').select('pq:data->settings->pq').eq('id', 1).single().then(r => r.data, () => null)
   ]);
-  const price = house.ok ? priceHouse(house.sqft, house.stories, iqConfig({ pq: pqRow?.pq || {} })) : null;
+  const cfg = iqConfig({ pq: pqRow?.pq || {} });
+  const price = house.ok ? priceFor(house, cfg) : null;
   res.setHeader('Cache-Control', 'no-store');
   // why: the reason code only (no_record, not_single_family, no_laser...), handy when checking an address
-  if (!price) return res.status(200).json({ ok: true, found: false, why: house.ok ? 'outside_range' : house.why });
+  if (!price) return res.status(200).json({ ok: true, found: false, why: house.ok ? whyNoPrice(house, cfg) : house.why });
   return res.status(200).json({
     ok: true, found: true, sqft: house.sqft, stories: house.stories,
     style: house.style, year: house.year, addr: house.addr, city: house.city, laser: !!house.laser,
@@ -182,7 +183,8 @@ async function makeQuote(req, body, res) {
     lookupHouse(address),
     sbAdmin.from('crm_data').select('pq:data->settings->pq').eq('id', 1).single().then(r => r.data, () => null)
   ]);
-  const price = house.ok ? priceHouse(house.sqft, house.stories, iqConfig({ pq: pqRow?.pq || {} })) : null;
+  const cfg = iqConfig({ pq: pqRow?.pq || {} });
+  const price = house.ok ? priceFor(house, cfg) : null;
   const token = randomBytes(20).toString('hex');
   let quoted = null;   // { clean, bright, url } once the quote is in the CRM
 
@@ -197,7 +199,7 @@ async function makeQuote(req, body, res) {
     onDb: (db, client, now) => {
       quoted = null;   // the save loop can run more than once
       if (!price) {
-        client.iq = { v: variant, priced: false, why: house.ok ? 'outside_range' : house.why, at: now.toISOString() };
+        client.iq = { v: variant, priced: false, why: house.ok ? whyNoPrice(house, cfg) : house.why, at: now.toISOString() };
         return;
       }
       if (db._ne == null) db._ne = 1001;
@@ -207,12 +209,12 @@ async function makeQuote(req, body, res) {
       client.status = 'estimate';
       client.statusAt = now.toISOString();
       client.val = est.total;
-      client.iq = { v: variant, priced: true, at: now.toISOString(), sqft: house.sqft, stories: house.stories, clean: price.clean, bright: price.bright, estId: est.id, ...(house.laser ? { laser: true } : {}) };
-      quoted = { clean: price.clean, bright: price.bright, withBright: !!est.instant.withBright, total: est.total, url: quoteUrl(db.settings, token) };
+      client.iq = { v: variant, priced: true, at: now.toISOString(), sqft: house.sqft, stories: house.stories, clean: price.clean, bright: price.bright, estId: est.id, ...(price.travel ? { travel: price.travel, miles: price.miles } : {}), ...(house.laser ? { laser: true } : {}) };
+      quoted = { clean: price.clean, bright: price.bright, travel: price.travel, miles: price.miles, withBright: !!est.instant.withBright, total: est.total, url: quoteUrl(db.settings, token) };
     },
     ownerExtra: () => quoted
-      ? `\nInstant price shown on the website: ${money(quoted.clean)}${quoted.withBright ? ` cleaning + ${money(quoted.bright)} brightening = ${money(quoted.total)}` : ''} (${Number(house.sqft).toLocaleString('en-US')} sq ft, ${house.stories} story${house.twoFamily ? ', two family' : ''}${house.laser ? ', New Hampshire: no town record, size measured from the air' : ''}). The quote is in the CRM.`
-      : '\nNo instant price for this house, quote it yourself.'
+      ? `\nInstant price shown on the website: ${money(quoted.clean)}${quoted.withBright ? ` cleaning + ${money(quoted.bright)} brightening = ${money(quoted.total)}` : ''} (${Number(house.sqft).toLocaleString('en-US')} sq ft, ${house.stories} story${house.twoFamily ? ', two family' : ''}${quoted.travel ? `, ${money(quoted.travel)} of it is travel, ${Math.round(quoted.miles)} miles out` : ''}${house.laser ? ', New Hampshire: no town record, size measured from the air' : ''}). The quote is in the CRM.`
+      : (house.ok && whyNoPrice(house, cfg) === 'too_far' ? '\nNo instant price, this one is past your distance limit. Quote it yourself.' : '\nNo instant price for this house, quote it yourself.')
   });
 
   // The CRM write failed (the degraded path texted Eric the lead) or the

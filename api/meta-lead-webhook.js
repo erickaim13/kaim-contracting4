@@ -16,7 +16,7 @@
 
 import crypto from 'crypto';
 import { intakeLead, sanitize, sbAdmin, usPhoneDigits, sendQuoteEmail } from './_lib/intake.js';
-import { iqConfig, priceHouse, lookupHouse, buildEstimate, applyItems } from './_lib/instant.js';
+import { iqConfig, priceFor, whyNoPrice, lookupHouse, buildEstimate, applyItems } from './_lib/instant.js';
 
 export const config = { api: { bodyParser: false } };
 
@@ -227,7 +227,8 @@ async function intakeGutterLead(parsed, lead, leadgenId, wantBright) {
     address ? lookupHouse(address) : Promise.resolve({ ok: false, why: 'no_address' }),
     sbAdmin.from('crm_data').select('pq:data->settings->pq').eq('id', 1).single().then(r => r.data, () => null)
   ]);
-  const price = house.ok ? priceHouse(house.sqft, house.stories, iqConfig({ pq: pqRow?.pq || {} })) : null;
+  const cfg = iqConfig({ pq: pqRow?.pq || {} });
+  const price = house.ok ? priceFor(house, cfg) : null;
   const token = crypto.randomBytes(20).toString('hex');
   const first = parsed.first || '(no name)';
   let quoted = null;
@@ -243,7 +244,7 @@ async function intakeGutterLead(parsed, lead, leadgenId, wantBright) {
     onDb: (db, client, now) => {
       quoted = null;   // the save loop can run more than once
       if (!price) {
-        client.iq = { v: 'form', priced: false, why: house.ok ? 'outside_range' : house.why, at: now.toISOString() };
+        client.iq = { v: 'form', priced: false, why: house.ok ? whyNoPrice(house, cfg) : house.why, at: now.toISOString() };
         return;
       }
       if (db._ne == null) db._ne = 1001;
@@ -253,11 +254,11 @@ async function intakeGutterLead(parsed, lead, leadgenId, wantBright) {
       client.status = 'estimate';
       client.statusAt = now.toISOString();
       client.val = est.total;
-      client.iq = { v: 'form', priced: true, at: now.toISOString(), sqft: house.sqft, stories: house.stories, clean: price.clean, bright: price.bright, estId: est.id, ...(house.laser ? { laser: true } : {}) };
-      quoted = { total: est.total, url: quoteUrl(db.settings, token) };
+      client.iq = { v: 'form', priced: true, at: now.toISOString(), sqft: house.sqft, stories: house.stories, clean: price.clean, bright: price.bright, estId: est.id, ...(price.travel ? { travel: price.travel, miles: price.miles } : {}), ...(house.laser ? { laser: true } : {}) };
+      quoted = { total: est.total, travel: price.travel, miles: price.miles, url: quoteUrl(db.settings, token) };
     },
     ownerExtra: () => quoted
-      ? `\nQuote sent to them by text and email: ${money(quoted.total)}${wantBright ? ' (cleaning and brightening)' : ''}, ${Number(house.sqft).toLocaleString('en-US')} sq ft, ${house.stories} story${house.twoFamily ? ', two family' : ''}${house.laser ? ', New Hampshire: size measured from the air' : ''}. It is in the CRM.`
+      ? `\nQuote sent to them by text and email: ${money(quoted.total)}${wantBright ? ' (cleaning and brightening)' : ''}, ${Number(house.sqft).toLocaleString('en-US')} sq ft, ${house.stories} story${house.twoFamily ? ', two family' : ''}${quoted.travel ? `, ${money(quoted.travel)} of it is travel, ${Math.round(quoted.miles)} miles out` : ''}${house.laser ? ', New Hampshire: size measured from the air' : ''}. It is in the CRM.`
       : '\nNo instant price for this house, quote it yourself.'
   });
   if (out.duplicate || out.degraded || !quoted) return out;

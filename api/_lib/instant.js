@@ -24,19 +24,30 @@ const CENSUS = 'https://geocoding.geo.census.gov/geocoder/locations/onelineaddre
 const NH_PARCELS = 'https://nhgeodata.unh.edu/nhgeodata/rest/services/CAD/ParcelMosaic/MapServer/1/query';
 const STRUCTURES = 'https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/USA_Structures_View/FeatureServer/0/query';
 const PARCELS = 'https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Property_Tax_Parcels/FeatureServer/0/query';
+// The same records on the state's own server. Both are asked at once and the
+// first good answer is used (2026-11-28: the first one hung for hours and
+// every Massachusetts visitor got no price).
+const PARCELS_2 = 'https://arcgisserver.digital.mass.gov/arcgisserver/rest/services/AGOL/L3_Parcels_FeatureService_4326/FeatureServer/1/query';
 
 export const IQ_DEFAULTS = {
   iqClean1: 0.08,      // $ per sq ft of house, 1 story
   iqClean2: 0.095,     // $ per sq ft of house, 2 story
-  iqCleanMin: 199,
+  iqCleanMin: 200,
   iqCleanMax: 350,
   iqBright1: 0.085,
   iqBright2: 0.10,
   iqBrightMin: 200,
   iqBrightMax: 300,
   iqShare: 0,          // % of gutter cleaning visitors who get the instant price (0 = test off)
-  iqMaxSqft: 5000      // bigger than this and Eric quotes it himself
+  iqMaxSqft: 5000,     // bigger than this and Eric quotes it himself
+  // Travel (Eric, 2026-11-28, after a $199 quote 45 minutes away in Nashua):
+  // miles in a straight line from Methuen. Added to the cleaning price, on top
+  // of the highest price too. Past iqMaxMiles there is no instant price.
+  iqNearMiles: 8, iqNearAdd: 25,
+  iqFarMiles: 12, iqFarAdd: 50,
+  iqMaxMiles: 20
 };
+const BASE = { lat: 42.7262, lng: -71.1909 };   // Methuen town centre
 const MIN_SQFT = 600;
 
 /** Eric's numbers from the CRM, falling back to the starting values. */
@@ -54,7 +65,7 @@ export function iqConfig(settings) {
 
 const round25 = n => Math.round(n / 25) * 25;
 // A price that rounds to the lowest price's $25 step (or under it) is the lowest
-// price itself, so a $199 minimum shows $199, never $200.
+// price itself (a $199 minimum shows $199, never $200).
 const clamp = (n, lo, hi) => n <= round25(lo) ? lo : Math.min(Math.max(lo, hi), n);
 
 /**
@@ -73,6 +84,38 @@ export function priceHouse(sqft, stories, cfg = IQ_DEFAULTS) {
   const bright = Math.max(0, Math.min(round25(clean) - 25,
     clamp(round25(a * (two ? cfg.iqBright2 : cfg.iqBright1)), cfg.iqBrightMin, cfg.iqBrightMax)));
   return { clean, bright };
+}
+
+/** Straight line miles from Methuen to the house, or null when the house has no position. */
+export function milesFromBase(house) {
+  const lat = Number(house && (house.lotLat || house.lat)), lng = Number(house && (house.lotLng || house.lng));
+  if (!lat || !lng) return null;
+  const k = Math.cos((lat + BASE.lat) / 2 * Math.PI / 180);
+  return Math.hypot((lng - BASE.lng) * k * 69.17, (lat - BASE.lat) * 68.69);
+}
+/** Dollars added for the drive, or null when the house is past the limit. */
+export function travelAdd(miles, cfg = IQ_DEFAULTS) {
+  const m = Number(miles);
+  if (!(m > 0)) return 0;
+  if (cfg.iqMaxMiles > 0 && m > cfg.iqMaxMiles) return null;
+  if (m > cfg.iqFarMiles) return cfg.iqFarAdd;
+  if (m > cfg.iqNearMiles) return cfg.iqNearAdd;
+  return 0;
+}
+/**
+ * The price for a looked-up house: the size rule plus the travel charge.
+ * { clean, bright, travel, miles } or null. clean already includes travel
+ * (the customer sees one number). Use whyNoPrice for the reason it is null.
+ */
+export function priceFor(house, cfg = IQ_DEFAULTS) {
+  const p = priceHouse(house.sqft, house.stories, cfg);
+  if (!p) return null;
+  const miles = milesFromBase(house), travel = travelAdd(miles, cfg);
+  if (travel == null) return null;
+  return { clean: p.clean + travel, bright: p.bright, travel, miles: miles == null ? null : Math.round(miles * 10) / 10 };
+}
+export function whyNoPrice(house, cfg = IQ_DEFAULTS) {
+  return priceHouse(house.sqft, house.stories, cfg) ? 'too_far' : 'outside_range';
 }
 
 /** "12A Oak Hill Rd, Haverhill" -> "12A" (the house number as typed), or ''. */
@@ -99,6 +142,15 @@ export function normStreet(s) {
 export function typedStreet(address) {
   const first = String(address || '').split(',')[0].trim().replace(/^\d+[A-Za-z]?\s+/, '');
   return normStreet(first.replace(/\b(apt|unit|#).*$/i, ''));
+}
+
+/** The town records for a query from whichever of the two servers answers first. Throws when neither does. */
+function parcelRows(fetchImpl, q) {
+  const ask = url => getJson(fetchImpl, url + '?' + q, 6000).then(d => {
+    if (!d || !Array.isArray(d.features)) throw new Error('no answer');
+    return d;
+  });
+  return Promise.any([ask(PARCELS), ask(PARCELS_2)]);
 }
 
 async function getJson(fetchImpl, url, ms) {
@@ -306,7 +358,7 @@ export async function lookupHouse(address, fetchImpl = fetch, deps = {}) {
     });
     const [g, d] = await Promise.all([
       getJson(fetchImpl, CENSUS + '?' + new URLSearchParams({ address: line, benchmark: 'Public_AR_Current', format: 'json' }), 6000),
-      getJson(fetchImpl, PARCELS + '?' + q, 6000)
+      parcelRows(fetchImpl, q)
     ]);
     const m = g && g.result && g.result.addressMatches && g.result.addressMatches[0];
     if (!m || !m.coordinates) return { ok: false, why: 'no_geocode' };
@@ -387,7 +439,8 @@ export function buildEstimate(db, client, house, price, variant, token, now = ne
     instant: {
       v: variant, at: now.toISOString(),
       sqft: house.sqft, stories: house.stories,
-      clean: price.clean, bright: price.bright
+      clean: price.clean, bright: price.bright,
+      ...(price.travel ? { travel: price.travel, miles: price.miles } : {})
     }
   };
   return applyItems(est, false);

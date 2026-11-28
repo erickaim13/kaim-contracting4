@@ -1,12 +1,12 @@
 // node --test test/instant.test.mjs      (LIVE=1 also hits the real lookups)
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { priceHouse, iqConfig, pickParcel, houseNumber, lookupHouse, buildEstimate, applyItems, IQ_DEFAULTS } from '../api/_lib/instant.js';
+import { priceFor, whyNoPrice, milesFromBase, travelAdd, priceHouse, iqConfig, pickParcel, houseNumber, lookupHouse, buildEstimate, applyItems, IQ_DEFAULTS } from '../api/_lib/instant.js';
 
 test('price: minimum, rate in between, maximum', () => {
-  assert.deepEqual(priceHouse(1332, 1), { clean: 199, bright: 175 });
-  assert.deepEqual(priceHouse(2004, 2), { clean: 199, bright: 175 });
-  assert.equal(priceHouse(2157, 2).clean, 199);
+  assert.deepEqual(priceHouse(1332, 1), { clean: 200, bright: 175 });
+  assert.deepEqual(priceHouse(2004, 2), { clean: 200, bright: 175 });
+  assert.equal(priceHouse(2157, 2).clean, 200);
   assert.equal(priceHouse(2400, 2).clean, 225);
   assert.deepEqual(priceHouse(3744, 2), { clean: 350, bright: 300 });
   assert.equal(priceHouse(3000, 1).clean, 250);
@@ -197,4 +197,35 @@ test('LIVE: New Hampshire addresses', { skip: !process.env.LIVE }, async () => {
     const t = Date.now(), r = await lookupHouse(q);
     console.log(q, '->', Date.now() - t, 'ms', JSON.stringify(r), JSON.stringify(r.ok ? priceHouse(r.sqft, r.stories) : null));
   }
+});
+
+test('travel: nothing close by, $25 past 8 miles, $50 past 12, no price past 20', () => {
+  assert.equal(travelAdd(3), 0); assert.equal(travelAdd(8), 0);
+  assert.equal(travelAdd(9), 25); assert.equal(travelAdd(12.1), 50); assert.equal(travelAdd(20), 50);
+  assert.equal(travelAdd(20.1), null); assert.equal(travelAdd(null), 0);
+  assert.equal(travelAdd(15, iqConfig({ pq: { iqFarAdd: 100 } })), 100);
+  // Methuen itself, then north Nashua (about 14 miles in a straight line)
+  assert.ok(milesFromBase({ lat: 42.73, lng: -71.19 }) < 1);
+  const nashua = { sqft: 2424, stories: 1, lat: 42.781, lng: -71.468 };
+  const m = milesFromBase(nashua); assert.ok(m > 13 && m < 15.5, String(m));
+  assert.deepEqual(priceFor(nashua), { clean: 250, bright: 175, travel: 50, miles: Math.round(m * 10) / 10 });
+  assert.deepEqual(priceFor({ sqft: 2424, stories: 1, lat: 42.72, lng: -71.2 }), { clean: 200, bright: 175, travel: 0, miles: 0.6 });
+  // travel sits on top of the highest price
+  assert.equal(priceFor({ sqft: 4500, stories: 2, lat: 42.781, lng: -71.468 }).clean, 400);
+  const far = { sqft: 2000, stories: 2, lat: 43.2, lng: -71.54 };   // Concord NH
+  assert.equal(priceFor(far), null); assert.equal(whyNoPrice(far), 'too_far');
+  assert.equal(whyNoPrice({ sqft: 9000, stories: 2, lat: 42.72, lng: -71.2 }), 'outside_range');
+  // the lot centre is used when the record has one
+  assert.ok(milesFromBase({ lat: 1, lng: 1, lotLat: 42.73, lotLng: -71.19 }) < 1);
+});
+test('lookup: the second record server answers when the first is down', async () => {
+  const f = async (url) => {
+    const u = String(url);
+    if (u.includes('geocoding.geo.census.gov')) return { ok: true, json: async () => ({ result: { addressMatches: [{ coordinates: { x: -71.08, y: 42.75 }, addressComponents: { state: 'MA', city: 'HAVERHILL' } }] } }) };
+    if (u.includes('services1.arcgis.com')) throw new Error('hung');
+    if (u.includes('arcgisserver.digital.mass.gov')) return { ok: true, json: async () => ({ features: [{ attributes: row(), centroid: { x: -71.081, y: 42.751 } }] }) };
+    throw new Error('unexpected ' + u);
+  };
+  const r = await lookupHouse('7 Alpine Dr, Haverhill', f);
+  assert.equal(r.ok, true); assert.equal(r.sqft, 2004);
 });
